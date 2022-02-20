@@ -2,6 +2,7 @@
 buildscript {
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.firebase:firebase-appdistribution-gradle:3.0.0'
     }
 }
 
