@@ -5,7 +5,6 @@ APPLY_FIXES: none # all, none, or list of linter keys
 # ENABLE: # If you use ENABLE variable, all other languages/formats/tooling-formats will be disabled by default
 ENABLE_LINTERS: # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
   - KOTLIN_KTLINT
-  - SPELL_CSPELL
 DISABLE:
   - COPYPASTE # Comment to enable checks of excessive copy-pastes
   # - SPELL # Uncomment to disable checks of spelling mistakes
