@@ -1,5 +1,5 @@
 package com.narcissus.marketplace.usecase
 
-class SignIn {
+class SignInWithGoogle {
     //TODO
 }
