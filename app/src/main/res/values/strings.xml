@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Marketplace App</string>
+    <string name="home">Home</string>
+    <string name="catalog">Catalog</string>
+    <string name="cart">Cart</string>
+    <string name="user">User</string>
 </resources>
