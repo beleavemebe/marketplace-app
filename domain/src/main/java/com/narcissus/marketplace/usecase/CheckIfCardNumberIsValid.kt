@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.usecase
 
 class CheckIfCardNumberIsValid {
-    operator fun invoke(cardNumber:Long): Boolean {
+    operator fun invoke(cardNumber: Long): Boolean {
         val cardNumberStr = cardNumber.toString()
         var sum: Int = Character.getNumericValue(cardNumberStr[cardNumberStr.length - 1])
         val parity: Int = cardNumberStr.length % 2

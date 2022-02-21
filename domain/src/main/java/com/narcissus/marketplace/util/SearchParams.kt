@@ -2,15 +2,16 @@ package com.narcissus.marketplace.util
 
 data class SearchParams(
     val query: String,
-    val filterType: Set<FilterType> = setOf(FilterType.Default),
+    val filters: Set<FilterType> = setOf(FilterType.Default),
     val sortType: SortType = SortType.Default,
     val sortDirection: SortDirection = SortDirection.Asc
 ) {
-    enum class FilterType {
-        Rating,
-        Sales,
-        Price,
-        Default
+
+    sealed class FilterType {
+        class Rating(val minValue: Int, maxValue: Int) : FilterType()
+        class Sales(val minValue: Int, maxValue: Int) : FilterType()
+        class Price(val minValue: Int, maxValue: Int) : FilterType()
+        object Default : FilterType()
     }
 
     enum class SortType {

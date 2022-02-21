@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.model
 
-data class ProductDetails (
-    val id:String,
+data class ProductDetails(
+    val id: String,
     val icon: String,
     val price: Int,
     val name: String,
@@ -12,6 +12,6 @@ data class ProductDetails (
     val material: String,
     val rating: Int,
     val sales: Int,
-    val reviews:List<Review>,
-    val description:String
-        )
+    val reviews: List<Review>,
+    val description: String
+)

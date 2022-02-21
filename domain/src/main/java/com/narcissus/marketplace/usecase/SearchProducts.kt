@@ -11,7 +11,7 @@ class SearchProducts(private val productsPreviewRepository: ProductsPreviewRepos
     suspend operator fun invoke(searchParams: SearchParams): ActionResult<List<ProductPreview>> {
         val result = productsPreviewRepository.searchProducts(
             query = searchParams.query,
-            filters = searchParams.filterType
+            filters = searchParams.filters
         )
         val filteredResult: ActionResult<List<ProductPreview>> = when (searchParams.sortType) {
             SortType.Default -> result

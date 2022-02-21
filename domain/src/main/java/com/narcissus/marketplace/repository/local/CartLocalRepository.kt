@@ -7,5 +7,4 @@ interface CartLocalRepository {
     fun getCart(): Flow<List<CartItem>>
     suspend fun addToCart(cartItem: CartItem)
     suspend fun removeFromCart(cartItem: CartItem)
-
 }
