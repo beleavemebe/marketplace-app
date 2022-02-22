@@ -14,12 +14,12 @@ class SearchProducts(private val productsPreviewRepository: ProductsPreviewRepos
             filters = searchParams.filters
         )
         val filteredResult: ActionResult<List<ProductPreview>> = when (searchParams.sortType) {
-            SortType.Default -> result
-            SortType.Rating -> result.mapResult { it.sortedBy { productPreview -> productPreview.rating } }
-            SortType.Sales -> result.mapResult { it.sortedBy { productPreview -> productPreview.sales } }
-            SortType.Price -> result.mapResult { it.sortedBy { productPreview -> productPreview.price } }
+            SortType.NONE -> result
+            SortType.RATING -> result.mapResult { it.sortedBy { productPreview -> productPreview.rating } }
+            SortType.SALES -> result.mapResult { it.sortedBy { productPreview -> productPreview.sales } }
+            SortType.PRICE -> result.mapResult { it.sortedBy { productPreview -> productPreview.price } }
         }
-        return if (searchParams.sortDirection == SortDirection.Desc)
+        return if (searchParams.sortDirection == SortDirection.DESC)
             filteredResult.mapResult { it.asReversed() }
         else filteredResult
     }

@@ -1,11 +1,11 @@
 package com.narcissus.marketplace.util
 
 enum class AuthResult {
-    SuccessfullSignIn,
-    SuccessfullSignUp,
-    SuccessfullSignOut,
-    WrongPassword,
-    InvalidEmail,
-    SimplePassword,
-    ShortPassword
+    SUCCESSFULLSSIGNIN,
+    SUCCESSFULLSIGNUP,
+    SUCCESSFULLSIGNOUT,
+    WRONGPASSWORD,
+    INAVLIDEMAIL,
+    SIMPLEPASSWORD,
+    SHORTPASSWORD
 }
