@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.appdistribution'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -18,6 +19,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -34,6 +38,10 @@ android {
 }
 
 dependencies {
+    implementation "androidx.navigation:navigation-ui:2.4.1"
+    implementation "androidx.navigation:navigation-runtime:2.4.1"
+    implementation "androidx.navigation:navigation-fragment:2.4.1"
+
     implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
 
