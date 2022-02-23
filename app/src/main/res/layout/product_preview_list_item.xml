@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="290dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="@dimen/card_elevation">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/productImageView"
+            android:layout_width="@dimen/product_preview_image_size"
+            android:layout_height="@dimen/product_preview_image_size"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/product_image"
+            tools:src="@drawable/product_img_example" />
+
+        <TextView
+            android:id="@+id/productNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productImageView"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            tools:text="MacBook Pro 13" />
+
+        <TextView
+            android:id="@+id/productPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productNameTextView"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            tools:text="$1299" />
+
+        <RatingBar
+            android:id="@+id/productRatingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productPriceTextView"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/grey_light"
+            android:progressTint="@color/ratingbar_active"
+            tools:progress="60" />
+
+        <TextView
+            android:id="@+id/productReviewsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productRatingBar"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/grey_light"
+            android:textSize="@dimen/minimal_text_size"
+            tools:text="15 reviews" />
+
+        <TextView
+            android:id="@+id/productStockTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productReviewsTextView"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/grey_light"
+            android:textSize="@dimen/minimal_text_size"
+            tools:text="In stock:1021" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/productAddToCartButton"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_gradient_background"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="@string/add_to_cart"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="@dimen/minimal_text_size" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
