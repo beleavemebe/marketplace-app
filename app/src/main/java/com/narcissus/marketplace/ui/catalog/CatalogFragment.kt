@@ -26,7 +26,7 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         _binding = FragmentCatalogBinding.bind(view)
 
         setDepartmentList()
-        setCatalogAdapter()
+        setCatalogRecyclerView()
 
     }
 
@@ -41,7 +41,7 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         }
     }
 
-    private fun setCatalogAdapter() {
+    private fun setCatalogRecyclerView() {
         binding.rvDepartment.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(
