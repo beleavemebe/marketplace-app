@@ -3,17 +3,17 @@ package com.narcissus.marketplace.ui.catalog
 import androidx.lifecycle.ViewModel
 import com.narcissus.marketplace.R
 
-class CatalogViewModel : ViewModel() {
+class CatalogViewModel:ViewModel() {
 
-    fun getDepartmentList(): List<DepartmentModel> {
+    fun getDepartmentList(): List<DepartmentModel>{
         return listOf(
-            DepartmentModel(
+           DepartmentModel(
                 name = "Electronics",
                 image = com.narcissus.marketplace.R.drawable.ic_hint
             ),
             DepartmentModel(
                 name = "Clothes",
-                image = com.narcissus.marketplace.R.drawable.ic_hint
+                image =com.narcissus.marketplace.R.drawable.ic_hint
             ),
             DepartmentModel(
                 name = "Books",
