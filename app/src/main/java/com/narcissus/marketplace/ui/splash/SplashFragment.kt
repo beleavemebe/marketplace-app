@@ -23,9 +23,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         _binding = FragmentSplashBinding.bind(view)
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            splashViewModel.isLaunchedFlow.collect {
-                if (it)
+            splashViewModel.isLaunchedFlow.collect { isLaunched ->
+                if (isLaunched) {
                     findNavController().navigate(R.id.action_fragment_splash_to_fragment_home)
+                }
+
             }
         }
     }
