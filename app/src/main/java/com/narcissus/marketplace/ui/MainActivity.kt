@@ -1,11 +1,14 @@
 package com.narcissus.marketplace.ui
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.narcissus.marketplace.R
+
+
 import com.narcissus.marketplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
