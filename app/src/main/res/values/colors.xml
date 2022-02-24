@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey_light">#707070</color>
     <color name="ratingbar_active">#9432C2</color>
+    <color name="logo_background">#3E5ABE</color>
 </resources>

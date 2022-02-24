@@ -4,8 +4,9 @@
     <string name="catalog">Catalog</string>
     <string name="cart">Cart</string>
     <string name="user">User</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="product_image">Product image</string>
+    <string name="application_logo">Application Logo</string>
+    <string name="working_title">NN SHOP</string>
 </resources>
