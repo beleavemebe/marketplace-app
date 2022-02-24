@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/searchLayout"
-        layout="@layout/layout_search_view" />
+        layout="@layout/layout_search_custom" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDepartment"
