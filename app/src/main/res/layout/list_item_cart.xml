@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp">
+    android:layout_height="@dimen/cart_item_height">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/cart_item_icon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginVertical="10dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="@dimen/cart_item_icon_size"
+        android:layout_height="@dimen/cart_item_icon_size"
+        android:layout_marginVertical="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_20"
         android:scaleType="centerCrop"
         android:src="@drawable/product_img_example"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,62 +19,62 @@
         app:shapeAppearanceOverlay="@style/RoundedSquare" />
 
     <TextView
-        android:id="@+id/cart_item_price"
+        android:id="@+id/cartItemPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/dimen_16"
         android:fontFamily="@font/montserrat_semibold"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="@dimen/cart_item_price_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/cart_item_icon"
         app:layout_constraintStart_toEndOf="@+id/cart_item_icon"
         tools:text="$1299" />
 
     <TextView
-        android:id="@+id/cart_item_name"
+        android:id="@+id/cartItemName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/cart_item_price"
+        android:textSize="@dimen/cart_item_name_text_size"
+        app:layout_constraintStart_toStartOf="@+id/cartItemPrice"
         app:layout_constraintTop_toTopOf="@+id/cart_item_icon"
         tools:text="Macbook Pro 13" />
 
     <ImageButton
-        android:id="@+id/cart_item_delete_button"
+        android:id="@+id/cartItemDeleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_close"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="@dimen/dimen_20"
         android:contentDescription="@string/close_button"
-        app:layout_constraintBottom_toBottomOf="@+id/add_delete_product"
-        app:layout_constraintEnd_toStartOf="@+id/add_delete_product"
-        app:layout_constraintTop_toTopOf="@+id/add_delete_product" />
+        app:layout_constraintBottom_toBottomOf="@+id/addDeleteProduct"
+        app:layout_constraintEnd_toStartOf="@+id/addDeleteProduct"
+        app:layout_constraintTop_toTopOf="@+id/addDeleteProduct" />
 
     <LinearLayout
-        android:id="@+id/add_delete_product"
+        android:id="@+id/addDeleteProduct"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginVertical="15dp"
-        android:layout_marginEnd="30dp"
+        android:layout_height="@dimen/dimen_25"
+        android:layout_marginVertical="@dimen/dimen_15"
+        android:layout_marginEnd="@dimen/dimen_30"
         android:background="@drawable/rounded_shape"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox">
+        app:layout_constraintTop_toBottomOf="@+id/cartItemCheckBox">
 
         <ImageButton
-            android:id="@+id/cart_item_remove_product"
+            android:id="@+id/cartItemRemoveProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="3dp"
+            android:layout_marginStart="@dimen/dimen_3"
             android:background="@drawable/ic_subtract"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/black"
             android:contentDescription="@string/todo" />
 
         <TextView
-            android:id="@+id/cart_item_product_amount"
+            android:id="@+id/cartItemProductAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
@@ -82,22 +82,30 @@
             tools:text="12" />
 
         <ImageButton
-            android:id="@+id/cart_item_add_product"
+            android:id="@+id/cartItemAddProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="3dp"
+            android:layout_marginEnd="@dimen/dimen_3"
             android:background="@drawable/ic_add"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/black"
             android:contentDescription="@string/todo" />
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cart_item_name"
-        app:layout_constraintEnd_toEndOf="@+id/add_delete_product"
-        app:layout_constraintTop_toTopOf="@+id/cart_item_name" />
+        android:id="@+id/cartItemCheckBox"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_30"
+        app:layout_constraintBottom_toBottomOf="@+id/cartItemName"
+        app:layout_constraintEnd_toEndOf="@+id/addDeleteProduct"
+        app:layout_constraintTop_toTopOf="@+id/cartItemName" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/delimiter_height"
+        android:layout_marginBottom="@dimen/dimen_2"
+        android:layout_marginHorizontal="@dimen/dimen_10"
+        android:background="@color/grey_delimiter"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
