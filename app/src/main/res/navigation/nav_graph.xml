@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment_home">
+    app:startDestination="@id/fragment_splash">
 
     <fragment
         android:id="@+id/fragment_home"
@@ -23,4 +24,16 @@
         android:id="@+id/fragment_user"
         android:name="com.narcissus.marketplace.ui.user.UserFragment"
         android:label="UserFragment" />
+
+    <fragment
+        android:id="@+id/fragment_splash"
+        android:name="com.narcissus.marketplace.ui.splash.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_fragment_splash_to_fragment_home"
+            app:destination="@id/fragment_home"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/nav_graph" />
+    </fragment>
 </navigation>
