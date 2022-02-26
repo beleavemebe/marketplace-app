@@ -3,4 +3,13 @@
     <style name="RoundedSquare">
         <item name="cornerSize">10%</item>
     </style>
+
+    <style name="MyToolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextAppearance">@style/toolbar_style</item>
+    </style>
+
+    <style name="toolbar_style" parent="@style/TextAppearance.MaterialComponents.Headline6">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="fontFamily">@font/montserrat</item>
+    </style>
 </resources>
