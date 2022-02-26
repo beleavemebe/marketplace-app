@@ -10,4 +10,7 @@
     <string name="product_image">Product image</string>
     <string name="increase_cart_item_amount">increase_amount</string>
     <string name="decrease_cart_item_amount">decrease_amount</string>
+    <string name="delete_selected_items">Delete selected</string>
+    <string name="select_all_items">Select all</string>
+    <string name="checkout">Checkout</string>
 </resources>
