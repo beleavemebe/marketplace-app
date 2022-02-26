@@ -5,15 +5,8 @@
     <dimen name="minimal_text_size">11sp</dimen>
     <dimen name="cart_item_name_text_size">14sp</dimen>
     <dimen name="cart_item_price_text_size">16sp</dimen>
-    <dimen name="dimen_20">20dp</dimen>
-    <dimen name="dimen_10">10dp</dimen>
-    <dimen name="dimen_16">16dp</dimen>
-    <dimen name="dimen_30">30dp</dimen>
-    <dimen name="dimen_15">15dp</dimen>
-    <dimen name="dimen_25">25dp</dimen>
-    <dimen name="dimen_2">2dp</dimen>
-    <dimen name="dimen_3">3dp</dimen>
     <dimen name="delimiter_height">1dp</dimen>
+    <dimen name="cart_checkbox_size">30dp</dimen>
     <dimen name="cart_item_height">90dp</dimen>
     <dimen name="cart_item_icon_size">70dp</dimen>
 </resources>
