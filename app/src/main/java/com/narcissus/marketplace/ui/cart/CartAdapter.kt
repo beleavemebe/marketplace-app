@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.narcissus.marketplace.databinding.ListItemCartBinding
 import com.narcissus.marketplace.model.CartItem
 
-class CartAdapter : RecyclerView.Adapter<CartViewHolder>() {
+class CartAdapter : RecyclerView.Adapter<CartItemViewHolder>() {
     private var items = mutableListOf<CartItem>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemViewHolder {
         val context = LayoutInflater.from(parent.context)
         val binding = ListItemCartBinding.inflate(context, parent, false)
-        return CartViewHolder(binding)
+        return CartItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CartItemViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
     }
@@ -30,5 +30,5 @@ class CartAdapter : RecyclerView.Adapter<CartViewHolder>() {
         notifyDataSetChanged()
     }
 
-    //TO DO add DiffUtil and some features
+    //TODO add DiffUtil and some features
 }
