@@ -3,26 +3,31 @@ package com.narcissus.marketplace.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
-import com.narcissus.marketplace.model.ProductPreview
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
         initRecyclerView()
         fillRecyclerWithDummyContent()
+        subscribeToViewModel()
     }
 
     private val adapter = ListDelegationAdapter(
         HomeScreenItem.Header.delegate,
         HomeScreenItem.ProductList.delegate,
+        HomeScreenItem.LoadingProductList.delegate,
     )
 
     private fun initRecyclerView() {
@@ -31,38 +36,69 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun fillRecyclerWithDummyContent() {
-        val dummyProducts = listOf(
-            ProductPreview("1", "", 1449,"Apple MacBook Pro 13","","",752,"","",3,152),
-            ProductPreview("2", "", 1299,"Apple MacBook Air 13","","",1021,"","",5,196),
-            ProductPreview("3", "", 2199,"Apple MacBook Pro 16","","",128,"","",4,65),
-        )
-
         adapter.items = listOf(
             HomeScreenItem.Header(
                 requireContext().getString(R.string.top_rated)
             ),
-            HomeScreenItem.ProductList(dummyProducts),
+            HomeScreenItem.LoadingProductList,
 
             HomeScreenItem.Header(
                 requireContext().getString(R.string.top_sales)
             ),
-            HomeScreenItem.ProductList(dummyProducts),
+            HomeScreenItem.LoadingProductList,
 
             HomeScreenItem.Header(
                 requireContext().getString(R.string.you_visited)
             ),
-            HomeScreenItem.ProductList(dummyProducts),
+            HomeScreenItem.LoadingProductList,
 
             HomeScreenItem.Header(
                 requireContext().getString(R.string.explore)
             ),
-            HomeScreenItem.ProductList(dummyProducts)
+            HomeScreenItem.LoadingProductList
         )
+    }
+
+    private fun subscribeToViewModel() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.topRatedFlow.collect { items ->
+                adapter.items = adapter.items.modifiedAt(TOP_RATED_PRODUCTS_INDEX, HomeScreenItem.ProductList(items))
+            }
+
+            viewModel.topSalesFlow.collect { items ->
+                adapter.items = adapter.items.modifiedAt(TOP_SALES_PRODUCTS_INDEX, HomeScreenItem.ProductList(items))
+            }
+
+            viewModel.recentlyVisitedFlow.collect { items ->
+                adapter.items = adapter.items.modifiedAt(RECENTLY_VISITED_PRODUCTS_INDEX, HomeScreenItem.ProductList(items))
+            }
+
+            viewModel.randomFlow.collect { result ->
+                adapter.items = adapter.items.modifiedAt(EXPLORE_PRODUCTS_INDEX, HomeScreenItem.ProductList(result.data))
+            }
+        }
+    }
+
+    fun List<HomeScreenItem>.modifiedAt(index: Int, with: HomeScreenItem): List<HomeScreenItem> {
+        val result = this.toMutableList()
+        result[index] = with
+        return result
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContent.adapter = null
         _binding = null
+    }
+
+    companion object {
+        const val TOP_RATED_HEADER_INDEX = 0
+        const val TOP_RATED_PRODUCTS_INDEX = 1
+        const val TOP_SALES_HEADER_INDEX = 2
+        const val TOP_SALES_PRODUCTS_INDEX = 3
+        const val RECENTLY_VISITED_HEADER_INDEX = 4
+        const val RECENTLY_VISITED_PRODUCTS_INDEX = 5
+        const val EXPLORE_HEADER_INDEX = 6
+        const val EXPLORE_PRODUCTS_INDEX = 7
     }
 }
