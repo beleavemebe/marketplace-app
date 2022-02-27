@@ -7,6 +7,7 @@
     <dimen name="cart_item_price_text_size">16sp</dimen>
     <dimen name="delimiter_height">1dp</dimen>
     <dimen name="cart_checkbox_size">30dp</dimen>
-    <dimen name="cart_item_height">90dp</dimen>
+    <dimen name="cart_item_height">100dp</dimen>
+    <dimen name="cart_item_add_remove_button_size">20dp</dimen>
     <dimen name="cart_item_icon_size">70dp</dimen>
 </resources>

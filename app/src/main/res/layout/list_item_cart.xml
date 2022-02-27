@@ -45,10 +45,11 @@
 
     <ImageButton
         android:id="@+id/cartItemDeleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/ic_close"
+        android:backgroundTint="@color/grey_light"
         android:contentDescription="delete item"
         app:layout_constraintBottom_toBottomOf="@+id/addDeleteProduct"
         app:layout_constraintEnd_toStartOf="@+id/addDeleteProduct"
@@ -58,7 +59,7 @@
     <LinearLayout
         android:id="@+id/addDeleteProduct"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_marginVertical="15dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/rounded_shape"
@@ -69,10 +70,10 @@
 
         <ImageButton
             android:id="@+id/cartItemRemoveProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/cart_item_add_remove_button_size"
+            android:layout_height="@dimen/cart_item_add_remove_button_size"
             android:layout_gravity="center"
-            android:layout_marginStart="3dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/ic_subtract"
             android:backgroundTint="@color/black"
             android:contentDescription="@string/decrease_cart_item_amount" />
@@ -81,16 +82,17 @@
             android:id="@+id/cartItemProductAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
+            android:layout_marginHorizontal="10dp"
+            android:textSize="16sp"
             android:textColor="@color/black"
-            tools:text="12" />
+            tools:text="1" />
 
         <ImageButton
             android:id="@+id/cartItemAddProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/cart_item_add_remove_button_size"
+            android:layout_height="@dimen/cart_item_add_remove_button_size"
             android:layout_gravity="center"
-            android:layout_marginEnd="3dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/ic_add"
             android:backgroundTint="@color/black"
             android:contentDescription="@string/increase_cart_item_amount" />
