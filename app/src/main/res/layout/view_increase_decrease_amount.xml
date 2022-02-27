@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_shape"
+    android:orientation="horizontal"
+    android:paddingVertical="4dp"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <ImageButton
+        android:id="@+id/ibDecrease"
+        android:layout_width="@dimen/cart_item_add_remove_button_size"
+        android:layout_height="@dimen/cart_item_add_remove_button_size"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/ic_subtract"
+        android:backgroundTint="@color/black"
+        android:contentDescription="@string/decrease_cart_item_amount" />
+
+    <TextView
+        android:id="@+id/tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:text="1" />
+
+    <ImageButton
+        android:id="@+id/ibIncrease"
+        android:layout_width="@dimen/cart_item_add_remove_button_size"
+        android:layout_height="@dimen/cart_item_add_remove_button_size"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_add"
+        android:backgroundTint="@color/black"
+        android:contentDescription="@string/increase_cart_item_amount" />
+</merge>
