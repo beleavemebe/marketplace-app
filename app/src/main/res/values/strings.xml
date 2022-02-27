@@ -4,12 +4,19 @@
     <string name="catalog">Catalog</string>
     <string name="cart">Cart</string>
     <string name="user">User</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="product_image">Product image</string>
-    <string name="increase_cart_item_amount">increase_amount</string>
-    <string name="decrease_cart_item_amount">decrease_amount</string>
+    <string name="increase_cart_item_amount">Increase amount</string>
+    <string name="decrease_cart_item_amount">Decrease amount</string>
+    <string name="price_placeholder">$%1$d</string>
+    <string name="in_stock_placeholder">In stock: %1$d</string>
+    <string name="sales_placeholder">%1$d sales</string>
+    <string name="top_sales">Top sales</string>
+    <string name="top_rated">Top rated</string>
+    <string name="you_visited">You visited</string>
+    <string name="explore">Explore</string>
+    <string name="application_logo">Application Logo</string>
+    <string name="working_title">NN SHOP</string>
     <string name="delete_selected_items">Delete selected</string>
     <string name="select_all_items">Select all</string>
     <string name="checkout">Checkout</string>
