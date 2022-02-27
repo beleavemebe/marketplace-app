@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.home
+package com.narcissus.marketplace.ui.products
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

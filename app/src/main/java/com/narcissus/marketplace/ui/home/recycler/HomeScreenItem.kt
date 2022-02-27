@@ -1,19 +1,22 @@
-package com.narcissus.marketplace.ui.home
+package com.narcissus.marketplace.ui.home.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.databinding.ListItemHomeScreenHeaderBinding
 import com.narcissus.marketplace.databinding.ListItemLoadingProductListBinding
 import com.narcissus.marketplace.databinding.ListItemProductListBinding
 import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.ui.home.HomeFragment.Companion.HOME_SCREEN_MARGINS
+import com.narcissus.marketplace.ui.products.ProductsAdapter
 
 typealias HeaderBinding = ListItemHomeScreenHeaderBinding
 typealias ProductListBinding = ListItemProductListBinding
 typealias LoadingProductListBinding = ListItemLoadingProductListBinding
 
-open class HomeScreenItem {
+sealed class HomeScreenItem {
     data class Header(val title: String) : HomeScreenItem() {
         companion object {
             @JvmStatic private fun inflateBinding(
@@ -34,8 +37,6 @@ open class HomeScreenItem {
 
     data class ProductList(val products: List<ProductPreview>) : HomeScreenItem() {
         companion object {
-            private const val EXTRA_LEFT_MARGIN = 8
-
             @JvmStatic private fun inflateBinding(
                 layoutInflater: LayoutInflater,
                 root: ViewGroup
@@ -47,7 +48,7 @@ open class HomeScreenItem {
                 ) {
                     val adapter = ProductsAdapter()
                     binding.rvProducts.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    binding.rvProducts.addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
+                    binding.rvProducts.addItemDecoration(ExtraHorizontalMarginDecoration(HOME_SCREEN_MARGINS))
                     binding.rvProducts.adapter = adapter
 
                     bind {
@@ -57,15 +58,41 @@ open class HomeScreenItem {
         }
     }
 
-    object LoadingProductList : HomeScreenItem() {
-        @JvmStatic private fun inflateBinding(
-            layoutInflater: LayoutInflater,
-            root: ViewGroup
-        ) = LoadingProductListBinding.inflate(layoutInflater, root, false)
+    class LoadingProductList : HomeScreenItem() {
+        companion object {
+            @JvmStatic private fun inflateBinding(
+                layoutInflater: LayoutInflater,
+                root: ViewGroup
+            ) = LoadingProductListBinding.inflate(layoutInflater, root, false)
 
-        val delegate get() =
-            adapterDelegateViewBinding<LoadingProductList, HomeScreenItem, LoadingProductListBinding>(
-                ::inflateBinding,
-            ) {}
+            val delegate get() =
+                adapterDelegateViewBinding<LoadingProductList, HomeScreenItem, LoadingProductListBinding>(
+                    ::inflateBinding,
+                ) {
+                }
+        }
+    }
+
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HomeScreenItem>() {
+            override fun areItemsTheSame(
+                oldItem: HomeScreenItem,
+                newItem: HomeScreenItem
+            ): Boolean {
+                return when (oldItem) {
+                    is Header -> newItem is Header && oldItem.title == newItem.title
+                    is ProductList -> newItem is ProductList && oldItem.products == newItem.products
+                    is LoadingProductList -> newItem is LoadingProductList && oldItem === newItem
+                }
+            }
+
+            override fun areContentsTheSame(
+                oldItem: HomeScreenItem,
+                newItem: HomeScreenItem
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

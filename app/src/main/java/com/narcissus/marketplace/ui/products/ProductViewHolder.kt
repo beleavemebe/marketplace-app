@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.home
+package com.narcissus.marketplace.ui.products
 
 import androidx.recyclerview.widget.RecyclerView
 import com.narcissus.marketplace.R

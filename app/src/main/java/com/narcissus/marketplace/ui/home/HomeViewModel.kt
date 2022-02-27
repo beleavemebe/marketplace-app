@@ -9,7 +9,6 @@ import com.narcissus.marketplace.usecase.GetTopSalesProducts
 import com.narcissus.marketplace.util.ActionResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 
 class HomeViewModel(
     private val getTopRatedProducts: GetTopRatedProducts = ServiceLocator.getTopRatedProducts,
@@ -18,16 +17,19 @@ class HomeViewModel(
     private val getRecentlyVisitedProducts: GetRecentlyVisitedProducts = ServiceLocator.getRecentlyVisitedProducts,
 ) : ViewModel() {
     val topRatedFlow = flow {
+        delay(500L)
         val result = getTopRatedProducts() as ActionResult.SuccessResult
         emit(result.data)
     }
 
     val topSalesFlow = flow {
+        delay(1000L)
         val result = getTopSalesProducts() as ActionResult.SuccessResult
         emit(result.data)
     }
 
     val randomFlow = flow {
+        delay(1500L)
         val result = getRandomProducts() as ActionResult.SuccessResult
         emit(result)
     }
