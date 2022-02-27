@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="product_preview_image_size">150dp</dimen>
-    <dimen name="card_elevation">10dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
     <dimen name="minimal_text_size">11sp</dimen>
     <dimen name="cart_item_name_text_size">14sp</dimen>
     <dimen name="cart_item_price_text_size">16sp</dimen>

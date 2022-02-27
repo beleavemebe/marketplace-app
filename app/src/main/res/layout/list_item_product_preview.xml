@@ -69,7 +69,7 @@
             tools:progress="60" />
 
         <TextView
-            android:id="@+id/productReviewsTextView"
+            android:id="@+id/productSalesTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/productRatingBar"
@@ -82,20 +82,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/productRatingBar"
-            tools:text="15 reviews" />
+            tools:text="151 sales" />
 
         <TextView
             android:id="@+id/productStockTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/productReviewsTextView"
+            android:layout_below="@id/productSalesTextView"
             android:layout_marginHorizontal="8dp"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/grey_light"
             android:textSize="@dimen/minimal_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productReviewsTextView"
+            app:layout_constraintTop_toBottomOf="@+id/productSalesTextView"
             tools:text="In stock: 1021" />
 
         <androidx.appcompat.widget.AppCompatButton
