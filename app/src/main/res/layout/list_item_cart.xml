@@ -6,7 +6,7 @@
     android:layout_height="@dimen/cart_item_height">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/cartItemIcon"
+        android:id="@+id/ivIcon"
         android:layout_width="@dimen/cart_item_icon_size"
         android:layout_height="@dimen/cart_item_icon_size"
         android:layout_marginVertical="10dp"
@@ -19,7 +19,7 @@
         app:shapeAppearanceOverlay="@style/RoundedSquare" />
 
     <TextView
-        android:id="@+id/cartItemPrice"
+        android:id="@+id/tvPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,37 +27,37 @@
         android:fontFamily="@font/montserrat_semibold"
         android:textColor="@color/black"
         android:textSize="@dimen/cart_item_price_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/cartItemIcon"
-        app:layout_constraintStart_toEndOf="@+id/cartItemIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+        app:layout_constraintStart_toEndOf="@+id/ivIcon"
         tools:text="$1299" />
 
     <TextView
-        android:id="@+id/cartItemName"
+        android:id="@+id/tvName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/black"
         android:textSize="@dimen/cart_item_name_text_size"
-        app:layout_constraintStart_toStartOf="@+id/cartItemPrice"
-        app:layout_constraintTop_toTopOf="@+id/cartItemIcon"
+        app:layout_constraintStart_toStartOf="@+id/tvPrice"
+        app:layout_constraintTop_toTopOf="@+id/ivIcon"
         tools:text="Macbook Pro 13" />
 
     <ImageButton
-        android:id="@+id/cartItemDeleteButton"
+        android:id="@+id/btnDelete"
         android:layout_width="@dimen/delete_item_button_size"
         android:layout_height="@dimen/delete_item_button_size"
         android:layout_marginEnd="25dp"
         android:background="@drawable/ic_close"
         android:backgroundTint="@color/grey_light"
         android:contentDescription="delete item"
-        app:layout_constraintBottom_toBottomOf="@+id/addDeleteProduct"
-        app:layout_constraintEnd_toStartOf="@+id/addDeleteProduct"
-        app:layout_constraintTop_toTopOf="@+id/addDeleteProduct"
+        app:layout_constraintBottom_toBottomOf="@+id/productAmount"
+        app:layout_constraintEnd_toStartOf="@+id/productAmount"
+        app:layout_constraintTop_toTopOf="@+id/productAmount"
         tools:ignore="HardcodedText" />
 
     <LinearLayout
-        android:id="@+id/addDeleteProduct"
+        android:id="@+id/productAmount"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginBottom="15dp"
@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
-            android:id="@+id/cartItemRemoveProduct"
+            android:id="@+id/ibDecrease"
             android:layout_width="@dimen/cart_item_add_remove_button_size"
             android:layout_height="@dimen/cart_item_add_remove_button_size"
             android:layout_gravity="center"
@@ -78,7 +78,7 @@
             android:contentDescription="@string/decrease_cart_item_amount" />
 
         <TextView
-            android:id="@+id/cartItemProductAmount"
+            android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -87,7 +87,7 @@
             tools:text="1" />
 
         <ImageButton
-            android:id="@+id/cartItemAddProduct"
+            android:id="@+id/ibIncrease"
             android:layout_width="@dimen/cart_item_add_remove_button_size"
             android:layout_height="@dimen/cart_item_add_remove_button_size"
             android:layout_gravity="center"
@@ -98,12 +98,12 @@
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/cartItemCheckBox"
+        android:id="@+id/cbSelected"
         android:layout_width="@dimen/cart_checkbox_size"
         android:layout_height="@dimen/cart_checkbox_size"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/addDeleteProduct"
+        app:layout_constraintBottom_toTopOf="@+id/productAmount"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.divider.MaterialDivider
