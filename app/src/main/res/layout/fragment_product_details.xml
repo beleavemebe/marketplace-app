@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.product_details.ProductDetailsFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/tbTop"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_arrow_back_black_36dp"
+            android:tint="@color/grey" />
+
+        <TextView
+            android:id="@+id/tvProductDepartment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="#1C1B1F"
+            android:textSize="22sp"
+            tools:text="Laptops" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibSearch"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="fitCenter"
+            android:tint="@color/grey"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_cart"
+            android:background="@color/white"/>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibCart"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
+            android:scaleType="fitCenter"
+            android:tint="@color/grey"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_catalog"
+            android:background="@color/white"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbTop"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivProduct"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/product_img_example" />
+
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/product_details_side_marign"
+                android:layout_marginEnd="@dimen/product_details_side_marign"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivProduct"
+                tools:text="Apple Macbook Pro 13 super duper Intel Core i9 8GB 16TB 512 GB" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/ratingBarProduct"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressBackgroundTint="@color/grey_light"
+                android:progressTint="@color/ratingbar_active"
+                android:scaleX=".85"
+                android:scaleY=".85"
+                android:stepSize="1"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPrice"
+                app:layout_constraintEnd_toStartOf="@id/tvPrice"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvPrice"
+                app:layout_constraintVertical_bias="0.5"
+                tools:progress="60" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/product_details_side_marign"
+                android:fontFamily="@font/montserrat_semibold"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvProductName"
+                tools:text="$1299" />
+
+            <TextView
+                android:id="@+id/tvSales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/product_details_side_marign"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarProduct"
+                tools:text="15 sales" />
+
+            <TextView
+                android:id="@+id/tvStock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/product_details_side_marign"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/grey_light"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSales"
+                tools:text="In stock: 1021" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPurchase"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="@dimen/product_details_side_marign"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/product_details_side_marign"
+                android:background="@drawable/button_large_gradient_background"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="@string/purchase"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStock" />
+
+
+            <TextView
+                android:id="@+id/tvAboutTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/product_details_side_marign"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="@string/about"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnPurchase" />
+
+
+            <include
+                android:id="@+id/layoutType"
+                layout="@layout/item_details_products_about_single_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tvAboutTitle" />
+
+            <include
+                android:id="@+id/layoutColor"
+                layout="@layout/item_details_products_about_single_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layoutType" />
+
+            <include
+                android:id="@+id/layoutMaterial"
+                layout="@layout/item_details_products_about_single_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layoutColor" />
+
+            <include
+                android:id="@+id/layoutDescription"
+                layout="@layout/item_details_products_about_multiple_lines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layoutMaterial" />
+
+            <TextView
+                android:id="@+id/tvReviewsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/product_details_side_marign"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="@string/reviews"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutDescription" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvReviews"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/product_details_side_marign"
+                android:layout_marginRight="@dimen/product_details_side_marign"
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvReviewsTitle" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutExpandReviewsList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvReviews">
+
+                <ImageView
+                    android:id="@+id/ivExpandReviewsList"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@string/show_all_reviews"
+                    android:src="@drawable/ic_expand_more_black_36dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/ratingbar_active" />
+
+                <TextView
+                    android:id="@+id/tvExpandReviewsList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/show_all_reviews"
+                    android:textColor="@color/ratingbar_active"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@id/ivExpandReviewsList"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvSimilarProductsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/product_details_side_marign"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="@string/similar_products"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutExpandReviewsList" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSimilarProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvSimilarProductsTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

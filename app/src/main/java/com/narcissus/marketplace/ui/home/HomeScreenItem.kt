@@ -5,16 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.databinding.ListItemHomeScreenHeaderBinding
-import com.narcissus.marketplace.databinding.ListItemHomeScreenProductListBinding
+import com.narcissus.marketplace.databinding.ListItemLoadingProductListBinding
+import com.narcissus.marketplace.databinding.ListItemProductListBinding
 import com.narcissus.marketplace.model.ProductPreview
 
 typealias HeaderBinding = ListItemHomeScreenHeaderBinding
-typealias ProductListBinding = ListItemHomeScreenProductListBinding
+typealias ProductListBinding = ListItemProductListBinding
+typealias LoadingProductListBinding = ListItemLoadingProductListBinding
 
 open class HomeScreenItem {
     data class Header(val title: String) : HomeScreenItem() {
         companion object {
-            private fun inflateBinding(
+            @JvmStatic private fun inflateBinding(
                 layoutInflater: LayoutInflater,
                 root: ViewGroup
             ) = HeaderBinding.inflate(layoutInflater, root, false)
@@ -34,7 +36,7 @@ open class HomeScreenItem {
         companion object {
             private const val EXTRA_LEFT_MARGIN = 8
 
-            private fun inflateBinding(
+            @JvmStatic private fun inflateBinding(
                 layoutInflater: LayoutInflater,
                 root: ViewGroup
             ) = ProductListBinding.inflate(layoutInflater, root, false)
@@ -53,5 +55,17 @@ open class HomeScreenItem {
                     }
                 }
         }
+    }
+
+    object LoadingProductList : HomeScreenItem() {
+        @JvmStatic private fun inflateBinding(
+            layoutInflater: LayoutInflater,
+            root: ViewGroup
+        ) = LoadingProductListBinding.inflate(layoutInflater, root, false)
+
+        val delegate get() =
+            adapterDelegateViewBinding<LoadingProductList, HomeScreenItem, LoadingProductListBinding>(
+                ::inflateBinding,
+            ) {}
     }
 }

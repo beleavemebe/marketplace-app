@@ -3,4 +3,5 @@
     <dimen name="product_preview_image_size">150dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="minimal_text_size">11sp</dimen>
+    <dimen name="product_details_side_marign">20dp</dimen>
 </resources>
