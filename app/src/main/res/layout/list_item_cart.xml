@@ -45,9 +45,9 @@
 
     <ImageButton
         android:id="@+id/cartItemDeleteButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_width="@dimen/delete_item_button_size"
+        android:layout_height="@dimen/delete_item_button_size"
+        android:layout_marginEnd="25dp"
         android:background="@drawable/ic_close"
         android:backgroundTint="@color/grey_light"
         android:contentDescription="delete item"
@@ -60,13 +60,12 @@
         android:id="@+id/addDeleteProduct"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginVertical="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/rounded_shape"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@+id/cartItemIcon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cartItemPrice">
+        app:layout_constraintBottom_toTopOf="@+id/cartItemDivider"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
             android:id="@+id/cartItemRemoveProduct"
@@ -83,8 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:textSize="16sp"
             android:textColor="@color/black"
+            android:textSize="16sp"
             tools:text="1" />
 
         <ImageButton
@@ -103,9 +102,9 @@
         android:layout_width="@dimen/cart_checkbox_size"
         android:layout_height="@dimen/cart_checkbox_size"
         android:layout_marginEnd="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cartItemName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cartItemName" />
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/addDeleteProduct"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/cartItemDivider"
