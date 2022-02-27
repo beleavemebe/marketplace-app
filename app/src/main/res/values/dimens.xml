@@ -10,4 +10,7 @@
     <dimen name="cart_item_height">100dp</dimen>
     <dimen name="cart_item_add_remove_button_size">20dp</dimen>
     <dimen name="cart_item_icon_size">70dp</dimen>
+    <dimen name="delete_item_button_size">25dp</dimen>
+    <dimen name="checkout_button_width">100dp</dimen>
+    <dimen name="checkout_button_height">40dp</dimen>
 </resources>
