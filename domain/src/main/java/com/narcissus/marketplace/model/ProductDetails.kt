@@ -13,5 +13,6 @@ data class ProductDetails(
     val rating: Int,
     val sales: Int,
     val reviews: List<Review>,
-    val description: String
+    val description: String,
+    val similarProducts:List<ProductPreview>
 )
