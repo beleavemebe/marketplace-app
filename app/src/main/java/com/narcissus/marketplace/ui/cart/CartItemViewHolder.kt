@@ -11,7 +11,7 @@ class CartItemViewHolder(
     fun bind(cartItem: CartItem) = with(binding) {
         tvName.text = cartItem.data.name
         tvPrice.text = itemView.context.getString(R.string.price_placeholder, cartItem.data.price)
-        cartItemProductAmount.text = cartItem.count.toString()
+        tvAmount.text = cartItem.count.toString()
         ivIcon.setImageResource(R.drawable.product_img_example)
     }
 }
