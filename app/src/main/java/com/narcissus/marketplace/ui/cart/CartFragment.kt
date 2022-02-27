@@ -3,7 +3,6 @@ package com.narcissus.marketplace.ui.cart
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentCartBinding
 import com.narcissus.marketplace.model.CartItem
@@ -17,22 +16,24 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCartBinding.bind(view)
-        initRView()
+        initRecyclerView()
         fillData()
     }
 
-    private fun initRView() {
-        binding.cartRView.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = cartAdapter
-        }
+    private fun initRecyclerView() {
+        binding.rvCartItems.adapter = cartAdapter
     }
 
-    private fun fillData(){
-        val sampleCartItem = ProductPreview("1", "", 1449,"Apple MacBook Pro 13","","",752,"","",3,152)
+    private fun fillData() {
+        val sampleCartItem = ProductPreview("1", "", 1449, "Apple MacBook Pro 13", "", "", 752, "", "", 3, 152)
         val cartItemsList: List<CartItem> = listOf(
-            CartItem(sampleCartItem,1),
-            CartItem(sampleCartItem,2)
+            CartItem(sampleCartItem, 1),
+            CartItem(sampleCartItem, 2),
+            CartItem(sampleCartItem, 1),
+            CartItem(sampleCartItem, 2),
+            CartItem(sampleCartItem, 1),
+            CartItem(sampleCartItem, 2),
+            CartItem(sampleCartItem, 1),
         )
         cartAdapter.setData(cartItemsList)
     }
