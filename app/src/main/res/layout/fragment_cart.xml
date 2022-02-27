@@ -7,7 +7,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
-        style="@style/toolbar_style"
+        style="@style/ToolbarTextAppearance"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,71 +15,86 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/cart_top_app_bar"
-            style="@style/MyToolbar"
+            android:id="@+id/topBar"
+            style="@style/AppToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:elevation="1dp"
-            app:title="@string/cart"
-            app:titleCentered="false" />
-
+            app:title="@string/cart" />
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <Button
-        android:id="@+id/cartDeleteSelectedButton"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/delete_selected_items"
-        android:textAllCaps="false"
-        android:textAppearance="@style/toolbar_style"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:icon="@drawable/ic_close"
-        app:iconSize="18dp"
-        app:iconTint="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/cartItemDivider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <CheckBox
-        android:id="@+id/cartListItemCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
-        android:layout_marginHorizontal="13dp"
-        android:layoutDirection="rtl"
-        android:text="@string/select_all_items"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/cartItemDivider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/cartItemDivider"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:dividerColor="@color/divider_color"
-        app:layout_constraintBottom_toTopOf="@+id/cartRView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cartRView"
-        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/checkout_panel"
+        app:layout_constraintBottom_toTopOf="@+id/checkoutBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cartDeleteSelectedButton"
-        tools:listitem="@layout/list_item_cart" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
-    <RelativeLayout
-        android:id="@+id/checkout_panel"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnDeleteSelected"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/delete_selected_items"
+                android:textAllCaps="false"
+                android:textAppearance="@style/ToolbarTextAppearance"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:icon="@drawable/ic_close"
+                app:iconSize="18dp"
+                app:iconTint="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbSelectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="13dp"
+                android:button="@null"
+                android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+                android:fontFamily="@font/montserrat"
+                android:layoutDirection="ltr"
+                android:text="@string/select_all_items"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:dividerColor="@color/divider_color"
+                app:layout_constraintBottom_toTopOf="@+id/rvCartItems"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCartItems"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:itemCount="5"
+                tools:listitem="@layout/list_item_cart" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/checkoutBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,34 +102,35 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/cartItemsAmount"
+            android:id="@+id/tvProductsAmount"
+            android:layout_marginStart="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/black"
             android:textSize="12sp"
-            tools:ignore="RelativeOverlap"
-            tools:text="products: 1 " />
+            app:layout_constraintBottom_toTopOf="@+id/tvTotalPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="5 products" />
 
         <TextView
-            android:id="@+id/cartItemsPrice"
+            android:id="@+id/tvTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cartItemsAmount"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="5dp"
             android:fontFamily="@font/montserrat_semibold"
             android:textColor="@color/black"
             android:textSize="14sp"
-            tools:text="2498$" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvProductsAmount"
+            app:layout_constraintTop_toBottomOf="@+id/tvProductsAmount"
+            tools:text="$2488" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/cartCheckoutButton"
+            android:id="@+id/btnCheckout"
             android:layout_width="@dimen/checkout_button_width"
             android:layout_height="@dimen/checkout_button_height"
-            android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="6dp"
             android:background="@drawable/button_gradient_background"
@@ -123,8 +139,8 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"
-            tools:ignore="RelativeOverlap" />
-    </RelativeLayout>
-
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
