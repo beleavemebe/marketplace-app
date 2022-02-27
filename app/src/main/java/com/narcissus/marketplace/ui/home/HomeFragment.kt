@@ -5,20 +5,19 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
 import com.narcissus.marketplace.ui.home.recycler.ExtraVerticalMarginDecoration
+import com.narcissus.marketplace.ui.home.recycler.HomeScreenAdapter
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModels()
+
+    private val adapter = HomeScreenAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,20 +27,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         subscribeToViewModel()
     }
 
-    private val adapter = object : AsyncListDifferDelegationAdapter<HomeScreenItem>(
-        HomeScreenItem.DIFF_CALLBACK,
-        HomeScreenItem.Header.delegate,
-        HomeScreenItem.ProductList.delegate,
-        HomeScreenItem.LoadingProductList.delegate,
-    ) {
-        override fun setItems(items: MutableList<HomeScreenItem>?) {
-            println("Got Items: ${items?.joinToString { it.javaClass.simpleName }}")
-            super.setItems(items)
-        }
-    }
-
     private fun initRecyclerView() {
-        binding.rvContent.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvContent.addItemDecoration(ExtraVerticalMarginDecoration(HOME_SCREEN_MARGINS))
         binding.rvContent.adapter = adapter
     }
@@ -73,41 +59,46 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun subscribeToViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.topRatedFlow
-                .flowOn(Dispatchers.Main) // TODO: find another way to escape race condition
-                .collect { items ->
-                    adapter.items = adapter.items.modifiedAt(
-                        TOP_RATED_PRODUCTS_INDEX,
-                        HomeScreenItem.ProductList(items)
-                    )
-            }
+            observeTopRatedProducts()
+            observeTopSalesProducts()
+            observeRecentlyVisitedProducts()
+            observeRandomProducts()
+        }
+    }
 
-            viewModel.topSalesFlow
-                .flowOn(Dispatchers.Main) // TODO: find another way to escape race condition
-                .collect { items ->
-                    adapter.items = adapter.items.modifiedAt(
-                        TOP_SALES_PRODUCTS_INDEX,
-                        HomeScreenItem.ProductList(items)
-                    )
-            }
+    private suspend fun observeTopRatedProducts() {
+        viewModel.topRatedFlow.collect { items ->
+            adapter.items = adapter.items.modifiedAt(
+                TOP_RATED_PRODUCTS_INDEX,
+                HomeScreenItem.ProductList(items)
+            )
+        }
+    }
 
-            viewModel.recentlyVisitedFlow
-                .flowOn(Dispatchers.Main) // TODO: find another way to escape race condition
-                .collect { items ->
-                    adapter.items = adapter.items.modifiedAt(
-                        RECENTLY_VISITED_PRODUCTS_INDEX,
-                        HomeScreenItem.ProductList(items)
-                    )
-            }
+    private suspend fun observeTopSalesProducts() {
+        viewModel.topSalesFlow.collect { items ->
+            adapter.items = adapter.items.modifiedAt(
+                TOP_SALES_PRODUCTS_INDEX,
+                HomeScreenItem.ProductList(items)
+            )
+        }
+    }
 
-            viewModel.randomFlow
-                .flowOn(Dispatchers.Main) // TODO: find another way to escape race condition
-                .collect { result ->
-                    adapter.items = adapter.items.modifiedAt(
-                        EXPLORE_PRODUCTS_INDEX,
-                        HomeScreenItem.ProductList(result.data)
-                    )
-            }
+    private suspend fun observeRecentlyVisitedProducts() {
+        viewModel.recentlyVisitedFlow.collect { items ->
+            adapter.items = adapter.items.modifiedAt(
+                RECENTLY_VISITED_PRODUCTS_INDEX,
+                HomeScreenItem.ProductList(items)
+            )
+        }
+    }
+
+    private suspend fun observeRandomProducts() {
+        viewModel.randomFlow.collect { result ->
+            adapter.items = adapter.items.modifiedAt(
+                EXPLORE_PRODUCTS_INDEX,
+                HomeScreenItem.ProductList(result.data)
+            )
         }
     }
 
