@@ -4,10 +4,12 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import java.util.concurrent.Executors
 
-class HomeScreenAdapter : AsyncListDifferDelegationAdapter<HomeScreenItem>(
+class HomeScreenAdapter(
+    onProductClicked: (id: String) -> Unit,
+) : AsyncListDifferDelegationAdapter<HomeScreenItem>(
     DIFFER_CONFIG,
     HomeScreenItem.Header.delegate,
-    HomeScreenItem.ProductList.delegate,
+    HomeScreenItem.ProductList.delegate(onProductClicked),
     HomeScreenItem.LoadingProductList.delegate,
 ) {
     companion object {

@@ -2,6 +2,7 @@ package com.narcissus.marketplace.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +18,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val adapter = HomeScreenAdapter()
+    private val adapter = HomeScreenAdapter(::navigateToProductDetails)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -109,6 +110,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val result = this.toMutableList()
         result[index] = with
         return result
+    }
+
+    private fun navigateToProductDetails(id: String) {
+        Toast.makeText(context, "TODO: navigate to id", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
