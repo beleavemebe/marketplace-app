@@ -4,19 +4,19 @@ package com.narcissus.marketplace.ui.catalog
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.narcissus.marketplace.databinding.ItemDepartmentBinding
+import com.narcissus.marketplace.databinding.ItemDepartmentCardBinding
 
 class CatalogAdapter: RecyclerView.Adapter<CatalogAdapter.DepartmentViewHolder>() {
 
     var departmentList: List<DepartmentModel> = emptyList()
 
     inner class DepartmentViewHolder(
-        val binding: ItemDepartmentBinding,
+        val binding: ItemDepartmentCardBinding,
     ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DepartmentViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemDepartmentBinding.inflate(inflater, parent, false)
+        val binding = ItemDepartmentCardBinding.inflate(inflater, parent, false)
         return DepartmentViewHolder(binding)
     }
 

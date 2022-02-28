@@ -2,10 +2,12 @@ package com.narcissus.marketplace.ui.catalog
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentCatalogBinding
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +21,8 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
 
     private val catalogViewModel: CatalogViewModel by viewModels()
     private val catalogAdapter = CatalogAdapter()
+    private val searchHistoryViewModel: SearchHistoryViewModel by viewModels()
+    private val searchHistoryAdapterAdapter = SearchHistoryAdapter()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,7 +31,29 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
 
         setDepartmentList()
         setCatalogRecyclerView()
+        setSearchListeners()
+        setSearchHistoryList()
+        setSearchHistoryRecyclerView()
 
+    }
+
+    private fun setSearchListeners() {
+        binding.searchLayout.etSearch.setOnFocusChangeListener { view, hasFocus ->
+            if (view.hasFocus()) {
+                binding.searchLayout.etSearch.background = ContextCompat.getDrawable(
+                    requireContext(),
+                    com.narcissus.marketplace.R.drawable.background_search
+                )
+                binding.searchLayout.rvSearchHistory.visibility = View.VISIBLE
+            }
+            else {binding.searchLayout.etlSearch.background = null
+            binding.searchLayout.rvSearchHistory.visibility=View.GONE
+            }
+        }
+
+        binding.searchLayout.cvFilter.setOnClickListener {
+
+        }
     }
 
     private fun setDepartmentList() {
@@ -49,6 +75,27 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
                 2
             )
             adapter = catalogAdapter
+        }
+    }
+
+    private fun setSearchHistoryList() {
+        lifecycleScope.launch {
+            flow {
+                emit(searchHistoryViewModel.getSearchHistoryList())
+            }.flowOn(Dispatchers.IO)
+                .collect {
+                    searchHistoryAdapterAdapter.searchHistoryList = it
+                }
+        }
+    }
+
+    private fun setSearchHistoryRecyclerView() {
+        binding.searchLayout.rvSearchHistory.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(
+                requireContext()
+            )
+            adapter = searchHistoryAdapterAdapter
         }
     }
 
