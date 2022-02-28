@@ -1,4 +1,4 @@
-package com.narcissus.marketplace
+package com.narcissus.marketplace.data
 
 import com.narcissus.marketplace.model.User
 import com.narcissus.marketplace.repository.remote.UserRemoteRepository
