@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.narcissus.marketplace.databinding.ItemSearchHistoryRowBinding
 
-class SearchHistoryAdapter : RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryViewHolder>() {
+class SearchHistoryAdapter: RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryViewHolder>() {
 
     var searchHistoryList: List<SearchHistoryModel> = emptyList()
 
@@ -30,5 +30,5 @@ class SearchHistoryAdapter : RecyclerView.Adapter<SearchHistoryAdapter.SearchHis
 }
 
 data class SearchHistoryModel(
-    val suggestion: String
+    val suggestion:String
 )
