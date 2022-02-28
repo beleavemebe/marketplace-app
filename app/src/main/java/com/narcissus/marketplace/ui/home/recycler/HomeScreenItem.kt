@@ -42,11 +42,11 @@ sealed class HomeScreenItem {
                 root: ViewGroup
             ) = ProductListBinding.inflate(layoutInflater, root, false)
 
-            val delegate get() =
+            fun delegate(onProductClicked: (id: String) -> Unit) =
                 adapterDelegateViewBinding<ProductList, HomeScreenItem, ProductListBinding>(
                     ::inflateBinding
                 ) {
-                    val adapter = ProductsAdapter()
+                    val adapter = ProductsAdapter(onProductClicked)
                     binding.rvProducts.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     binding.rvProducts.addItemDecoration(ExtraHorizontalMarginDecoration(HOME_SCREEN_MARGINS))
                     binding.rvProducts.adapter = adapter
