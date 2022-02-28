@@ -10,10 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
-import com.narcissus.marketplace.ui.home.ExtraHorizontalMarginDecoration
-import com.narcissus.marketplace.ui.home.ProductsAdapter
+import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.reviews.DividerItemDecorator
 import com.narcissus.marketplace.ui.product_details.reviews.ReviewsAdapter
+import com.narcissus.marketplace.ui.products.ProductsAdapter
 
 class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     companion object {
@@ -25,7 +25,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
     private val reviewsAdapter = ReviewsAdapter()
-    private val similarAdapter = ProductsAdapter()
+    private val similarAdapter = ProductsAdapter {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
