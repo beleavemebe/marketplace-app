@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.home
+package com.narcissus.marketplace.ui.products
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.narcissus.marketplace.databinding.ListItemProductPreviewBinding
 import com.narcissus.marketplace.model.ProductPreview
 
-class ProductsAdapter : RecyclerView.Adapter<ProductViewHolder>() {
+class ProductsAdapter(
+    private val onProductClicked: (id: String) -> Unit,
+) : RecyclerView.Adapter<ProductViewHolder>() {
     private var items = mutableListOf<ProductPreview>()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -24,7 +26,7 @@ class ProductsAdapter : RecyclerView.Adapter<ProductViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val context = LayoutInflater.from(parent.context)
         val binding = ListItemProductPreviewBinding.inflate(context, parent, false)
-        return ProductViewHolder(binding)
+        return ProductViewHolder(binding, onProductClicked)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {

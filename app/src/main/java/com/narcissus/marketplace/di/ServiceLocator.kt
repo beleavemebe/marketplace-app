@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.di
 
-import com.narcissus.marketplace.ProductsPreviewRepositoryImpl
-import com.narcissus.marketplace.UserLocalRepositoryImpl
+import com.narcissus.marketplace.data.ProductsPreviewRepositoryImpl
+import com.narcissus.marketplace.data.UserLocalRepositoryImpl
 import com.narcissus.marketplace.usecase.GetRandomProducts
 import com.narcissus.marketplace.usecase.GetRecentlyVisitedProducts
 import com.narcissus.marketplace.usecase.GetTopRatedProducts
