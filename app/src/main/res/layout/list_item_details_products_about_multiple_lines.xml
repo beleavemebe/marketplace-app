@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/aboutTitleTV"
+        android:id="@+id/tvAboutTitleMultipleLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -21,7 +21,7 @@
         tools:text="title"/>
 
     <TextView
-        android:id="@+id/aboutValueTV"
+        android:id="@+id/tvAboutValueMultipleLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/product_details_side_marign"
@@ -29,6 +29,6 @@
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aboutTitleTV"
+        app:layout_constraintTop_toBottomOf="@id/tvAboutTitleMultipleLine"
         tools:text="aaa\nsdada\ndasdads"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
