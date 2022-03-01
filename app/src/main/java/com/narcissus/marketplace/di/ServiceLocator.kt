@@ -16,4 +16,5 @@ object ServiceLocator {
 
     private val cartLocalRepositoryImpl = CartLocalRepositoryImpl()
     val getCart = GetCart(cartLocalRepositoryImpl)
+    val getCartCost = GetCartCost(cartLocalRepositoryImpl)
 }

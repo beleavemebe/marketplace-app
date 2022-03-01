@@ -29,13 +29,17 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private fun fillData() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.getCartFlow.collect { result ->
-                result.collect { items ->
-                    cartAdapter.setData(items)
-                }
+            viewModel.getCartFlow.collect { items ->
+                cartAdapter.setData(items)
             }
-            "products: ${cartAdapter.itemCount}".also { binding.tvProductsAmount.text = it } // later will be updated
+            viewModel.getCartCostFlow.collect { price ->
+                binding.tvTotalPrice.text = price
+            }
+            viewModel.getCartItemsAmount.collect { amount ->
+                "products: $amount".also { binding.tvProductsAmount.text = it } // temporary
+            }
         }
+
     }
 
     override fun onDestroyView() {

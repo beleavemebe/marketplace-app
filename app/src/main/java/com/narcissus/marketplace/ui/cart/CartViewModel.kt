@@ -3,14 +3,27 @@ package com.narcissus.marketplace.ui.cart
 import androidx.lifecycle.ViewModel
 import com.narcissus.marketplace.di.ServiceLocator
 import com.narcissus.marketplace.usecase.GetCart
+import com.narcissus.marketplace.usecase.GetCartCost
 import kotlinx.coroutines.flow.flow
 
 class CartViewModel(
-    private val getCart: GetCart = ServiceLocator.getCart // temporary only getCart
+    private val getCart: GetCart = ServiceLocator.getCart,
+    private val getCartCost: GetCartCost = ServiceLocator.getCartCost
 ) : ViewModel() {
 
     val getCartFlow = flow {
-        val result = getCart()
-        emit(result)
+        getCart().collect { items ->
+            emit(items)
+        }
+    }
+    val getCartCostFlow = flow {
+        getCartCost().collect { price ->
+            emit(price)
+        }
+    }
+    val getCartItemsAmount = flow {
+        getCart().collect { cartItemsList ->
+            emit(cartItemsList.size.toString())
+        }
     }
 }
