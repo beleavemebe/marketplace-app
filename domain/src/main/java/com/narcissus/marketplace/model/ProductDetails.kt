@@ -5,14 +5,11 @@ data class ProductDetails(
     val icon: String,
     val price: Int,
     val name: String,
-    val category: String,
-    val type: String,
+    val department: String,
     val stock: Int,
-    val color: String,
-    val material: String,
+    val aboutList: List<DetailsAbout>,
     val rating: Int,
     val sales: Int,
     val reviews: List<Review>,
-    val description: String,
     val similarProducts:List<ProductPreview>
 )

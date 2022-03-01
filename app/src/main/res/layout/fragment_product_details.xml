@@ -33,26 +33,28 @@
             android:textColor="#1C1B1F"
             android:textSize="22sp"
             tools:text="Laptops" />
+
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ibSearch"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginEnd="20dp"
-            android:scaleType="fitCenter"
-            android:tint="@color/grey"
             android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_cart"
-            android:background="@color/white"/>
+            android:tint="@color/grey" />
+
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ibCart"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginEnd="12dp"
-            android:scaleType="fitCenter"
-            android:tint="@color/grey"
             android:layout_gravity="end"
+            android:layout_marginEnd="12dp"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_catalog"
-            android:background="@color/white"/>
+            android:tint="@color/grey" />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -184,33 +186,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/btnPurchase" />
 
 
-            <include
-                android:id="@+id/layoutType"
-                layout="@layout/item_details_products_about_single_line"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tvAboutTitle" />
-
-            <include
-                android:id="@+id/layoutColor"
-                layout="@layout/item_details_products_about_single_line"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/layoutType" />
-
-            <include
-                android:id="@+id/layoutMaterial"
-                layout="@layout/item_details_products_about_single_line"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/layoutColor" />
-
-            <include
-                android:id="@+id/layoutDescription"
-                layout="@layout/item_details_products_about_multiple_lines"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/layoutMaterial" />
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAboutTitle" />
 
             <TextView
                 android:id="@+id/tvReviewsTitle"
@@ -223,7 +206,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutDescription" />
+                app:layout_constraintTop_toBottomOf="@id/rvAbout" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvReviews"
