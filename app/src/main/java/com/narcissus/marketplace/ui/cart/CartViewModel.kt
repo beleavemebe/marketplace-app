@@ -21,9 +21,4 @@ class CartViewModel(
             emit(price)
         }
     }
-    val getCartItemsAmount = flow {
-        getCart().collect { cartItemsList ->
-            emit(cartItemsList.size.toString())
-        }
-    }
 }

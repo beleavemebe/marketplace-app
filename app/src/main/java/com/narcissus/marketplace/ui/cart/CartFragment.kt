@@ -31,12 +31,10 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.getCartFlow.collect { items ->
                 cartAdapter.setData(items)
+                "goods: ${items.size}".also { binding.tvProductsAmount.text = it } // temporary
             }
             viewModel.getCartCostFlow.collect { price ->
                 binding.tvTotalPrice.text = price
-            }
-            viewModel.getCartItemsAmount.collect { amount ->
-                "products: $amount".also { binding.tvProductsAmount.text = it } // temporary
             }
         }
 
