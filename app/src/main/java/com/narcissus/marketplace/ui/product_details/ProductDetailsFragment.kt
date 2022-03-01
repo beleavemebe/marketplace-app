@@ -2,6 +2,7 @@ package com.narcissus.marketplace.ui.product_details
 
 import android.animation.LayoutTransition
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -9,12 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.model.DetailsAbout
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
-import com.narcissus.marketplace.ui.product_details.about.AboutItem
+import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
+import com.narcissus.marketplace.ui.product_details.about.AboutProductAdapter
 import com.narcissus.marketplace.ui.product_details.reviews.DividerItemDecorator
 import com.narcissus.marketplace.ui.product_details.reviews.ReviewsAdapter
 import com.narcissus.marketplace.ui.products.ProductsAdapter
@@ -23,26 +24,22 @@ import kotlinx.coroutines.launch
 class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     companion object {
         private const val EXTRA_LEFT_MARGIN = 8
-        private const val ROTATION_EXPAND = 0F
-        private const val ROTATION_UNEXPAND = 180F
+        private const val ROTATION_EXPANDED = 0F
+        private const val ROTATION_CONSTRICTED = 180F
     }
 
     private val viewModel: ProductDetailsViewModel by viewModels()
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
     private val reviewsAdapter = ReviewsAdapter()
-    private val similarAdapter = ProductsAdapter {}
-
-    private val aboutAdapter = ListDelegationAdapter(
-        AboutItem.SingleLineItem.delegate,
-        AboutItem.MultipleLineItem.delegate
-    )
+    private val similarProductsAdapter = ProductsAdapter {}
+    private val aboutProductAdapter = AboutProductAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProductDetailsBinding.bind(view)
         subscribeViewModel()
-        initAboutRecyclerView()
+        initAboutProductRecyclerView()
         initReviewsRecyclerView()
         initSimilarProductsRecyclerView()
         setOnClickListeners()
@@ -50,9 +47,9 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
     }
 
-    private fun initAboutRecyclerView() = with(binding.rvAbout){
-        layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-        adapter=aboutAdapter
+    private fun initAboutProductRecyclerView() = with(binding.rvAbout) {
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        adapter = aboutProductAdapter
     }
 
 
@@ -66,12 +63,12 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         )
     }
 
-    private fun initSimilarProductsRecyclerView() = with(binding.rvSimilarProducts){
+
+    private fun initSimilarProductsRecyclerView() = with(binding.rvSimilarProducts) {
         layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
         addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
-        adapter = similarAdapter
+        adapter = similarProductsAdapter
     }
 
     private fun setOnClickListeners() {
@@ -83,24 +80,21 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private fun subscribeViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             subscribeMainProductData()
-            launch {
-                subscribeReviews()
-            }
+            subscribeReviews()
             launch {
                 subscribeReviewsExpandState()
             }
         }
-
     }
 
     private suspend fun subscribeReviewsExpandState() {
         viewModel.isReviewsListExpandedFlow.collect { isExpanded ->
             with(binding) {
                 if (isExpanded) {
-                    ivExpandReviewsList.rotation = ROTATION_UNEXPAND
+                    ivExpandReviewsList.rotation = ROTATION_CONSTRICTED
                     tvExpandReviewsList.text = getString(R.string.hide_all_reviews)
                 } else {
-                    ivExpandReviewsList.rotation = ROTATION_EXPAND
+                    ivExpandReviewsList.rotation = ROTATION_EXPANDED
                     tvExpandReviewsList.text = getString(R.string.show_all_reviews)
                 }
             }
@@ -123,23 +117,23 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                 tvSales.text = getString(R.string.sales_placeholder, data.sales)
                 tvStock.text = getString(R.string.in_stock_placeholder, data.stock)
             }
-            aboutAdapter.items=mapProductAboutList(data.aboutList)
-            similarAdapter.submitItems(data.similarProducts)
+            aboutProductAdapter.items = mapProductAboutList(data.aboutList)
+            similarProductsAdapter.submitItems(data.similarProducts)
         }
     }
 
-    private fun mapProductAboutList(aboutList:List<DetailsAbout>): List<AboutItem> {
-        val list:MutableList<AboutItem> = mutableListOf()
-        aboutList.onEach { about->
-            val title = when(about){
-                is DetailsAbout.Type ->getString(R.string.type)
+    private fun mapProductAboutList(aboutList: List<DetailsAbout>): List<AboutProductItem> {
+        val list: MutableList<AboutProductItem> = mutableListOf()
+        aboutList.onEach { about ->
+            val title = when (about) {
+                is DetailsAbout.Type -> getString(R.string.type)
                 is DetailsAbout.Color -> getString(R.string.about)
                 is DetailsAbout.Material -> getString(R.string.material)
                 is DetailsAbout.Description -> getString(R.string.description)
             }
-            val data = when(about){
-                is DetailsAbout.Description->AboutItem.MultipleLineItem(title,about.data)
-                else ->AboutItem.SingleLineItem(title,about.data)
+            val data = when (about) {
+                is DetailsAbout.Description -> AboutProductItem.MultipleLineItem(title, about.data)
+                else -> AboutProductItem.SingleLineItem(title, about.data)
             }
             list.add(data)
         }

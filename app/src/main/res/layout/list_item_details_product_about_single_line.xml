@@ -8,7 +8,6 @@
         android:id="@+id/tvAboutTitleSingleLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/product_details_side_marign"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/grey_light"
         android:textSize="12sp"
@@ -17,10 +16,12 @@
         app:layout_constraintTop_toTopOf="@id/tvAboutValueSingleLine" />
 
     <ImageView
-        android:id="@+id/ivAboutSeparatorMulipleLine"
+        android:id="@+id/ivAboutSeparatorMultipleLine"
         android:layout_width="0dp"
         android:layout_height="5dp"
         android:src="@drawable/dotted_line"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="@id/tvAboutValueSingleLine"
         app:layout_constraintEnd_toStartOf="@id/tvAboutValueSingleLine"
         app:layout_constraintStart_toEndOf="@id/tvAboutTitleSingleLine"
@@ -30,7 +31,6 @@
         android:id="@+id/tvAboutValueSingleLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/product_details_side_marign"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/black"

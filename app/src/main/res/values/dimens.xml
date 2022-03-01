@@ -13,6 +13,6 @@
     <dimen name="delete_item_button_size">25dp</dimen>
     <dimen name="checkout_button_width">100dp</dimen>
     <dimen name="checkout_button_height">40dp</dimen>
-    <dimen name="product_details_side_marign">20dp</dimen>
+    <dimen name="product_details_side_margin">20dp</dimen>
 
 </resources>

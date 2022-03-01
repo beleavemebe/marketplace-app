@@ -6,7 +6,9 @@ import com.narcissus.marketplace.usecase.GetProductDetails
 import com.narcissus.marketplace.util.ActionResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 
 import kotlinx.coroutines.flow.flow
@@ -21,7 +23,8 @@ class ProductDetailsViewModel : ViewModel() {
         val result = getProductDetails("") as ActionResult.SuccessResult
         emit(result.data)
     }
-    val isReviewsListExpandedFlow = MutableStateFlow(false)
+    private val _isReviewsListExpandedFlow = MutableStateFlow(false)
+    val isReviewsListExpandedFlow = _isReviewsListExpandedFlow.asStateFlow()
     val productReviewsFlow =
         isReviewsListExpandedFlow.combine(productDetailsFlow) { isReviewsListExpanded, productDetails ->
         if (isReviewsListExpanded) productDetails.reviews
@@ -30,7 +33,7 @@ class ProductDetailsViewModel : ViewModel() {
 
     fun changeReviewsListState() {
         CoroutineScope(Dispatchers.Main).launch {
-            isReviewsListExpandedFlow.emit(!isReviewsListExpandedFlow.value)
+            _isReviewsListExpandedFlow.emit(!isReviewsListExpandedFlow.value)
         }
     }
 
