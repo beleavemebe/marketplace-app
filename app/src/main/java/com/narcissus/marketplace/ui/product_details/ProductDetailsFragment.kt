@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.model.DetailsAbout
@@ -33,17 +33,26 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private val reviewsAdapter = ReviewsAdapter()
     private val similarAdapter = ProductsAdapter {}
 
+    private val aboutAdapter = ListDelegationAdapter(
+        AboutItem.SingleLineItem.delegate,
+        AboutItem.MultipleLineItem.delegate
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProductDetailsBinding.bind(view)
-        initTextViews()
         subscribeViewModel()
+        initAboutRecyclerView()
         initReviewsRecyclerView()
         initSimilarProductsRecyclerView()
         setOnClickListeners()
         val layoutTransition = binding.root.layoutTransition
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+    }
+
+    private fun initAboutRecyclerView() = with(binding.rvAbout){
+        layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        adapter=aboutAdapter
     }
 
 
@@ -63,13 +72,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
         addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
         adapter = similarAdapter
-    }
-
-    private fun initTextViews() = with(binding) {
-        layoutType.tvAboutTitleSingleLine.text = getString(R.string.type)
-        layoutColor.tvAboutTitleSingleLine.text = getString(R.string.about)
-        layoutMaterial.tvAboutTitleSingleLine.text = getString(R.string.material)
-        layoutDescription.tvAboutTitleMultipleLine.text = getString(R.string.description)
     }
 
     private fun setOnClickListeners() {
@@ -106,7 +108,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     }
 
     private suspend fun subscribeMainProductData() {
-        viewModel.productDetailsFlow.collect() { data ->
+        viewModel.productDetailsFlow.collect { data ->
             with(binding) {
                 tvProductDepartment.text = data.department
                 ivProduct.setImageDrawable(
@@ -120,17 +122,28 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                 tvPrice.text = getString(R.string.price_placeholder, data.price)
                 tvSales.text = getString(R.string.sales_placeholder, data.sales)
                 tvStock.text = getString(R.string.in_stock_placeholder, data.stock)
-                layoutType.tvAboutValueSingleLine.text =
-                    (data.aboutList[0] as DetailsAbout.Type).data
-                layoutColor.tvAboutValueSingleLine.text =
-                    (data.aboutList[1] as DetailsAbout.Color).data
-                layoutMaterial.tvAboutValueSingleLine.text =
-                    (data.aboutList[2] as DetailsAbout.Material).data
-                layoutDescription.tvAboutValueMultipleLine.text =
-                    (data.aboutList[3] as DetailsAbout.Description).data
-                similarAdapter.submitItems(data.similarProducts)
             }
+            aboutAdapter.items=mapProductAboutList(data.aboutList)
+            similarAdapter.submitItems(data.similarProducts)
         }
+    }
+
+    private fun mapProductAboutList(aboutList:List<DetailsAbout>): List<AboutItem> {
+        val list:MutableList<AboutItem> = mutableListOf()
+        aboutList.onEach { about->
+            val title = when(about){
+                is DetailsAbout.Type ->getString(R.string.type)
+                is DetailsAbout.Color -> getString(R.string.about)
+                is DetailsAbout.Material -> getString(R.string.material)
+                is DetailsAbout.Description -> getString(R.string.description)
+            }
+            val data = when(about){
+                is DetailsAbout.Description->AboutItem.MultipleLineItem(title,about.data)
+                else ->AboutItem.SingleLineItem(title,about.data)
+            }
+            list.add(data)
+        }
+        return list
     }
 
     private suspend fun subscribeReviews() {
