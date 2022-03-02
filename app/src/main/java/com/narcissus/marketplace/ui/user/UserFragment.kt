@@ -2,9 +2,11 @@ package com.narcissus.marketplace.ui.user
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -81,19 +83,23 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                             ProfileInfo()
                             Spacer(modifier = Modifier.height(32.dp))
                             Header(text = "My Profile")
-                            Item("Orders", R.drawable.ic_cart)
-                            Item("Billing", R.drawable.ic_cart)
-                            Item("Logout", R.drawable.ic_cart)
+                            Item("Orders", R.drawable.ic_cart) { toast("Orders") }
+                            Item("Billing", R.drawable.ic_cart) { toast("Billing") }
+                            Item("Logout", R.drawable.ic_cart) { toast("Logout") }
                             Header(text = "Application")
-                            Item("Dark Theme", R.drawable.ic_cart)
-                            Item("Clear data", R.drawable.ic_cart)
-                            Item("Report bug", R.drawable.ic_cart)
-                            Item("Source code", R.drawable.ic_cart)
+                            Item("Dark Theme", R.drawable.ic_cart) { toast("Dark Theme") }
+                            Item("Clear data", R.drawable.ic_cart) { toast("Clear data") }
+                            Item("Report bug", R.drawable.ic_cart) { toast("Report bug") }
+                            Item("Source code", R.drawable.ic_cart) { toast("Source code") }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun toast(string: String) {
+        Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
@@ -175,13 +181,14 @@ fun HeaderPreview() {
 }
 
 @Composable
-fun Item(text: String, @DrawableRes iconResId: Int) {
+fun Item(text: String, @DrawableRes iconResId: Int, onClick: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .background(White)
+            .clickable { onClick() }
     ) {
         Spacer(modifier = Modifier.width(8.dp))
 
@@ -208,7 +215,6 @@ fun Item(text: String, @DrawableRes iconResId: Int) {
 @Preview
 fun ItemPreview() {
     Column {
-        Item("Orders")
-        Item("Orders", R.drawable.ic_catalog)
+        Item("Orders", R.drawable.ic_catalog) {}
     }
 }
