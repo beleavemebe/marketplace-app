@@ -58,7 +58,6 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                 DefaultTheme {
                     Column(
                         modifier = Modifier
-                            .verticalScroll(rememberScrollState())
                             .background(White)
                     ) {
                         TopAppBar(
@@ -75,17 +74,22 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                             backgroundColor = White,
                         )
 
-                        ProfileInfo()
-                        Spacer(modifier = Modifier.height(32.dp))
-                        Header(text = "My Profile")
-                        Item("Orders", R.drawable.ic_cart)
-                        Item("Billing", R.drawable.ic_cart)
-                        Item("Logout", R.drawable.ic_cart)
-                        Header(text = "Application")
-                        Item("Dark Theme", R.drawable.ic_cart)
-                        Item("Clear data", R.drawable.ic_cart)
-                        Item("Report bug", R.drawable.ic_cart)
-                        Item("Source code", R.drawable.ic_cart)
+                        Column(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            ProfileInfo()
+                            Spacer(modifier = Modifier.height(32.dp))
+                            Header(text = "My Profile")
+                            Item("Orders", R.drawable.ic_cart)
+                            Item("Billing", R.drawable.ic_cart)
+                            Item("Logout", R.drawable.ic_cart)
+                            Header(text = "Application")
+                            Item("Dark Theme", R.drawable.ic_cart)
+                            Item("Clear data", R.drawable.ic_cart)
+                            Item("Report bug", R.drawable.ic_cart)
+                            Item("Source code", R.drawable.ic_cart)
+                        }
                     }
                 }
             }
