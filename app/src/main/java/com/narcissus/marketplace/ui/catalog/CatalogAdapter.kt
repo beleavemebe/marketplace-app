@@ -1,11 +1,26 @@
 package com.narcissus.marketplace.ui.catalog
 
+
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ItemDepartmentCardBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
-class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.DepartmentViewHolder>() {
+class CatalogAdapter: RecyclerView.Adapter<CatalogAdapter.DepartmentViewHolder>() {
 
     var departmentList: List<DepartmentModel> = emptyList()
 
@@ -21,8 +36,34 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.DepartmentViewHolder>
 
     override fun onBindViewHolder(holder: DepartmentViewHolder, position: Int) {
         val department = (departmentList[position])
+
         holder.binding.name.text = department.name
-        holder.binding.image.setImageResource(department.image)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+//                val departmentStorageReference = Firebase.storage.reference
+//                val firebaseAuth = FirebaseAuth.getInstance()
+//                val user = firebaseAuth.currentUser
+//                val departmentImagePath = departmentStorageReference.child(
+//                    "departmentImage/${department.name}"
+//                )
+//                val maxDownloadSize = 1L * 1024 * 1024
+//                val bytes = departmentImagePath.getBytes(maxDownloadSize).await()
+//                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+                withContext(Dispatchers.Main) {
+                    holder.binding.image.load("https://www.gannett-cdn.com/presto/2020/06/27/USAT/2b50ff33-dff6-46cb-8082-044e2a0bc6c0-appliances.jpg") {
+                        crossfade(true)
+                        crossfade(500)
+                        placeholder(R.drawable.ic_hint)
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -31,6 +72,7 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.DepartmentViewHolder>
 }
 
 data class DepartmentModel(
-    val name: String,
-    val image: Int
+    val name:String,
+    val image:Int
 )
+
