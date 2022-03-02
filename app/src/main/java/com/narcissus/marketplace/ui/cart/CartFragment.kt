@@ -19,6 +19,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCartBinding.bind(view)
         initRecyclerView()
+        initSelectAll()
         fillData()
     }
 
@@ -35,11 +36,18 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             viewModel.getCartCostFlow.collect { price ->
                 binding.tvTotalPrice.text = price
             }
-            viewModel.getCartItemsAmountFlow.collect{ amount ->
+            viewModel.getCartItemsAmountFlow.collect { amount ->
                 binding.tvProductsAmount.text = amount
             }
         }
 
+    }
+
+    private fun initSelectAll() {
+        binding.cbSelectAll.setOnCheckedChangeListener { compoundButton, _ ->
+            if (compoundButton.isChecked) cartAdapter.selectAll()
+            else cartAdapter.unselectAll()
+        }
     }
 
     override fun onDestroyView() {

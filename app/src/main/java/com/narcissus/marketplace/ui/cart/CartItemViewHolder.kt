@@ -8,10 +8,11 @@ import com.narcissus.marketplace.model.CartItem
 class CartItemViewHolder(
     private val binding: ListItemCartBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(cartItem: CartItem) = with(binding) {
+    fun bind(cartItem: CartItem,isSelected:Boolean) = with(binding) {
         tvName.text = cartItem.data.name
         tvPrice.text = itemView.context.getString(R.string.price_placeholder, cartItem.data.price)
 //        tvAmount.text = cartItem.count.toString() // TODO set this amount in custom view attribute
         ivIcon.setImageResource(R.drawable.product_img_example)
+        cbSelected.isChecked = isSelected
     }
 }
