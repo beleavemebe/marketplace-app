@@ -24,7 +24,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     companion object {
         private const val EXTRA_LEFT_MARGIN = 8
         private const val ROTATION_EXPANDED = 0F
-        private const val ROTATION_CONSTRICTED = 180F
+        private const val ROTATION_COLLAPSED = 180F
     }
 
     private val viewModel: ProductDetailsViewModel by viewModels()
@@ -88,7 +88,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         viewModel.isReviewsListExpandedFlow.collect { isExpanded ->
             with(binding) {
                 if (isExpanded) {
-                    ivExpandReviewsList.rotation = ROTATION_CONSTRICTED
+                    ivExpandReviewsList.rotation = ROTATION_COLLAPSED
                     tvExpandReviewsList.text = getString(R.string.hide_all_reviews)
                 } else {
                     ivExpandReviewsList.rotation = ROTATION_EXPANDED

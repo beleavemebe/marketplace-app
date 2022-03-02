@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class ProductDetailsViewModel : ViewModel() {
     companion object {
-        const val CONSTRICT_REVIEWS_LIST_SIZE = 2
+        const val COLLAPSED_REVIEWS_LIST_SIZE = 2
     }
     val getProductDetails = ServiceLocator.getProductDetails
     val productDetailsFlow = flow {
@@ -25,7 +25,7 @@ class ProductDetailsViewModel : ViewModel() {
     val productReviewsFlow =
         isReviewsListExpandedFlow.combine(productDetailsFlow) { isReviewsListExpanded, productDetails ->
             if (isReviewsListExpanded) productDetails.reviews
-            else productDetails.reviews.subList(0, CONSTRICT_REVIEWS_LIST_SIZE)
+            else productDetails.reviews.subList(0, COLLAPSED_REVIEWS_LIST_SIZE)
         }
 
     fun changeReviewsListState() {
