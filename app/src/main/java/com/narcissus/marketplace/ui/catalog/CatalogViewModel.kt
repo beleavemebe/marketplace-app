@@ -5,6 +5,8 @@ import com.narcissus.marketplace.R
 
 class CatalogViewModel:ViewModel() {
 
+
+
     fun getDepartmentList(): List<DepartmentModel>{
         return listOf(
            DepartmentModel(
