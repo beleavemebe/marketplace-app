@@ -23,13 +23,14 @@ import kotlinx.coroutines.launch
 class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     companion object {
         private const val EXTRA_LEFT_MARGIN = 8
-        private const val ROTATION_EXPANDED = 0F
-        private const val ROTATION_CONSTRICTED = 180F
+        private const val ROTATION_EXPANDED = 180F
+        private const val ROTATION_COLLAPSED = 0F
     }
 
     private val viewModel: ProductDetailsViewModel by viewModels()
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
+
     private val reviewsAdapter = ReviewsAdapter()
     private val similarProductsAdapter = ProductsAdapter {}
     private val aboutProductAdapter = AboutProductAdapter()
@@ -37,21 +38,21 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProductDetailsBinding.bind(view)
-        subscribeViewModel()
-        initAboutProductRecyclerView()
-        initReviewsRecyclerView()
-        initSimilarProductsRecyclerView()
-        setOnClickListeners()
+        subscribeToViewModel()
+        initAboutSectionRv()
+        initReviewsRv()
+        initSimilarProductsRv()
+        initListeners()
         val layoutTransition = binding.root.layoutTransition
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
     }
 
-    private fun initAboutProductRecyclerView() = with(binding.rvAbout) {
+    private fun initAboutSectionRv() = with(binding.rvAbout) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = aboutProductAdapter
     }
 
-    private fun initReviewsRecyclerView() = with(binding.rvReviews) {
+    private fun initReviewsRv() = with(binding.rvReviews) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = reviewsAdapter
         addItemDecoration(
@@ -61,46 +62,32 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         )
     }
 
-    private fun initSimilarProductsRecyclerView() = with(binding.rvSimilarProducts) {
+    private fun initSimilarProductsRv() = with(binding.rvSimilarProducts) {
         layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
         adapter = similarProductsAdapter
     }
 
-    private fun setOnClickListeners() {
+    private fun initListeners() {
         binding.layoutExpandReviewsList.setOnClickListener {
             viewModel.changeReviewsListState()
         }
     }
 
-    private fun subscribeViewModel() {
+    private fun subscribeToViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            subscribeMainProductData()
+            observeProductDetails()
             launch {
-                subscribeReviews()
+                observeReviews()
             }
             launch {
-                subscribeReviewsExpandState()
+                observeIsReviewListExpanded()
             }
         }
     }
 
-    private suspend fun subscribeReviewsExpandState() {
-        viewModel.isReviewsListExpandedFlow.collect { isExpanded ->
-            with(binding) {
-                if (isExpanded) {
-                    ivExpandReviewsList.rotation = ROTATION_CONSTRICTED
-                    tvExpandReviewsList.text = getString(R.string.hide_all_reviews)
-                } else {
-                    ivExpandReviewsList.rotation = ROTATION_EXPANDED
-                    tvExpandReviewsList.text = getString(R.string.show_all_reviews)
-                }
-            }
-        }
-    }
-
-    private suspend fun subscribeMainProductData() {
+    private suspend fun observeProductDetails() {
         viewModel.productDetailsFlow.collect { data ->
             with(binding) {
                 tvProductDepartment.text = data.department
@@ -139,9 +126,23 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         return list
     }
 
-    private suspend fun subscribeReviews() {
-        viewModel.productReviewsFlow.collect {
+    private suspend fun observeReviews() {
+        viewModel.reviewsFlow.collect {
             reviewsAdapter.submitItems(it)
+        }
+    }
+
+    private suspend fun observeIsReviewListExpanded() {
+        viewModel.isReviewListExpandedFlow.collect { isExpanded ->
+            with(binding) {
+                if (isExpanded) {
+                    ivExpandReviewsList.rotation = ROTATION_EXPANDED
+                    tvExpandReviewsList.text = getString(R.string.hide_all_reviews)
+                } else {
+                    ivExpandReviewsList.rotation = ROTATION_COLLAPSED
+                    tvExpandReviewsList.text = getString(R.string.show_all_reviews)
+                }
+            }
         }
     }
 
