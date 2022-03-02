@@ -1,0 +1,120 @@
+----------------------------------------------------------------------------------------------------
+-------------------------------------------- MegaLinter --------------------------------------------
+----------------------------------------------------------------------------------------------------
+ - Image Creation Date: 2022-02-18T22:32:50Z
+ - Image Revision: a4a213b63
+ - Image Version: v5
+----------------------------------------------------------------------------------------------------
+The MegaLinter documentation can be found at:
+ - https://megalinter.github.io
+----------------------------------------------------------------------------------------------------
+GITHUB_REPOSITORY: beleavemebe/marketplace-app
+GITHUB_REF: refs/pull/14/merge
+GITHUB_RUN_ID: 1923183842
+
+
+SNAKEMAKE_SNAKEFMT has been temporary disabled in MegaLinter, please use a previous MegaLinter version or wait for the next one !
+Skipped linters: ACTION_ACTIONLINT, ANSIBLE_ANSIBLE_LINT, ARM_ARM_TTK, BASH_EXEC, BASH_SHELLCHECK, BASH_SHFMT, CLOJURE_CLJ_KONDO, CLOUDFORMATION_CFN_LINT, COFFEE_COFFEELINT, COPYPASTE_JSCPD, CPP_CPPLINT, CREDENTIALS_SECRETLINT, CSHARP_DOTNET_FORMAT, CSS_SCSS_LINT, CSS_STYLELINT, C_CPPLINT, DART_DARTANALYZER, DOCKERFILE_DOCKERFILELINT, DOCKERFILE_HADOLINT, EDITORCONFIG_EDITORCONFIG_CHECKER, ENV_DOTENV_LINTER, GHERKIN_GHERKIN_LINT, GIT_GIT_DIFF, GO_GOLANGCI_LINT, GO_REVIVE, GRAPHQL_GRAPHQL_SCHEMA_LINTER, GROOVY_NPM_GROOVY_LINT, HTML_HTMLHINT, JAVASCRIPT_ES, JAVASCRIPT_PRETTIER, JAVASCRIPT_STANDARD, JAVA_CHECKSTYLE, JSON_ESLINT_PLUGIN_JSONC, JSON_JSONLINT, JSON_PRETTIER, JSON_V8R, JSX_ESLINT, KUBERNETES_KUBEVAL, LATEX_CHKTEX, LUA_LUACHECK, MARKDOWN_MARKDOWNLINT, MARKDOWN_MARKDOWN_LINK_CHECK, MARKDOWN_MARKDOWN_TABLE_FORMATTER, MARKDOWN_REMARK_LINT, OPENAPI_SPECTRAL, PERL_PERLCRITIC, PHP_BUILTIN, PHP_PHPCS, PHP_PHPLINT, PHP_PHPSTAN, PHP_PSALM, POWERSHELL_POWERSHELL, PROTOBUF_PROTOLINT, PUPPET_PUPPET_LINT, PYTHON_BANDIT, PYTHON_BLACK, PYTHON_FLAKE8, PYTHON_ISORT, PYTHON_MYPY, PYTHON_PYLINT, RAKU_RAKU, RST_RSTCHECK, RST_RSTFMT, RST_RST_LINT, RUBY_RUBOCOP, RUST_CLIPPY, R_LINTR, SALESFORCE_SFDX_SCANNER_APEX, SALESFORCE_SFDX_SCANNER_AURA, SALESFORCE_SFDX_SCANNER_LWC, SCALA_SCALAFIX, SNAKEMAKE_LINT, SNAKEMAKE_SNAKEFMT, SPELL_CSPELL, SPELL_MISSPELL, SQL_SQLFLUFF, SQL_SQL_LINT, SQL_TSQLLINT, SWIFT_SWIFTLINT, TEKTON_TEKTON_LINT, TERRAFORM_CHECKOV, TERRAFORM_KICS, TERRAFORM_TERRAFORM_FMT, TERRAFORM_TERRAGRUNT, TERRAFORM_TERRASCAN, TERRAFORM_TFLINT, TSX_ESLINT, TYPESCRIPT_ES, TYPESCRIPT_PRETTIER, TYPESCRIPT_STANDARD, VBDOTNET_DOTNET_FORMAT, XML_XMLLINT, YAML_PRETTIER, YAML_V8R, YAML_YAMLLINT
+To receive reports as email, please set variable EMAIL_REPORTER_EMAIL
+Listing all files in directory [/github/workspace], then filter with:
+- File extensions: .kt, .kts
+- Excluding .gitignored files [0]: 
+Kept [71] files on [160] found files
+
++----MATCHING LINTERS-+----------+----------------+------------+
+| Descriptor | Linter | Criteria | Matching files | Format/Fix |
++------------+--------+----------+----------------+------------+
+| KOTLIN     | ktlint | .kt|.kts | 71             | yes        |
++------------+--------+----------+----------------+------------+
+
+
+[1m### Processed [KOTLIN] files[0m
+- Using [ktlint v0.44.0] https://megalinter.github.io/v5/descriptors/kotlin_ktlint
+- MegaLinter key: [KOTLIN_KTLINT]
+- Rules config: identified by [ktlint]
+[ktlint] app/src/main/java/com/narcissus/marketplace/di/ServiceLocator.kt - SUCCESS - 0 error(s)
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/MainActivity.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/cart/CartAdapter.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/cart/CartFragment.kt - SUCCESS - 0 error(s)
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/cart/CartItemViewHolder.kt - SUCCESS - 0 error(s)
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/cart/IncreaseDecreaseAmountView.kt - SUCCESS - 0 error(s)
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/catalog/CatalogAdapter.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/catalog/CatalogFragment.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/catalog/CatalogViewModel.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/catalog/SearchHistoryAdapter.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/catalog/SearchHistoryViewModel.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/home/HomeFragment.kt - SUCCESS - 0 error(s)
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/home/HomeViewModel.kt - SUCCESS - 0 error(s)
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/home/recycler/Decoration.kt - SUCCESS - 0 error(s)
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/home/recycler/HomeScreenAdapter.kt - SUCCESS - 0 error(s)
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/home/recycler/HomeScreenItem.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/products/ProductViewHolder.kt - SUCCESS - 0 error(s)
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/products/ProductsAdapter.kt - SUCCESS - 0 error(s)
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/splash/SplashFragment.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] app/src/main/java/com/narcissus/marketplace/ui/splash/SplashViewModel.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] app/src/main/java/com/narcissus/marketplace/ui/user/UserFragment.kt - SUCCESS - 0 error(s)
+[36m[ktlint] data/src/androidTest/java/com/narcissus/marketplace/ExampleInstrumentedTest.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] data/src/main/java/com/narcissus/marketplace/data/CartLocalRepositoryImpl.kt - SUCCESS - 0 error(s)
+[ktlint] data/src/main/java/com/narcissus/marketplace/data/DepartmentsRepositoryImpl.kt - SUCCESS - 0 error(s)
+[36m[ktlint] data/src/main/java/com/narcissus/marketplace/data/DummyProducts.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] data/src/main/java/com/narcissus/marketplace/data/OrderRepositoryImpl.kt - SUCCESS - 0 error(s)
+[ktlint] data/src/main/java/com/narcissus/marketplace/data/ProductsDetailsRepositoryImpl.kt - SUCCESS - 0 error(s)
+[ktlint] data/src/main/java/com/narcissus/marketplace/data/ProductsPreviewRepositoryImpl.kt - SUCCESS - 0 error(s)
+[ktlint] data/src/main/java/com/narcissus/marketplace/data/UserLocalRepositoryImpl.kt - SUCCESS - 0 error(s)
+[ktlint] data/src/main/java/com/narcissus/marketplace/data/UserRemoteRepositoryImpl.kt - SUCCESS - 0 error(s)
+[36m[ktlint] data/src/test/java/com/narcissus/marketplace/ExampleUnitTest.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] domain/src/main/java/com/narcissus/marketplace/model/Cart.kt - SUCCESS - 0 error(s)
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/model/CartItem.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] domain/src/main/java/com/narcissus/marketplace/model/Department.kt - SUCCESS - 0 error(s)
+[ktlint] domain/src/main/java/com/narcissus/marketplace/model/Order.kt - SUCCESS - 0 error(s)
+[ktlint] domain/src/main/java/com/narcissus/marketplace/model/ProductDetails.kt - SUCCESS - 0 error(s)
+[ktlint] domain/src/main/java/com/narcissus/marketplace/model/ProductPreview.kt - SUCCESS - 0 error(s)
+[ktlint] domain/src/main/java/com/narcissus/marketplace/model/Review.kt - SUCCESS - 0 error(s)
+[ktlint] domain/src/main/java/com/narcissus/marketplace/model/User.kt - SUCCESS - 0 error(s)
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/repository/local/CartLocalRepository.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/repository/local/UserLocalRepository.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/repository/remote/DepartmentsRepository.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/repository/remote/OrderRepository.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/repository/remote/ProductsDetailsRepository.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/repository/remote/ProductsPreviewRepository.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/repository/remote/UserRemoteRepository.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/AddCard.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/AddToCart.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetAllProducts.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetCart.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetDepartments.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetOrderList.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetProductById.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetProductsByDepartmentId.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetRandomProducts.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetRecentlyVisitedProducts.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetTopRatedProducts.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetTopRatedProductsByDepartment.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetTopSalesProducts.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetTopSalesProductsByDepartment.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/GetUserData.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/MakeAnOrder.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/RemoveFromCart.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/SearchProducts.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/SignInWithEmail.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/SignInWithGoogle.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/SignOut.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/usecase/SignUpWithEmail.kt - SUCCESS - 0 error(s) - FIXED[0m
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/util/ActionResult.kt - SUCCESS - 0 error(s) - FIXED[0m
+[ktlint] domain/src/main/java/com/narcissus/marketplace/util/AuthResult.kt - SUCCESS - 0 error(s)
+[36m[ktlint] domain/src/main/java/com/narcissus/marketplace/util/SearchParams.kt - SUCCESS - 0 error(s) - FIXED[0m
+[32m✅ Linted [KOTLIN] files with [ktlint] successfully - (112.37s)[0m
+[Text Reporter] Generated TEXT report: /github/workspace/report/linters_logs/SUCCESS-KOTLIN_KTLINT.log
+
++----SUMMARY-+--------+------+-------+-------+--------+--------------+
+| Descriptor | Linter | Mode | Files | Fixed | Errors | Elapsed time |
++------------+--------+------+-------+-------+--------+--------------+
+| ✅ KOTLIN  | ktlint | file |    71 |    45 |      0 |      112.37s |
++------------+--------+------+-------+-------+--------+--------------+
+
+[File.io Reporter] Reports are available at https://file.io/Lj6iZVcryUEo
+Identified PR#14 from environment
+[GitHub Comment Reporter] Posted summary as comment on beleavemebe/marketplace-app #PR14
+[Updated Sources Reporter] copied 45 fixed source files in folder /github/workspace/report/updated_sources.
+Download it from artifacts then copy-paste it in your local repo to apply linters updates
+[32m✅ Successfully linted all files without errors[0m
