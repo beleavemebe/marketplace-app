@@ -22,9 +22,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -81,16 +86,60 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                                 .verticalScroll(rememberScrollState())
                         ) {
                             ProfileInfo()
+
                             Spacer(modifier = Modifier.height(32.dp))
+
                             Header(text = "My Profile")
-                            Item("Orders", R.drawable.ic_cart) { toast("Orders") }
-                            Item("Billing", R.drawable.ic_cart) { toast("Billing") }
-                            Item("Logout", R.drawable.ic_cart) { toast("Logout") }
+
+                            Item(
+                                text = "Orders",
+                                iconResId = R.drawable.ic_cart,
+                                onClick = { toast("Orders") }
+                            )
+
+                            Item(
+                                text = "Billing",
+                                iconResId = R.drawable.ic_cart,
+                                onClick = { toast("Billing") }
+                            )
+
+                            Item(
+                                text = "Logout",
+                                iconResId = R.drawable.ic_cart,
+                                onClick = { toast("Logout") }
+                            )
+
                             Header(text = "Application")
-                            Item("Dark Theme", R.drawable.ic_cart) { toast("Dark Theme") }
-                            Item("Clear data", R.drawable.ic_cart) { toast("Clear data") }
-                            Item("Report bug", R.drawable.ic_cart) { toast("Report bug") }
-                            Item("Source code", R.drawable.ic_cart) { toast("Source code") }
+
+                            // TODO: track whether app is in dark theme or not
+                            val isSystemInDarkTheme = false
+                            SwitchItem(
+                                text = "Dark Theme",
+                                iconResId = R.drawable.ic_cart,
+                                checked = isSystemInDarkTheme
+                            ) { flag ->
+                                toast("Dark Theme: $flag")
+                            }
+
+                            Item(
+                                text = "Clear data",
+                                iconResId = R.drawable.ic_cart,
+                                onClick = { toast("Clear data") }
+                            )
+
+                            Item(
+                                text = "Report bug",
+                                iconResId = R.drawable.ic_cart,
+                                onClick = {
+                                    toast("Report bug")
+                                }
+                            )
+
+                            Item(
+                                text = "Source code",
+                                iconResId = R.drawable.ic_cart,
+                                onClick = { toast("Source code") }
+                            )
                         }
                     }
                 }
@@ -98,8 +147,13 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         }
     }
 
+    var currentToast: Toast? = null
+
     private fun toast(string: String) {
-        Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT).show()
+        val toast = Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT)
+        currentToast?.cancel()
+        currentToast = toast
+        toast.show()
     }
 
     override fun onDestroyView() {
@@ -181,14 +235,19 @@ fun HeaderPreview() {
 }
 
 @Composable
-fun Item(text: String, @DrawableRes iconResId: Int, onClick: () -> Unit) {
+fun Item(
+    text: String,
+    @DrawableRes iconResId: Int,
+    onClick: () -> Unit = {},
+    appendContent: @Composable () -> Unit = {},
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .background(White)
             .clickable { onClick() }
+            .fillMaxWidth()
     ) {
         Spacer(modifier = Modifier.width(8.dp))
 
@@ -208,13 +267,47 @@ fun Item(text: String, @DrawableRes iconResId: Int, onClick: () -> Unit) {
             ),
             modifier = Modifier.padding(vertical = 4.dp)
         )
+
+        Spacer(modifier = Modifier.fillMaxWidth(0.8f))
+
+        appendContent()
     }
 }
 
 @Composable
 @Preview
 fun ItemPreview() {
-    Column {
-        Item("Orders", R.drawable.ic_catalog) {}
+    Item("Orders", R.drawable.ic_catalog) {}
+}
+
+@Composable
+fun SwitchItem(
+    text: String,
+    @DrawableRes iconResId: Int,
+    checked: Boolean,
+    onChecked: (Boolean) -> Unit,
+) {
+    Item(
+        text = text,
+        iconResId = iconResId,
+        onClick = {}
+    ) {
+        var isChecked by remember { mutableStateOf(checked) }
+        Switch(
+            checked = isChecked,
+            onCheckedChange = {
+                isChecked = !isChecked
+                onChecked(isChecked)
+            }
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
     }
+}
+
+
+@Composable
+@Preview
+fun SwitchItemPreview() {
+    SwitchItem("Orders", R.drawable.ic_catalog, true) {}
 }
