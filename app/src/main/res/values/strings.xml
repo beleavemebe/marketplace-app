@@ -20,4 +20,14 @@
     <string name="delete_selected_items">Delete selected</string>
     <string name="select_all_items">Select all</string>
     <string name="checkout">Checkout</string>
+    <string name="purchase">Purchase</string>
+    <string name="type">Type</string>
+    <string name="color">Color</string>
+    <string name="material">Material</string>
+    <string name="description">Description</string>
+    <string name="about">About</string>
+    <string name="reviews">Reviews</string>
+    <string name="similar_products">Similar Products</string>
+    <string name="show_all_reviews">Show all reviews</string>
+    <string name="hide_all_reviews">Hide all reviews</string>
 </resources>
