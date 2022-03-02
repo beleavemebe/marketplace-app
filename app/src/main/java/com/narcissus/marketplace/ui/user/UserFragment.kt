@@ -97,13 +97,13 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
                             Item(
                                 text = "Billing",
-                                iconResId = R.drawable.ic_cart,
+                                iconResId = R.drawable.ic_card,
                                 onClick = { toast("Billing") }
                             )
 
                             Item(
                                 text = "Logout",
-                                iconResId = R.drawable.ic_cart,
+                                iconResId = R.drawable.ic_logout,
                                 onClick = { toast("Logout") }
                             )
 
@@ -113,7 +113,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                             val isSystemInDarkTheme = false
                             SwitchItem(
                                 text = "Dark Theme",
-                                iconResId = R.drawable.ic_cart,
+                                iconResId = R.drawable.ic_crescent,
                                 checked = isSystemInDarkTheme
                             ) { flag ->
                                 toast("Dark Theme: $flag")
@@ -121,13 +121,13 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
                             Item(
                                 text = "Clear data",
-                                iconResId = R.drawable.ic_cart,
+                                iconResId = R.drawable.ic_broom,
                                 onClick = { toast("Clear data") }
                             )
 
                             Item(
                                 text = "Report bug",
-                                iconResId = R.drawable.ic_cart,
+                                iconResId = R.drawable.ic_bug,
                                 onClick = {
                                     toast("Report bug")
                                 }
@@ -135,7 +135,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
                             Item(
                                 text = "Source code",
-                                iconResId = R.drawable.ic_cart,
+                                iconResId = R.drawable.ic_code,
                                 onClick = { toast("Source code") }
                             )
                         }
