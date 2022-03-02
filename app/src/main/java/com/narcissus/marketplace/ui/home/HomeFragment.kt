@@ -27,6 +27,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         initRecyclerView()
         fillRecyclerWithDummyContent()
         subscribeToViewModel()
+        findNavController().navigate(com.narcissus.marketplace.R.id.action_fragment_home_to_productDetailsFragment)
     }
 
     private fun initRecyclerView() {

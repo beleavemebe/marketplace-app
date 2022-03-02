@@ -80,7 +80,9 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private fun subscribeViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             subscribeMainProductData()
-            subscribeReviews()
+            launch {
+                subscribeReviews()
+            }
             launch {
                 subscribeReviewsExpandState()
             }
