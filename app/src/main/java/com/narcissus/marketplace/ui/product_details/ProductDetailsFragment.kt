@@ -2,7 +2,6 @@ package com.narcissus.marketplace.ui.product_details
 
 import android.animation.LayoutTransition
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -14,8 +13,8 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.model.DetailsAbout
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
-import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.about.AboutProductAdapter
+import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.reviews.DividerItemDecorator
 import com.narcissus.marketplace.ui.product_details.reviews.ReviewsAdapter
 import com.narcissus.marketplace.ui.products.ProductsAdapter
@@ -52,7 +51,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         adapter = aboutProductAdapter
     }
 
-
     private fun initReviewsRecyclerView() = with(binding.rvReviews) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = reviewsAdapter
@@ -62,7 +60,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             )
         )
     }
-
 
     private fun initSimilarProductsRecyclerView() = with(binding.rvSimilarProducts) {
         layoutManager =
