@@ -85,9 +85,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                             modifier = Modifier
                                 .verticalScroll(rememberScrollState())
                         ) {
-                            ProfileInfo()
-
-                            Spacer(modifier = Modifier.height(32.dp))
+                            ProfileInfo(name = "Joe Ordinary", email = "example@gmail.com")
 
                             Header(text = "My Profile")
 
@@ -147,7 +145,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         }
     }
 
-    var currentToast: Toast? = null
+    private var currentToast: Toast? = null
 
     private fun toast(string: String) {
         val toast = Toast.makeText(requireContext(), string, Toast.LENGTH_SHORT)
@@ -163,14 +161,14 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
 }
 
-@Preview
 @Composable
-fun ProfileInfo() {
+fun ProfileInfo(name: String, email: String) {
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
+            .background(White)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -187,7 +185,7 @@ fun ProfileInfo() {
 
         Text(
             fontFamily = MontserratSemiBold,
-            text = "Joe Ordinary",
+            text = name,
             style = TextStyle(
                 fontSize = 18.sp
             ),
@@ -195,34 +193,43 @@ fun ProfileInfo() {
 
         Text(
             fontFamily = Montserrat,
-            text = "example@gmail.com",
+            text = email,
             style = TextStyle(
                 color = Color(0xFF6B6B6B),
                 fontSize = 16.sp
             ),
         )
+
+        Spacer(modifier = Modifier.height(32.dp))
     }
+}
+
+@Preview
+@Composable
+fun ProfileInfoPreview() {
+    ProfileInfo(name = "Joe Ordinary", email = "example@gmail.com")
 }
 
 @Composable
 fun Header(text: String) {
-    Row {
-        Box(
+    Box(
+        contentAlignment = Alignment.CenterStart,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clip(RoundedCornerShape(CornerSize(8.dp)))
+            .background(HeaderBackgroundColor),
+    ) {
+        Text(
+            text = text,
+            style = TextStyle(
+                fontFamily = MontserratMedium,
+                fontSize = 18.sp
+            ),
             modifier = Modifier
-                .clip(RoundedCornerShape(CornerSize(8.dp)))
-                .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 16.dp)
-                .background(HeaderBackgroundColor)
-        ) {
-            Text(
-                text = text,
-                style = TextStyle(
-                    fontFamily = MontserratMedium,
-                    fontSize = 18.sp
-                ),
-                modifier = Modifier.padding(8.dp)
-            )
-        }
+                .padding(horizontal = 8.dp)
+        )
     }
 }
 
@@ -244,10 +251,12 @@ fun Item(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
+            .height(40.dp)
+            .padding(horizontal = 16.dp)
+            .clip(RoundedCornerShape(CornerSize(8.dp)))
             .background(White)
             .clickable { onClick() }
-            .fillMaxWidth()
     ) {
         Spacer(modifier = Modifier.width(8.dp))
 
