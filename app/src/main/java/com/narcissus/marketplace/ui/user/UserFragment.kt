@@ -175,7 +175,7 @@ fun HeaderPreview() {
 }
 
 @Composable
-fun Item(text: String, @DrawableRes iconResId: Int? = null) {
+fun Item(text: String, @DrawableRes iconResId: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -185,15 +185,13 @@ fun Item(text: String, @DrawableRes iconResId: Int? = null) {
     ) {
         Spacer(modifier = Modifier.width(8.dp))
 
-        if (iconResId != null) {
-            Image(
-                painter = painterResource(id = iconResId),
-                contentDescription = text,
-                Modifier.size(18.dp)
-            )
+        Image(
+            painter = painterResource(id = iconResId),
+            contentDescription = text,
+            Modifier.size(18.dp)
+        )
 
-            Spacer(modifier = Modifier.width(12.dp))
-        }
+        Spacer(modifier = Modifier.width(12.dp))
 
         Text(
             text = text,
