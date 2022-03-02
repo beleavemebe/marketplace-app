@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -33,7 +34,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
@@ -46,11 +46,17 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentUserBinding
+import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
+import com.narcissus.marketplace.ui.user.theme.HalfPadding
 import com.narcissus.marketplace.ui.user.theme.HeaderBackgroundColor
+import com.narcissus.marketplace.ui.user.theme.HeaderHeight
+import com.narcissus.marketplace.ui.user.theme.IconSize
+import com.narcissus.marketplace.ui.user.theme.IntermediatePadding
+import com.narcissus.marketplace.ui.user.theme.ItemHeight
 import com.narcissus.marketplace.ui.user.theme.Montserrat
-import com.narcissus.marketplace.ui.user.theme.MontserratMedium
-import com.narcissus.marketplace.ui.user.theme.MontserratSemiBold
+import com.narcissus.marketplace.ui.user.theme.SmallPadding
+import com.narcissus.marketplace.ui.user.theme.SubtitleColor
 
 class UserFragment : Fragment(R.layout.fragment_user) {
     private var _binding: FragmentUserBinding? = null
@@ -71,11 +77,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                             title = {
                                 Text(
                                     text = "Profile",
-                                    style = TextStyle(
-                                        color = Black,
-                                        fontSize = 22.sp,
-                                        fontFamily = Montserrat,
-                                    )
+                                    style = MaterialTheme.typography.h4
                                 )
                             },
                             backgroundColor = White,
@@ -115,8 +117,8 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                                 text = "Dark Theme",
                                 iconResId = R.drawable.ic_crescent,
                                 checked = isSystemInDarkTheme
-                            ) { flag ->
-                                toast("Dark Theme: $flag")
+                            ) { checked ->
+                                toast("Dark Theme: $checked")
                             }
 
                             Item(
@@ -169,7 +171,7 @@ fun ProfileInfo(name: String, email: String) {
             .fillMaxWidth()
             .background(White)
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(DefaultPadding))
 
         Image(
             contentScale = ContentScale.Crop,
@@ -180,22 +182,18 @@ fun ProfileInfo(name: String, email: String) {
                 .clip(CircleShape)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(DefaultPadding))
 
         Text(
-            fontFamily = MontserratSemiBold,
             text = name,
-            style = TextStyle(
-                fontSize = 18.sp
-            ),
+            style = MaterialTheme.typography.h5,
         )
 
         Text(
             fontFamily = Montserrat,
             text = email,
-            style = TextStyle(
-                color = Color(0xFF6B6B6B),
-                fontSize = 16.sp
+            style = MaterialTheme.typography.subtitle1.copy(
+                color = SubtitleColor,
             ),
         )
 
@@ -206,7 +204,9 @@ fun ProfileInfo(name: String, email: String) {
 @Preview
 @Composable
 fun ProfileInfoPreview() {
-    ProfileInfo(name = "Joe Ordinary", email = "example@gmail.com")
+    DefaultTheme {
+        ProfileInfo(name = "Joe Ordinary", email = "example@gmail.com")
+    }
 }
 
 @Composable
@@ -215,19 +215,16 @@ fun Header(text: String) {
         contentAlignment = Alignment.CenterStart,
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clip(RoundedCornerShape(CornerSize(8.dp)))
+            .height(HeaderHeight)
+            .padding(horizontal = DefaultPadding, vertical = HalfPadding)
+            .clip(MaterialTheme.shapes.medium)
             .background(HeaderBackgroundColor),
     ) {
         Text(
             text = text,
-            style = TextStyle(
-                fontFamily = MontserratMedium,
-                fontSize = 18.sp
-            ),
+            style = MaterialTheme.typography.h6,
             modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = HalfPadding)
         )
     }
 }
@@ -235,7 +232,7 @@ fun Header(text: String) {
 @Preview
 @Composable
 fun HeaderPreview() {
-    Column {
+    DefaultTheme {
         Header(text = "My Profile")
     }
 }
@@ -251,29 +248,26 @@ fun Item(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .height(40.dp)
-            .padding(horizontal = 16.dp)
-            .clip(RoundedCornerShape(CornerSize(8.dp)))
+            .height(ItemHeight)
+            .padding(horizontal = DefaultPadding)
+            .clip(MaterialTheme.shapes.medium)
             .background(White)
             .clickable { onClick() }
     ) {
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(HalfPadding))
 
         Image(
             painter = painterResource(id = iconResId),
             contentDescription = text,
-            Modifier.size(18.dp)
+            Modifier.size(IconSize)
         )
 
-        Spacer(modifier = Modifier.width(12.dp))
+        Spacer(modifier = Modifier.width(IntermediatePadding))
 
         Text(
             text = text,
-            style = TextStyle(
-                fontFamily = Montserrat,
-                fontSize = 16.sp
-            ),
-            modifier = Modifier.padding(vertical = 4.dp)
+            style = MaterialTheme.typography.subtitle1,
+            modifier = Modifier.padding(vertical = SmallPadding)
         )
 
         Spacer(modifier = Modifier.fillMaxWidth(0.8f))
@@ -285,7 +279,9 @@ fun Item(
 @Composable
 @Preview
 fun ItemPreview() {
-    Item("Orders", R.drawable.ic_catalog) {}
+    DefaultTheme {
+        Item("Orders", R.drawable.ic_catalog) {}
+    }
 }
 
 @Composable
@@ -309,12 +305,14 @@ fun SwitchItem(
             }
         )
 
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(DefaultPadding))
     }
 }
 
 @Composable
 @Preview
 fun SwitchItemPreview() {
-    SwitchItem("Orders", R.drawable.ic_catalog, true) {}
+    DefaultTheme {
+        SwitchItem("Orders", R.drawable.ic_catalog, true) {}
+    }
 }
