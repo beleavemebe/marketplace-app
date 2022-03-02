@@ -5,14 +5,11 @@ import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -42,6 +40,7 @@ import androidx.fragment.app.Fragment
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentUserBinding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
+import com.narcissus.marketplace.ui.user.theme.HeaderBackgroundColor
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.MontserratMedium
 import com.narcissus.marketplace.ui.user.theme.MontserratSemiBold
@@ -57,16 +56,10 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 DefaultTheme {
-                    // TODO: fix scroll not working
-                    val scrollState = rememberScrollState()
                     Column(
                         modifier = Modifier
+                            .verticalScroll(rememberScrollState())
                             .background(White)
-                            .fillMaxSize()
-                            .scrollable(
-                                state = scrollState,
-                                orientation = Orientation.Vertical
-                            )
                     ) {
                         TopAppBar(
                             title = {
@@ -80,8 +73,8 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                                 )
                             },
                             backgroundColor = White,
+                        )
 
-                            )
                         ProfileInfo()
                         Spacer(modifier = Modifier.height(32.dp))
                         Header(text = "My Profile")
@@ -155,14 +148,7 @@ fun Header(text: String) {
                 .clip(RoundedCornerShape(CornerSize(8.dp)))
                 .fillMaxWidth()
                 .padding(vertical = 8.dp, horizontal = 16.dp)
-                .background(
-                    Color(
-                        red = 0.9647058844566345f,
-                        green = 0.9647058844566345f,
-                        blue = 0.9647058844566345f,
-                        alpha = 1f
-                    )
-                )
+                .background(HeaderBackgroundColor)
         ) {
             Text(
                 text = text,
@@ -199,7 +185,7 @@ fun Item(text: String, @DrawableRes iconResId: Int? = null) {
             Image(
                 painter = painterResource(id = iconResId),
                 contentDescription = text,
-                Modifier.size(20.dp)
+                Modifier.size(18.dp)
             )
 
             Spacer(modifier = Modifier.width(12.dp))
