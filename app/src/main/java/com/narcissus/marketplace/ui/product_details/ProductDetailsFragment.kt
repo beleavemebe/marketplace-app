@@ -2,6 +2,7 @@ package com.narcissus.marketplace.ui.product_details
 
 import android.animation.LayoutTransition
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -18,6 +19,10 @@ import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.reviews.DividerItemDecorator
 import com.narcissus.marketplace.ui.product_details.reviews.ReviewsAdapter
 import com.narcissus.marketplace.ui.products.ProductsAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
@@ -77,12 +82,21 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private fun subscribeViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             subscribeMainProductData()
+            Log.d("DEBUG","BEFORE SUBSCRIBEREVIEWS")
             launch {
                 subscribeReviews()
             }
+            Log.d("DEBUG","AFTER SUBSCRIBEREVIEWS")
             launch {
                 subscribeReviewsExpandState()
             }
+            launch {
+                subscribeReviews()
+            }
+
+//            viewModel.productReviewsFlow.onEach{
+//                reviewsAdapter.submitItems(it)
+//            }.launchIn(this)
         }
     }
 
