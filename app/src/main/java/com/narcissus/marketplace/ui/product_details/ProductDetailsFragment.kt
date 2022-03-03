@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.ui.product_details
 
 import android.animation.LayoutTransition
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
@@ -8,15 +9,19 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.model.DetailsAbout
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
-import com.narcissus.marketplace.ui.product_details.about.AboutProductAdapter
 import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.reviews.DividerItemDecorator
-import com.narcissus.marketplace.ui.product_details.reviews.ReviewsAdapter
+import com.narcissus.marketplace.ui.product_details.reviews.ReviewsItem
 import com.narcissus.marketplace.ui.products.ProductsAdapter
 import kotlinx.coroutines.launch
 
@@ -31,28 +36,37 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val reviewsAdapter = ReviewsAdapter()
+    private val reviewsAdapter = ListDelegationAdapter(
+        ReviewsItem.ReviewItem.delegate,
+        ReviewsItem.LoadingItem.delegate
+    )
     private val similarProductsAdapter = ProductsAdapter {}
-    private val aboutProductAdapter = AboutProductAdapter()
+    private val aboutProductAdapter = AsyncListDifferDelegationAdapter(
+        AboutProductItem.DIFF_CALLBACK,
+        AboutProductItem.SingleLineItem.delegate,
+        AboutProductItem.MultipleLineItem.delegate,
+        AboutProductItem.LoadingItem.delegate
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProductDetailsBinding.bind(view)
         subscribeToViewModel()
-        initAboutSectionRv()
-        initReviewsRv()
-        initSimilarProductsRv()
+        initAboutRecyclerView()
+        initReviewsRecyclerView()
+        initSimilarProductsRecyclerView()
+        initToolBar()
         initListeners()
-        val layoutTransition = binding.root.layoutTransition
-        layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        initLayoutAnimation()
     }
 
-    private fun initAboutSectionRv() = with(binding.rvAbout) {
+    private fun initAboutRecyclerView() = with(binding.rvAbout) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = aboutProductAdapter
+        aboutProductAdapter.items = listOf(AboutProductItem.LoadingItem())
     }
 
-    private fun initReviewsRv() = with(binding.rvReviews) {
+    private fun initReviewsRecyclerView() = with(binding.rvReviews) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = reviewsAdapter
         addItemDecoration(
@@ -60,13 +74,25 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                 ContextCompat.getDrawable(requireContext(), R.drawable.recycler_view_divider)!!
             )
         )
+        reviewsAdapter.submitItems(listOf(ReviewsItem.LoadingItem()))
     }
 
-    private fun initSimilarProductsRv() = with(binding.rvSimilarProducts) {
+    private fun initSimilarProductsRecyclerView() = with(binding.rvSimilarProducts) {
         layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
         adapter = similarProductsAdapter
+    }
+
+    private fun initToolBar() {
+        val navController = findNavController()
+        binding.tbTop
+            .setupWithNavController(navController, AppBarConfiguration(navController.graph))
+    }
+
+    private fun initLayoutAnimation() {
+        val layoutTransition = binding.root.layoutTransition
+        layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
     }
 
     private fun initListeners() {
@@ -77,7 +103,9 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
     private fun subscribeToViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            observeProductDetails()
+            launch {
+                observeProductDetails()
+            }
             launch {
                 observeReviews()
             }
@@ -90,7 +118,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private suspend fun observeProductDetails() {
         viewModel.productDetailsFlow.collect { data ->
             with(binding) {
-                tvProductDepartment.text = data.department
                 ivProduct.setImageDrawable(
                     AppCompatResources.getDrawable(
                         requireContext(),
@@ -127,8 +154,8 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     }
 
     private suspend fun observeReviews() {
-        viewModel.reviewsFlow.collect {
-            reviewsAdapter.submitItems(it)
+        viewModel.reviewsFlow.collect { reviewList ->
+            reviewsAdapter.submitItems(reviewList.map { ReviewsItem.ReviewItem(it) })
         }
     }
 
@@ -150,4 +177,11 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         super.onDestroyView()
         _binding = null
     }
+
+    @SuppressLint("NotifyDataSetChanged") // animation doesn't work well with diffutils
+    fun <T> ListDelegationAdapter<List<T>>.submitItems(items: List<T>) {
+        this.items = items
+        this.notifyDataSetChanged()
+    }
+
 }

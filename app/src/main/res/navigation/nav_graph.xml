@@ -43,6 +43,5 @@
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.narcissus.marketplace.ui.product_details.ProductDetailsFragment"
-        android:label="fragment_product_details"
         tools:layout="@layout/fragment_product_details" />
 </navigation>
