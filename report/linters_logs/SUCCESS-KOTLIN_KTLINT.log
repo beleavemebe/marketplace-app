@@ -1,0 +1,94 @@
+Results of ktlint linter (version 0.44.0)
+See documentation on https://megalinter.github.io/descriptors/kotlin_ktlint/
+-----------------------------------------------
+
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/di/ServiceLocator.kt - FIXED
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/MainActivity.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/cart/CartAdapter.kt - FIXED
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/cart/CartFragment.kt - FIXED
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/cart/CartItemViewHolder.kt - FIXED
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/cart/CartViewModel.kt - FIXED
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/cart/IncreaseDecreaseAmountView.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/catalog/CatalogAdapter.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/catalog/CatalogFragment.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/catalog/CatalogViewModel.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/catalog/SearchHistoryAdapter.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/catalog/SearchHistoryViewModel.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/home/HomeFragment.kt - FIXED
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/home/HomeViewModel.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/home/recycler/Decoration.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/home/recycler/HomeScreenAdapter.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/home/recycler/HomeScreenItem.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/product_details/ProductDetailsFragment.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/product_details/ProductDetailsViewModel.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/product_details/about/AboutProductAdapter.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/product_details/about/AboutProductItem.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/product_details/reviews/DividerItemDecorator.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/product_details/reviews/ReviewViewHolder.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/product_details/reviews/ReviewsAdapter.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/product_details/reviews/ReviewsDiffUtilCallback.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/products/ProductViewHolder.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/products/ProductsAdapter.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/splash/SplashFragment.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/splash/SplashViewModel.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/user/UserFragment.kt - FIXED
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/user/theme/Color.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/user/theme/Dimen.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/user/theme/Font.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/user/theme/Shape.kt - FIXED
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/user/theme/Theme.kt
+✅ [SUCCESS] app/src/main/java/com/narcissus/marketplace/ui/user/theme/Type.kt - FIXED
+✅ [SUCCESS] data/src/androidTest/java/com/narcissus/marketplace/ExampleInstrumentedTest.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/CartLocalRepositoryImpl.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/DepartmentsRepositoryImpl.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/DummyCartItems.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/DummyProducts.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/OrderRepositoryImpl.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/ProductsDetailsRepositoryImpl.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/ProductsPreviewRepositoryImpl.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/UserLocalRepositoryImpl.kt
+✅ [SUCCESS] data/src/main/java/com/narcissus/marketplace/data/UserRemoteRepositoryImpl.kt
+✅ [SUCCESS] data/src/test/java/com/narcissus/marketplace/ExampleUnitTest.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/Cart.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/CartItem.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/Department.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/DetailsAbout.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/Order.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/ProductDetails.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/ProductPreview.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/Review.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/model/User.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/repository/local/CartLocalRepository.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/repository/local/UserLocalRepository.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/repository/remote/DepartmentsRepository.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/repository/remote/OrderRepository.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/repository/remote/ProductsDetailsRepository.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/repository/remote/ProductsPreviewRepository.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/repository/remote/UserRemoteRepository.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/AddCard.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/AddToCart.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetAllProducts.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetCart.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetCartCost.kt - FIXED
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetCartItemsAmount.kt - FIXED
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetDepartments.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetOrderList.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetProductDetails.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetProductsByDepartmentId.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetRandomProducts.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetRecentlyVisitedProducts.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetTopRatedProducts.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetTopRatedProductsByDepartment.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetTopSalesProducts.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetTopSalesProductsByDepartment.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/GetUserData.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/MakeAnOrder.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/RemoveFromCart.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/SearchProducts.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/SignInWithEmail.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/SignInWithGoogle.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/SignOut.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/usecase/SignUpWithEmail.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/util/ActionResult.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/util/AuthResult.kt
+✅ [SUCCESS] domain/src/main/java/com/narcissus/marketplace/util/SearchParams.kt
