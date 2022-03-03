@@ -12,7 +12,7 @@ sealed class ActionResult<T> {
     }
 
     fun getOrThrow(): T = when (this) {
-        is ErrorResult -> error("")
+        is ErrorResult -> error("Result is error")
         is SuccessResult -> this.data
     }
 }
