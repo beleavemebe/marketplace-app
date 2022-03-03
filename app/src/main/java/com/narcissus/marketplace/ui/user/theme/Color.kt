@@ -8,10 +8,4 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 val SubtitleColor = Color(0xFF6B6B6B)
-
-val HeaderBackgroundColor = Color(
-    red = 0.9647058844566345f,
-    green = 0.9647058844566345f,
-    blue = 0.9647058844566345f,
-    alpha = 1f
-)
+val HeaderBackgroundColor = Color(0xFFF6F6F6)
