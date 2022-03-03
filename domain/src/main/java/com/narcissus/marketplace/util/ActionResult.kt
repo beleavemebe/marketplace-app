@@ -10,4 +10,9 @@ sealed class ActionResult<T> {
         is SuccessResult -> SuccessResult(mapper(this.data))
         is ErrorResult -> ErrorResult(this.message)
     }
+
+    fun getOrThrow(): T = when (this) {
+        is ErrorResult -> error("Result is error")
+        is SuccessResult -> this.data
+    }
 }

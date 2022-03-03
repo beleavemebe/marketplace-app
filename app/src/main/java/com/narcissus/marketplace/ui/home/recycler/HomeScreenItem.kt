@@ -2,6 +2,7 @@ package com.narcissus.marketplace.ui.home.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
@@ -17,7 +18,7 @@ typealias ProductListBinding = ListItemProductListBinding
 typealias LoadingProductListBinding = ListItemLoadingProductListBinding
 
 sealed class HomeScreenItem {
-    data class Header(val title: String) : HomeScreenItem() {
+    data class Header(@StringRes val titleResId: Int) : HomeScreenItem() {
         companion object {
             @JvmStatic private fun inflateBinding(
                 layoutInflater: LayoutInflater,
@@ -29,7 +30,7 @@ sealed class HomeScreenItem {
                     ::inflateBinding
                 ) {
                     bind {
-                        binding.tvHeaderTitle.text = item.title
+                        binding.tvHeaderTitle.text = context.getString(item.titleResId)
                     }
                 }
         }
@@ -80,7 +81,7 @@ sealed class HomeScreenItem {
                 newItem: HomeScreenItem
             ): Boolean {
                 return when (oldItem) {
-                    is Header -> newItem is Header && oldItem.title == newItem.title
+                    is Header -> newItem is Header && oldItem.titleResId == newItem.titleResId
                     is ProductList -> newItem is ProductList && oldItem.products == newItem.products
                     is LoadingProductList -> newItem is LoadingProductList && oldItem === newItem
                 }
