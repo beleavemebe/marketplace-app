@@ -9,14 +9,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SplashViewModel: ViewModel() {
+class SplashViewModel : ViewModel() {
     private val _isLaunchedFlow = MutableStateFlow(false)
     val isLaunchedFlow: StateFlow<Boolean> = _isLaunchedFlow.asStateFlow()
 
-    fun launch(){
+    fun launch() {
         viewModelScope.launch(Dispatchers.IO) {
             delay(2500L)
-            _isLaunchedFlow.value=true
+            _isLaunchedFlow.value = true
         }
     }
 }

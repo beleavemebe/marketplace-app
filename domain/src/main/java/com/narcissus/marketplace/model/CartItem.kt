@@ -4,5 +4,3 @@ data class CartItem(
     val data: ProductPreview,
     val count: Int
 )
-
-

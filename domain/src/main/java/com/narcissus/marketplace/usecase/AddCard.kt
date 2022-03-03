@@ -14,8 +14,7 @@ class AddCard(
         return if (checkIfCardNumberIsValid(cardNumber)) {
             userRemoteRepository.addCard(cardNumber, svv, expirationDate)
             ActionResult.SuccessResult(true)
-        } else ActionResult.ErrorResult("")//подумать, мб делать это не тут
-
+        } else ActionResult.ErrorResult("") // подумать, мб делать это не тут
     }
 
     private fun checkIfCardNumberIsValid(cardNumber: Long): Boolean {

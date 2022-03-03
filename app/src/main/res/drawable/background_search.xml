@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <solid android:color="@android:color/white" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="@color/background_search_tint" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item
+        android:left="44dp">
+        <!-- left is icon size + 2x side padding around icon-->
+        <!-- 18 + 8 + 8 -->
+        <shape>
+            <solid android:color="@android:color/white" />
+            <corners android:radius="10dp"
+                android:topRightRadius="10dp"
+                android:topLeftRadius="0dp"
+                android:bottomRightRadius="10dp"
+                android:bottomLeftRadius="0dp"/>
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <corners android:radius="10dp" />
+
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/background_search_tint" />
+        </shape>
+    </item>
+</layer-list>

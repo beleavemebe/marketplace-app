@@ -2,10 +2,10 @@ package com.narcissus.marketplace.ui.home
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
 import com.narcissus.marketplace.ui.home.recycler.ExtraVerticalMarginDecoration
@@ -113,7 +113,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun navigateToProductDetails(id: String) {
-        Toast.makeText(context, "TODO: navigate to id", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(
+            HomeFragmentDirections.actionFragmentHomeToProductDetailsFragment()
+        )
     }
 
     override fun onDestroyView() {

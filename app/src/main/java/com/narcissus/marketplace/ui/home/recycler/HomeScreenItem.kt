@@ -73,7 +73,6 @@ sealed class HomeScreenItem {
         }
     }
 
-
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HomeScreenItem>() {
             override fun areItemsTheSame(
