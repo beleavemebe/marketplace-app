@@ -16,3 +16,5 @@ rootProject.name = "Marketplace App"
 include ':app'
 include ':domain'
 include ':data'
+include ':ui:user'
+include ':core'
