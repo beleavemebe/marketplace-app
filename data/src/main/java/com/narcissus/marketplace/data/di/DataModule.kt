@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.data.di
 
+import com.github.beleavemebe.data.apiclient.di.apiClientModule
 import com.narcissus.marketplace.data.CartLocalRepositoryImpl
 import com.narcissus.marketplace.data.DepartmentsRepositoryImpl
 import com.narcissus.marketplace.data.OrderRepositoryImpl
@@ -14,9 +15,12 @@ import com.narcissus.marketplace.repository.remote.OrderRepository
 import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
 import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository
 import com.narcissus.marketplace.repository.remote.UserRemoteRepository
+import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
 val dataModule = module {
+    loadKoinModules(apiClientModule)
+
     single<CartLocalRepository> { CartLocalRepositoryImpl() }
     single<DepartmentsRepository> { DepartmentsRepositoryImpl() }
     single<OrderRepository> { OrderRepositoryImpl() }
