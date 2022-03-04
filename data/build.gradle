@@ -3,6 +3,18 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+String PROPERTY_API_KEY = "API_KEY"
+
+def apiKeyProps = new Properties()
+try {
+    apiKeyProps.load(new FileInputStream(rootProject.file("apikey.properties")))
+} catch (Exception e) {
+    def ciKey = System.getenv(PROPERTY_API_KEY)
+    if (ciKey != null) {
+        apiKeyProps.setProperty(PROPERTY_API_KEY, ciKey)
+    }
+}
+
 android {
     compileSdk 32
 
@@ -12,6 +24,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        def apiKey = apiKeyProps[PROPERTY_API_KEY]
+        if (apiKey != null) {
+            buildConfigField("String", "API_KEY", apiKey)
+        }
     }
 
     buildTypes {

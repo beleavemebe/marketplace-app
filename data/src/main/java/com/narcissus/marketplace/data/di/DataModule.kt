@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.data.di
 
 import com.narcissus.marketplace.apiclient.di.apiClientModule
+import com.narcissus.marketplace.data.BuildConfig
 import com.narcissus.marketplace.data.CartLocalRepositoryImpl
 import com.narcissus.marketplace.data.DepartmentsRepositoryImpl
 import com.narcissus.marketplace.data.OrderRepositoryImpl
@@ -19,7 +20,8 @@ import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
 val dataModule = module {
-    loadKoinModules(apiClientModule)
+    val apiKey = BuildConfig.API_KEY
+    loadKoinModules(apiClientModule(apiKey))
 
     single<CartLocalRepository> { CartLocalRepositoryImpl() }
     single<DepartmentsRepository> { DepartmentsRepositoryImpl() }
