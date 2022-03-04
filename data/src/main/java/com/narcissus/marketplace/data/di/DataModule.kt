@@ -1,6 +1,6 @@
 package com.narcissus.marketplace.data.di
 
-import com.github.beleavemebe.data.apiclient.di.apiClientModule
+import com.narcissus.marketplace.apiclient.di.apiClientModule
 import com.narcissus.marketplace.data.CartLocalRepositoryImpl
 import com.narcissus.marketplace.data.DepartmentsRepositoryImpl
 import com.narcissus.marketplace.data.OrderRepositoryImpl
