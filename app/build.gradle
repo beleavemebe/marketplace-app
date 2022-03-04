@@ -21,7 +21,6 @@ android {
 
     buildFeatures {
         viewBinding true
-        compose true
     }
     buildTypes {
         release {
@@ -36,21 +35,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.1.1'
-        kotlinCompilerVersion '1.6.10'
-    }
 }
 
 dependencies {
     implementation "io.insert-koin:koin-core:3.1.5"
     testImplementation "io.insert-koin:koin-test:3.1.5"
-
-    implementation "androidx.compose.ui:ui:1.1.1"
-    implementation 'androidx.compose.ui:ui-tooling:1.1.1'
-    implementation 'androidx.compose.material:material:1.1.1'
-    implementation 'androidx.activity:activity-compose:1.4.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
@@ -69,6 +58,7 @@ dependencies {
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
+    implementation project(path: ':ui:user')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

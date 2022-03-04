@@ -1,7 +1,9 @@
 package com.narcissus.marketplace.ui.user
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -34,13 +36,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import com.narcissus.marketplace.R
-import com.narcissus.marketplace.databinding.FragmentUserBinding
+import com.narcissus.marketplace.core.R
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
 import com.narcissus.marketplace.ui.user.theme.HalfPadding
@@ -53,89 +55,87 @@ import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
 import com.narcissus.marketplace.ui.user.theme.SubtitleColor
 
-class UserFragment : Fragment(R.layout.fragment_user) {
-    private var _binding: FragmentUserBinding? = null
-    private val binding get() = _binding!!
+class UserFragment : Fragment() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentUserBinding.bind(view)
-        with(binding.root) {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                DefaultTheme {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = ComposeView(requireContext()).apply {
+        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            DefaultTheme {
+                Column(
+                    modifier = Modifier
+                        .background(White)
+                ) {
+                    TopAppBar(
+                        title = {
+                            Text(
+                                text = "Profile",
+                                style = MaterialTheme.typography.h4
+                            )
+                        },
+                        backgroundColor = White,
+                    )
+
                     Column(
                         modifier = Modifier
-                            .background(White)
+                            .verticalScroll(rememberScrollState())
                     ) {
-                        TopAppBar(
-                            title = {
-                                Text(
-                                    text = "Profile",
-                                    style = MaterialTheme.typography.h4
-                                )
-                            },
-                            backgroundColor = White,
+                        ProfileInfo(name = "Joe Ordinary", email = "example@gmail.com")
+
+                        Header(text = "My Profile")
+
+                        Item(
+                            text = "Orders",
+                            iconResId = R.drawable.ic_cart,
+                            onClick = { toast("Orders") }
                         )
 
-                        Column(
-                            modifier = Modifier
-                                .verticalScroll(rememberScrollState())
-                        ) {
-                            ProfileInfo(name = "Joe Ordinary", email = "example@gmail.com")
+                        Item(
+                            text = "Billing",
+                            iconResId = R.drawable.ic_card,
+                            onClick = { toast("Billing") }
+                        )
 
-                            Header(text = "My Profile")
+                        Item(
+                            text = "Logout",
+                            iconResId = R.drawable.ic_logout,
+                            onClick = { toast("Logout") }
+                        )
 
-                            Item(
-                                text = "Orders",
-                                iconResId = R.drawable.ic_cart,
-                                onClick = { toast("Orders") }
-                            )
+                        Header(text = "Application")
 
-                            Item(
-                                text = "Billing",
-                                iconResId = R.drawable.ic_card,
-                                onClick = { toast("Billing") }
-                            )
-
-                            Item(
-                                text = "Logout",
-                                iconResId = R.drawable.ic_logout,
-                                onClick = { toast("Logout") }
-                            )
-
-                            Header(text = "Application")
-
-                            // TODO: track whether app is in dark theme or not
-                            val isSystemInDarkTheme = false
-                            SwitchItem(
-                                text = "Dark Theme",
-                                iconResId = R.drawable.ic_crescent,
-                                checked = isSystemInDarkTheme
-                            ) { checked ->
-                                toast("Dark Theme: $checked")
-                            }
-
-                            Item(
-                                text = "Clear data",
-                                iconResId = R.drawable.ic_broom,
-                                onClick = { toast("Clear data") }
-                            )
-
-                            Item(
-                                text = "Report bug",
-                                iconResId = R.drawable.ic_bug,
-                                onClick = {
-                                    toast("Report bug")
-                                }
-                            )
-
-                            Item(
-                                text = "Source code",
-                                iconResId = R.drawable.ic_code,
-                                onClick = { toast("Source code") }
-                            )
+                        // TODO: track whether app is in dark theme or not
+                        val isSystemInDarkTheme = false
+                        SwitchItem(
+                            text = "Dark Theme",
+                            iconResId = R.drawable.ic_crescent,
+                            checked = isSystemInDarkTheme
+                        ) { checked ->
+                            toast("Dark Theme: $checked")
                         }
+
+                        Item(
+                            text = "Clear data",
+                            iconResId = R.drawable.ic_broom,
+                            onClick = { toast("Clear data") }
+                        )
+
+                        Item(
+                            text = "Report bug",
+                            iconResId = R.drawable.ic_bug,
+                            onClick = {
+                                toast("Report bug")
+                            }
+                        )
+
+                        Item(
+                            text = "Source code",
+                            iconResId = R.drawable.ic_code,
+                            onClick = { toast("Source code") }
+                        )
                     }
                 }
             }
@@ -149,11 +149,6 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         currentToast?.cancel()
         currentToast = toast
         toast.show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
 
@@ -275,7 +270,7 @@ fun Item(
 @Preview
 fun ItemPreview() {
     DefaultTheme {
-        Item("Orders", R.drawable.ic_catalog) {}
+        Item("Orders", R.drawable.ic_cart) {}
     }
 }
 
@@ -308,6 +303,6 @@ fun SwitchItem(
 @Preview
 fun SwitchItemPreview() {
     DefaultTheme {
-        SwitchItem("Orders", R.drawable.ic_catalog, true) {}
+        SwitchItem("Orders", R.drawable.ic_cart, true) {}
     }
 }
