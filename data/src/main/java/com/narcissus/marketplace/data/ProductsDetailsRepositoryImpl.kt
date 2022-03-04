@@ -7,7 +7,7 @@ import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
 import com.narcissus.marketplace.util.ActionResult
 
-class ProductsDetailsRepositoryImpl : ProductsDetailsRepository {
+internal class ProductsDetailsRepositoryImpl : ProductsDetailsRepository {
     override suspend fun getProductDetailsById(productId: String): ActionResult<ProductDetails> {
         val result = ProductDetails(
             "1",

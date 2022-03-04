@@ -2,7 +2,7 @@ package com.narcissus.marketplace.data
 
 import com.narcissus.marketplace.model.ProductPreview
 
-object DummyProducts {
+internal object DummyProducts {
     val previews = listOf(
         ProductPreview("1", "", 1449, "Apple MacBook Pro 13", "", "", 752, "", "", 3, 152),
         ProductPreview("2", "", 1299, "Apple MacBook Air 13", "", "", 1021, "", "", 5, 196),

@@ -5,7 +5,7 @@ import com.narcissus.marketplace.repository.remote.UserRemoteRepository
 import com.narcissus.marketplace.util.ActionResult
 import com.narcissus.marketplace.util.AuthResult
 
-class UserRemoteRepositoryImpl : UserRemoteRepository {
+internal class UserRemoteRepositoryImpl : UserRemoteRepository {
     override suspend fun addCard(cardNumber: Long, svv: Int, expirationDate: String) {
         TODO("Not yet implemented")
     }
