@@ -1,12 +1,19 @@
 package com.narcissus.marketplace.apiclient.di
 
-import com.narcissus.marketplace.apiclient.api.ApiService
+import com.narcissus.marketplace.apiclient.api.interceptor.ApiKeyInterceptor
+import com.narcissus.marketplace.apiclient.api.service.ApiService
+import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 internal val retrofit: Retrofit by lazy {
-    Retrofit.Builder().build()
+    Retrofit.Builder().baseUrl("https://dummyproducts-api.herokuapp.com/api/v1/")
+        .addConverterFactory(
+            GsonConverterFactory.create()
+        )
+        .client(OkHttpClient().newBuilder().addInterceptor(ApiKeyInterceptor()).build()).build()
 }
 
 internal val apiService by lazy {
@@ -16,3 +23,4 @@ internal val apiService by lazy {
 val apiClientModule = module {
     single { apiService }
 }
+
