@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:isIndicator="true"
         android:numStars="5"
+        android:stepSize="1"
         android:progressBackgroundTint="@color/grey_light"
         android:progressTint="@color/ratingbar_active"
         app:layout_constraintStart_toStartOf="parent"

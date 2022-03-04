@@ -4,15 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
+import com.narcissus.marketplace.databinding.ListItemDetailsProductAboutLoadingBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsProductAboutMultipleLinesBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsProductAboutSingleLineBinding
 
 typealias AboutSingleLineBinding = ListItemDetailsProductAboutSingleLineBinding
 typealias AboutMultipleLineBinding = ListItemDetailsProductAboutMultipleLinesBinding
+typealias AboutLoadingBinding = ListItemDetailsProductAboutLoadingBinding
 
 sealed class AboutProductItem {
 
-    data class SingleLineItem(val title: String, val value: String) : AboutProductItem() {
+    class SingleLineItem(val title: String, val value: String) : AboutProductItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -33,7 +35,7 @@ sealed class AboutProductItem {
         }
     }
 
-    data class MultipleLineItem(val title: String, val value: String) : AboutProductItem() {
+    class MultipleLineItem(val title: String, val value: String) : AboutProductItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -54,6 +56,22 @@ sealed class AboutProductItem {
         }
     }
 
+    class LoadingItem : AboutProductItem() {
+        companion object {
+            @JvmStatic
+            private fun inflateBinding(
+                layoutInflater: LayoutInflater,
+                root: ViewGroup
+            ) = AboutLoadingBinding.inflate(layoutInflater, root, false)
+
+            val delegate
+                get() =
+                    adapterDelegateViewBinding<LoadingItem, AboutProductItem, AboutLoadingBinding>(
+                        ::inflateBinding
+                    ) {}
+        }
+    }
+
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AboutProductItem>() {
             override fun areItemsTheSame(
@@ -63,6 +81,7 @@ sealed class AboutProductItem {
                 return when (oldItem) {
                     is SingleLineItem -> newItem is SingleLineItem && oldItem.title == newItem.title
                     is MultipleLineItem -> newItem is MultipleLineItem && oldItem.title == newItem.title
+                    is LoadingItem -> false
                 }
             }
 
