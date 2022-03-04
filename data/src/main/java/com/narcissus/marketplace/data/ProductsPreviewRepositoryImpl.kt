@@ -5,7 +5,7 @@ import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository
 import com.narcissus.marketplace.util.ActionResult
 import com.narcissus.marketplace.util.SearchParams
 
-class ProductsPreviewRepositoryImpl : ProductsPreviewRepository {
+internal class ProductsPreviewRepositoryImpl : ProductsPreviewRepository {
     override suspend fun searchProducts(
         query: String,
         filters: Set<SearchParams.FilterType>

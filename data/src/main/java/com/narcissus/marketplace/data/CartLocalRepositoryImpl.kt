@@ -5,7 +5,7 @@ import com.narcissus.marketplace.repository.local.CartLocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class CartLocalRepositoryImpl : CartLocalRepository {
+internal class CartLocalRepositoryImpl : CartLocalRepository {
     override fun getCart(): Flow<List<CartItem>> {
         return flow {
             emit(DummyCartItems.items)

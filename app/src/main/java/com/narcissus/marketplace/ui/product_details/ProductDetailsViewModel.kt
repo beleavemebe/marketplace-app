@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.ui.product_details
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.di.ServiceLocator
