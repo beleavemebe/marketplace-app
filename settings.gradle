@@ -16,3 +16,4 @@ rootProject.name = "Marketplace App"
 include ':app'
 include ':domain'
 include ':data'
+include ':apiclient'
