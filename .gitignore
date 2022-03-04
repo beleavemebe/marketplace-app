@@ -1,6 +1,7 @@
 *.iml
 .gradle
 /local.properties
+/apikey.properties
 /.idea
 .DS_Store
 /build
@@ -8,5 +9,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+apikey.properties
 google-services.json
 /report
