@@ -42,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import com.narcissus.marketplace.core.R
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
 import com.narcissus.marketplace.ui.user.theme.HalfPadding
@@ -53,7 +54,6 @@ import com.narcissus.marketplace.ui.user.theme.ItemHeight
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
 import com.narcissus.marketplace.ui.user.theme.SubtitleColor
-import com.narcissus.marketplace.core.R
 
 class UserFragment : Fragment() {
 

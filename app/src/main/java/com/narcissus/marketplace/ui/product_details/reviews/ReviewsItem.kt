@@ -2,7 +2,6 @@ package com.narcissus.marketplace.ui.product_details.reviews
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsReviewBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsReviewLoadingBinding
@@ -49,5 +48,4 @@ sealed class ReviewsItem {
                     ) {}
         }
     }
-
 }
