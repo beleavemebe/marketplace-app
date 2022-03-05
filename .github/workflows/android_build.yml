@@ -32,9 +32,9 @@ jobs:
         run: echo $DATA > /home/runner/work/marketplace-app/marketplace-app/app/google-services.json
 
       - name: Add api key to local.properties
-          env:
-            API_KEY: $ {{ secrets.API_KEY }}
-          run: echo $API_KEY > /home/runner/work/marketplace-app/marketplace-app/app/local.properties
+        env:
+          API_KEY: $ {{ secrets.API_KEY }}
+        run: echo $API_KEY > /home/runner/work/marketplace-app/marketplace-app/local.properties
 
       - name: Assemble
         run: ./gradlew assemble
