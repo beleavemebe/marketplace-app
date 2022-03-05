@@ -2,7 +2,6 @@ package com.narcissus.marketplace.ui.products
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.request.ImageRequest
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductPreviewBinding
 import com.narcissus.marketplace.model.ProductPreview
