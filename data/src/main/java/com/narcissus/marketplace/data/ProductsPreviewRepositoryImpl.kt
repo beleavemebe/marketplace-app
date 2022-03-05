@@ -1,11 +1,17 @@
 package com.narcissus.marketplace.data
 
+import com.narcissus.marketplace.apiclient.api.model.ProductPreviewResponseData
+import com.narcissus.marketplace.apiclient.api.service.ApiService
 import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository
 import com.narcissus.marketplace.util.ActionResult
 import com.narcissus.marketplace.util.SearchParams
 
-internal class ProductsPreviewRepositoryImpl : ProductsPreviewRepository {
+private const val PREVIEWS_AMOUNT = 15
+
+internal class ProductsPreviewRepositoryImpl(
+    private val apiService: ApiService,
+) : ProductsPreviewRepository {
     override suspend fun searchProducts(
         query: String,
         filters: Set<SearchParams.FilterType>
@@ -18,15 +24,21 @@ internal class ProductsPreviewRepositoryImpl : ProductsPreviewRepository {
     }
 
     override suspend fun getProductsRandom(): ActionResult<List<ProductPreview>> {
-        return ActionResult.SuccessResult(DummyProducts.previews)
+        val randomProducts = apiService.getRandomProducts(PREVIEWS_AMOUNT, 1).data
+        val productPreviews = randomProducts.map(ProductPreviewResponseData::toProductPreview)
+        return ActionResult.SuccessResult(productPreviews)
     }
 
     override suspend fun getProductsTopRated(): ActionResult<List<ProductPreview>> {
-        return ActionResult.SuccessResult(DummyProducts.previews)
+        val randomProducts = apiService.getTopRatedProducts(PREVIEWS_AMOUNT, 1).data
+        val productPreviews = randomProducts.map(ProductPreviewResponseData::toProductPreview)
+        return ActionResult.SuccessResult(productPreviews)
     }
 
     override suspend fun getProductsTopSales(): ActionResult<List<ProductPreview>> {
-        return ActionResult.SuccessResult(DummyProducts.previews)
+        val randomProducts = apiService.getTopSalesProducts(PREVIEWS_AMOUNT, 1).data
+        val productPreviews = randomProducts.map(ProductPreviewResponseData::toProductPreview)
+        return ActionResult.SuccessResult(productPreviews)
     }
 
     override suspend fun getProductsByDepartment(departmentId: String): ActionResult<List<ProductPreview>> {
@@ -41,3 +53,6 @@ internal class ProductsPreviewRepositoryImpl : ProductsPreviewRepository {
         TODO("Not yet implemented")
     }
 }
+
+private fun ProductPreviewResponseData.toProductPreview(): ProductPreview =
+    ProductPreview(id, icon, price, name, departmentName, type, stock, color, material, rating, sales)
