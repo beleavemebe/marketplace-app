@@ -1,8 +1,8 @@
 package com.narcissus.marketplace.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.di.ServiceLocator
 import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
 import com.narcissus.marketplace.usecase.GetRandomProducts
@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class HomeViewModel(
-    private val getTopRatedProducts: GetTopRatedProducts = ServiceLocator.getTopRatedProducts,
-    private val getTopSalesProducts: GetTopSalesProducts = ServiceLocator.getTopSalesProducts,
-    private val getRandomProducts: GetRandomProducts = ServiceLocator.getRandomProducts,
-    private val getRecentlyVisitedProducts: GetRecentlyVisitedProducts = ServiceLocator.getRecentlyVisitedProducts,
+    private val getTopRatedProducts: GetTopRatedProducts,
+    private val getTopSalesProducts: GetTopSalesProducts,
+    private val getRandomProducts: GetRandomProducts,
+    private val getRecentlyVisitedProducts: GetRecentlyVisitedProducts,
 ) : ViewModel() {
     private val topRatedFlow = productListFlow {
         getTopRatedProducts().getOrThrow()
@@ -57,7 +57,15 @@ class HomeViewModel(
     private fun productListFlow(block: suspend () -> List<ProductPreview>): Flow<HomeScreenItem> {
         return flow {
             emit(HomeScreenItem.LoadingProductList())
-            val products = block()
+
+            val products =
+                runCatching {
+                    block()
+                }.getOrElse {
+                    Log.e("HomeViewModel", "Got error", it)
+                    emptyList()
+                }
+
             emit(HomeScreenItem.ProductList(products))
         }
     }

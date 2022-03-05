@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.ui.products
 
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductPreviewBinding
 import com.narcissus.marketplace.model.ProductPreview
@@ -11,7 +12,7 @@ class ProductViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(productPreview: ProductPreview) = with(binding) {
         productNameTextView.text = productPreview.name
-        productImageView.setImageResource(R.drawable.product_img_example) // TODO: replace with Coil call
+        productImageView.load(productPreview.icon)
         productRatingBar.progress = productPreview.rating * 2
         productPriceTextView.text = itemView.context.getString(R.string.price_placeholder, productPreview.price)
         productSalesTextView.text = itemView.context.getString(R.string.sales_placeholder, productPreview.sales)

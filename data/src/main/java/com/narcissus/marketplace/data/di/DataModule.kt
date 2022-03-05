@@ -25,7 +25,11 @@ val dataModule = module {
     single<DepartmentsRepository> { DepartmentsRepositoryImpl() }
     single<OrderRepository> { OrderRepositoryImpl() }
     single<ProductsDetailsRepository> { ProductsDetailsRepositoryImpl() }
-    single<ProductsPreviewRepository> { ProductsPreviewRepositoryImpl() }
+
+    single<ProductsPreviewRepository> {
+        ProductsPreviewRepositoryImpl(apiService = get())
+    }
+
     single<UserLocalRepository> { UserLocalRepositoryImpl() }
     single<UserRemoteRepository> { UserRemoteRepositoryImpl() }
 }
