@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 internal val retrofit: Retrofit by lazy {
-//base url is https://dummyproducts-api.herokuapp.com/api/v1/
+// base url is https://dummyproducts-api.herokuapp.com/api/v1/
 // must be added in local.properties project level
     Retrofit.Builder().baseUrl(BuildConfig.DUMMYPRODUCTSBASEURL)
         .addConverterFactory(
@@ -26,4 +26,3 @@ internal val apiService by lazy {
 val apiClientModule = module {
     single { apiService }
 }
-

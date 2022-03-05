@@ -14,7 +14,7 @@ internal object SerializedNames {
     const val sales = "product_sales"
     const val data = "data"
     const val productDescription = "product_description"
-    const val productReviews ="product_reviews"
+    const val productReviews = "product_reviews"
     const val reviewProductId = "review_productid"
     const val reviewAuthor = "review_name"
     const val reviewDetails = "review_details"

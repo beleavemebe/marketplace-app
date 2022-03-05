@@ -7,7 +7,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    //Если лимит дефлолтный, вынесем в interceptor
+    // Если лимит дефлолтный, вынесем в interceptor
     @GET("products/{id}")
     suspend fun getProductDetails(
         @Path("id") productId: String,

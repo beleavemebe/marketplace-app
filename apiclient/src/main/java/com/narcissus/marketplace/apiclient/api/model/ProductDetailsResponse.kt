@@ -48,4 +48,3 @@ class ReviewResponseData(
     @SerializedName(SerializedNames.reviewRating)
     val rating: Int
 )
-

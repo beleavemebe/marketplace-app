@@ -8,7 +8,7 @@ import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
 import com.narcissus.marketplace.util.ActionResult
 import org.koin.core.component.KoinComponent
 
-internal class ProductsDetailsRepositoryImpl : ProductsDetailsRepository,KoinComponent {
+internal class ProductsDetailsRepositoryImpl : ProductsDetailsRepository, KoinComponent {
     override suspend fun getProductDetailsById(productId: String): ActionResult<ProductDetails> {
         val result = ProductDetails(
             "1",
