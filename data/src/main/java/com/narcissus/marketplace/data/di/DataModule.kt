@@ -24,7 +24,7 @@ val dataModule = module {
     single<CartLocalRepository> { CartLocalRepositoryImpl() }
     single<DepartmentsRepository> { DepartmentsRepositoryImpl() }
     single<OrderRepository> { OrderRepositoryImpl() }
-    single<ProductsDetailsRepository> { ProductsDetailsRepositoryImpl() }
+    single<ProductsDetailsRepository> { ProductsDetailsRepositoryImpl(apiService = get()) }
 
     single<ProductsPreviewRepository> {
         ProductsPreviewRepositoryImpl(apiService = get())

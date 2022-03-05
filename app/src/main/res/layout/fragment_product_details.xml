@@ -46,14 +46,15 @@
             android:layout_height="match_parent"
             android:animateLayoutChanges="true">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:id="@+id/ivProduct"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/product_img_example" />
+                tools:src="@drawable/product_img_example"
+                android:contentDescription="@string/product_image" />
 
             <TextView
                 android:id="@+id/tvProductName"

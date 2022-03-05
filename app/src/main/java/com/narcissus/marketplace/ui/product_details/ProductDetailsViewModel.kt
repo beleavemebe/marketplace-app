@@ -12,15 +12,14 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
-class ProductDetailsViewModel : ViewModel() {
+class ProductDetailsViewModel(private val productId:String) : ViewModel() {
     companion object {
         const val COLLAPSED_REVIEWS_LIST_SIZE = 2
     }
 
     private val getProductDetails = ServiceLocator.getProductDetails
     val productDetailsFlow = flow {
-        val result = getProductDetails("") as ActionResult.SuccessResult
-        kotlinx.coroutines.delay(1000L)
+        val result = getProductDetails(productId) as ActionResult.SuccessResult
         emit(result.data)
     }
 

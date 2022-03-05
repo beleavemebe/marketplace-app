@@ -24,6 +24,9 @@ import com.narcissus.marketplace.ui.product_details.reviews.DividerItemDecorator
 import com.narcissus.marketplace.ui.product_details.reviews.ReviewsItem
 import com.narcissus.marketplace.ui.products.ProductsAdapter
 import kotlinx.coroutines.launch
+import coil.load
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     companion object {
@@ -32,7 +35,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         private const val ROTATION_COLLAPSED = 0F
     }
 
-    private val viewModel: ProductDetailsViewModel by viewModels()
+    private val viewModel: ProductDetailsViewModel by viewModel{ parametersOf("5fffb4b642ea294184dc1570")}
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -118,12 +121,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private suspend fun observeProductDetails() {
         viewModel.productDetailsFlow.collect { data ->
             with(binding) {
-                ivProduct.setImageDrawable(
-                    AppCompatResources.getDrawable(
-                        requireContext(),
-                        R.drawable.product_img_example
-                    )
-                )
+                ivProduct.load(data.icon)
                 tvProductName.text = data.name
                 ratingBarProduct.progress = data.rating
                 tvPrice.text = getString(R.string.price_placeholder, data.price)
