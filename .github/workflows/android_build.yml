@@ -33,8 +33,9 @@ jobs:
 
       - name: Add api key to local.properties
         env:
-          API_KEY: $ {{ secrets.API_KEY }}
-        run: echo $API_KEY > /home/runner/work/marketplace-app/marketplace-app/local.properties
+          PROPS_FILE: /home/runner/work/marketplace-app/marketplace-app/local.properties
+          API_KEY: ${{ secrets.API_KEY }}
+        run: echo DUMMYPRODUCTSAPIKEY=$API_KEY > $PROPS_FILE
 
       - name: Assemble
         run: ./gradlew assemble
