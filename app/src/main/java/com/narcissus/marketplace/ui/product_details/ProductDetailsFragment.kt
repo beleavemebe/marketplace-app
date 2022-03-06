@@ -61,13 +61,12 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         initToolBar()
         initListeners()
         initLayoutAnimation()
-
     }
 
     private fun initAboutRecyclerView() = with(binding.rvAbout) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = aboutProductAdapter
-        itemAnimator=null
+        itemAnimator = null
         aboutProductAdapter.items = listOf(AboutProductItem.LoadingItem())
     }
 
@@ -79,7 +78,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                 ContextCompat.getDrawable(requireContext(), R.drawable.recycler_view_divider)!!
             )
         )
-        itemAnimator=null
+        itemAnimator = null
         reviewsAdapter.submitItems(listOf(ReviewsItem.LoadingItem()))
     }
 
@@ -88,7 +87,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
         adapter = similarProductsAdapter
-        itemAnimator=null
+        itemAnimator = null
     }
 
     private fun initToolBar() {
