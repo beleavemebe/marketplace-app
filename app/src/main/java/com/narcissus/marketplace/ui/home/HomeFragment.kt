@@ -39,7 +39,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun navigateToProductDetails(id: String) {
         findNavController().navigate(
-            HomeFragmentDirections.actionFragmentHomeToProductDetailsFragment()
+            HomeFragmentDirections.actionFragmentHomeToFragmentProductDetails(id)
         )
     }
 

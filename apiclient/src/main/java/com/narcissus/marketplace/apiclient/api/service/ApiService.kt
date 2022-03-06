@@ -11,6 +11,7 @@ interface ApiService {
     @GET("products/{id}")
     suspend fun getProductDetails(
         @Path("id") productId: String,
+        @Query("similarities") state: String = "true"
     ): ProductDetailsResponse
 
     @GET("products/random")
