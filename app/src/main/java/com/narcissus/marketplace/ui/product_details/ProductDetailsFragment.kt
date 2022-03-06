@@ -79,7 +79,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                 ContextCompat.getDrawable(requireContext(), R.drawable.recycler_view_divider)!!
             )
         )
-
+        itemAnimator=null
         reviewsAdapter.submitItems(listOf(ReviewsItem.LoadingItem()))
     }
 
@@ -196,7 +196,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
     }
 
     @SuppressLint("NotifyDataSetChanged") // animation doesn't work well with diffutils
