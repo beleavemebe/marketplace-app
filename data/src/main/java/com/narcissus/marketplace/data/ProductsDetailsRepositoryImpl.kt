@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.data
 
 import com.narcissus.marketplace.apiclient.api.model.ProductDetailsResponse
+import com.narcissus.marketplace.apiclient.api.model.SimilarProductsResponseData
 import com.narcissus.marketplace.apiclient.api.service.ApiService
 import com.narcissus.marketplace.model.DetailsAbout
 import com.narcissus.marketplace.model.ProductDetails
@@ -8,7 +9,6 @@ import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
 import com.narcissus.marketplace.util.ActionResult
-import org.koin.core.component.KoinComponent
 
 internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService) :
     ProductsDetailsRepository {
@@ -34,23 +34,11 @@ internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService)
             rating,
             sales,
             reviewsList.map { Review(it.reviewId, it.author, it.details, it.rating) },
-            similarProductsList.map {
-                ProductPreview(
-                    it.id,
-                    it.icon,
-                    it.price,
-                    it.name,
-                    it.departmentName,
-                    it.type,
-                    it.stock,
-                    "",
-                    "",
-                    it.rating,
-                    it.sales
-                )
-            }
+            similarProductsList.map(SimilarProductsResponseData::toSimilarProducts)
         )
     }
 
-
 }
+
+private fun SimilarProductsResponseData.toSimilarProducts(): ProductPreview =
+    ProductPreview(id, icon, price, name, departmentName, type, stock, "", "", rating, sales)

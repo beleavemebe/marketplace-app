@@ -35,7 +35,7 @@ data class ProductDetailsResponseData(
     @SerializedName(SerializedNames.productReviews)
     val reviewsList: List<ReviewResponseData>,
     @SerializedName("product_similar")
-    val similarProductsList: List<SimilarProductsResposeData>,
+    val similarProductsList: List<SimilarProductsResponseData>,
 )
 
 class ReviewResponseData(
@@ -50,7 +50,7 @@ class ReviewResponseData(
     @SerializedName(SerializedNames.reviewRating)
     val rating: Int
 )
-class SimilarProductsResposeData(
+class SimilarProductsResponseData(
     @SerializedName(SerializedNames.id)
     val id: String,
     @SerializedName(SerializedNames.icon)

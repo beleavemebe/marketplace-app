@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayoutDetails">
+        app:layout_constraintTop_toBottomOf="@id/appBarLayoutDetails">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/root"
@@ -56,6 +56,22 @@
                 tools:src="@drawable/product_img_example"
                 android:contentDescription="@string/product_image" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/productImageShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivProduct">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="16dp"
+                    android:layout_margin="16dp"
+                    app:cardBackgroundColor="#A7A7A7"/>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tvProductName"
                 android:layout_width="match_parent"
@@ -67,7 +83,7 @@
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivProduct"
+                app:layout_constraintTop_toBottomOf="@id/productImageShimmer"
                 tools:text="Apple Macbook Pro 13 super duper Intel Core i9 8GB 16TB 512 GB" />
 
             <androidx.appcompat.widget.AppCompatRatingBar
@@ -86,7 +102,7 @@
                 app:layout_constraintEnd_toStartOf="@id/tvPrice"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvPrice"
+                app:layout_constraintTop_toTopOf="@id/tvPrice"
                 app:layout_constraintVertical_bias="0.5"
                 tools:progress="60" />
 
@@ -99,7 +115,7 @@
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvProductName"
+                app:layout_constraintTop_toBottomOf="@id/tvProductName"
                 tools:text="$1299" />
 
             <TextView
@@ -112,7 +128,7 @@
                 android:textColor="@color/grey_light"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBarProduct"
+                app:layout_constraintTop_toBottomOf="@id/ratingBarProduct"
                 tools:text="15 sales" />
 
             <TextView
@@ -125,7 +141,7 @@
                 android:textColor="@color/grey_light"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSales"
+                app:layout_constraintTop_toBottomOf="@id/tvSales"
                 tools:text="In stock: 1021" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -143,7 +159,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvStock" />
+                app:layout_constraintTop_toBottomOf="@id/tvStock" />
 
 
             <TextView
@@ -157,7 +173,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnPurchase" />
+                app:layout_constraintTop_toBottomOf="@id/btnPurchase" />
 
 
             <androidx.recyclerview.widget.RecyclerView

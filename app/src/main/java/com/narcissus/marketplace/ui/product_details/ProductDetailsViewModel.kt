@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.di.ServiceLocator
 import com.narcissus.marketplace.model.Review
+import com.narcissus.marketplace.usecase.GetProductDetails
 import com.narcissus.marketplace.util.ActionResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,12 +13,16 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
-class ProductDetailsViewModel(private val productId:String) : ViewModel() {
+class ProductDetailsViewModel(
+    private val productId: String,
+    private val getProductDetails: GetProductDetails
+) : ViewModel() {
     companion object {
         const val COLLAPSED_REVIEWS_LIST_SIZE = 2
     }
 
-    private val getProductDetails = ServiceLocator.getProductDetails
+    // private val getProductDetails = ServiceLocator.getProductDetails
+
     val productDetailsFlow = flow {
         val result = getProductDetails(productId) as ActionResult.SuccessResult
         emit(result.data)

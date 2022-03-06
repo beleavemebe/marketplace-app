@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +36,8 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         private const val ROTATION_COLLAPSED = 0F
     }
 
-    private val viewModel: ProductDetailsViewModel by viewModel{ parametersOf("5fffb4b642ea294184dc1570")}
+    private val args by navArgs<ProductDetailsFragmentArgs>()
+    private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(args.productId) }
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -43,7 +45,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         ReviewsItem.ReviewItem.delegate,
         ReviewsItem.LoadingItem.delegate
     )
-    private val similarProductsAdapter = ProductsAdapter {}
+    private val similarProductsAdapter = ProductsAdapter(::navigateToSimilarProduct)
     private val aboutProductAdapter = AsyncListDifferDelegationAdapter(
         AboutProductItem.DIFF_CALLBACK,
         AboutProductItem.SingleLineItem.delegate,
@@ -104,6 +106,14 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         }
     }
 
+    private fun navigateToSimilarProduct(productId: String) {
+        findNavController().navigate(
+            ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductDetailsFragment(
+                productId
+            )
+        )
+    }
+
     private fun subscribeToViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
@@ -121,7 +131,14 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private suspend fun observeProductDetails() {
         viewModel.productDetailsFlow.collect { data ->
             with(binding) {
-                ivProduct.load(data.icon)
+                ivProduct.load(data.icon) {
+                    listener(
+                        onSuccess = { _, _ ->
+                            hideShimmerImage()
+
+                        }
+                    )
+                }
                 tvProductName.text = data.name
                 ratingBarProduct.progress = data.rating
                 tvPrice.text = getString(R.string.price_placeholder, data.price)
@@ -132,6 +149,11 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             similarProductsAdapter.submitItems(data.similarProducts)
         }
     }
+
+    private fun hideShimmerImage() {
+        binding.productImageShimmer.visibility = View.GONE
+    }
+
 
     private fun mapProductAboutList(aboutList: List<DetailsAbout>): List<AboutProductItem> {
         val list: MutableList<AboutProductItem> = mutableListOf()
