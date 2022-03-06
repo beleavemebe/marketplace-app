@@ -18,10 +18,8 @@ class ProductDetailsViewModel(
     private val getProductDetails: GetProductDetails
 ) : ViewModel() {
     companion object {
-        const val COLLAPSED_REVIEWS_LIST_SIZE = 2
+        const val COLLAPSED_REVIEWS_LIST_SIZE = 1
     }
-
-    // private val getProductDetails = ServiceLocator.getProductDetails
 
     val productDetailsFlow = flow {
         val result = getProductDetails(productId) as ActionResult.SuccessResult
