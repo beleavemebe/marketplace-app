@@ -63,11 +63,13 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         initToolBar()
         initListeners()
         initLayoutAnimation()
+
     }
 
     private fun initAboutRecyclerView() = with(binding.rvAbout) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = aboutProductAdapter
+        itemAnimator=null
         aboutProductAdapter.items = listOf(AboutProductItem.LoadingItem())
     }
 
@@ -88,6 +90,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
         adapter = similarProductsAdapter
+        itemAnimator=null
     }
 
     private fun initToolBar() {
