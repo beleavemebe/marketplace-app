@@ -37,7 +37,6 @@ internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService)
             similarProductsList.map(SimilarProductsResponseData::toSimilarProducts)
         )
     }
-
 }
 
 private fun SimilarProductsResponseData.toSimilarProducts(): ProductPreview =

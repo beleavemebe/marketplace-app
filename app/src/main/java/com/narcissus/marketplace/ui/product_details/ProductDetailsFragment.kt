@@ -4,16 +4,15 @@ import android.animation.LayoutTransition
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
@@ -25,7 +24,6 @@ import com.narcissus.marketplace.ui.product_details.reviews.DividerItemDecorator
 import com.narcissus.marketplace.ui.product_details.reviews.ReviewsItem
 import com.narcissus.marketplace.ui.products.ProductsAdapter
 import kotlinx.coroutines.launch
-import coil.load
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -135,7 +133,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                     listener(
                         onSuccess = { _, _ ->
                             hideShimmerImage()
-
                         }
                     )
                 }
@@ -153,7 +150,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private fun hideShimmerImage() {
         binding.productImageShimmer.visibility = View.GONE
     }
-
 
     private fun mapProductAboutList(aboutList: List<DetailsAbout>): List<AboutProductItem> {
         val list: MutableList<AboutProductItem> = mutableListOf()
