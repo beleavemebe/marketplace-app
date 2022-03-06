@@ -2,7 +2,6 @@ package com.narcissus.marketplace.ui.product_details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.narcissus.marketplace.di.ServiceLocator
 import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.usecase.GetProductDetails
 import com.narcissus.marketplace.util.ActionResult
