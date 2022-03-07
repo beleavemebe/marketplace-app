@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.usecase
 
-import com.narcissus.marketplace.repository.remote.UserRemoteRepository
+import com.narcissus.marketplace.repository.remote.UserRepository
 
-class SignOut(private val userRemoteRepository: UserRemoteRepository) {
-    suspend operator fun invoke() = userRemoteRepository.signOut()
+class SignOut(private val userRepository: UserRepository) {
+    suspend operator fun invoke() = userRepository.signOut()
 }

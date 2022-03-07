@@ -17,6 +17,6 @@ val domainModule = module {
     factory { GetTopSalesProducts(get()) }
     factory { GetRandomProducts(get()) }
     factory { GetRecentlyVisitedProducts(get()) }
-    factory { GetProductDetails(get()) }
+    factory { GetProductDetails(get(), get()) }
     factory { AddToCart(get()) }
 }

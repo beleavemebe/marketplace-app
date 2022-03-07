@@ -13,3 +13,20 @@ data class ProductDetails(
     val reviews: List<Review>,
     val similarProducts: List<ProductPreview>
 )
+
+fun ProductDetails.toProductPreview(): ProductPreview {
+    return ProductPreview(
+        id = id,
+        icon = icon,
+        price = price,
+        name = name,
+        category = department,
+        type = "lol xdd",
+        stock = stock,
+        color = "lol xd",
+        material = "wtf",
+        rating = rating,
+        sales = sales
+    )
+}
+
