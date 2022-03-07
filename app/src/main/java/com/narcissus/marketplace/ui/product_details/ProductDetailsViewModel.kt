@@ -6,7 +6,6 @@ import com.narcissus.marketplace.usecase.GetProductDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
 class ProductDetailsViewModel(
     private val productId: String,
     private val getProductDetails: GetProductDetails
@@ -18,7 +17,5 @@ class ProductDetailsViewModel(
                 getProductDetails(productId).getOrThrow()
             }.getOrNull()
         details?.let { emit(it) }
-
     }
-
 }

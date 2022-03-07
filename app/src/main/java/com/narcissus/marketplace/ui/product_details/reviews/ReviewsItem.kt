@@ -7,9 +7,7 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsReviewBinding
-import com.narcissus.marketplace.databinding.ListItemDetailsReviewLoadingBinding
 import com.narcissus.marketplace.model.Review
-import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 
 typealias ReviewBinding = ListItemDetailsReviewBinding
 
@@ -58,13 +56,9 @@ sealed class ReviewsItem {
                                         )
                                     )
                                 }
-
-
                             }
-
                         }
                     }
         }
     }
-
 }

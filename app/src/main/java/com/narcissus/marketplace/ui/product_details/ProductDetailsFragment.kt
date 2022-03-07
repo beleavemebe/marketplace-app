@@ -54,16 +54,14 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             findNavController().navigate(
                 ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductReviewsFragment(productId)
             )
-            }
         }
-
+    }
 
     private fun initAboutRecyclerView() = with(binding.rvAbout) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = aboutProductAdapter
         aboutProductAdapter.items = listOf(AboutProductItem.LoadingItem())
     }
-
 
     private fun initSimilarProductsRecyclerView() = with(binding.rvSimilarProducts) {
         layoutManager =
@@ -77,7 +75,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         binding.tbTop
             .setupWithNavController(navController, AppBarConfiguration(navController.graph))
     }
-
 
     private fun navigateToSimilarProduct(productId: String) {
         findNavController().navigate(
@@ -106,13 +103,12 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                     tvReviewsPreviewAuthor.text = data.reviews[0].author
                     tvReviewsPreviewDescription.text = data.reviews[0].details
                     reviewsPreviewRatingBar.progress = data.reviews[0].rating
-                    ivReviewsPreviewAvatar.load(data.reviews[0].reviewAuthorIcon){
-                        transformations(RoundedCornersTransformation(REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS ))
+                    ivReviewsPreviewAvatar.load(data.reviews[0].reviewAuthorIcon) {
+                        transformations(RoundedCornersTransformation(REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS))
                     }
                 }
                 aboutProductAdapter.items = mapProductAboutList(data.aboutList)
                 similarProductsAdapter.submitItems(data.similarProducts)
-
             }
         }
     }
@@ -138,7 +134,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         }
         return list
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

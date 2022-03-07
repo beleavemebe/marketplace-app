@@ -50,7 +50,7 @@ class ReviewResponseData(
     @SerializedName(SerializedNames.reviewRating)
     val rating: Int,
     @SerializedName(SerializedNames.reviewAvatar)
-    val reviewAuthorIcon:String
+    val reviewAuthorIcon: String
 )
 class SimilarProductsResponseData(
     @SerializedName(SerializedNames.id)
