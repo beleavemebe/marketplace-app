@@ -105,19 +105,22 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                     tvPrice.text = getString(R.string.price_placeholder, product.price)
                     tvSales.text = getString(R.string.sales_placeholder, product.sales)
                     tvStock.text = getString(R.string.in_stock_placeholder, product.stock)
-                    tvReviewsPreviewAuthor.text = product.reviews[0].author
-                    tvReviewsPreviewDescription.text = product.reviews[0].details
-                    reviewsPreviewRatingBar.progress = product.reviews[0].rating
-                    ivReviewsPreviewAvatar.load(product.reviews[0].reviewAuthorIcon) {
-                        transformations(
-                            RoundedCornersTransformation(
-                                REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS
+                    if(product.reviews.isNotEmpty()){
+                        tvReviewsPreviewAuthor.text = product.reviews[0].author
+                        tvReviewsPreviewDescription.text = product.reviews[0].details
+                        reviewsPreviewRatingBar.progress = product.reviews[0].rating
+                        ivReviewsPreviewAvatar.load(product.reviews[0].reviewAuthorIcon) {
+                            transformations(
+                                RoundedCornersTransformation(
+                                    REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS
+                                )
                             )
-                        )
+                    }
+
                     }
                 }
                 aboutProductAdapter.items = mapProductAboutList(product.getProductAbout())
-                //  similarProductsAdapter.submitItems(product.similarProducts)
+                //  similarProductsAdapter.submitItems(product.similarProducts) //TODO
             }
         }
     }

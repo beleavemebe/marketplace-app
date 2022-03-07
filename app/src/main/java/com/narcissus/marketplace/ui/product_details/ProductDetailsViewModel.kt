@@ -43,7 +43,7 @@ class ProductDetailsViewModel(
             price,
             name,
             department,
-            "lol xdd",
+            type,
             stock,
             "lol xd",
             "wtf",
