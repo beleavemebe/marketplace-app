@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.ui.cart
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -20,6 +21,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCartBinding.bind(view)
         initRecyclerView()
+        initButtons()
         subscribeToViewModel()
     }
 
@@ -57,6 +59,30 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             adapter.items = adapter.items.modifiedAt(CartItems.ItemsList(items))
         }
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private suspend fun selectAll(isSelected:Boolean){
+        viewModel.selectAll(isSelected).collect{
+            adapter.items = adapter.items.modifiedAt(CartItems.ItemsList(it))
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun initButtons(){
+        binding.cbSelectAll.setOnCheckedChangeListener { compoundButton, _ ->
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                if (compoundButton.isChecked)
+                    selectAll(true)
+                else {
+                    selectAll(false)
+                }
+            }
+        }
+        binding.btnDeleteSelected.setOnClickListener {
+
+        }
+    }
+
 
     private fun List<CartItems>.modifiedAt(
         with: CartItems, index:Int = 0

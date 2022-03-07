@@ -9,7 +9,6 @@ import com.narcissus.marketplace.model.CartItem
 
 class CartAdapter : RecyclerView.Adapter<CartItemViewHolder>() {
     private var items = mutableListOf<CartItem>()
-    private var isSelected = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemViewHolder {
         val context = LayoutInflater.from(parent.context)
@@ -19,7 +18,7 @@ class CartAdapter : RecyclerView.Adapter<CartItemViewHolder>() {
 
     override fun onBindViewHolder(holder: CartItemViewHolder, position: Int) {
         val item = items[position]
-        holder.bind(item,isSelected)
+        holder.bind(item)
     }
 
     override fun getItemCount() = items.size

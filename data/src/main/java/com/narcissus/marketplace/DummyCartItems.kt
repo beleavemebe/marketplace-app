@@ -9,7 +9,7 @@ object DummyCartItems {
     val items: MutableList<CartItem> = mutableListOf(
         CartItem(sampleCartItem, 1, isSelected = false),
         CartItem(sampleCartItem, 1, isSelected = false),
-        CartItem(sampleCartItem, 1, isSelected = false),
-        CartItem(sampleCartItem, 1, isSelected = false),
+        CartItem(sampleCartItemTwo, 1, isSelected = false),
+        CartItem(sampleCartItemTwo, 1, isSelected = false),
     )
 }

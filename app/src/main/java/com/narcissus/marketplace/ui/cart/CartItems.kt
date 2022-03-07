@@ -20,17 +20,17 @@ open class CartItems {
                 root: ViewGroup
             ) = CartItemsBinding.inflate(layoutInflater, root, false)
 
-
+            val adapter = CartAdapter()
             val delegate get() = adapterDelegateViewBinding<ItemsList, CartItems, CartItemsBinding>(
                 ::inflateBinding
             ) {
-                val adapter = CartAdapter()
                 binding.rvCartItems.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 binding.rvCartItems.adapter = adapter
                 bind{
                     adapter.setData(item.items)
                 }
             }
+
         }
     }
 }
