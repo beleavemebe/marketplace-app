@@ -17,6 +17,7 @@ import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.model.DetailsAbout
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
+import com.narcissus.marketplace.ui.product_details.model.DetailsAbout
 import com.narcissus.marketplace.ui.products.ProductsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -108,8 +109,8 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                         transformations(RoundedCornersTransformation(REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS))
                     }
                 }
-                aboutProductAdapter.items = mapProductAboutList(product.aboutList)
-                similarProductsAdapter.submitItems(product.similarProducts)
+                aboutProductAdapter.items = mapProductAboutList(product.about)
+              //  similarProductsAdapter.submitItems(product.similarProducts)
             }
         }
     }
@@ -123,7 +124,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         aboutList.onEach { about ->
             val title = when (about) {
                 is DetailsAbout.Type -> getString(R.string.type)
-                is DetailsAbout.Color -> getString(R.string.color)
+                is DetailsAbout.Color -> getString(R.string.about)
                 is DetailsAbout.Material -> getString(R.string.material)
                 is DetailsAbout.Description -> getString(R.string.description)
             }

@@ -16,12 +16,15 @@ class ProductDetailsViewModel(
     private val getProductDetails: GetProductDetails,
     private val addToCart: AddToCart,
 ) : ViewModel() {
+
+    val productDetailsFlow: Flow<ProductDetailsScreenData> = flow {
     val productDetailsFlow: Flow<ProductDetails> = flow {
         val details =
             runCatching {
                 getProductDetails(productId).getOrThrow()
             }.getOrNull()
-        details?.let { emit(it) }
+
+        details?.let { emit(it.toProductDetailsScreenData()) }
     }
 
     fun purchase(product: ProductDetails) {
@@ -34,4 +37,25 @@ class ProductDetailsViewModel(
 // TODO: fix absent properties and move elsewhere
 private fun ProductDetails.toProductPreview(): ProductPreview {
     return ProductPreview(id, icon, price, name, department, "lol xdd", stock, "lol xd", "wtf", rating, sales)
+
+    private fun ProductDetails.toProductDetailsScreenData(): ProductDetailsScreenData =
+        ProductDetailsScreenData(
+            id,
+            icon,
+            price,
+            name,
+            type,
+            department,
+            stock,
+            rating,
+            sales,
+            listOf(
+                DetailsAbout.Type(type),
+                DetailsAbout.Color(color),
+                DetailsAbout.Material(material),
+                DetailsAbout.Description(description)
+            ),
+            reviews,
+            similarProducts
+        )
 }
