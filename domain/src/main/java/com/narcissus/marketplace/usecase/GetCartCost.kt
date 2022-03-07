@@ -23,5 +23,4 @@ class GetCartCost(private val cartLocalRepository: CartLocalRepository) {
             }
         }
     }
-
 }

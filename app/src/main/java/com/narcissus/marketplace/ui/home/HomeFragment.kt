@@ -3,86 +3,44 @@ package com.narcissus.marketplace.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
+import androidx.navigation.fragment.findNavController
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
+import com.narcissus.marketplace.ui.home.recycler.ExtraVerticalMarginDecoration
+import com.narcissus.marketplace.ui.home.recycler.HomeScreenAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModel()
+
+    private val adapter = HomeScreenAdapter(::navigateToProductDetails)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
         initRecyclerView()
-        fillRecyclerWithDummyContent()
         subscribeToViewModel()
     }
 
-    private val adapter = ListDelegationAdapter(
-        HomeScreenItem.Header.delegate,
-        HomeScreenItem.ProductList.delegate,
-        HomeScreenItem.LoadingProductList.delegate,
-    )
-
     private fun initRecyclerView() {
-        binding.rvContent.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvContent.addItemDecoration(ExtraVerticalMarginDecoration(HOME_SCREEN_MARGINS))
         binding.rvContent.adapter = adapter
-    }
-
-    private fun fillRecyclerWithDummyContent() {
-        adapter.items = listOf(
-            HomeScreenItem.Header(
-                requireContext().getString(R.string.top_rated)
-            ),
-            HomeScreenItem.LoadingProductList,
-
-            HomeScreenItem.Header(
-                requireContext().getString(R.string.top_sales)
-            ),
-            HomeScreenItem.LoadingProductList,
-
-            HomeScreenItem.Header(
-                requireContext().getString(R.string.you_visited)
-            ),
-            HomeScreenItem.LoadingProductList,
-
-            HomeScreenItem.Header(
-                requireContext().getString(R.string.explore)
-            ),
-            HomeScreenItem.LoadingProductList
-        )
     }
 
     private fun subscribeToViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.topRatedFlow.collect { items ->
-                adapter.items = adapter.items.modifiedAt(TOP_RATED_PRODUCTS_INDEX, HomeScreenItem.ProductList(items))
-            }
-
-            viewModel.topSalesFlow.collect { items ->
-                adapter.items = adapter.items.modifiedAt(TOP_SALES_PRODUCTS_INDEX, HomeScreenItem.ProductList(items))
-            }
-
-            viewModel.recentlyVisitedFlow.collect { items ->
-                adapter.items = adapter.items.modifiedAt(RECENTLY_VISITED_PRODUCTS_INDEX, HomeScreenItem.ProductList(items))
-            }
-
-            viewModel.randomFlow.collect { result ->
-                adapter.items = adapter.items.modifiedAt(EXPLORE_PRODUCTS_INDEX, HomeScreenItem.ProductList(result.data))
-            }
+            viewModel.contentFlow.collect(adapter::setItems)
         }
     }
 
-    fun List<HomeScreenItem>.modifiedAt(index: Int, with: HomeScreenItem): List<HomeScreenItem> {
-        val result = this.toMutableList()
-        result[index] = with
-        return result
+    private fun navigateToProductDetails(id: String) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionFragmentHomeToFragmentProductDetails(id)
+        )
     }
 
     override fun onDestroyView() {
@@ -92,13 +50,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     companion object {
-        const val TOP_RATED_HEADER_INDEX = 0
-        const val TOP_RATED_PRODUCTS_INDEX = 1
-        const val TOP_SALES_HEADER_INDEX = 2
-        const val TOP_SALES_PRODUCTS_INDEX = 3
-        const val RECENTLY_VISITED_HEADER_INDEX = 4
-        const val RECENTLY_VISITED_PRODUCTS_INDEX = 5
-        const val EXPLORE_HEADER_INDEX = 6
-        const val EXPLORE_PRODUCTS_INDEX = 7
+        const val HOME_SCREEN_MARGINS = 8
     }
 }

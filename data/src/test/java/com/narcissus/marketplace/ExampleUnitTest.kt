@@ -3,7 +3,6 @@ package com.narcissus.marketplace
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *

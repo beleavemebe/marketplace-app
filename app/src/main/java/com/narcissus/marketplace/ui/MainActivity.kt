@@ -1,7 +1,6 @@
 package com.narcissus.marketplace.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         val navController =
             (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
         initBottomNavigation(navController)
-
     }
 
     private fun initBottomNavigation(navController: NavController) {

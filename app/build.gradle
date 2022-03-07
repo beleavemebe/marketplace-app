@@ -38,6 +38,14 @@ android {
 }
 
 dependencies {
+    implementation "io.coil-kt:coil:2.0.0-rc01"
+
+    implementation "io.insert-koin:koin-core:3.1.5"
+    implementation "io.insert-koin:koin-android:3.1.5"
+    testImplementation "io.insert-koin:koin-test:3.1.5"
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     def coroutines_version = "1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_version}"
@@ -53,6 +61,7 @@ dependencies {
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
+    implementation project(path: ':ui:user')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

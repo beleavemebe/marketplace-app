@@ -73,7 +73,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/productRatingBar"
-
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/montserrat"
@@ -106,7 +105,7 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/button_gradient_background"
+            android:background="@drawable/button_small_gradient_background"
             android:fontFamily="@font/montserrat_semibold"
             android:text="@string/add_to_cart"
             android:textAllCaps="false"

@@ -6,8 +6,7 @@ import com.narcissus.marketplace.util.ActionResult
 class SignUpWithEmail(private val userRemoteRepository: UserRemoteRepository) {
     suspend operator fun invoke(email: String, pass: String): ActionResult.SuccessResult<Boolean> {
         userRemoteRepository.signUpWithEmail(email, pass)
-        //TODO алгоритм проверки валидности логина/пароля
+        // TODO алгоритм проверки валидности логина/пароля
         return ActionResult.SuccessResult(true)
     }
-
 }

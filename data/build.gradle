@@ -30,7 +30,11 @@ android {
 }
 
 dependencies {
+    implementation "io.insert-koin:koin-core:3.1.5"
+    testImplementation "io.insert-koin:koin-test:3.1.5"
+
     implementation project(path: ':domain')
+    implementation project(path: ':apiclient')
 
     def coroutines_version = "1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"

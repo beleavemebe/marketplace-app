@@ -5,5 +5,3 @@ data class CartItem(
     val count: Int,
     val isSelected: Boolean
 )
-
-

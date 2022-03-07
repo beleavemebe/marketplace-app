@@ -8,7 +8,11 @@
     <fragment
         android:id="@+id/fragment_home"
         android:name="com.narcissus.marketplace.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_product_details"
+            app:destination="@id/fragment_product_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_catalog"
@@ -29,11 +33,22 @@
         android:id="@+id/fragment_splash"
         android:name="com.narcissus.marketplace.ui.splash.SplashFragment"
         android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_fragment_splash_to_fragment_home"
             app:destination="@id/fragment_home"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/nav_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_product_details"
+        android:name="com.narcissus.marketplace.ui.product_details.ProductDetailsFragment"
+        tools:layout="@layout/fragment_product_details">
+        <action
+            android:id="@+id/action_productDetailsFragment_to_productDetailsFragment"
+            app:destination="@id/fragment_product_details" />
+        <argument
+            android:name="productId"
+            app:argType="string" />
     </fragment>
 </navigation>
