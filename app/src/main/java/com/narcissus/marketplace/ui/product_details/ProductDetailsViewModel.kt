@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.model.CartItem
 import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.ui.product_details.model.DetailsAbout
+import com.narcissus.marketplace.ui.product_details.model.ProductDetailsScreenData
 import com.narcissus.marketplace.usecase.AddToCart
 import com.narcissus.marketplace.usecase.GetProductDetails
 import kotlinx.coroutines.flow.Flow
@@ -17,14 +19,14 @@ class ProductDetailsViewModel(
     private val addToCart: AddToCart,
 ) : ViewModel() {
 
-    val productDetailsFlow: Flow<ProductDetailsScreenData> = flow {
     val productDetailsFlow: Flow<ProductDetails> = flow {
         val details =
             runCatching {
                 getProductDetails(productId).getOrThrow()
             }.getOrNull()
 
-        details?.let { emit(it.toProductDetailsScreenData()) }
+        details?.let { emit(it) }
+
     }
 
     fun purchase(product: ProductDetails) {
@@ -32,30 +34,21 @@ class ProductDetailsViewModel(
             addToCart(CartItem(product.toProductPreview(), 1, false))
         }
     }
-}
 
-// TODO: fix absent properties and move elsewhere
-private fun ProductDetails.toProductPreview(): ProductPreview {
-    return ProductPreview(id, icon, price, name, department, "lol xdd", stock, "lol xd", "wtf", rating, sales)
-
-    private fun ProductDetails.toProductDetailsScreenData(): ProductDetailsScreenData =
-        ProductDetailsScreenData(
+    // TODO: fix absent properties and move elsewhere
+    private fun ProductDetails.toProductPreview(): ProductPreview {
+        return ProductPreview(
             id,
             icon,
             price,
             name,
-            type,
             department,
+            "lol xdd",
             stock,
+            "lol xd",
+            "wtf",
             rating,
-            sales,
-            listOf(
-                DetailsAbout.Type(type),
-                DetailsAbout.Color(color),
-                DetailsAbout.Material(material),
-                DetailsAbout.Description(description)
-            ),
-            reviews,
-            similarProducts
+            sales
         )
+    }
 }

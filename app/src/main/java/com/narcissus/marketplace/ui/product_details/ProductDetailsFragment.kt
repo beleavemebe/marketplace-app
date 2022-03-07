@@ -14,10 +14,11 @@ import coil.transform.RoundedCornersTransformation
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
-import com.narcissus.marketplace.model.DetailsAbout
+import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.model.DetailsAbout
+import com.narcissus.marketplace.ui.product_details.model.ProductDetailsScreenData
 import com.narcissus.marketplace.ui.products.ProductsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -53,7 +54,9 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private fun initNavigationListeners(productId: String) {
         binding.reviewsPreviewLayout.setOnClickListener {
             findNavController().navigate(
-                ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductReviewsFragment(productId)
+                ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductReviewsFragment(
+                    productId
+                )
             )
         }
     }
@@ -106,11 +109,15 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                     tvReviewsPreviewDescription.text = product.reviews[0].details
                     reviewsPreviewRatingBar.progress = product.reviews[0].rating
                     ivReviewsPreviewAvatar.load(product.reviews[0].reviewAuthorIcon) {
-                        transformations(RoundedCornersTransformation(REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS))
+                        transformations(
+                            RoundedCornersTransformation(
+                                REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS
+                            )
+                        )
                     }
                 }
-                aboutProductAdapter.items = mapProductAboutList(product.about)
-              //  similarProductsAdapter.submitItems(product.similarProducts)
+                aboutProductAdapter.items = mapProductAboutList(product.getProductAbout())
+                //  similarProductsAdapter.submitItems(product.similarProducts)
             }
         }
     }
@@ -141,4 +148,12 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun ProductDetails.getProductAbout(): List<DetailsAbout> =
+        listOf(
+            DetailsAbout.Type(type),
+            DetailsAbout.Color(color),
+            DetailsAbout.Material(material),
+            DetailsAbout.Description(description)
+        )
 }
