@@ -26,6 +26,8 @@
         <TextView
             android:id="@+id/productNameTextView"
             android:layout_width="0dp"
+            android:minLines="2"
+            android:maxLines="2"
             android:layout_height="wrap_content"
             android:layout_below="@id/productImageView"
             android:layout_marginHorizontal="8dp"
