@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.di
 
 import com.narcissus.marketplace.data.di.dataModule
+import com.narcissus.marketplace.usecase.AddToCart
 import com.narcissus.marketplace.usecase.GetProductDetails
 import com.narcissus.marketplace.usecase.GetRandomProducts
 import com.narcissus.marketplace.usecase.GetRecentlyVisitedProducts
@@ -17,4 +18,5 @@ val domainModule = module {
     factory { GetRandomProducts(get()) }
     factory { GetRecentlyVisitedProducts(get()) }
     factory { GetProductDetails(get()) }
+    factory { AddToCart(get()) }
 }

@@ -86,29 +86,30 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
     private fun observeProductDetails() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.productDetailsFlow.collect { data ->
+            viewModel.productDetailsFlow.collect { product ->
                 with(binding) {
-                    ivProduct.load(data.icon) {
+                    ivProduct.load(product.icon) {
                         listener(
                             onSuccess = { _, _ ->
                                 hideShimmerImage()
                             }
                         )
                     }
-                    tvProductName.text = data.name
-                    ratingBarProduct.progress = data.rating
-                    tvPrice.text = getString(R.string.price_placeholder, data.price)
-                    tvSales.text = getString(R.string.sales_placeholder, data.sales)
-                    tvStock.text = getString(R.string.in_stock_placeholder, data.stock)
-                    tvReviewsPreviewAuthor.text = data.reviews[0].author
-                    tvReviewsPreviewDescription.text = data.reviews[0].details
-                    reviewsPreviewRatingBar.progress = data.reviews[0].rating
-                    ivReviewsPreviewAvatar.load(data.reviews[0].reviewAuthorIcon) {
+                    tvProductName.text = product.name
+                    ratingBarProduct.progress = product.rating
+                    btnPurchase.setOnClickListener { viewModel.purchase(product) }
+                    tvPrice.text = getString(R.string.price_placeholder, product.price)
+                    tvSales.text = getString(R.string.sales_placeholder, product.sales)
+                    tvStock.text = getString(R.string.in_stock_placeholder, product.stock)
+                    tvReviewsPreviewAuthor.text = product.reviews[0].author
+                    tvReviewsPreviewDescription.text = product.reviews[0].details
+                    reviewsPreviewRatingBar.progress = product.reviews[0].rating
+                    ivReviewsPreviewAvatar.load(product.reviews[0].reviewAuthorIcon) {
                         transformations(RoundedCornersTransformation(REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS))
                     }
                 }
-                aboutProductAdapter.items = mapProductAboutList(data.aboutList)
-                similarProductsAdapter.submitItems(data.similarProducts)
+                aboutProductAdapter.items = mapProductAboutList(product.aboutList)
+                similarProductsAdapter.submitItems(product.similarProducts)
             }
         }
     }
