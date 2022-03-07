@@ -1,10 +1,7 @@
 package com.narcissus.marketplace.ui.product_details
 
-import android.animation.LayoutTransition
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,16 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.model.DetailsAbout
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
-import com.narcissus.marketplace.ui.product_details.reviews.DividerItemDecorator
-import com.narcissus.marketplace.ui.product_details.reviews.ReviewsItem
 import com.narcissus.marketplace.ui.products.ProductsAdapter
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -51,13 +44,12 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         _binding = FragmentProductDetailsBinding.bind(view)
         observeProductDetails()
         initAboutRecyclerView()
-        initListeners(args.productId)
+        initNavigationListeners(args.productId)
         initSimilarProductsRecyclerView()
         initToolBar()
-        initLayoutAnimation()
     }
 
-    private fun initListeners(productId: String) {
+    private fun initNavigationListeners(productId: String) {
         binding.reviewsPreviewLayout.setOnClickListener {
             findNavController().navigate(
                 ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductReviewsFragment(productId)
@@ -69,7 +61,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private fun initAboutRecyclerView() = with(binding.rvAbout) {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = aboutProductAdapter
-        itemAnimator = null
         aboutProductAdapter.items = listOf(AboutProductItem.LoadingItem())
     }
 
@@ -79,7 +70,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
         adapter = similarProductsAdapter
-        itemAnimator = null
     }
 
     private fun initToolBar() {
@@ -88,10 +78,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             .setupWithNavController(navController, AppBarConfiguration(navController.graph))
     }
 
-    private fun initLayoutAnimation() {
-        val layoutTransition = binding.root.layoutTransition
-        layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-    }
 
     private fun navigateToSimilarProduct(productId: String) {
         findNavController().navigate(
