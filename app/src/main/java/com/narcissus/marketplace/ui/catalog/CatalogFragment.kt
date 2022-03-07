@@ -1,9 +1,11 @@
 package com.narcissus.marketplace.ui.catalog
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -27,10 +29,16 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
     private val searchHistoryViewModel: SearchHistoryViewModel by viewModels()
     private val searchHistoryAdapterAdapter = SearchHistoryAdapter()
 
-//    private val supportFragmentManager = activity?.supportFragmentManager
-//    private val navController =
-//        (supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment)
-//            .navController
+    lateinit var supportFragmentManager: FragmentManager
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        supportFragmentManager = requireActivity().supportFragmentManager
+        val navController =
+            (supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment)
+                .navController
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,35 +50,21 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         setSearchHistoryList()
         setSearchHistoryRecyclerView()
 
-
-//        binding.searchLayout.cvFilter.setOnClickListener {
-//            val dialogFragment = FilterDialogFragment()
-//            supportFragmentManager?.beginTransaction()
-//                //                .add(R.id.fragment_filter_dialog,dialogFragment)
-//                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                ?.addToBackStack("yFragment")
-//                ?.commit()
-//            }
-//        }
     }
 
     private fun setSearchListeners() {
-//        binding.searchLayout.etSearch.setOnFocusChangeListener { view, hasFocus ->
-//            if (view.hasFocus()) {
-//                binding.searchLayout.etSearch.background = ContextCompat.getDrawable(
-//                    requireContext(),
-//                    com.narcissus.marketplace.R.drawable.background_search
-//                )
-//                binding.searchLayout.rvSearchHistory.visibility = View.VISIBLE
-//            }
-//            else {binding.searchLayout.etlSearch.background = null
-//            binding.searchLayout.rvSearchHistory.visibility=View.GONE
-//            }
-//        }
-//
-//        binding.searchLayout.cvFilter.setOnClickListener {
-//
-//        }
+        binding.searchLayout.cvFilter.setOnClickListener {
+            BottomSheetFragment().apply {
+                show(supportFragmentManager, tag)
+            }
+        }
+        binding.searchLayout.searchView.setOnFocusChangeListener { view, hasFocus ->
+            if (view.hasFocus()) {
+                binding.searchLayout.rvSearchHistory.visibility = View.VISIBLE
+            } else {
+                binding.searchLayout.rvSearchHistory.visibility = View.GONE
+            }
+        }
     }
 
     private fun setDepartmentList() {
@@ -120,6 +114,4 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         super.onDestroyView()
         _binding = null
     }
-
-
 }
