@@ -122,7 +122,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         aboutList.onEach { about ->
             val title = when (about) {
                 is DetailsAbout.Type -> getString(R.string.type)
-                is DetailsAbout.Color -> getString(R.string.about)
+                is DetailsAbout.Color -> getString(R.string.color)
                 is DetailsAbout.Material -> getString(R.string.material)
                 is DetailsAbout.Description -> getString(R.string.description)
             }
