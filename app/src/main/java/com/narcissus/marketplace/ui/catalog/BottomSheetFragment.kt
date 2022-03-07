@@ -18,15 +18,16 @@ import com.narcissus.marketplace.databinding.FragmentBottomSheetBinding
 class BottomSheetFragment : BottomSheetDialogFragment() {
 
     private var bottomSheetBehavior: BottomSheetBehavior<*>? = null
-    private var mBinding: FragmentBottomSheetBinding? = null
+    private var _binding: FragmentBottomSheetBinding? = null
 
-    private val binding get() = mBinding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
-        mBinding = FragmentBottomSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,25 +57,20 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding = null
+        _binding = null
     }
 
 
     private val mBottomSheetBehaviorCallback: BottomSheetCallback = object : BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
-//            if (BottomSheetBehavior.STATE_EXPANDED == newState) {
-//                showView(mBinding!!.appBarLayout, getActionBarSize());
-//                hideAppBar(mBinding!!.ivServiceTitle);
-//                hideAppBar(mBinding!!.viewLine);
-//                dismiss();
-//            }
+            if (BottomSheetBehavior.STATE_EXPANDED == newState) {
+                dismiss();
+            }
             if (BottomSheetBehavior.STATE_HALF_EXPANDED == newState) {
                 binding.animationView.visibility = View.VISIBLE
-
             }
 
             if (BottomSheetBehavior.STATE_COLLAPSED == newState) {
-
             }
 
             if (BottomSheetBehavior.STATE_HIDDEN == newState) {
