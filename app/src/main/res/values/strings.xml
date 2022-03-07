@@ -30,4 +30,6 @@
     <string name="similar_products">Similar Products</string>
     <string name="show_all_reviews">Show all reviews</string>
     <string name="hide_all_reviews">Hide all reviews</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

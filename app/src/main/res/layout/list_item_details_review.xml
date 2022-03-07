@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/ivReviewsAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/reviews"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/authorTV"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvReviewsAuthor"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/grey_light"
-        android:textSize="14sp"
-        android:fontFamily="@font/montserrat"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="author" />
+        android:layout_marginStart="6dp"
+        app:layout_constraintStart_toEndOf="@+id/ivReviewsAvatar"
+        app:layout_constraintTop_toTopOf="@+id/ivReviewsAvatar"
+        tools:text="Billy Clow" />
 
     <RatingBar
-        android:id="@+id/reviewRatingBar"
+        android:id="@+id/reviewsRatingBar"
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:isIndicator="true"
         android:numStars="5"
-        android:stepSize="1"
         android:progressBackgroundTint="@color/grey_light"
         android:progressTint="@color/ratingbar_active"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/authorTV"
+        android:stepSize="1"
+        app:layout_constraintBottom_toBottomOf="@+id/ivReviewsAvatar"
+        app:layout_constraintStart_toEndOf="@+id/ivReviewsAvatar"
         tools:progress="60" />
 
     <TextView
-        android:id="@+id/reviewTextTV"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvReviewsDescription"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/black"
-        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reviewRatingBar"
-        tools:text="Vso kruto tovar class" />
+        app:layout_constraintTop_toBottomOf="@+id/reviewsRatingBar"
+        tools:text="Aaa\nBbb\nCcc\nDdd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
