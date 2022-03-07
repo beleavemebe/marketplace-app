@@ -50,13 +50,15 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
     def coroutines_version = "1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${coroutines_version}"
+
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
 
