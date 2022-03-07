@@ -15,7 +15,8 @@ class CartViewModel(
     private val removeFromCart: RemoveFromCart = ServiceLocator.removeFromCart,
     private val setCartItemSelected: SetCartItemSelected = ServiceLocator.setCartItemSelected,
     private val setCartItemAmount: SetCartItemAmount = ServiceLocator.setCartItemAmount,
-    private val selectAllCartItems: SelectAllCartItems = ServiceLocator.selectAllCartItems
+    private val selectAllCartItems: SelectAllCartItems = ServiceLocator.selectAllCartItems,
+    private val removeSelectedCartItems: RemoveSelectedCartItems = ServiceLocator.removeSelectedCartItems
 ) : ViewModel() {
 
     val getCartFlow = flow {
@@ -49,7 +50,9 @@ class CartViewModel(
     }
 
     fun deleteSelectedItems() {
-        TODO()
+        viewModelScope.launch {
+            removeSelectedCartItems()
+        }
     }
 
     fun onItemChecked(cartItem: CartItem, flag: Boolean) {
