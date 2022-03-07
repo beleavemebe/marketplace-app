@@ -15,4 +15,5 @@ object ServiceLocator : KoinComponent {
     val setCartItemSelected = SetCartItemSelected(cartLocalRepositoryImpl)
     val setCartItemAmount = SetCartItemAmount(cartLocalRepositoryImpl)
     val selectAllCartItems = SelectAllCartItems(cartLocalRepositoryImpl)
+    val removeSelectedCartItems = RemoveSelectedCartItems(cartLocalRepositoryImpl)
 }

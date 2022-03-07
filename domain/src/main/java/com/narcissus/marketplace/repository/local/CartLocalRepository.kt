@@ -10,4 +10,5 @@ interface CartLocalRepository {
     suspend fun setCartItemSelected(cartItem: CartItem, selected: Boolean)
     suspend fun setCartItemAmount(cartItem: CartItem, amount: Int)
     suspend fun selectAllCartItems(isSelected:Boolean)
+    suspend fun deleteSelectedItems()
 }

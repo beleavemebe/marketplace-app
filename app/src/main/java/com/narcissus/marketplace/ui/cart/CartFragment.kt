@@ -78,7 +78,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         }
 
         binding.btnDeleteSelected.setOnClickListener {
-
+            viewModel.deleteSelectedItems()
         }
     }
 
