@@ -1,22 +1,68 @@
-package com.narcissus.marketplace.data
+package com.narcissus.marketplace
 
 import com.narcissus.marketplace.model.CartItem
+import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.repository.local.CartLocalRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-internal class CartLocalRepositoryImpl : CartLocalRepository {
+class CartLocalRepositoryImpl : CartLocalRepository {
+
+    private val sampleCartItem =
+        ProductPreview("1", "", 1449, "Apple MacBook Pro 13", "", "", 752, "", "", 3, 152)
+
+    private val sampleCartItemTwo =
+        ProductPreview("2", "", 400, "Apple Watch", "", "", 240, "", "", 5, 100)
+
+    private val items = MutableStateFlow(
+        listOf(
+            CartItem(sampleCartItem, 1, isSelected = false),
+            CartItem(sampleCartItemTwo, 1, isSelected = false),
+        )
+    )
+
     override fun getCart(): Flow<List<CartItem>> {
-        return flow {
-            emit(DummyCartItems.items)
-        }
+        return items
     }
 
     override suspend fun addToCart(cartItem: CartItem) {
-        TODO("Not yet implemented")
+        items.value = items.value + cartItem
     }
 
     override suspend fun removeFromCart(cartItem: CartItem) {
-        TODO("Not yet implemented")
+        items.value = items.value - cartItem
+    }
+
+    override suspend fun setCartItemSelected(cartItem: CartItem, selected: Boolean) {
+
+        val newList = items.value.map { item ->
+            if (item == cartItem) {
+                item.copy(isSelected = selected)
+            } else {
+                item
+            }
+        }
+
+        items.value = newList
+    }
+
+    override suspend fun setCartItemAmount(cartItem: CartItem, amount: Int) {
+
+        val newList = items.value.map { item ->
+            if (item == cartItem) {
+                item.copy(count = amount)
+            } else {
+                item
+            }
+        }
+
+        items.value = newList
+    }
+
+    override suspend fun selectAllCartItems(isSelected: Boolean) {
+        val newList = items.value.map { item ->
+            item.copy(isSelected = isSelected)
+        }
+        items.value = newList
     }
 }

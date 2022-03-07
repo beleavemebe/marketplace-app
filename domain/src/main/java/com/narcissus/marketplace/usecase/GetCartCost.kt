@@ -14,7 +14,9 @@ class GetCartCost(private val cartLocalRepository: CartLocalRepository) {
                     emit("")
                 } else {
                     for (item in listItems) {
-                        sum += item.data.price
+                        if (item.isSelected) {
+                            sum += item.data.price*item.count
+                        }
                     }
                     emit("$$sum")
                 }

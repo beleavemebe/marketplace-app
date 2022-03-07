@@ -12,7 +12,13 @@ class GetCartItemsAmount(private val cartLocalRepository: CartLocalRepository) {
                 if (listItems.isEmpty()) {
                     emit("")
                 } else {
-                    emit("goods: ${listItems.size}")
+                    var amount = 0
+                    for (item in listItems) {
+                        if(item.isSelected){
+                            amount += item.count
+                        }
+                    }
+                    emit("goods: $amount")
                 }
             }
         }

@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
 import com.narcissus.marketplace.R
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlin.math.max
 
 class IncreaseDecreaseAmountView @JvmOverloads constructor(
@@ -22,7 +24,12 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
     private lateinit var ibIncrease: ImageButton
     private lateinit var tvAmount: TextView
 
-    private var currentAmount = 1
+    fun setAmount(value: Int) {
+        _amountFlow.value = value
+    }
+
+    private val _amountFlow = MutableStateFlow(1)
+    val amountFlow = _amountFlow.asStateFlow()
 
     init {
         inflate(context, R.layout.view_increase_decrease_amount, this)
@@ -42,12 +49,12 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
 
     private fun initListeners() {
         ibDecrease.setOnClickListener {
-            currentAmount = max(1, currentAmount - 1)
+            _amountFlow.value = max(1, _amountFlow.value - 1)
             invalidate()
         }
 
         ibIncrease.setOnClickListener {
-            currentAmount += 1
+            _amountFlow.value += 1
             invalidate()
         }
     }
@@ -58,17 +65,17 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
     }
 
     private fun refreshAmount() {
-        tvAmount.text = currentAmount.toString()
+        tvAmount.text = _amountFlow.value.toString()
     }
 
     override fun onSaveInstanceState(): Parcelable {
         super.onSaveInstanceState()
-        return bundleOf("amount" to currentAmount)
+        return bundleOf("amount" to _amountFlow.value)
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         super.onRestoreInstanceState(null)
         val restoredAmount = (state as? Bundle)?.get("amount") as? Int
-        currentAmount = restoredAmount ?: 1
+        _amountFlow.value = restoredAmount ?: 1
     }
 }
