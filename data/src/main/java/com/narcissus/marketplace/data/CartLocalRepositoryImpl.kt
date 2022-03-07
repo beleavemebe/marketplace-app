@@ -70,7 +70,7 @@ class CartLocalRepositoryImpl : CartLocalRepository {
         val updatedList: MutableList<CartItem> = mutableListOf()
 
         items.value.map { item ->
-            if(!item.isSelected) updatedList.add(item)
+            if (!item.isSelected) updatedList.add(item)
         }
 
         items.value = updatedList

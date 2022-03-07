@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.model.CartItem
 import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.model.ProductPreview
-import com.narcissus.marketplace.ui.product_details.model.DetailsAbout
-import com.narcissus.marketplace.ui.product_details.model.ProductDetailsScreenData
 import com.narcissus.marketplace.usecase.AddToCart
 import com.narcissus.marketplace.usecase.GetProductDetails
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +24,6 @@ class ProductDetailsViewModel(
             }.getOrNull()
 
         details?.let { emit(it) }
-
     }
 
     fun purchase(product: ProductDetails) {
