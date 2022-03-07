@@ -11,6 +11,7 @@ import com.narcissus.marketplace.data.UserRemoteRepositoryImpl
 import com.narcissus.marketplace.repository.local.CartLocalRepository
 import com.narcissus.marketplace.repository.local.UserLocalRepository
 import com.narcissus.marketplace.repository.remote.DepartmentsRepository
+import com.narcissus.marketplace.data.persistence.di.persistenceModule
 import com.narcissus.marketplace.repository.remote.OrderRepository
 import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
 import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository
@@ -19,7 +20,7 @@ import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
 val dataModule = module {
-    loadKoinModules(apiClientModule)
+    loadKoinModules(listOf(apiClientModule, persistenceModule))
 
     single<CartLocalRepository> { CartLocalRepositoryImpl() }
     single<DepartmentsRepository> { DepartmentsRepositoryImpl() }
