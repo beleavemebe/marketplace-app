@@ -33,7 +33,7 @@ internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService)
             ),
             rating,
             sales,
-            reviewsList.map { Review(it.reviewId, it.author, it.details, it.rating) },
+            reviewsList.map { Review(it.reviewId, it.author, it.details, it.rating,it.reviewAuthorIcon) },
             similarProductsList.map(SimilarProductsResponseData::toSimilarProducts)
         )
     }

@@ -50,5 +50,19 @@
         <argument
             android:name="productId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_productReviewsFragment"
+            app:destination="@id/reviewsFragment" />
+
     </fragment>
+    <fragment
+        android:id="@+id/reviewsFragment"
+        android:name="com.narcissus.marketplace.ui.product_details.reviews.ReviewsFragment"
+        android:label="@string/reviews"
+        tools:layout="@layout/fragment_reviews" >
+        <argument
+            android:name="productId"
+            app:argType="string" />
+    </fragment>
+
 </navigation>
