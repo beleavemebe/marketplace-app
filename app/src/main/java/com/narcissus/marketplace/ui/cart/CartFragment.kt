@@ -1,15 +1,17 @@
 package com.narcissus.marketplace.ui.cart
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentCartBinding
+import com.narcissus.marketplace.model.CartItem
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
@@ -25,71 +27,64 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         subscribeToViewModel()
     }
 
-    private val adapter = ListDelegationAdapter(CartItems.ItemsList.delegate)
+    private val adapter = object : AsyncListDifferDelegationAdapter<CartListItem>(
+        CartListItem.DIFF_CALLBACK,
+        CartListItem.Item.delegate,
+    ) {}
 
     private fun initRecyclerView() {
-        binding.rvCartContent.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvCartContent.adapter = adapter
-        adapter.items = listOf(CartItems())
     }
-
 
     private fun subscribeToViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                observeCartCost()
-                observeItemsInCart()
-                observeCart()
+            observeCartCost()
+            observeCartItemAmount()
+            observeCart()
         }
     }
 
-    private suspend fun observeCartCost() {
-        viewModel.getCartCostFlow.collect { totalPrice ->
+    private fun observeCartCost() {
+        viewModel.getCartCostFlow.onEach { totalPrice ->
             binding.tvTotalPrice.text = totalPrice
-        }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private suspend fun observeItemsInCart() {
-        viewModel.getCartItemsAmountFlow.collect { amount ->
+    private fun observeCartItemAmount() {
+        viewModel.getCartItemsAmountFlow.onEach { amount ->
             binding.tvProductsAmount.text = amount
-        }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private suspend fun observeCart() {
-        viewModel.getCartFlow.collect { items ->
-            adapter.items = adapter.items.modifiedAt(CartItems.ItemsList(items))
-        }
+    private fun selectAll(isSelected: Boolean) {
+        TODO()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private suspend fun selectAll(isSelected:Boolean){
-        viewModel.selectAll(isSelected).collect{
-            adapter.items = adapter.items.modifiedAt(CartItems.ItemsList(it))
-            adapter.notifyDataSetChanged()
-        }
-    }
-
-    private fun initButtons(){
-        binding.cbSelectAll.setOnCheckedChangeListener { compoundButton, _ ->
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                if (compoundButton.isChecked)
-                    selectAll(true)
-                else {
-                    selectAll(false)
-                }
+    private fun observeCart() {
+        viewModel.getCartFlow.onEach { items ->
+            binding.groupCartIsEmpty.isVisible = items.isEmpty()
+            adapter.items = items.map { cartItem ->
+                cartItem.toCartListItem()
             }
-        }
-        binding.btnDeleteSelected.setOnClickListener {
-
-        }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun CartItem.toCartListItem() = CartListItem.Item(
+        this,
+        viewModel::deleteItem,
+        viewModel::onItemChecked,
+        viewModel::onItemAmountChanged,
+        viewLifecycleOwner.lifecycleScope
+    )
 
-    private fun List<CartItems>.modifiedAt(
-        with: CartItems, index:Int = 0
-    ): List<CartItems> {
-        val result = this.toMutableList()
-        result[index] = with
-        return result
+    private fun initButtons() {
+        binding.cbSelectAll.setOnCheckedChangeListener { _, isChecked ->
+            selectAll(isChecked)
+        }
+
+        binding.btnDeleteSelected.setOnClickListener {
+            TODO()
+        }
     }
 
     override fun onDestroyView() {

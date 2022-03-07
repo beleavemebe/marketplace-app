@@ -79,6 +79,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids=""
+                android:id="@+id/groupCartIsEmpty" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCartContent"
                 android:layout_width="0dp"

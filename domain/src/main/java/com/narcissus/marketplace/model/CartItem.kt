@@ -3,7 +3,7 @@ package com.narcissus.marketplace.model
 data class CartItem(
     val data: ProductPreview,
     val count: Int,
-    var isSelected: Boolean
+    val isSelected: Boolean
 )
 
 

@@ -19,4 +19,6 @@ object ServiceLocator {
     val getCartCost = GetCartCost(cartLocalRepositoryImpl)
     val getCartItemsAmount = GetCartItemsAmount(cartLocalRepositoryImpl)
     val removeFromCart = RemoveFromCart(cartLocalRepositoryImpl)
+    val setCartItemSelected = SetCartItemSelected(cartLocalRepositoryImpl)
+    val setCartItemAmount = SetCartItemAmount(cartLocalRepositoryImpl)
 }
