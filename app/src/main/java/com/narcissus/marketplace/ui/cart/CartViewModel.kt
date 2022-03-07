@@ -4,13 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.di.ServiceLocator
 import com.narcissus.marketplace.model.CartItem
-import com.narcissus.marketplace.usecase.AddToCart
-import com.narcissus.marketplace.usecase.GetCart
-import com.narcissus.marketplace.usecase.GetCartCost
-import com.narcissus.marketplace.usecase.GetCartItemsAmount
-import com.narcissus.marketplace.usecase.RemoveFromCart
-import com.narcissus.marketplace.usecase.SetCartItemAmount
-import com.narcissus.marketplace.usecase.SetCartItemSelected
+import com.narcissus.marketplace.usecase.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
@@ -20,7 +14,8 @@ class CartViewModel(
     private val getCartItemsAmount: GetCartItemsAmount = ServiceLocator.getCartItemsAmount,
     private val removeFromCart: RemoveFromCart = ServiceLocator.removeFromCart,
     private val setCartItemSelected: SetCartItemSelected = ServiceLocator.setCartItemSelected,
-    private val setCartItemAmount: SetCartItemAmount = ServiceLocator.setCartItemAmount
+    private val setCartItemAmount: SetCartItemAmount = ServiceLocator.setCartItemAmount,
+    private val selectAllCartItems: SelectAllCartItems = ServiceLocator.selectAllCartItems
 ) : ViewModel() {
 
     val getCartFlow = flow {
@@ -48,7 +43,9 @@ class CartViewModel(
     }
 
     fun selectAll(flag: Boolean) {
-        TODO()
+        viewModelScope.launch {
+            selectAllCartItems(flag)
+        }
     }
 
     fun deleteSelectedItems() {

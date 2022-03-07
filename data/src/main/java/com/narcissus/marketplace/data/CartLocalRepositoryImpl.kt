@@ -58,4 +58,11 @@ class CartLocalRepositoryImpl : CartLocalRepository {
 
         items.value = newList
     }
+
+    override suspend fun selectAllCartItems(isSelected: Boolean) {
+        val newList = items.value.map { item ->
+            item.copy(isSelected = isSelected)
+        }
+        items.value = newList
+    }
 }

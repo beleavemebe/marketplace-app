@@ -55,11 +55,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             binding.tvProductsAmount.text = amount
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
-
-    private fun selectAll(isSelected: Boolean) {
-        TODO()
-    }
-
     private fun observeCart() {
         viewModel.getCartFlow.onEach { items ->
             binding.groupCartIsEmpty.isVisible = items.isEmpty()
@@ -79,11 +74,11 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private fun initButtons() {
         binding.cbSelectAll.setOnCheckedChangeListener { _, isChecked ->
-            selectAll(isChecked)
+            viewModel.selectAll(isChecked)
         }
 
         binding.btnDeleteSelected.setOnClickListener {
-            TODO()
+
         }
     }
 
