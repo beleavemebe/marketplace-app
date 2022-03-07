@@ -9,13 +9,12 @@ import com.narcissus.marketplace.model.CartItem
 
 class CartAdapter : RecyclerView.Adapter<CartItemViewHolder>() {
     private var items = mutableListOf<CartItem>()
-    private var isSelected: Boolean = false
+    private var isSelected = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemViewHolder {
         val context = LayoutInflater.from(parent.context)
         val binding = ListItemCartBinding.inflate(context, parent, false)
         return CartItemViewHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: CartItemViewHolder, position: Int) {
@@ -31,18 +30,4 @@ class CartAdapter : RecyclerView.Adapter<CartItemViewHolder>() {
         items.addAll(list)
         notifyDataSetChanged()
     }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun selectAll() {
-        isSelected = true
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun unselectAll(){
-        isSelected = false
-        notifyDataSetChanged()
-    }
-
-    //TODO add DiffUtil and some features
 }

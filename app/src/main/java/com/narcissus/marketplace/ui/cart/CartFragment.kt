@@ -5,54 +5,69 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentCartBinding
 
+
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
-    private var _cartAdapter: CartAdapter? = null
     private val binding get() = _binding!!
-    private val cartAdapter get() = _cartAdapter!!
     private val viewModel: CartViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCartBinding.bind(view)
         initRecyclerView()
-        initSelectAll()
-        fillData()
+        subscribeToViewModel()
     }
+
+    private val adapter = ListDelegationAdapter(CartItems.ItemsList.delegate)
 
     private fun initRecyclerView() {
-        _cartAdapter = CartAdapter()
-        binding.rvCartItems.adapter = cartAdapter
+        binding.rvCartContent.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvCartContent.adapter = adapter
+        adapter.items = listOf(CartItems())
     }
 
-    private fun fillData() {
+
+    private fun subscribeToViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.getCartFlow.collect { items ->
-                cartAdapter.setData(items)
-            }
-            viewModel.getCartCostFlow.collect { price ->
-                binding.tvTotalPrice.text = price
-            }
-            viewModel.getCartItemsAmountFlow.collect { amount ->
-                binding.tvProductsAmount.text = amount
-            }
+                observeCartCost()
+                observeItemsInCart()
+                observeCart()
         }
-
     }
 
-    private fun initSelectAll() {
-        binding.cbSelectAll.setOnCheckedChangeListener { compoundButton, _ ->
-            if (compoundButton.isChecked) cartAdapter.selectAll()
-            else cartAdapter.unselectAll()
+    private suspend fun observeCartCost() {
+        viewModel.getCartCostFlow.collect { totalPrice ->
+            binding.tvTotalPrice.text = totalPrice
         }
+    }
+
+    private suspend fun observeItemsInCart() {
+        viewModel.getCartItemsAmountFlow.collect { amount ->
+            binding.tvProductsAmount.text = amount
+        }
+    }
+
+    private suspend fun observeCart() {
+        viewModel.getCartFlow.collect { items ->
+            adapter.items = adapter.items.modifiedAt(CartItems.ItemsList(items))
+        }
+    }
+
+    private fun List<CartItems>.modifiedAt(
+        with: CartItems, index:Int = 0
+    ): List<CartItems> {
+        val result = this.toMutableList()
+        result[index] = with
+        return result
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _cartAdapter = null
         _binding = null
     }
 }
