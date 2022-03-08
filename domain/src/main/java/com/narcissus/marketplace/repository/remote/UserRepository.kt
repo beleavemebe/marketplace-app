@@ -23,5 +23,4 @@ interface UserRepository {
     // fun isUserLoggedIn(): Flow<Boolean>
     fun getRecentlyVisitedProducts(): Flow<List<ProductPreview>>
     suspend fun writeToVisitedProducts(productPreview: ProductPreview)
-
 }

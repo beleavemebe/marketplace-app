@@ -2,7 +2,6 @@ package com.narcissus.marketplace.data
 
 import com.narcissus.marketplace.apiclient.api.model.ProductPreviewResponseData
 import com.narcissus.marketplace.apiclient.api.service.ApiService
-import com.narcissus.marketplace.data.persistence.database.ProductDao
 import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository
 import com.narcissus.marketplace.util.ActionResult

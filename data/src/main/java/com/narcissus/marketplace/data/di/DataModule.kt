@@ -7,9 +7,9 @@ import com.narcissus.marketplace.data.OrderRepositoryImpl
 import com.narcissus.marketplace.data.ProductsDetailsRepositoryImpl
 import com.narcissus.marketplace.data.ProductsPreviewRepositoryImpl
 import com.narcissus.marketplace.data.UserRepositoryImpl
+import com.narcissus.marketplace.data.persistence.di.persistenceModule
 import com.narcissus.marketplace.repository.local.CartLocalRepository
 import com.narcissus.marketplace.repository.remote.DepartmentsRepository
-import com.narcissus.marketplace.data.persistence.di.persistenceModule
 import com.narcissus.marketplace.repository.remote.OrderRepository
 import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
 import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository

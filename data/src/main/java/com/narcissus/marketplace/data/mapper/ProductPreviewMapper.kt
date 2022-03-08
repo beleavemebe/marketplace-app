@@ -18,5 +18,3 @@ fun ProductEntity.toProductPreview(): ProductPreview {
         sales = sales
     )
 }
-
-
