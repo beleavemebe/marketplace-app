@@ -18,7 +18,6 @@ import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.model.DetailsAbout
-import com.narcissus.marketplace.ui.product_details.model.ProductDetailsScreenData
 import com.narcissus.marketplace.ui.products.ProductsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -105,7 +104,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                     tvPrice.text = getString(R.string.price_placeholder, product.price)
                     tvSales.text = getString(R.string.sales_placeholder, product.sales)
                     tvStock.text = getString(R.string.in_stock_placeholder, product.stock)
-                    if(product.reviews.isNotEmpty()){
+                    if (product.reviews.isNotEmpty()) {
                         tvReviewsPreviewAuthor.text = product.reviews[0].author
                         tvReviewsPreviewDescription.text = product.reviews[0].details
                         reviewsPreviewRatingBar.progress = product.reviews[0].rating
@@ -115,8 +114,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                                     REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS
                                 )
                             )
-                    }
-
+                        }
                     }
                 }
                 aboutProductAdapter.items = mapProductAboutList(product.getProductAbout())

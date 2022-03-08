@@ -1,6 +1,6 @@
 package com.narcissus.marketplace.model
 
-data class SimilarProduct (
+data class SimilarProduct(
     val id: String,
     val icon: String,
     val price: Int,
@@ -9,4 +9,4 @@ data class SimilarProduct (
     val type: String,
     val stock: Int,
     val rating: Int,
-        )
+)

@@ -14,7 +14,7 @@ class GetCartItemsAmount(private val cartLocalRepository: CartLocalRepository) {
                 } else {
                     var amount = 0
                     for (item in listItems) {
-                        if(item.isSelected){
+                        if (item.isSelected) {
                             amount += item.count
                         }
                     }
