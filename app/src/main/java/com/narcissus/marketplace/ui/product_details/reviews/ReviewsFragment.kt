@@ -22,8 +22,11 @@ import org.koin.core.parameter.parametersOf
 class ReviewsFragment : Fragment(R.layout.fragment_reviews), KoinComponent {
     private var _binding: FragmentReviewsBinding? = null
     private val binding get() = _binding!!
+
     private val args by navArgs<ProductDetailsFragmentArgs>()
+
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(args.productId) }
+
     private val reviewsAdapter = AsyncListDifferDelegationAdapter(
         ReviewsItem.DIFF_CALLBACK,
         ReviewsItem.ReviewItem.delegate
@@ -34,18 +37,23 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews), KoinComponent {
         _binding = FragmentReviewsBinding.bind(view)
         initReviewsRecyclerView()
         observeReviews()
-        initToolBar()
+        initToolbar()
     }
 
-    private fun initReviewsRecyclerView() = with(binding.rvReviews) {
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        adapter = reviewsAdapter
-        addItemDecoration(
-            DividerItemDecorator(
-                ContextCompat.getDrawable(requireContext(), R.drawable.recycler_view_divider)!!
+    private fun initReviewsRecyclerView() {
+        binding.rvReviews.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvReviews.adapter = reviewsAdapter
+        binding.rvReviews.addItemDecoration(
+            DividerItemDecoration(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.recycler_view_divider
+                )!!
             )
         )
     }
+
     private fun observeReviews() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.productDetailsFlow.collect { details ->
@@ -54,9 +62,9 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews), KoinComponent {
         }
     }
 
-    private fun initToolBar() {
+    private fun initToolbar() {
         val navController = findNavController()
-        binding.tbTop
-            .setupWithNavController(navController, AppBarConfiguration(navController.graph))
+        val configuration = AppBarConfiguration(navController.graph)
+        binding.tbTop.setupWithNavController(navController, configuration)
     }
 }
