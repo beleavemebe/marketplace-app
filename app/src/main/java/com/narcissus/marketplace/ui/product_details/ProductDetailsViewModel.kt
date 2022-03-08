@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.model.CartItem
 import com.narcissus.marketplace.model.ProductDetails
-import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.model.toProductPreview
 import com.narcissus.marketplace.usecase.AddToCart
 import com.narcissus.marketplace.usecase.GetProductDetails
 import kotlinx.coroutines.flow.Flow
@@ -16,11 +16,13 @@ class ProductDetailsViewModel(
     private val getProductDetails: GetProductDetails,
     private val addToCart: AddToCart,
 ) : ViewModel() {
+
     val productDetailsFlow: Flow<ProductDetails> = flow {
         val details =
             runCatching {
                 getProductDetails(productId).getOrThrow()
             }.getOrNull()
+
         details?.let { emit(it) }
     }
 
@@ -29,9 +31,4 @@ class ProductDetailsViewModel(
             addToCart(CartItem(product.toProductPreview(), 1, false))
         }
     }
-}
-
-// TODO: fix absent properties and move elsewhere
-private fun ProductDetails.toProductPreview(): ProductPreview {
-    return ProductPreview(id, icon, price, name, department, "lol xdd", stock, "lol xd", "wtf", rating, sales)
 }

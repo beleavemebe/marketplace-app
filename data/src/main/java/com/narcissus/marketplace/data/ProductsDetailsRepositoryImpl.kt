@@ -1,12 +1,12 @@
 package com.narcissus.marketplace.data
 
 import com.narcissus.marketplace.apiclient.api.model.ProductDetailsResponse
+import com.narcissus.marketplace.apiclient.api.model.ReviewResponseData
 import com.narcissus.marketplace.apiclient.api.model.SimilarProductsResponseData
 import com.narcissus.marketplace.apiclient.api.service.ApiService
-import com.narcissus.marketplace.model.DetailsAbout
 import com.narcissus.marketplace.model.ProductDetails
-import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.model.Review
+import com.narcissus.marketplace.model.SimilarProduct
 import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
 import com.narcissus.marketplace.util.ActionResult
 
@@ -24,20 +24,21 @@ internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService)
             price,
             name,
             departmentName,
+            type,
             stock,
-            aboutList = listOf(
-                DetailsAbout.Type(type),
-                DetailsAbout.Color(color),
-                DetailsAbout.Material(material),
-                DetailsAbout.Description(description)
-            ),
+            color,
+            material,
+            description,
             rating,
             sales,
-            reviewsList.map { Review(it.reviewId, it.author, it.details, it.rating, it.reviewAuthorIcon) },
+            reviewsList.map(ReviewResponseData::toReview),
             similarProductsList.map(SimilarProductsResponseData::toSimilarProducts)
         )
     }
 }
 
-private fun SimilarProductsResponseData.toSimilarProducts(): ProductPreview =
-    ProductPreview(id, icon, price, name, departmentName, type, stock, "", "", rating, sales)
+private fun SimilarProductsResponseData.toSimilarProducts(): SimilarProduct =
+    SimilarProduct(id, icon, price, name, departmentName, type, stock, rating)
+
+private fun ReviewResponseData.toReview(): Review =
+    Review(reviewId, author, details, rating, reviewAuthorIcon)

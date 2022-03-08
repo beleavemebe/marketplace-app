@@ -69,6 +69,5 @@ class SimilarProductsResponseData(
     val stock: Int,
     @SerializedName(SerializedNames.productRating)
     val rating: Int,
-    @SerializedName(SerializedNames.sales)
-    val sales: Int
+
 )
