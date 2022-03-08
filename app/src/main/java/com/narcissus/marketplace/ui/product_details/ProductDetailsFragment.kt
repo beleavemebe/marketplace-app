@@ -1,7 +1,6 @@
 package com.narcissus.marketplace.ui.product_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.model.ProductDetails
@@ -21,7 +19,6 @@ import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoratio
 import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.model.DetailsAbout
 import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
-import com.narcissus.marketplace.ui.products.ProductsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

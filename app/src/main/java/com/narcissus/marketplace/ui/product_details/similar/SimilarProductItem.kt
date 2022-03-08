@@ -13,7 +13,7 @@ import com.narcissus.marketplace.model.SimilarProduct
 typealias SimilarProductBinding = ListItemDetailsSimilarProductItemBinding
 typealias SimilarProductLoadingBinding = ListItemDetailsSimilarProductLoadingBinding
 sealed class SimilarProductListItem {
-    class SimilarProductItem(val similarProduct: SimilarProduct,val rootOnClickListener:(productId:String)->Unit) : SimilarProductListItem() {
+    class SimilarProductItem(val similarProduct: SimilarProduct, val rootOnClickListener: (productId: String) -> Unit) : SimilarProductListItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -41,14 +41,12 @@ sealed class SimilarProductListItem {
                                 )
                                 root.setOnClickListener { item.rootOnClickListener(item.similarProduct.id) }
                                 btnSimilarProductAddToCart.setOnClickListener {}
-
                             }
-
                         }
                     }
         }
     }
-    class SimilarProductLoadingItem : SimilarProductListItem(){
+    class SimilarProductLoadingItem : SimilarProductListItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -64,22 +62,22 @@ sealed class SimilarProductListItem {
                     }
         }
     }
-companion object {
-    val DIFF_CALLBACK = object: DiffUtil.ItemCallback<SimilarProductListItem>() {
-        override fun areItemsTheSame(
-            oldItem: SimilarProductListItem,
-            newItem: SimilarProductListItem
-        ): Boolean {
-            return when (newItem) {
-                is SimilarProductItem -> oldItem is SimilarProductItem && oldItem.similarProduct.id == newItem.similarProduct.id
-                else -> false
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SimilarProductListItem>() {
+            override fun areItemsTheSame(
+                oldItem: SimilarProductListItem,
+                newItem: SimilarProductListItem
+            ): Boolean {
+                return when (newItem) {
+                    is SimilarProductItem -> oldItem is SimilarProductItem && oldItem.similarProduct.id == newItem.similarProduct.id
+                    else -> false
+                }
             }
-        }
 
-        override fun areContentsTheSame(
-            oldItem: SimilarProductListItem,
-            newItem: SimilarProductListItem
-        ): Boolean = oldItem == newItem
+            override fun areContentsTheSame(
+                oldItem: SimilarProductListItem,
+                newItem: SimilarProductListItem
+            ): Boolean = oldItem == newItem
+        }
     }
-}
 }
