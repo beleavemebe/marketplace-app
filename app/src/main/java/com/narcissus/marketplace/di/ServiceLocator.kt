@@ -1,7 +1,14 @@
 package com.narcissus.marketplace.di
 
 import com.narcissus.marketplace.repository.local.CartLocalRepository
-import com.narcissus.marketplace.usecase.*
+import com.narcissus.marketplace.usecase.GetCart
+import com.narcissus.marketplace.usecase.GetCartCost
+import com.narcissus.marketplace.usecase.GetCartItemsAmount
+import com.narcissus.marketplace.usecase.RemoveFromCart
+import com.narcissus.marketplace.usecase.RemoveSelectedCartItems
+import com.narcissus.marketplace.usecase.SelectAllCartItems
+import com.narcissus.marketplace.usecase.SetCartItemAmount
+import com.narcissus.marketplace.usecase.SetCartItemSelected
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

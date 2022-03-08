@@ -6,27 +6,29 @@ data class ProductDetails(
     val price: Int,
     val name: String,
     val department: String,
+    val type: String,
     val stock: Int,
-    val aboutList: List<DetailsAbout>,
+    val color: String,
+    val material: String,
+    val description: String,
     val rating: Int,
     val sales: Int,
     val reviews: List<Review>,
-    val similarProducts: List<ProductPreview>
+    val similarProducts: List<SimilarProduct>
 )
 
 fun ProductDetails.toProductPreview(): ProductPreview {
     return ProductPreview(
-        id = id,
-        icon = icon,
-        price = price,
-        name = name,
-        category = department,
-        type = "lol xdd",
-        stock = stock,
-        color = "lol xd",
-        material = "wtf",
-        rating = rating,
-        sales = sales
+        id,
+        icon,
+        price,
+        name,
+        department,
+        type,
+        stock,
+        color,
+        material,
+        rating,
+        sales
     )
 }
-

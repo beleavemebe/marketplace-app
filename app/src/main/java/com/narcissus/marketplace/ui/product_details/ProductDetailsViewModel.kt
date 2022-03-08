@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.model.CartItem
 import com.narcissus.marketplace.model.ProductDetails
-import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.model.toProductPreview
 import com.narcissus.marketplace.usecase.AddToCart
 import com.narcissus.marketplace.usecase.GetProductDetails
@@ -17,11 +16,13 @@ class ProductDetailsViewModel(
     private val getProductDetails: GetProductDetails,
     private val addToCart: AddToCart,
 ) : ViewModel() {
+
     val productDetailsFlow: Flow<ProductDetails> = flow {
         val details =
             runCatching {
                 getProductDetails(productId).getOrThrow()
             }.getOrNull()
+
         details?.let { emit(it) }
     }
 
