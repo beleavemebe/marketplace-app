@@ -32,7 +32,7 @@ class ProductDetailsViewModel(
         }
     }
 
-    // TODO: fix absent properties and move elsewhere
+    // TODO: move elsewhere
     private fun ProductDetails.toProductPreview(): ProductPreview {
         return ProductPreview(
             id,
@@ -42,8 +42,8 @@ class ProductDetailsViewModel(
             department,
             type,
             stock,
-            "lol xd",
-            "wtf",
+            color,
+            material,
             rating,
             sales
         )
