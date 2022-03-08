@@ -39,26 +39,23 @@ sealed class ReviewsItem {
                 root: ViewGroup
             ) = ReviewBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<ReviewItem, ReviewsItem, ReviewBinding>(
-                        ::inflateBinding
-                    ) {
-                        bind {
-                            with(binding) {
-                                tvReviewsAuthor.text = item.review.author
-                                tvReviewsDescription.text = item.review.details
-                                reviewsRatingBar.progress = item.review.rating
-                                ivReviewsAvatar.load(item.review.reviewAuthorIcon) {
-                                    transformations(
-                                        RoundedCornersTransformation(
-                                            REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS
-                                        )
-                                    )
-                                }
-                            }
+            val delegate get() =
+                adapterDelegateViewBinding<ReviewItem, ReviewsItem, ReviewBinding>(
+                    ::inflateBinding
+                ) {
+                    bind {
+                        binding.tvReviewsAuthor.text = item.review.author
+                        binding.tvReviewsDescription.text = item.review.details
+                        binding.reviewsRatingBar.progress = item.review.rating
+                        binding.ivReviewsAvatar.load(item.review.reviewAuthorIcon) {
+                            transformations(
+                                RoundedCornersTransformation(
+                                    REVIEWS_AUTHOR_AVATAR_CORNER_RADIUS
+                                )
+                            )
                         }
                     }
+                }
         }
     }
 }

@@ -7,13 +7,14 @@ import coil.load
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemDetailsSimilarProductItemBinding
-import com.narcissus.marketplace.databinding.ListItemDetailsSimilarProductLoadingBinding
+import com.narcissus.marketplace.databinding.ListItemProductPreviewLoadingBinding
 import com.narcissus.marketplace.model.SimilarProduct
 
 typealias SimilarProductBinding = ListItemDetailsSimilarProductItemBinding
-typealias SimilarProductLoadingBinding = ListItemDetailsSimilarProductLoadingBinding
+typealias SimilarProductLoadingBinding = ListItemProductPreviewLoadingBinding
+
 sealed class SimilarProductListItem {
-    class SimilarProductItem(val similarProduct: SimilarProduct, val rootOnClickListener: (productId: String) -> Unit) : SimilarProductListItem() {
+    data class SimilarProductItem(val product: SimilarProduct) : SimilarProductListItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -21,31 +22,29 @@ sealed class SimilarProductListItem {
                 root: ViewGroup
             ) = SimilarProductBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<SimilarProductItem, SimilarProductListItem, SimilarProductBinding>(
-                        ::inflateBinding
-                    ) {
-                        bind {
-                            with(binding) {
-                                ivSimilarProduct.load(item.similarProduct.icon)
-                                tvSimilarProductName.text = item.similarProduct.name
-                                tvSimilarProductPrice.text = binding.root.context.getString(
-                                    R.string.price_placeholder,
-                                    item.similarProduct.price
-                                )
-                                similarProductRatingBar.progress = item.similarProduct.rating
-                                tvSimilarProductStock.text = binding.root.context.getString(
-                                    R.string.in_stock_placeholder,
-                                    item.similarProduct.stock
-                                )
-                                root.setOnClickListener { item.rootOnClickListener(item.similarProduct.id) }
-                                btnSimilarProductAddToCart.setOnClickListener {}
-                            }
-                        }
+            fun delegate(onProductClicked: (id: String) -> Unit) =
+                adapterDelegateViewBinding<SimilarProductItem, SimilarProductListItem, SimilarProductBinding>(
+                    ::inflateBinding
+                ) {
+                    bind {
+                        binding.ivSimilarProduct.load(item.product.icon)
+                        binding.tvSimilarProductName.text = item.product.name
+                        binding.tvSimilarProductPrice.text = binding.root.context.getString(
+                            R.string.price_placeholder,
+                            item.product.price
+                        )
+                        binding.similarProductRatingBar.progress = item.product.rating
+                        binding.tvSimilarProductStock.text = binding.root.context.getString(
+                            R.string.in_stock_placeholder,
+                            item.product.stock
+                        )
+                        binding.root.setOnClickListener { onProductClicked(item.product.id) }
+                        binding.btnSimilarProductAddToCart.setOnClickListener {}
                     }
+                }
         }
     }
+
     class SimilarProductLoadingItem : SimilarProductListItem() {
         companion object {
             @JvmStatic
@@ -53,31 +52,33 @@ sealed class SimilarProductListItem {
                 layoutInflater: LayoutInflater,
                 root: ViewGroup
             ) = SimilarProductLoadingBinding.inflate(layoutInflater, root, false)
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<SimilarProductLoadingItem, SimilarProductListItem, SimilarProductLoadingBinding>(
-                        ::inflateBinding
-                    ) {
-                        bind {}
-                    }
+
+            val delegate get() =
+                adapterDelegateViewBinding<SimilarProductLoadingItem, SimilarProductListItem, SimilarProductLoadingBinding>(
+                    ::inflateBinding
+                ) {
+                }
         }
     }
+
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SimilarProductListItem>() {
             override fun areItemsTheSame(
                 oldItem: SimilarProductListItem,
                 newItem: SimilarProductListItem
             ): Boolean {
-                return when (newItem) {
-                    is SimilarProductItem -> oldItem is SimilarProductItem && oldItem.similarProduct.id == newItem.similarProduct.id
-                    else -> false
+                return when (oldItem) {
+                    is SimilarProductItem -> newItem is SimilarProductItem && oldItem.product.id == newItem.product.id
+                    is SimilarProductLoadingItem -> newItem is SimilarProductLoadingItem && oldItem === newItem
                 }
             }
 
             override fun areContentsTheSame(
                 oldItem: SimilarProductListItem,
                 newItem: SimilarProductListItem
-            ): Boolean = oldItem == newItem
+            ): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 }
