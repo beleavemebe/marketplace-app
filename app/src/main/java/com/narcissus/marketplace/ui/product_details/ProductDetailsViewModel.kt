@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.model.CartItem
 import com.narcissus.marketplace.model.ProductDetails
-import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.model.toProductPreview
 import com.narcissus.marketplace.usecase.AddToCart
 import com.narcissus.marketplace.usecase.GetProductDetails
 import kotlinx.coroutines.flow.Flow
@@ -30,22 +30,5 @@ class ProductDetailsViewModel(
         viewModelScope.launch {
             addToCart(CartItem(product.toProductPreview(), 1, false))
         }
-    }
-
-    // TODO: move elsewhere
-    private fun ProductDetails.toProductPreview(): ProductPreview {
-        return ProductPreview(
-            id,
-            icon,
-            price,
-            name,
-            department,
-            type,
-            stock,
-            color,
-            material,
-            rating,
-            sales
-        )
     }
 }
