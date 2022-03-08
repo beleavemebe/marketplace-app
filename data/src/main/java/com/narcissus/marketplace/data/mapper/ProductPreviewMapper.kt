@@ -9,7 +9,7 @@ fun ProductEntity.toProductPreview(): ProductPreview {
         icon = icon,
         price = price,
         name = name,
-        category = category,
+        department = department,
         type = type,
         stock = stock,
         color = color,

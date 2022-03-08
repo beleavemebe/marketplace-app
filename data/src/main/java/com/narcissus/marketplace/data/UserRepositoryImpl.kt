@@ -59,7 +59,7 @@ private fun ProductPreview.toProductEntity(): ProductEntity {
         icon,
         price,
         name,
-        category,
+        department,
         type,
         stock,
         color,

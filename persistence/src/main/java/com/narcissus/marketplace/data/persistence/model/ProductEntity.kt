@@ -10,7 +10,7 @@ data class ProductEntity(
     val icon: String = "",
     val price: Int = 0,
     val name: String = "",
-    val category: String = "",
+    val department: String = "",
     val type: String = "",
     val stock: Int = 0,
     val color: String = "",
