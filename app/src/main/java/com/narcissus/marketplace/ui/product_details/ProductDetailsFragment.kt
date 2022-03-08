@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.ui.product_details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -12,12 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.model.DetailsAbout
+import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
 import com.narcissus.marketplace.ui.products.ProductsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -32,7 +35,12 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(args.productId) }
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
-    private val similarProductsAdapter = ProductsAdapter(::navigateToSimilarProduct)
+
+    private val similarProductsAdapter = AsyncListDifferDelegationAdapter(
+        SimilarProductListItem.DIFF_CALLBACK,
+        SimilarProductListItem.SimilarProductItem.delegate,
+        SimilarProductListItem.SimilarProductLoadingItem.delegate
+    )
     private val aboutProductAdapter = AsyncListDifferDelegationAdapter(
         AboutProductItem.DIFF_CALLBACK,
         AboutProductItem.SingleLineItem.delegate,
@@ -71,6 +79,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
         adapter = similarProductsAdapter
+        similarProductsAdapter.items = listOf(SimilarProductListItem.SimilarProductLoadingItem())
     }
 
     private fun initToolBar() {
@@ -80,6 +89,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     }
 
     private fun navigateToSimilarProduct(productId: String) {
+
         findNavController().navigate(
             ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductDetailsFragment(
                 productId
@@ -118,7 +128,13 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                     }
                 }
                 aboutProductAdapter.items = mapProductAboutList(product.getProductAbout())
-                //  similarProductsAdapter.submitItems(product.similarProducts) //TODO
+                similarProductsAdapter.items =
+                    product.similarProducts.map {
+                        SimilarProductListItem.SimilarProductItem(
+                            it,
+                            ::navigateToSimilarProduct
+                        )
+                    }
             }
         }
     }
