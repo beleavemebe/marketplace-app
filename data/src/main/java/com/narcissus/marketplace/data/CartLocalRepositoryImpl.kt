@@ -1,4 +1,4 @@
-package com.narcissus.marketplace
+package com.narcissus.marketplace.data
 
 import com.narcissus.marketplace.model.CartItem
 import com.narcissus.marketplace.model.ProductPreview
@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class CartLocalRepositoryImpl : CartLocalRepository {
 
     private val sampleCartItem =
-        ProductPreview("1", "", 1449, "Apple MacBook Pro 13", "", "", 752, "", "", 3, 152)
+        ProductPreview("1", "https://c.tenor.com/UjdeUF--bBkAAAAS/sussy.gif", 1449, "Fake item", "", "", 752, "", "", 3, 152)
 
     private val sampleCartItemTwo =
-        ProductPreview("2", "", 400, "Apple Watch", "", "", 240, "", "", 5, 100)
+        ProductPreview("2", "https://c.tenor.com/UjdeUF--bBkAAAAS/sussy.gif", 400, "Apple Watch", "", "", 240, "", "", 5, 100)
 
     private val items = MutableStateFlow(
         listOf(
@@ -70,7 +70,7 @@ class CartLocalRepositoryImpl : CartLocalRepository {
         val updatedList: MutableList<CartItem> = mutableListOf()
 
         items.value.map { item ->
-            if(!item.isSelected) updatedList.add(item)
+            if (!item.isSelected) updatedList.add(item)
         }
 
         items.value = updatedList

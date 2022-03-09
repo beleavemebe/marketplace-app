@@ -5,7 +5,7 @@ data class ProductPreview(
     val icon: String,
     val price: Int,
     val name: String,
-    val category: String,
+    val department: String,
     val type: String,
     val stock: Int,
     val color: String,

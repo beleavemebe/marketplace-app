@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.model
+package com.narcissus.marketplace.ui.product_details.model
 
 sealed class DetailsAbout(val data: String) {
     class Type(data: String) : DetailsAbout(data)

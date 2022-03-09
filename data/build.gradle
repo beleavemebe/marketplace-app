@@ -35,6 +35,7 @@ dependencies {
 
     implementation project(path: ':domain')
     implementation project(path: ':apiclient')
+    implementation project(path: ':persistence')
 
     def coroutines_version = "1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"

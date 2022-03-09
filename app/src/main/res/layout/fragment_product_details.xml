@@ -43,8 +43,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/root"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:animateLayoutChanges="true">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/ivProduct"
@@ -200,16 +199,86 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rvAbout" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvReviews"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/reviewsPreviewLayout"
                 android:layout_marginLeft="@dimen/product_details_side_margin"
                 android:layout_marginRight="@dimen/product_details_side_margin"
-                android:overScrollMode="never"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvReviewsTitle" />
+                app:layout_constraintTop_toBottomOf="@id/tvReviewsTitle">
+
+                <ImageView
+                    android:id="@+id/ivReviewsPreviewAvatar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/reviews" />
+
+                <TextView
+                    android:id="@+id/tvReviewsPreviewAuthor"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/ivReviewsPreviewAvatar"
+                    app:layout_constraintTop_toTopOf="@+id/ivReviewsPreviewAvatar"
+                    tools:text="Billy Clow" />
+
+                <RatingBar
+                    android:id="@+id/reviewsPreviewRatingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:progressBackgroundTint="@color/grey_light"
+                    android:progressTint="@color/ratingbar_active"
+                    android:stepSize="1"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivReviewsPreviewAvatar"
+                    app:layout_constraintStart_toEndOf="@+id/ivReviewsPreviewAvatar"
+                    tools:progress="60" />
+
+                <TextView
+                    android:id="@+id/tvReviewsPreviewDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="4dp"
+                    android:maxLines="4"
+                    android:ellipsize="end"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/reviewsPreviewRatingBar"
+                    tools:text="Aaa\nBbb\nCcc\nDdd" />
+
+                <TextView
+                    android:id="@+id/tvShowAllReviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/show_all_reviews"
+                    android:textColor="@color/ratingbar_active"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/tvReviewsPreviewDescription"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivShowAllReviewsIcon"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="4dp"
+                    android:contentDescription="@string/show_all_reviews"
+                    android:src="@drawable/ic_arrow_forward_ios_black_36dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tvShowAllReviews"
+                    app:layout_constraintStart_toEndOf="@id/tvShowAllReviews"
+                    app:layout_constraintTop_toTopOf="@id/tvShowAllReviews"
+                    app:tint="@color/ratingbar_active" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutExpandReviewsList"
@@ -217,29 +286,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvReviews">
-
-                <ImageView
-                    android:id="@+id/ivExpandReviewsList"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/show_all_reviews"
-                    android:src="@drawable/ic_expand_more_black_36dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/ratingbar_active" />
-
-                <TextView
-                    android:id="@+id/tvExpandReviewsList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/show_all_reviews"
-                    android:textColor="@color/ratingbar_active"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@id/ivExpandReviewsList"
-                    app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/reviewsPreviewLayout">
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

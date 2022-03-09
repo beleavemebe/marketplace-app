@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
