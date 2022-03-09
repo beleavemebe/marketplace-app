@@ -13,10 +13,27 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
+
+      - name: Create `google-services.json` file
+        run: cat /home/runner/work/marketplace-app/marketplace-app/app/google-services.json | base64
+
+      - name: Fill `google-services.json` with content
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/marketplace-app/marketplace-app/app/google-services.json
+
+      - name: Add api key to local.properties
+        env:
+          PROPS_FILE: /home/runner/work/marketplace-app/marketplace-app/local.properties
+          API_KEY: ${{ secrets.API_KEY }}
+        run: echo DUMMYPRODUCTSAPIKEY=$API_KEY > $PROPS_FILE
+
       - name: build debug
         run: ./gradlew assembleDevDebug
+
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
