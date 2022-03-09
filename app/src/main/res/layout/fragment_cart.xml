@@ -109,12 +109,13 @@
 
         <TextView
             android:id="@+id/tvProductsAmount"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/tvTotalPrice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
