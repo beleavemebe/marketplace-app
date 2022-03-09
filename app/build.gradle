@@ -60,6 +60,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
 
+    implementation 'com.airbnb.android:lottie:3.4.0'
+
     implementation project(path: ':domain')
     implementation project(path: ':data')
     implementation project(path: ':ui:user')
