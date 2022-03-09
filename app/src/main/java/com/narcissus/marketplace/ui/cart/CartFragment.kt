@@ -57,7 +57,11 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     }
     private fun observeCart() {
         viewModel.getCartFlow.onEach { items ->
-            binding.groupCartIsEmpty.isVisible = items.isEmpty()
+            val isNotEmpty = items.isNotEmpty()
+            binding.checkoutBar.isVisible = isNotEmpty
+            binding.nsvCartContent.isVisible = isNotEmpty
+            binding.selectDeleteBar.isVisible = isNotEmpty
+            binding.clCartEmpty.isVisible = !isNotEmpty
             adapter.items = items.map { cartItem ->
                 cartItem.toCartListItem()
             }
