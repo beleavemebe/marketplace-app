@@ -7,12 +7,13 @@ import androidx.core.graphics.createBitmap
 import coil.size.Size
 import coil.transform.Transformation
 
-class CoilGradientTransformation() : Transformation {
+class GradientTransformation : Transformation {
 
     override val cacheKey: String = javaClass.name
 
     override suspend fun transform(input: Bitmap, size: Size): Bitmap {
-
+        return input
+        // TODO: use linear, lighter gradient
         val width = input.width
         val height = input.height
         val centerX = width * 0.75f

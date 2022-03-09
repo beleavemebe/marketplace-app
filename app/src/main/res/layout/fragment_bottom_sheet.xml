@@ -45,7 +45,6 @@
             android:id="@+id/animationView"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            app:lottie_rawRes="@raw/animation"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             android:layout_margin="50dp"
@@ -53,9 +52,6 @@
             app:layout_constraintTop_toBottomOf="@+id/viewLine"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-
-
 
         <TextView
             android:id="@+id/tvPrice"
