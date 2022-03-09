@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.usecase
 
-import com.narcissus.marketplace.repository.local.UserLocalRepository
+import com.narcissus.marketplace.repository.remote.UserRepository
 
-class GetRecentlyVisitedProducts(private val userLocalRepository: UserLocalRepository) {
-    operator fun invoke() = userLocalRepository.getRecentlyVisitedProducts()
+class GetRecentlyVisitedProducts(private val userRepository: UserRepository) {
+    operator fun invoke() = userRepository.getRecentlyVisitedProducts()
 }

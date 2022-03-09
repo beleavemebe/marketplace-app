@@ -1,10 +1,10 @@
 package com.narcissus.marketplace.usecase
 
-import com.narcissus.marketplace.repository.remote.UserRemoteRepository
+import com.narcissus.marketplace.repository.remote.UserRepository
 import com.narcissus.marketplace.util.ActionResult
 
 class AddCard(
-    private val userRemoteRepository: UserRemoteRepository,
+    private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(
         cardNumber: Long,
@@ -12,7 +12,7 @@ class AddCard(
         expirationDate: String
     ): ActionResult<Boolean> {
         return if (checkIfCardNumberIsValid(cardNumber)) {
-            userRemoteRepository.addCard(cardNumber, svv, expirationDate)
+            userRepository.addCard(cardNumber, svv, expirationDate)
             ActionResult.SuccessResult(true)
         } else ActionResult.ErrorResult("") // подумать, мб делать это не тут
     }

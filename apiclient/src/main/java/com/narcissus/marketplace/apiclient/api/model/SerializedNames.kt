@@ -19,4 +19,6 @@ internal object SerializedNames {
     const val reviewAuthor = "review_name"
     const val reviewDetails = "review_details"
     const val reviewRating = "review_rating"
+    const val reviewAvatar = "review_avatar"
+    const val similarProducts = "product_similar"
 }

@@ -54,5 +54,5 @@ internal class ProductsPreviewRepositoryImpl(
     }
 }
 
-private fun ProductPreviewResponseData.toProductPreview(): ProductPreview =
+fun ProductPreviewResponseData.toProductPreview(): ProductPreview =
     ProductPreview(id, icon, price, name, departmentName, type, stock, color, material, rating, sales)

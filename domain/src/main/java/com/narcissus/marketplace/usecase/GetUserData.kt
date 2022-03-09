@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.usecase
 
-import com.narcissus.marketplace.repository.remote.UserRemoteRepository
+import com.narcissus.marketplace.repository.remote.UserRepository
 
-class GetUserData(private val userRemoteRepository: UserRemoteRepository) {
-    suspend operator fun invoke() = userRemoteRepository.getUserData()
+class GetUserData(private val userRepository: UserRepository) {
+    suspend operator fun invoke() = userRepository.getUserData()
 }
