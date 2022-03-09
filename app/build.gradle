@@ -47,18 +47,12 @@ dependencies {
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
-
     def coroutines_version = "1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${coroutines_version}"
-
-    def lottieVersion = "3.4.0"
-    implementation "com.airbnb.android:lottie:$lottieVersion"
-
+    
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
-
-    implementation "io.coil-kt:coil:1.4.0"
 
     implementation "androidx.navigation:navigation-ui:2.4.1"
     implementation "androidx.navigation:navigation-runtime:2.4.1"
@@ -70,6 +64,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-common-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
+
+    implementation 'com.airbnb.android:lottie:3.4.0'
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
