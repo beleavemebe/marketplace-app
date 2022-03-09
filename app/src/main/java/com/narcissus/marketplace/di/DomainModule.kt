@@ -35,6 +35,5 @@ val domainModule = module {
     factory { SelectAllCartItems(get()) }
     factory { RemoveSelectedCartItems(get()) }
     factory { RemoveFromCart(get()) }
-    factory { GetProductDetails(get(), get()) }
     factory { AddToCart(get()) }
 }
