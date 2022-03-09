@@ -36,7 +36,7 @@ data class DepartmentListItem(
                 val maxDownloadSize = 1L * 1024 * 1024
 
                 suspend fun fetchBitmap(imgName: String): Bitmap {
-                    val path = storage.child("departmentImage/${imgName}")
+                    val path = storage.child("departmentImage/$imgName")
 
                     val bytes = withContext(Dispatchers.IO) {
                         path.getBytes(maxDownloadSize).await()

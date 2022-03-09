@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.ui.catalog
 
-
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Paint
