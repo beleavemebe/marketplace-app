@@ -19,6 +19,7 @@ import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoratio
 import com.narcissus.marketplace.ui.product_details.about.AboutProductItem
 import com.narcissus.marketplace.ui.product_details.model.DetailsAbout
 import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
