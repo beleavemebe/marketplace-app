@@ -30,4 +30,6 @@
     <string name="similar_products">Similar Products</string>
     <string name="show_all_reviews">Show all reviews</string>
     <string name="hide_all_reviews">Hide all reviews</string>
+    <string name="cart_is_empty">Cart is empty</string>
+    <string name="browse_catalog">Browse Catalog</string>
 </resources>
