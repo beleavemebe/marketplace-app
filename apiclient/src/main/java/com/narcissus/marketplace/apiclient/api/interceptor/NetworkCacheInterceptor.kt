@@ -9,7 +9,7 @@ import okhttp3.Response
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-class NetworkCacheInterceptor:Interceptor {
+class NetworkCacheInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
         val cacheControl = CacheControl.Builder()

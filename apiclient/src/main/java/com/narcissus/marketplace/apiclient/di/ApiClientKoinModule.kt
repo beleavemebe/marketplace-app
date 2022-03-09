@@ -12,7 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-internal fun okHttpClient (cache: Cache): OkHttpClient {
+internal fun okHttpClient(cache: Cache): OkHttpClient {
     return OkHttpClient().newBuilder()
         .addInterceptor(ApiKeyInterceptor())
         .addInterceptor(NetworkCacheInterceptor())
@@ -37,6 +37,4 @@ val apiClientModule = module {
     single { provideCache(get()) }
     single { okHttpClient(get()) }
     single { retrofit(get()) }
-
 }
-
