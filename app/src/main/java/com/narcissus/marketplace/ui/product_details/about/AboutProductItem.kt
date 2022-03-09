@@ -13,8 +13,7 @@ typealias AboutMultipleLineBinding = ListItemDetailsProductAboutMultipleLinesBin
 typealias AboutLoadingBinding = ListItemDetailsProductAboutLoadingBinding
 
 sealed class AboutProductItem {
-
-    class SingleLineItem(val title: String, val value: String) : AboutProductItem() {
+    data class SingleLineItem(val title: String, val value: String) : AboutProductItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -22,20 +21,19 @@ sealed class AboutProductItem {
                 root: ViewGroup
             ) = AboutSingleLineBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<SingleLineItem, AboutProductItem, AboutSingleLineBinding>(
-                        ::inflateBinding
-                    ) {
-                        bind {
-                            binding.tvAboutTitleSingleLine.text = item.title
-                            binding.tvAboutValueSingleLine.text = item.value
-                        }
+            val delegate get() =
+                adapterDelegateViewBinding<SingleLineItem, AboutProductItem, AboutSingleLineBinding>(
+                    ::inflateBinding
+                ) {
+                    bind {
+                        binding.tvAboutTitleSingleLine.text = item.title
+                        binding.tvAboutValueSingleLine.text = item.value
                     }
+                }
         }
     }
 
-    class MultipleLineItem(val title: String, val value: String) : AboutProductItem() {
+    data class MultipleLineItem(val title: String, val value: String) : AboutProductItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -43,16 +41,15 @@ sealed class AboutProductItem {
                 root: ViewGroup
             ) = AboutMultipleLineBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<MultipleLineItem, AboutProductItem, AboutMultipleLineBinding>(
-                        ::inflateBinding
-                    ) {
-                        bind {
-                            binding.tvAboutTitleMultipleLine.text = item.title
-                            binding.tvAboutValueMultipleLine.text = item.value
-                        }
+            val delegate get() =
+                adapterDelegateViewBinding<MultipleLineItem, AboutProductItem, AboutMultipleLineBinding>(
+                    ::inflateBinding
+                ) {
+                    bind {
+                        binding.tvAboutTitleMultipleLine.text = item.title
+                        binding.tvAboutValueMultipleLine.text = item.value
                     }
+                }
         }
     }
 

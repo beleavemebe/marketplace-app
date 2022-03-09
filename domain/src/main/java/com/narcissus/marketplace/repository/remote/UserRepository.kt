@@ -1,10 +1,12 @@
 package com.narcissus.marketplace.repository.remote
 
+import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.model.User
 import com.narcissus.marketplace.util.ActionResult
 import com.narcissus.marketplace.util.AuthResult
+import kotlinx.coroutines.flow.Flow
 
-interface UserRemoteRepository {
+interface UserRepository {
     suspend fun addCard(
         cardNumber: Long,
         svv: Int,
@@ -17,4 +19,8 @@ interface UserRemoteRepository {
     suspend fun signUpWithEmail(email: String, password: String): AuthResult
     suspend fun signOut(): AuthResult
     suspend fun signInWithGoogle() // TODO
+
+    // fun isUserLoggedIn(): Flow<Boolean>
+    fun getRecentlyVisitedProducts(): Flow<List<ProductPreview>>
+    suspend fun writeToVisitedProducts(productPreview: ProductPreview)
 }
