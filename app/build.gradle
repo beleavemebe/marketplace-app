@@ -50,7 +50,8 @@ dependencies {
     def coroutines_version = "1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_version}"
-
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${coroutines_version}"
+    
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
 
     implementation "androidx.navigation:navigation-ui:2.4.1"
@@ -59,6 +60,10 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
+
+    implementation 'com.google.firebase:firebase-common-ktx:20.0.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
 
     implementation 'com.airbnb.android:lottie:3.4.0'
 

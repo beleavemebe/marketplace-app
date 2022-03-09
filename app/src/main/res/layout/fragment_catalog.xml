@@ -4,24 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     tools:context=".ui.MainActivity">
 
     <include
         android:id="@+id/searchLayout"
-        layout="@layout/layout_search_view" />
+        layout="@layout/layout_search_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDepartment"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchLayout"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:spanCount="2"
         tools:itemCount="5"
-        tools:listitem="@layout/item_department_card" />
+        tools:listitem="@layout/list_item_department" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
