@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="product_preview_image_size">150dp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
+    <dimen name="minimal_text_size">11sp</dimen>
+    <dimen name="cart_item_name_text_size">14sp</dimen>
+    <dimen name="cart_item_price_text_size">16sp</dimen>
+    <dimen name="delimiter_height">1dp</dimen>
+    <dimen name="cart_checkbox_size">18dp</dimen>
+    <dimen name="cart_item_height">100dp</dimen>
+    <dimen name="cart_item_add_remove_button_size">20dp</dimen>
+    <dimen name="cart_item_icon_size">70dp</dimen>
+    <dimen name="delete_item_button_size">25dp</dimen>
+    <dimen name="checkout_button_width">100dp</dimen>
+    <dimen name="checkout_button_height">40dp</dimen>
+    <dimen name="product_details_side_margin">20dp</dimen>
+
+</resources>

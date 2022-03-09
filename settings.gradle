@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Marketplace App"
 include ':app'
+include ':core'
+include ':domain'
+include ':data'
+include ':ui:user'
+include ':apiclient'
+include ':persistence'

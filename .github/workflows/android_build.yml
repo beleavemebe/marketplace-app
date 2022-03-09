@@ -3,6 +3,8 @@ name: Android CI
 on:
   pull_request:
     branches: [ master, dev ]
+  push:
+    branches: [ master, dev ]
 
 jobs:
   build:
@@ -29,8 +31,14 @@ jobs:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo $DATA > /home/runner/work/marketplace-app/marketplace-app/app/google-services.json
 
-      - name: Run tests
-        run: ./gradlew test
+      - name: Add api key to local.properties
+        env:
+          PROPS_FILE: /home/runner/work/marketplace-app/marketplace-app/local.properties
+          API_KEY: ${{ secrets.API_KEY }}
+        run: echo DUMMYPRODUCTSAPIKEY=$API_KEY > $PROPS_FILE
 
       - name: Assemble
         run: ./gradlew assemble
+
+      - name: Run tests
+        run: ./gradlew test

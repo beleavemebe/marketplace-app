@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Marketplace App</string>
+    <string name="home">Home</string>
+    <string name="catalog">Catalog</string>
+    <string name="cart">Cart</string>
+    <string name="user">User</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="product_image">Product image</string>
+    <string name="increase_cart_item_amount">Increase amount</string>
+    <string name="decrease_cart_item_amount">Decrease amount</string>
+    <string name="price_placeholder">$%1$d</string>
+    <string name="in_stock_placeholder">In stock: %1$d</string>
+    <string name="sales_placeholder">%1$d sales</string>
+    <string name="top_sales">Top sales</string>
+    <string name="top_rated">Top rated</string>
+    <string name="you_visited">You visited</string>
+    <string name="explore">Explore</string>
+    <string name="application_logo">Application Logo</string>
+    <string name="working_title">NN SHOP</string>
+    <string name="delete_selected_items">Delete selected</string>
+    <string name="select_all_items">Select all</string>
+    <string name="checkout">Checkout</string>
+    <string name="purchase">Purchase</string>
+    <string name="type">Type</string>
+    <string name="color">Color</string>
+    <string name="material">Material</string>
+    <string name="description">Description</string>
+    <string name="about">About</string>
+    <string name="reviews">Reviews</string>
+    <string name="similar_products">Similar Products</string>
+    <string name="show_all_reviews">Show all reviews</string>
+    <string name="hide_all_reviews">Hide all reviews</string>
+    <string name="cart_is_empty">Cart is empty</string>
+    <string name="browse_catalog">Browse Catalog</string>
 </resources>
