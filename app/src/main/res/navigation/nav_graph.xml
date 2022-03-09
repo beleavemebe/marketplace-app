@@ -5,6 +5,8 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/fragment_splash">
 
+    <include app:graph="@navigation/nav_graph_search"/>
+
     <fragment
         android:id="@+id/fragment_home"
         android:name="com.narcissus.marketplace.ui.home.HomeFragment"
@@ -12,12 +14,19 @@
         <action
             android:id="@+id/action_fragment_home_to_fragment_product_details"
             app:destination="@id/fragment_product_details" />
+        <action
+            android:id="@+id/action_fragment_home_to_search"
+            app:destination="@id/nav_graph_search" />
     </fragment>
 
     <fragment
         android:id="@+id/fragment_catalog"
         android:name="com.narcissus.marketplace.ui.catalog.CatalogFragment"
-        android:label="CatalogFragment" />
+        android:label="CatalogFragment">
+        <action
+            android:id="@+id/action_fragment_catalog_to_search"
+            app:destination="@id/nav_graph_search" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_cart"
