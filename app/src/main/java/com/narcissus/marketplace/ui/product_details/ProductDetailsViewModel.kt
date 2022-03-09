@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.ui.product_details
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.model.CartItem
@@ -9,9 +8,6 @@ import com.narcissus.marketplace.model.toProductPreview
 import com.narcissus.marketplace.usecase.AddToCart
 import com.narcissus.marketplace.usecase.GetProductDetails
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
