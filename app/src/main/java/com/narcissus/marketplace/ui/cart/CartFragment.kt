@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
@@ -12,12 +11,13 @@ import com.narcissus.marketplace.databinding.FragmentCartBinding
 import com.narcissus.marketplace.model.CartItem
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CartViewModel by viewModels()
+    private val viewModel: CartViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

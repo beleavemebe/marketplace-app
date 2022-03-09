@@ -2,21 +2,20 @@ package com.narcissus.marketplace.ui.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.narcissus.marketplace.di.ServiceLocator
 import com.narcissus.marketplace.model.CartItem
 import com.narcissus.marketplace.usecase.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class CartViewModel(
-    private val getCart: GetCart = ServiceLocator.getCart,
-    private val getCartCost: GetCartCost = ServiceLocator.getCartCost,
-    private val getCartItemsAmount: GetCartItemsAmount = ServiceLocator.getCartItemsAmount,
-    private val removeFromCart: RemoveFromCart = ServiceLocator.removeFromCart,
-    private val setCartItemSelected: SetCartItemSelected = ServiceLocator.setCartItemSelected,
-    private val setCartItemAmount: SetCartItemAmount = ServiceLocator.setCartItemAmount,
-    private val selectAllCartItems: SelectAllCartItems = ServiceLocator.selectAllCartItems,
-    private val removeSelectedCartItems: RemoveSelectedCartItems = ServiceLocator.removeSelectedCartItems
+    private val getCart: GetCart,
+    private val getCartCost: GetCartCost,
+    private val getCartItemsAmount: GetCartItemsAmount,
+    private val removeFromCart: RemoveFromCart,
+    private val setCartItemSelected: SetCartItemSelected,
+    private val setCartItemAmount: SetCartItemAmount,
+    private val selectAllCartItems: SelectAllCartItems,
+    private val removeSelectedCartItems: RemoveSelectedCartItems,
 ) : ViewModel() {
 
     val getCartFlow = flow {
