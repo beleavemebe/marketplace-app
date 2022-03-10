@@ -32,7 +32,7 @@ jobs:
         run: echo DUMMYPRODUCTSAPIKEY=$API_KEY > $PROPS_FILE
 
       - name: build debug
-        run: ./gradlew assembleDevDebug
+        run: ./gradlew assembleDebug
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
