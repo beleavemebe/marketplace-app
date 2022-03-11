@@ -13,4 +13,5 @@
     <color name="ratingbar_active">#9432C2</color>
     <color name="logo_background">#3E5ABE</color>
     <color name="search_view">#EBEFFF</color>
+    <color name="red">#FF0000</color>
 </resources>
