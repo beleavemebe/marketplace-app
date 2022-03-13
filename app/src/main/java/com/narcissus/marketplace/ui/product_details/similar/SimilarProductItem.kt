@@ -22,7 +22,7 @@ sealed class SimilarProductListItem {
                 root: ViewGroup
             ) = SimilarProductBinding.inflate(layoutInflater, root, false)
 
-            fun delegate(onProductClicked: (id: String) -> Unit) =
+            fun delegate(onProductClicked: (productId: String) -> Unit,onAddToCartClicked:(productId:String)->Unit) =
                 adapterDelegateViewBinding<SimilarProductItem, SimilarProductListItem, SimilarProductBinding>(
                     ::inflateBinding
                 ) {
@@ -39,7 +39,7 @@ sealed class SimilarProductListItem {
                             item.product.stock
                         )
                         binding.root.setOnClickListener { onProductClicked(item.product.id) }
-                        binding.btnSimilarProductAddToCart.setOnClickListener {}
+                        binding.btnSimilarProductAddToCart.setOnClickListener {onAddToCartClicked(item.product.id)}
                     }
                 }
         }

@@ -5,27 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/product_details_side_margin"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="@dimen/product_details_side_margin">
-
+    android:layout_marginEnd="@dimen/product_details_side_margin"
+    android:layout_marginTop="14dp">
 
     <TextView
-        android:id="@+id/tvDetailsAboutTitleMultipleLine"
-        style="@style/B2_body_grey"
+        android:id="@+id/tvDetailsButtonTitle"
+        style="@style/H6_headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="title" />
+        tools:text="Title" />
 
     <TextView
-        android:id="@+id/tvDetailsAboutValueMultipleLine"
-        style="@style/B2_body_black"
+        android:id="@+id/tvBtnDetailsTitle"
+        style="@style/Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:maxLines="5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDetailsAboutTitleMultipleLine"
-        tools:text="description" />
+        android:textColor="@color/ratingbar_active"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="true"
+        tools:text="ALL REVIEWS"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvDetailsButtonTitle"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

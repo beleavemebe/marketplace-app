@@ -53,25 +53,28 @@
         android:id="@+id/fragment_product_details"
         android:name="com.narcissus.marketplace.ui.product_details.ProductDetailsFragment"
         tools:layout="@layout/fragment_product_details">
-        <action
-            android:id="@+id/action_productDetailsFragment_to_productDetailsFragment"
-            app:destination="@id/fragment_product_details" />
         <argument
             android:name="productId"
             app:argType="string" />
         <action
+            android:id="@+id/action_productDetailsFragment_to_productDetailsFragment"
+            app:destination="@id/fragment_product_details" />
+        <action
             android:id="@+id/action_productDetailsFragment_to_productReviewsFragment"
-            app:destination="@id/reviewsFragment" />
+            app:destination="@id/reviewsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            />
 
     </fragment>
     <fragment
         android:id="@+id/reviewsFragment"
         android:name="com.narcissus.marketplace.ui.product_details.reviews.ReviewsFragment"
         android:label="@string/reviews"
-        tools:layout="@layout/fragment_reviews" >
+        tools:layout="@layout/fragment_reviews">
         <argument
-            android:name="productId"
-            app:argType="string" />
+            android:name="productReviews"
+            app:argType="com.narcissus.marketplace.ui.product_details.model.ReviewParcelable[]" />
     </fragment>
 
 </navigation>
