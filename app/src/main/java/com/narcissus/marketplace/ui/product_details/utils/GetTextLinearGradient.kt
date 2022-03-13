@@ -10,7 +10,7 @@ fun getTextLinearGradient(context: Context)=LinearGradient(
         0f,
         100f,
         100f,
-        arrayOf(context.getColor(R.color.gradient_background_start), context.getColor(R.color.gradient_background_center),context.getColor(
+        arrayOf(context.getColor(R.color.gradient_background_start),context.getColor(
             R.color.gradient_background_end)).toIntArray(),
         null,
         Shader.TileMode.CLAMP
