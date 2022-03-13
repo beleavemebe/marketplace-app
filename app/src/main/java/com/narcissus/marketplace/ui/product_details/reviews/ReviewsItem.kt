@@ -11,7 +11,7 @@ import com.narcissus.marketplace.databinding.ListItemDetailsReviewBinding
 import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
 
-typealias ReviewBinding = ListItemDetailsReviewBinding
+typealias ReviewBinding =ListItemDetailsReviewBinding
 
 sealed class ReviewsItem {
     companion object {
