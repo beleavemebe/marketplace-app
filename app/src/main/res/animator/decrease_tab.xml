@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator
+        android:duration="@integer/tab_animation_duration"
+        android:propertyName="textSize"
+        android:valueFrom="16"
+        android:valueTo="14" />
+
+    <objectAnimator
+        android:duration="@integer/tab_animation_duration"
+        android:propertyName="textColor"
+        android:valueFrom="@color/black"
+        android:valueTo="@color/grey_light" />
+
+    <objectAnimator
+        android:duration="@integer/tab_animation_duration"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:propertyName="paddingBottom"
+        android:valueFrom="0dp"
+        android:valueTo="0dp" />
+</set>

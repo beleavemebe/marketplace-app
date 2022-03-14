@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MarketplaceTextAppearance"/>
+    <style name="MarketplaceTextAppearance.b1">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/montserrat_semibold_ttf</item>
+    </style>
+    <style name="MarketplaceTextAppearance.b2">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/montserrat_regular_ttf</item>
+    </style>
+</resources>

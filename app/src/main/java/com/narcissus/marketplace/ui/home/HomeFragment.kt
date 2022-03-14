@@ -1,15 +1,20 @@
 package com.narcissus.marketplace.ui.home
 
+import android.animation.AnimatorInflater
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
-import com.narcissus.marketplace.ui.home.recycler.ExtraVerticalMarginDecoration
-import com.narcissus.marketplace.ui.home.recycler.HomeScreenAdapter
+import com.narcissus.marketplace.ui.home.pager.banner.Banner
+import com.narcissus.marketplace.ui.home.pager.products.ProductsPageAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -18,20 +23,61 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModel()
 
-    private val adapter = HomeScreenAdapter(::navigateToProductDetails)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-        initRecyclerView()
+        initBannerPager()
+        initProductsPager()
         initSearchViewListener()
-        subscribeToViewModel()
     }
 
-    private fun initRecyclerView() {
-        binding.rvContent.addItemDecoration(ExtraVerticalMarginDecoration(HOME_SCREEN_MARGINS))
-        binding.rvContent.adapter = adapter
+    private fun initBannerPager() {
+        val bannerAdapter = ListDelegationAdapter(Banner.delegate())
+        binding.vpBanners.adapter = bannerAdapter
+        bannerAdapter.items = listOf(
+            Banner("https://c.tenor.com/UjdeUF--bBkAAAAS/sussy.gif") {},
+            Banner("https://c.tenor.com/UjdeUF--bBkAAAAS/sussy.gif") {},
+        )
     }
+
+    private fun initProductsPager() {
+        binding.vpPages.adapter = ProductsPageAdapter(this)
+        binding.vpPages.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        binding.tlPages.addOnTabSelectedListener(createOnProductsTabSelectedListener())
+
+        TabLayoutMediator(
+            binding.tlPages, binding.vpPages,
+        ) { tab, position ->
+            tab.setCustomView(R.layout.tab_view)
+            (tab.customView as TextView).text =
+                requireContext().getString(ProductsPageAdapter.getTitle(position))
+        }.attach()
+    }
+
+    private val increaseTabAnimator by lazy {
+        AnimatorInflater.loadAnimator(requireContext(), R.animator.increase_tab)
+    }
+
+    private val decreaseTabAnimator by lazy {
+        AnimatorInflater.loadAnimator(requireContext(), R.animator.decrease_tab)
+    }
+
+    private fun createOnProductsTabSelectedListener() =
+        object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val tvToIncrease = tab.customView as? TextView ?: return
+                increaseTabAnimator.setTarget(tvToIncrease)
+                increaseTabAnimator.start()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                val tvToDecrease = tab.customView as? TextView ?: return
+                decreaseTabAnimator.setTarget(tvToDecrease)
+                decreaseTabAnimator.start()
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        }
 
     private fun initSearchViewListener() {
         val searchView = binding.root.findViewById<SearchView>(R.id.searchView)
@@ -41,31 +87,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun subscribeToViewModel() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.contentFlow.collect(adapter::setItems)
-        }
-    }
-
-    private fun navigateToProductDetails(id: String) {
-        findNavController().navigate(
-            HomeFragmentDirections.actionFragmentHomeToFragmentProductDetails(id)
-        )
-    }
-
     private fun navigateToSearch() {
         findNavController().navigate(
-            HomeFragmentDirections.actionFragmentHomeToSearch()
+            HomeFragmentDirections.actionFragmentHomeToSearch(),
         )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContent.adapter = null
         _binding = null
-    }
-
-    companion object {
-        const val HOME_SCREEN_MARGINS = 8
     }
 }

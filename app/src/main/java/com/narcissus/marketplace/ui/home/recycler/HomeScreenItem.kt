@@ -2,97 +2,85 @@ package com.narcissus.marketplace.ui.home.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.StringRes
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.databinding.ListItemHomeScreenHeaderBinding
-import com.narcissus.marketplace.databinding.ListItemLoadingProductListBinding
-import com.narcissus.marketplace.databinding.ListItemProductListBinding
-import com.narcissus.marketplace.model.ProductPreview
-import com.narcissus.marketplace.ui.home.HomeFragment.Companion.HOME_SCREEN_MARGINS
-import com.narcissus.marketplace.ui.products.ProductsAdapter
+import com.narcissus.marketplace.R
+import com.narcissus.marketplace.databinding.ListItemBannerBinding
+import com.narcissus.marketplace.databinding.ListItemHeadlineBinding
+import com.narcissus.marketplace.databinding.ListItemProductOfTheDayBinding
+import com.narcissus.marketplace.ui.home.pager.banner.Banner
+import com.narcissus.marketplace.ui.home.util.crossOut
 
-typealias HeaderBinding = ListItemHomeScreenHeaderBinding
-typealias ProductListBinding = ListItemProductListBinding
-typealias LoadingProductListBinding = ListItemLoadingProductListBinding
+typealias HeadlineBinding = ListItemHeadlineBinding
+typealias BannerBinding = ListItemBannerBinding
+typealias ProductOfTheDayBinding = ListItemProductOfTheDayBinding
 
 sealed class HomeScreenItem {
-    data class Header(@StringRes val titleResId: Int) : HomeScreenItem() {
+    data class Headline(val text: String) : HomeScreenItem() {
         companion object {
-            @JvmStatic private fun inflateBinding(
-                layoutInflater: LayoutInflater,
-                root: ViewGroup
-            ) = HeaderBinding.inflate(layoutInflater, root, false)
+            @JvmStatic
+            private fun inflateBinding(
+                inflater: LayoutInflater,
+                parent: ViewGroup,
+            ) = ListItemHeadlineBinding.inflate(inflater, parent, false)
 
-            val delegate get() =
-                adapterDelegateViewBinding<Header, HomeScreenItem, HeaderBinding>(
-                    ::inflateBinding
-                ) {
-                    bind {
-                        binding.tvHeaderTitle.text = context.getString(item.titleResId)
+            val delegate
+                get() =
+                    adapterDelegateViewBinding<Headline, HomeScreenItem, HeadlineBinding>(
+                        ::inflateBinding,
+                    ) {
+                        bind {
+                            binding.tvDetailsTitle.text = item.text
+                        }
                     }
-                }
         }
     }
 
-    data class ProductList(val products: List<ProductPreview>) : HomeScreenItem() {
+    data class BannerItem(val banner: Banner) : HomeScreenItem() {
         companion object {
-            @JvmStatic private fun inflateBinding(
-                layoutInflater: LayoutInflater,
-                root: ViewGroup
-            ) = ProductListBinding.inflate(layoutInflater, root, false)
+            @JvmStatic
+            private fun inflateBinding(
+                inflater: LayoutInflater,
+                parent: ViewGroup,
+            ) = ListItemBannerBinding.inflate(inflater, parent, false)
 
-            fun delegate(onProductClicked: (id: String) -> Unit) =
-                adapterDelegateViewBinding<ProductList, HomeScreenItem, ProductListBinding>(
-                    ::inflateBinding
-                ) {
-                    val adapter = ProductsAdapter(onProductClicked)
-                    binding.rvProducts.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    binding.rvProducts.addItemDecoration(ExtraHorizontalMarginDecoration(HOME_SCREEN_MARGINS))
-                    binding.rvProducts.adapter = adapter
+            val delegate
+                get() =
+                    adapterDelegateViewBinding<BannerItem, HomeScreenItem, BannerBinding>(
+                        ::inflateBinding,
+                    ) {
+                        bind {
 
-                    bind {
-                        adapter.submitItems(item.products)
+                        }
                     }
-                }
         }
     }
 
-    class LoadingProductList : HomeScreenItem() {
+    data class ProductOfTheDayItem(val product: ProductOfTheDay) : HomeScreenItem() {
         companion object {
-            @JvmStatic private fun inflateBinding(
-                layoutInflater: LayoutInflater,
-                root: ViewGroup
-            ) = LoadingProductListBinding.inflate(layoutInflater, root, false)
+            @JvmStatic
+            private fun inflateBinding(
+                inflater: LayoutInflater,
+                parent: ViewGroup,
+            ) = ListItemProductOfTheDayBinding.inflate(inflater, parent, false)
 
-            val delegate get() =
-                adapterDelegateViewBinding<LoadingProductList, HomeScreenItem, LoadingProductListBinding>(
-                    ::inflateBinding,
-                ) {
-                }
-        }
-    }
-
-    companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HomeScreenItem>() {
-            override fun areItemsTheSame(
-                oldItem: HomeScreenItem,
-                newItem: HomeScreenItem
-            ): Boolean {
-                return when (oldItem) {
-                    is Header -> newItem is Header && oldItem.titleResId == newItem.titleResId
-                    is ProductList -> newItem is ProductList && oldItem.products == newItem.products
-                    is LoadingProductList -> newItem is LoadingProductList && oldItem === newItem
-                }
-            }
-
-            override fun areContentsTheSame(
-                oldItem: HomeScreenItem,
-                newItem: HomeScreenItem
-            ): Boolean {
-                return oldItem == newItem
-            }
+            val delegate
+                get() =
+                    adapterDelegateViewBinding<ProductOfTheDayItem, HomeScreenItem, ProductOfTheDayBinding>(
+                        ::inflateBinding,
+                    ) {
+                        bind {
+                            binding.tvProductTitle.text = item.product.name
+                            binding.tvOldPrice.text = context.getString(
+                                R.string.price_placeholder, item.product.oldPrice,
+                            )
+                            binding.tvOldPrice.crossOut()
+                            binding.tvNewPrice.text = context.getString(
+                                R.string.price_placeholder, item.product.newPrice,
+                            )
+                            binding.ivImage.load(item.product.imageUrl)
+                        }
+                    }
         }
     }
 }
