@@ -5,16 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.product_details.ProductDetailsFragment"
-
-    >
-
+    tools:context=".ui.product_details.ProductDetailsFragment">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarDetailsLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="wrap_content">
 
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -78,9 +73,6 @@
             android:layout_height="2dp"
             android:background="@color/divider_color" />
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDetails"
