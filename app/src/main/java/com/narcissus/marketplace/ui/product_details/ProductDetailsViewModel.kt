@@ -8,6 +8,7 @@ import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.model.toProductPreview
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
+import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
 import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
 import com.narcissus.marketplace.ui.product_details.model.ToolBarData
 import com.narcissus.marketplace.usecase.AddToCart
@@ -123,7 +124,14 @@ class ProductDetailsViewModel(
             ProductDetailsItem.ReviewsPreview(details.reviews[0], reviewsState),
             ProductDetailsItem.Divider(),
             ProductDetailsItem.BasicTitle(R.string.similar_products),
-            ProductDetailsItem.SimilarProducts(details.similarProducts),
+            ProductDetailsItem.SimilarProducts(
+                details.similarProducts.map {
+                    PresentationSimilarProduct(
+                        it,
+                        false, // ПЕРЕДЕЛАТЬ С КОРЗИНОЙ
+                    )
+                },
+            ),
         )
 
     private fun mapReviews(reviews: List<Review>) = reviews.map { review ->

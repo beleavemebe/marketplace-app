@@ -9,12 +9,17 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemDetailsSimilarProductItemBinding
 import com.narcissus.marketplace.databinding.ListItemProductPreviewLoadingBinding
 import com.narcissus.marketplace.model.SimilarProduct
+import com.narcissus.marketplace.ui.product_details.utils.getTextLinearGradient
 
 typealias SimilarProductBinding = ListItemDetailsSimilarProductItemBinding
 typealias SimilarProductLoadingBinding = ListItemProductPreviewLoadingBinding
 
 sealed class SimilarProductListItem {
-    data class SimilarProductItem(val product: SimilarProduct) : SimilarProductListItem() {
+    data class SimilarProductItem(
+        val product: SimilarProduct,
+        val isButtonAddToCartActive: Boolean,
+    ) :
+        SimilarProductListItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -42,7 +47,17 @@ sealed class SimilarProductListItem {
                             item.product.stock,
                         )
                         binding.root.setOnClickListener { onProductClicked(item.product.id) }
-                        binding.btnSimilarProductAddToCart.setOnClickListener {
+                        if(item.isButtonAddToCartActive){
+                            binding.tvBtnSimilarProductAddToCart.text=context.getString(R.string.add_to_cart)
+                            binding.tvBtnSimilarProductAddToCart.paint.shader =  null
+                            binding.layoutBtnSimilarProductAddToCart.background = getDrawable(R.drawable.button_5dp_corners_gradient_background)
+                        }else{
+                            binding.tvBtnSimilarProductAddToCart.text=context.getString(R.string.go_to_cart)
+                            binding.tvBtnSimilarProductAddToCart.paint.shader =  getTextLinearGradient(context)
+                            binding.layoutBtnSimilarProductAddToCart.background = getDrawable(R.drawable.button_5dp_corners_gradient_inactive_background)
+                        }
+
+                        binding.layoutBtnSimilarProductAddToCart.setOnClickListener {
                             onAddToCartClicked(item.product.id)
                         }
                     }
@@ -75,6 +90,7 @@ sealed class SimilarProductListItem {
             ): Boolean {
                 return when (oldItem) {
                     is SimilarProductItem -> newItem is SimilarProductItem && oldItem.product.id == newItem.product.id
+                        && oldItem.isButtonAddToCartActive == newItem.isButtonAddToCartActive
                     is SimilarProductLoadingItem -> newItem is SimilarProductLoadingItem && oldItem === newItem
                 }
             }

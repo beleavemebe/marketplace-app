@@ -29,6 +29,7 @@ import com.narcissus.marketplace.model.SimilarProduct
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductDetailsMainInfoAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
+import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
 import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
 
 
@@ -274,7 +275,7 @@ sealed class ProductDetailsItem {
     }
 
     data class SimilarProducts(
-        val similarProductsList: List<SimilarProduct>,
+        val similarProductsList: List<PresentationSimilarProduct>,
     ) : ProductDetailsItem() {
         companion object {
 
@@ -310,7 +311,7 @@ sealed class ProductDetailsItem {
 
                     bind {
                         adapter.items = item.similarProductsList.map {
-                            SimilarProductListItem.SimilarProductItem(it)
+                            SimilarProductListItem.SimilarProductItem(it.similarProduct,it.isButtonAddToCartActive)
                         }
                     }
                 }
