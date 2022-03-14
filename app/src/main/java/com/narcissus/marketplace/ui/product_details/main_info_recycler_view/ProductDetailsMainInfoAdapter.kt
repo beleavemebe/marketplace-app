@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.product_details
+package com.narcissus.marketplace.ui.product_details.main_info_recycler_view
 
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
