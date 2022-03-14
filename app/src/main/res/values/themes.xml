@@ -17,11 +17,11 @@
 
     </style>
 
-    <style name ="Theme.MarketplaceAppTest" parent="Theme.Material3.Light.NoActionBar">
+    <style name ="Theme.MarketplaceAppTest" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorSecondary">@color/purple_200</item>
-        <item name="colorSecondaryVariant">@color/ratingbar_active</item>
+        <item name="colorSecondary">#8E44EB</item>
+        <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorError">@color/red</item>
         <item name="colorSurface">@color/white</item>
         <item name="background">@color/white</item>
@@ -30,5 +30,6 @@
         <item name="colorOnSecondary">@color/grey</item>
         <item name="colorOnSurface">@color/black</item>
         <item name="colorOnBackground">@color/black</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 </resources>
