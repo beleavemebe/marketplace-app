@@ -2,6 +2,7 @@ package com.narcissus.marketplace.ui.home.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import coil.load
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
@@ -16,7 +17,7 @@ typealias BannerBinding = ListItemBannerBinding
 typealias ProductOfTheDayBinding = ListItemProductOfTheDayBinding
 
 sealed class HomeScreenItem {
-    data class Headline(val text: String) : HomeScreenItem() {
+    data class Headline(@StringRes val titleResId: Int) : HomeScreenItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -30,7 +31,8 @@ sealed class HomeScreenItem {
                         ::inflateBinding,
                     ) {
                         bind {
-                            binding.tvDetailsTitle.text = item.text
+                            binding.tvDetailsTitle.text = context
+                                .getString(item.titleResId)
                         }
                     }
         }
