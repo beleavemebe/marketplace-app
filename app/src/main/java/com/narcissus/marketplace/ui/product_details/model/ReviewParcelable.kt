@@ -10,5 +10,5 @@ data class ReviewParcelable(
     val author: String,
     val details: String,
     val rating: Int,
-    val reviewAuthorIcon: String
+    val reviewAuthorIcon: String,
 ) : Parcelable

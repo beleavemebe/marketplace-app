@@ -11,7 +11,7 @@ import com.narcissus.marketplace.databinding.ListItemDetailsReviewBinding
 import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
 
-typealias ReviewBinding =ListItemDetailsReviewBinding
+typealias ReviewBinding = ListItemDetailsReviewBinding
 
 sealed class ReviewsItem {
     companion object {
@@ -20,13 +20,13 @@ sealed class ReviewsItem {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ReviewsItem>() {
             override fun areItemsTheSame(
                 oldItem: ReviewsItem,
-                newItem: ReviewsItem
+                newItem: ReviewsItem,
             ): Boolean =
                 (newItem as ReviewItem).review.reviewId == (oldItem as ReviewItem).review.reviewId
 
             override fun areContentsTheSame(
                 oldItem: ReviewsItem,
-                newItem: ReviewsItem
+                newItem: ReviewsItem,
             ): Boolean {
                 return oldItem == newItem
             }
@@ -38,24 +38,25 @@ sealed class ReviewsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ReviewBinding.inflate(layoutInflater, root, false)
 
-            val delegate get() =
-                adapterDelegateViewBinding<ReviewItem, ReviewsItem, ReviewBinding>(
-                    ::inflateBinding
-                ) {
-                    bind {
-                        binding.tvReviewPreviewAuthor.text = item.review.author
-                        binding.tvReviewPreviewDescription.text = item.review.details
-                        binding.reviewPreviewRatingBar.progress = item.review.rating
-                        binding.ivReviewPreviewAvatar.load(item.review.reviewAuthorIcon) {
-                            transformations(
-                               CircleCropTransformation()
-                            )
+            val delegate
+                get() =
+                    adapterDelegateViewBinding<ReviewItem, ReviewsItem, ReviewBinding>(
+                        ::inflateBinding,
+                    ) {
+                        bind {
+                            binding.tvReviewPreviewAuthor.text = item.review.author
+                            binding.tvReviewPreviewDescription.text = item.review.details
+                            binding.reviewPreviewRatingBar.progress = item.review.rating
+                            binding.ivReviewPreviewAvatar.load(item.review.reviewAuthorIcon) {
+                                transformations(
+                                    CircleCropTransformation(),
+                                )
+                            }
                         }
                     }
-                }
         }
     }
 }

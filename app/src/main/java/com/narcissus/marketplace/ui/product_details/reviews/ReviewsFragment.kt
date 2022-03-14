@@ -21,7 +21,7 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
     private val reviews by lazy { args.productReviews }
     private val reviewsAdapter = AsyncListDifferDelegationAdapter(
         ReviewsItem.DIFF_CALLBACK,
-        ReviewsItem.ReviewItem.delegate
+        ReviewsItem.ReviewItem.delegate,
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,11 +39,11 @@ class ReviewsFragment : Fragment(R.layout.fragment_reviews) {
             DividerItemDecoration(
                 ContextCompat.getDrawable(
                     requireContext(),
-                    R.drawable.recycler_view_divider
-                )!!
-            )
+                    R.drawable.recycler_view_divider,
+                )!!,
+            ),
         )
-        reviewsAdapter.items=reviews.toList().map {  ReviewsItem.ReviewItem(it)}
+        reviewsAdapter.items = reviews.toList().map { ReviewsItem.ReviewItem(it) }
     }
 
     private fun initToolbar() {

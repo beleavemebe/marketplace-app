@@ -26,13 +26,13 @@ sealed class ProductMainInfoItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = RatingSectionBinding.inflate(layoutInflater, root, false)
 
             val delegate
                 get() =
                     adapterDelegateViewBinding<ProductMainInfoRatingSection, ProductMainInfoItem, RatingSectionBinding>(
-                        ::inflateBinding
+                        ::inflateBinding,
                     ) {
                         bind {
                             binding.ratingBarDetailsProduct.progress = item.rating
@@ -46,18 +46,18 @@ sealed class ProductMainInfoItem {
     }
 
     data class ProductMainInfoPurchaseButtonActive(
-        @StringRes val titleId: Int
+        @StringRes val titleId: Int,
     ) : ProductMainInfoItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = PurchaseButtonActiveBinding.inflate(layoutInflater, root, false)
 
             fun delegate(purchaseButtonListener: () -> Unit) =
                 adapterDelegateViewBinding<ProductMainInfoPurchaseButtonActive, ProductMainInfoItem, PurchaseButtonActiveBinding>(
-                    ::inflateBinding
+                    ::inflateBinding,
                 ) {
                     binding.layoutBtnPurchase.setOnClickListener { purchaseButtonListener() }
                     bind {
@@ -68,18 +68,18 @@ sealed class ProductMainInfoItem {
     }
 
     data class ProductMainInfoPurchaseButtonInactive(
-        @StringRes val titleId: Int
+        @StringRes val titleId: Int,
     ) : ProductMainInfoItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = PurchaseButtonInactiveBinding.inflate(layoutInflater, root, false)
 
             fun delegate(goToCartButtonListener: () -> Unit) =
                 adapterDelegateViewBinding<ProductMainInfoPurchaseButtonInactive, ProductMainInfoItem, PurchaseButtonInactiveBinding>(
-                    ::inflateBinding
+                    ::inflateBinding,
                 ) {
                     bind {
                         binding.layoutBtnPurchase.setOnClickListener { goToCartButtonListener() }
@@ -95,7 +95,7 @@ sealed class ProductMainInfoItem {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProductMainInfoItem>() {
             override fun areItemsTheSame(
                 oldItem: ProductMainInfoItem,
-                newItem: ProductMainInfoItem
+                newItem: ProductMainInfoItem,
             ): Boolean {
                 return when (oldItem) {
                     is ProductMainInfoRatingSection -> newItem is ProductMainInfoRatingSection
@@ -105,7 +105,7 @@ sealed class ProductMainInfoItem {
 
             override fun areContentsTheSame(
                 oldItem: ProductMainInfoItem,
-                newItem: ProductMainInfoItem
+                newItem: ProductMainInfoItem,
             ): Boolean {
                 return oldItem == newItem
             }

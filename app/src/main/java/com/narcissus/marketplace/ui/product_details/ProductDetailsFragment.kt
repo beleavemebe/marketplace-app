@@ -33,7 +33,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         allReviewsClicked = ::navigateToReviews,
         reviewTextClicked = ::changeReviewExpandedState,
         similarProductClicked = ::navigateToSimilarProduct,
-        addSimilarProductToCartClicked = ::addSimilarProductToCart
+        addSimilarProductToCartClicked = ::addSimilarProductToCart,
     )
 
 
@@ -63,7 +63,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvDetails.adapter = detailsAdapter
         binding.rvDetails.smoothScrollToPosition(0)
-       binding.rvDetails.itemAnimator = null
+        binding.rvDetails.itemAnimator = null
     }
 
     private fun changeReviewExpandedState() {
@@ -74,11 +74,13 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         val navController = findNavController()
         val configuration = AppBarConfiguration(navController.graph)
         binding.toolBarDetails.setupWithNavController(navController, configuration)
-        binding.appBarDetailsLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0)
-                binding.collapsingToolbarDetailsDivider.visibility = View.VISIBLE
-            else binding.collapsingToolbarDetailsDivider.visibility = View.INVISIBLE
-        })
+        binding.appBarDetailsLayout.addOnOffsetChangedListener(
+            AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0)
+                    binding.collapsingToolbarDetailsDivider.visibility = View.VISIBLE
+                else binding.collapsingToolbarDetailsDivider.visibility = View.INVISIBLE
+            },
+        )
     }
 
     private fun observeProductDetails() {
@@ -103,7 +105,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             listener(
                 onSuccess = { _, _ ->
                     hideShimmerImage()
-                }
+                },
             )
         }
         binding.collapsingToolbarDetailsLayout.title = toolBarData.productName
@@ -116,20 +118,20 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private fun navigateToSimilarProduct(productId: String) {
         findNavController().navigate(
             ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductDetailsFragment(
-                productId
-            )
+                productId,
+            ),
         )
     }
 
     private fun navigateToReviews() {
         findNavController().navigate(
             ProductDetailsFragmentDirections.actionProductDetailsFragmentToProductReviewsFragment(
-                viewModel.reviewsFlow.value.toTypedArray()
-            )
+                viewModel.reviewsFlow.value.toTypedArray(),
+            ),
         )
     }
 
-    private fun addSimilarProductToCart(productId:String){
+    private fun addSimilarProductToCart(productId: String) {
 
     }
 

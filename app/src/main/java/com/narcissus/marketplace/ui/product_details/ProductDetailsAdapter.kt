@@ -8,7 +8,7 @@ class ProductDetailsAdapter(
     allReviewsClicked: () -> Unit,
     reviewTextClicked: () -> Unit,
     similarProductClicked: (productId: String) -> Unit,
-    addSimilarProductToCartClicked:(ProductId:String)->Unit
+    addSimilarProductToCartClicked: (ProductId: String) -> Unit,
 ) : AsyncListDifferDelegationAdapter<ProductDetailsItem>(
     ProductDetailsItem.DIFF_CALLBACK,
     ProductDetailsItem.Price.delegate,
@@ -20,6 +20,9 @@ class ProductDetailsAdapter(
     ProductDetailsItem.AboutMultipleLine.delegate,
     ProductDetailsItem.ButtonTitle.delegate(allReviewsClicked),
     ProductDetailsItem.ReviewsPreview.delegate(reviewTextClicked),
-    ProductDetailsItem.SimilarProducts.delegate(similarProductClicked,addSimilarProductToCartClicked),
+    ProductDetailsItem.SimilarProducts.delegate(
+        similarProductClicked,
+        addSimilarProductToCartClicked,
+    ),
     ProductDetailsItem.Divider.delegate,
 )

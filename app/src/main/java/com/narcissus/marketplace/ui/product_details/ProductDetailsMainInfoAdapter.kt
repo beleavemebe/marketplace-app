@@ -5,15 +5,15 @@ import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.Prod
 
 class ProductDetailsMainInfoAdapter(
     purchaseButtonListener: () -> Unit,
-    goToCartButtonListener: () -> Unit
+    goToCartButtonListener: () -> Unit,
 ) : AsyncListDifferDelegationAdapter<ProductMainInfoItem>(
     ProductMainInfoItem.DIFF_CALLBACK,
     ProductMainInfoItem.ProductMainInfoRatingSection.delegate,
     ProductMainInfoItem.ProductMainInfoPurchaseButtonActive.delegate(
-        purchaseButtonListener
+        purchaseButtonListener,
     ),
     ProductMainInfoItem.ProductMainInfoPurchaseButtonInactive.delegate(
-        goToCartButtonListener
-    )
+        goToCartButtonListener,
+    ),
 )
 

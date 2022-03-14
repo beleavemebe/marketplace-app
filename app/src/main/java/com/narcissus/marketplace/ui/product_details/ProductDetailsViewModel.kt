@@ -46,7 +46,7 @@ class ProductDetailsViewModel(
     }.shareIn(
         CoroutineScope(Dispatchers.IO),
         replay = 1,
-        started = SharingStarted.WhileSubscribed()
+        started = SharingStarted.WhileSubscribed(),
     )
 
 
@@ -54,23 +54,22 @@ class ProductDetailsViewModel(
         combine(
             productDetailsDataFlow,
             reviewsExpandedStateFlow,
-            purchaseButtonActiveStateFlow
+            purchaseButtonActiveStateFlow,
         ) { details, reviewsState, purchaseActiveState ->
             mapDetails(details, reviewsState, purchaseActiveState)
         }.shareIn(
             CoroutineScope(Dispatchers.IO),
             replay = 1,
-            started = SharingStarted.WhileSubscribed()
+            started = SharingStarted.WhileSubscribed(),
         )
 
     val productDetailsToolBarFlow: SharedFlow<ToolBarData> =
         productDetailsDataFlow.map { ToolBarData(it.icon, it.name) }.shareIn(
             CoroutineScope(Dispatchers.IO),
             replay = 1,
-            started = SharingStarted.WhileSubscribed()
+            started = SharingStarted.WhileSubscribed(),
         )
     val reviewsFlow: MutableStateFlow<List<ReviewParcelable>> = MutableStateFlow(listOf())
-
 
 
     fun collapseReviewState() {
@@ -89,7 +88,7 @@ class ProductDetailsViewModel(
     fun purchase() {
         viewModelScope.launch {
             if (purchaseButtonActiveStateFlow.value) {
-                    addToCart(CartItem(productDetailsDataFlow.first().toProductPreview(), 1, false))
+                addToCart(CartItem(productDetailsDataFlow.first().toProductPreview(), 1, false))
                 purchaseButtonActiveStateFlow.emit(!purchaseButtonActiveStateFlow.value)
             }
 
@@ -99,17 +98,21 @@ class ProductDetailsViewModel(
     private fun mapDetails(
         details: ProductDetails,
         reviewsState: Boolean,
-        purchaseActiveState: Boolean
+        purchaseActiveState: Boolean,
     ) =
         listOf(
             ProductDetailsItem.Price(details.price),
             ProductDetailsItem.ProductMainInfo(
                 listOf(
-                    ProductMainInfoItem.ProductMainInfoRatingSection(details.rating,details.sales,details.stock),
-                    getProductPurchaseButtonState(purchaseActiveState)
-                )
+                    ProductMainInfoItem.ProductMainInfoRatingSection(
+                        details.rating,
+                        details.sales,
+                        details.stock,
+                    ),
+                    getProductPurchaseButtonState(purchaseActiveState),
+                ),
 
-            ),
+                ),
             ProductDetailsItem.BasicTitle(R.string.about),
             ProductDetailsItem.AboutSingleLine(R.string.type, details.type),
             ProductDetailsItem.AboutSingleLine(R.string.color, details.color),
@@ -120,20 +123,21 @@ class ProductDetailsViewModel(
             ProductDetailsItem.ReviewsPreview(details.reviews[0], reviewsState),
             ProductDetailsItem.Divider(),
             ProductDetailsItem.BasicTitle(R.string.similar_products),
-            ProductDetailsItem.SimilarProducts(details.similarProducts)
+            ProductDetailsItem.SimilarProducts(details.similarProducts),
         )
 
-    private fun mapReviews(reviews:List<Review>)=reviews.map { review->
+    private fun mapReviews(reviews: List<Review>) = reviews.map { review ->
         ReviewParcelable(
             review.reviewId,
             review.author,
             review.details,
             review.rating,
-            review.reviewAuthorIcon
+            review.reviewAuthorIcon,
         )
     }
+
     private fun getProductPurchaseButtonState(purchaseActiveState: Boolean): ProductMainInfoItem {
-        return if(purchaseActiveState)
+        return if (purchaseActiveState)
             ProductMainInfoItem.ProductMainInfoPurchaseButtonActive(R.string.purchase)
         else
             ProductMainInfoItem.ProductMainInfoPurchaseButtonInactive(R.string.go_to_cart)

@@ -50,13 +50,13 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ProductPriceBinding.inflate(layoutInflater, root, false)
 
             val delegate
                 get() =
                     adapterDelegateViewBinding<Price, ProductDetailsItem, ProductPriceBinding>(
-                        ::inflateBinding
+                        ::inflateBinding,
                     ) {
                         bind {
                             binding.tvDetailsPrice.text =
@@ -67,22 +67,22 @@ sealed class ProductDetailsItem {
     }
 
     data class ProductMainInfo(
-        val mainInfoList: List<ProductMainInfoItem>
+        val mainInfoList: List<ProductMainInfoItem>,
     ) : ProductDetailsItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ProductMainInfoBinding.inflate(layoutInflater, root, false)
 
             fun delegate(purchaseButtonListener: () -> Unit, goToCartButtonListener: () -> Unit) =
                 adapterDelegateViewBinding<ProductMainInfo, ProductDetailsItem, ProductMainInfoBinding>(
-                    ::inflateBinding
+                    ::inflateBinding,
                 ) {
                     val adapter = ProductDetailsMainInfoAdapter(
                         purchaseButtonListener,
-                        goToCartButtonListener
+                        goToCartButtonListener,
                     )
                     binding.rvMainInfo.layoutManager = GridLayoutManager(context, 2)
                     binding.rvMainInfo.adapter = adapter
@@ -99,13 +99,13 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ProductMainInfoPlaceHolderBinding.inflate(layoutInflater, root, false)
 
             val delegate
                 get() =
                     adapterDelegateViewBinding<ProductMainInfoPlaceHolder, ProductDetailsItem, ProductMainInfoPlaceHolderBinding>(
-                        ::inflateBinding
+                        ::inflateBinding,
                     ) {
                         bind {}
                     }
@@ -118,13 +118,13 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ProductBasicTitleBinding.inflate(layoutInflater, root, false)
 
             val delegate
                 get() =
                     adapterDelegateViewBinding<BasicTitle, ProductDetailsItem, ProductBasicTitleBinding>(
-                        ::inflateBinding
+                        ::inflateBinding,
                     ) {
                         bind {
                             binding.tvDetailsTitle.text = context.getString(item.titleId)
@@ -138,13 +138,13 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ProductDetailsPlaceHolderBinding.inflate(layoutInflater, root, false)
 
             val delegate
                 get() =
                     adapterDelegateViewBinding<ProductDetailsPlaceHolder, ProductDetailsItem, ProductDetailsPlaceHolderBinding>(
-                        ::inflateBinding
+                        ::inflateBinding,
                     ) {
                         bind {}
                     }
@@ -158,13 +158,13 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = AboutSingleLineBinding.inflate(layoutInflater, root, false)
 
             val delegate
                 get() =
                     adapterDelegateViewBinding<AboutSingleLine, ProductDetailsItem, AboutSingleLineBinding>(
-                        ::inflateBinding
+                        ::inflateBinding,
                     ) {
                         bind {
                             binding.tvDetailsAboutTitleSingleLine.text =
@@ -181,13 +181,13 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = AboutMultipleLineBinding.inflate(layoutInflater, root, false)
 
             val delegate
                 get() =
                     adapterDelegateViewBinding<AboutMultipleLine, ProductDetailsItem, AboutMultipleLineBinding>(
-                        ::inflateBinding
+                        ::inflateBinding,
                     ) {
                         bind {
                             binding.tvDetailsAboutTitleMultipleLine.text =
@@ -205,12 +205,12 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ProductButtonTitleBinding.inflate(layoutInflater, root, false)
 
             fun delegate(onButtonClicked: () -> Unit) =
                 adapterDelegateViewBinding<ButtonTitle, ProductDetailsItem, ProductButtonTitleBinding>(
-                    ::inflateBinding
+                    ::inflateBinding,
                 ) {
                     bind {
                         binding.tvDetailsButtonTitle.text = context.getString(item.titleId)
@@ -228,19 +228,19 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ReviewsPreviewBinding.inflate(layoutInflater, root, false)
 
             fun delegate(onReviewClicked: () -> Unit) =
                 adapterDelegateViewBinding<ReviewsPreview, ProductDetailsItem, ReviewsPreviewBinding>(
-                    ::inflateBinding
+                    ::inflateBinding,
                 ) {
 
 
                     bind {
                         binding.ivReviewPreviewAvatar.load(item.review.reviewAuthorIcon) {
                             transformations(
-                                CircleCropTransformation()
+                                CircleCropTransformation(),
                             )
                         }
 
@@ -251,12 +251,12 @@ sealed class ProductDetailsItem {
                         if (item.isExpanded) {
                             animateMaxLines(
                                 binding.tvReviewPreviewDescription,
-                                REVIEW_EXPANDED_MAX_LINES
+                                REVIEW_EXPANDED_MAX_LINES,
                             )
                         } else if (binding.tvReviewPreviewDescription.maxLines != REVIEW_COLLAPSED_MAX_LINES) {
                             animateMaxLines(
                                 binding.tvReviewPreviewDescription,
-                                REVIEW_COLLAPSED_MAX_LINES
+                                REVIEW_COLLAPSED_MAX_LINES,
                             )
                         }
                     }
@@ -266,14 +266,14 @@ sealed class ProductDetailsItem {
                 ObjectAnimator.ofInt(
                     view,
                     MAX_LINES_PROPERTY_NAME,
-                    linesCount
+                    linesCount,
                 ).setDuration(ANIM_DURATION).start()
             }
         }
     }
 
     data class SimilarProducts(
-        val similarProductsList: List<SimilarProduct>
+        val similarProductsList: List<SimilarProduct>,
     ) : ProductDetailsItem() {
         companion object {
 
@@ -281,29 +281,29 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = SimilarProductsListBinding.inflate(layoutInflater, root, false)
 
             fun delegate(
                 itemOnClicked: (productId: String) -> Unit,
-                itemAddToCartClicked: (productId: String) -> Unit
+                itemAddToCartClicked: (productId: String) -> Unit,
             ) =
                 adapterDelegateViewBinding<SimilarProducts, ProductDetailsItem, SimilarProductsListBinding>(
-                    ::inflateBinding
+                    ::inflateBinding,
                 ) {
                     val adapter = AsyncListDifferDelegationAdapter(
                         SimilarProductListItem.DIFF_CALLBACK,
                         SimilarProductListItem.SimilarProductItem.delegate(
                             itemOnClicked,
-                            itemAddToCartClicked
-                        )
+                            itemAddToCartClicked,
+                        ),
                     )
                     binding.rvDetailsSimilarProducts.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     binding.rvDetailsSimilarProducts.addItemDecoration(
                         ExtraHorizontalMarginDecoration(
-                            EXTRA_LEFT_MARGIN
-                        )
+                            EXTRA_LEFT_MARGIN,
+                        ),
                     )
                     binding.rvDetailsSimilarProducts.adapter = adapter
 
@@ -321,13 +321,13 @@ sealed class ProductDetailsItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = DividerBinding.inflate(layoutInflater, root, false)
 
             val delegate
                 get() =
                     adapterDelegateViewBinding<Divider, ProductDetailsItem, DividerBinding>(
-                        ::inflateBinding
+                        ::inflateBinding,
                     ) {
                         bind {}
                     }
@@ -339,7 +339,7 @@ sealed class ProductDetailsItem {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProductDetailsItem>() {
             override fun areItemsTheSame(
                 oldItem: ProductDetailsItem,
-                newItem: ProductDetailsItem
+                newItem: ProductDetailsItem,
             ): Boolean {
                 return when (oldItem) {
                     is Price -> newItem is Price && oldItem.price == newItem.price
@@ -355,7 +355,7 @@ sealed class ProductDetailsItem {
 
             override fun areContentsTheSame(
                 oldItem: ProductDetailsItem,
-                newItem: ProductDetailsItem
+                newItem: ProductDetailsItem,
             ): Boolean {
                 return oldItem == newItem
             }

@@ -19,27 +19,32 @@ sealed class SimilarProductListItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = SimilarProductBinding.inflate(layoutInflater, root, false)
 
-            fun delegate(onProductClicked: (productId: String) -> Unit,onAddToCartClicked:(productId:String)->Unit) =
+            fun delegate(
+                onProductClicked: (productId: String) -> Unit,
+                onAddToCartClicked: (productId: String) -> Unit,
+            ) =
                 adapterDelegateViewBinding<SimilarProductItem, SimilarProductListItem, SimilarProductBinding>(
-                    ::inflateBinding
+                    ::inflateBinding,
                 ) {
                     bind {
                         binding.ivSimilarProduct.load(item.product.icon)
                         binding.tvSimilarProductName.text = item.product.name
                         binding.tvSimilarProductPrice.text = binding.root.context.getString(
                             R.string.price_placeholder,
-                            item.product.price
+                            item.product.price,
                         )
                         binding.similarProductRatingBar.progress = item.product.rating
                         binding.tvSimilarProductStock.text = binding.root.context.getString(
                             R.string.in_stock_placeholder,
-                            item.product.stock
+                            item.product.stock,
                         )
                         binding.root.setOnClickListener { onProductClicked(item.product.id) }
-                        binding.btnSimilarProductAddToCart.setOnClickListener {onAddToCartClicked(item.product.id)}
+                        binding.btnSimilarProductAddToCart.setOnClickListener {
+                            onAddToCartClicked(item.product.id)
+                        }
                     }
                 }
         }
@@ -50,14 +55,15 @@ sealed class SimilarProductListItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = SimilarProductLoadingBinding.inflate(layoutInflater, root, false)
 
-            val delegate get() =
-                adapterDelegateViewBinding<SimilarProductLoadingItem, SimilarProductListItem, SimilarProductLoadingBinding>(
-                    ::inflateBinding
-                ) {
-                }
+            val delegate
+                get() =
+                    adapterDelegateViewBinding<SimilarProductLoadingItem, SimilarProductListItem, SimilarProductLoadingBinding>(
+                        ::inflateBinding,
+                    ) {
+                    }
         }
     }
 
@@ -65,7 +71,7 @@ sealed class SimilarProductListItem {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SimilarProductListItem>() {
             override fun areItemsTheSame(
                 oldItem: SimilarProductListItem,
-                newItem: SimilarProductListItem
+                newItem: SimilarProductListItem,
             ): Boolean {
                 return when (oldItem) {
                     is SimilarProductItem -> newItem is SimilarProductItem && oldItem.product.id == newItem.product.id
@@ -75,7 +81,7 @@ sealed class SimilarProductListItem {
 
             override fun areContentsTheSame(
                 oldItem: SimilarProductListItem,
-                newItem: SimilarProductListItem
+                newItem: SimilarProductListItem,
             ): Boolean {
                 return oldItem == newItem
             }
