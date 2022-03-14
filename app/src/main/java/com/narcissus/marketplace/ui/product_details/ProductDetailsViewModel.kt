@@ -50,7 +50,6 @@ class ProductDetailsViewModel(
         started = SharingStarted.WhileSubscribed(),
     )
 
-
     val productDetailsFlow: SharedFlow<List<ProductDetailsItem>> =
         combine(
             productDetailsDataFlow,
@@ -72,13 +71,11 @@ class ProductDetailsViewModel(
         )
     val reviewsFlow: MutableStateFlow<List<ReviewParcelable>> = MutableStateFlow(listOf())
 
-
     fun collapseReviewState() {
         viewModelScope.launch {
             reviewsExpandedStateFlow.emit(false)
         }
     }
-
 
     fun changeReviewExpandedState() {
         viewModelScope.launch {
@@ -92,7 +89,6 @@ class ProductDetailsViewModel(
                 addToCart(CartItem(productDetailsDataFlow.first().toProductPreview(), 1, false))
                 purchaseButtonActiveStateFlow.emit(!purchaseButtonActiveStateFlow.value)
             }
-
         }
     }
 
@@ -113,7 +109,7 @@ class ProductDetailsViewModel(
                     getProductPurchaseButtonState(purchaseActiveState),
                 ),
 
-                ),
+            ),
             ProductDetailsItem.BasicTitle(R.string.about),
             ProductDetailsItem.AboutSingleLine(R.string.type, details.type),
             ProductDetailsItem.AboutSingleLine(R.string.color, details.color),

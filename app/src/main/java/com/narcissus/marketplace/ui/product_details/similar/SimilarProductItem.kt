@@ -47,13 +47,13 @@ sealed class SimilarProductListItem {
                             item.product.stock,
                         )
                         binding.root.setOnClickListener { onProductClicked(item.product.id) }
-                        if(item.isButtonAddToCartActive){
-                            binding.tvBtnSimilarProductAddToCart.text=context.getString(R.string.add_to_cart)
-                            binding.tvBtnSimilarProductAddToCart.paint.shader =  null
+                        if (item.isButtonAddToCartActive) {
+                            binding.tvBtnSimilarProductAddToCart.text = context.getString(R.string.add_to_cart)
+                            binding.tvBtnSimilarProductAddToCart.paint.shader = null
                             binding.layoutBtnSimilarProductAddToCart.background = getDrawable(R.drawable.button_5dp_corners_gradient_background)
-                        }else{
-                            binding.tvBtnSimilarProductAddToCart.text=context.getString(R.string.go_to_cart)
-                            binding.tvBtnSimilarProductAddToCart.paint.shader =  getTextLinearGradient(context)
+                        } else {
+                            binding.tvBtnSimilarProductAddToCart.text = context.getString(R.string.go_to_cart)
+                            binding.tvBtnSimilarProductAddToCart.paint.shader = getTextLinearGradient(context)
                             binding.layoutBtnSimilarProductAddToCart.background = getDrawable(R.drawable.button_5dp_corners_gradient_inactive_background)
                         }
 
@@ -89,8 +89,9 @@ sealed class SimilarProductListItem {
                 newItem: SimilarProductListItem,
             ): Boolean {
                 return when (oldItem) {
-                    is SimilarProductItem -> newItem is SimilarProductItem && oldItem.product.id == newItem.product.id
-                        && oldItem.isButtonAddToCartActive == newItem.isButtonAddToCartActive
+                    is SimilarProductItem ->
+                        newItem is SimilarProductItem && oldItem.product.id == newItem.product.id &&
+                            oldItem.isButtonAddToCartActive == newItem.isButtonAddToCartActive
                     is SimilarProductLoadingItem -> newItem is SimilarProductLoadingItem && oldItem === newItem
                 }
             }

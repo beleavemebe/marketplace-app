@@ -5,17 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
 import coil.transform.CircleCropTransformation
-import coil.transform.RoundedCornersTransformation
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsReviewBinding
-import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
 
 typealias ReviewBinding = ListItemDetailsReviewBinding
 
 sealed class ReviewsItem {
     companion object {
-
 
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ReviewsItem>() {
             override fun areItemsTheSame(
