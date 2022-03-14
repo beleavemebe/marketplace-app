@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/product_details_side_margin"
+    android:layout_marginEnd="@dimen/product_details_side_margin"
     android:layout_marginTop="14dp"
-    android:layout_marginBottom="8dp"
     >
 
     <ImageView
@@ -47,6 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:maxLines="4"
         android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="160dp"
-    android:layout_height="320dp"
+    android:layout_height="290dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="@dimen/card_elevation">
@@ -60,6 +60,7 @@
             android:layout_marginHorizontal="8dp"
             android:isIndicator="true"
             android:numStars="5"
+            android:stepSize="1"
             android:progressBackgroundTint="@color/grey_light"
             android:progressTint="@color/ratingbar_active"
             app:layout_constraintStart_toStartOf="parent"

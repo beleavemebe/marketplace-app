@@ -12,4 +12,6 @@
     <color name="divider_color">#EAE4E4</color>
     <color name="ratingbar_active">#9432C2</color>
     <color name="logo_background">#3E5ABE</color>
+    <color name="gradient_background_start">#68B4FA</color>
+    <color name="gradient_background_end">#8E44EB</color>
 </resources>
