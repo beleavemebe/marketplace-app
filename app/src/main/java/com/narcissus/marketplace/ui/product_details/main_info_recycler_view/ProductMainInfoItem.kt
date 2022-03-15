@@ -90,7 +90,6 @@ sealed class ProductMainInfoItem {
         }
     }
 
-
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProductMainInfoItem>() {
             override fun areItemsTheSame(
@@ -111,5 +110,4 @@ sealed class ProductMainInfoItem {
             }
         }
     }
-
 }

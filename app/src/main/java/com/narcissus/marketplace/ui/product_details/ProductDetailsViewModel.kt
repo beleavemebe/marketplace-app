@@ -8,6 +8,7 @@ import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.model.toProductPreview
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
+import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
 import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
 import com.narcissus.marketplace.ui.product_details.model.ToolBarData
 import com.narcissus.marketplace.usecase.AddToCart
@@ -49,7 +50,6 @@ class ProductDetailsViewModel(
         started = SharingStarted.WhileSubscribed(),
     )
 
-
     val productDetailsFlow: SharedFlow<List<ProductDetailsItem>> =
         combine(
             productDetailsDataFlow,
@@ -71,13 +71,11 @@ class ProductDetailsViewModel(
         )
     val reviewsFlow: MutableStateFlow<List<ReviewParcelable>> = MutableStateFlow(listOf())
 
-
     fun collapseReviewState() {
         viewModelScope.launch {
             reviewsExpandedStateFlow.emit(false)
         }
     }
-
 
     fun changeReviewExpandedState() {
         viewModelScope.launch {
@@ -91,7 +89,6 @@ class ProductDetailsViewModel(
                 addToCart(CartItem(productDetailsDataFlow.first().toProductPreview(), 1, false))
                 purchaseButtonActiveStateFlow.emit(!purchaseButtonActiveStateFlow.value)
             }
-
         }
     }
 
@@ -112,7 +109,7 @@ class ProductDetailsViewModel(
                     getProductPurchaseButtonState(purchaseActiveState),
                 ),
 
-                ),
+            ),
             ProductDetailsItem.BasicTitle(R.string.about),
             ProductDetailsItem.AboutSingleLine(R.string.type, details.type),
             ProductDetailsItem.AboutSingleLine(R.string.color, details.color),
@@ -123,7 +120,14 @@ class ProductDetailsViewModel(
             ProductDetailsItem.ReviewsPreview(details.reviews[0], reviewsState),
             ProductDetailsItem.Divider(),
             ProductDetailsItem.BasicTitle(R.string.similar_products),
-            ProductDetailsItem.SimilarProducts(details.similarProducts),
+            ProductDetailsItem.SimilarProducts(
+                details.similarProducts.map {
+                    PresentationSimilarProduct(
+                        it,
+                        false, // ПЕРЕДЕЛАТЬ С КОРЗИНОЙ
+                    )
+                },
+            ),
         )
 
     private fun mapReviews(reviews: List<Review>) = reviews.map { review ->

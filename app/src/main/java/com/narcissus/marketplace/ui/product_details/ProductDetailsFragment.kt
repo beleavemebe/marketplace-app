@@ -14,7 +14,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.ui.product_details.model.ToolBarData
-
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -36,7 +35,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         addSimilarProductToCartClicked = ::addSimilarProductToCart,
     )
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProductDetailsBinding.bind(view)
@@ -45,7 +43,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         setProductDetailsLoadingState()
         observeProductDetails()
         viewModel.collapseReviewState()
-
     }
 
     private fun setProductDetailsLoadingState() {
@@ -56,7 +53,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             ProductDetailsItem.ProductDetailsPlaceHolder(),
         )
     }
-
 
     private fun initDetailsRecyclerView() {
         binding.rvDetails.layoutManager =
@@ -94,10 +90,8 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
                 viewModel.productDetailsFlow.collect { details ->
                     detailsAdapter.items = details
                 }
-
             }
         }
-
     }
 
     private fun renderToolBar(toolBarData: ToolBarData) {
@@ -132,7 +126,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     }
 
     private fun addSimilarProductToCart(productId: String) {
-
     }
 
     private fun purchase() {
@@ -140,6 +133,5 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     }
 
     private fun goToCart() {
-
     }
 }

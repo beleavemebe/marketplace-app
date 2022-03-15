@@ -19,4 +19,3 @@ fun getTextLinearGradient(context: Context) = LinearGradient(
     null,
     Shader.TileMode.CLAMP,
 )
-

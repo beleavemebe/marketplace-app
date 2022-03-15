@@ -25,12 +25,11 @@ import com.narcissus.marketplace.databinding.ListItemDetailsSimilarProductsListB
 import com.narcissus.marketplace.databinding.ListItemDetailsTitileBasicBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsTitleButtonBinding
 import com.narcissus.marketplace.model.Review
-import com.narcissus.marketplace.model.SimilarProduct
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductDetailsMainInfoAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
+import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
 import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
-
 
 typealias ProductPriceBinding = ListItemDetailsPriceBinding
 typealias ProductMainInfoBinding = ListItemDetailsMainInfoBinding
@@ -113,7 +112,6 @@ sealed class ProductDetailsItem {
         }
     }
 
-
     data class BasicTitle(@StringRes val titleId: Int) : ProductDetailsItem() {
         companion object {
             @JvmStatic
@@ -151,7 +149,6 @@ sealed class ProductDetailsItem {
                     }
         }
     }
-
 
     data class AboutSingleLine(@StringRes val titleId: Int, val value: String) :
         ProductDetailsItem() {
@@ -199,7 +196,6 @@ sealed class ProductDetailsItem {
         }
     }
 
-
     data class ButtonTitle(@StringRes val titleId: Int, @StringRes val buttonNameId: Int) :
         ProductDetailsItem() {
         companion object {
@@ -225,7 +221,6 @@ sealed class ProductDetailsItem {
     data class ReviewsPreview(val review: Review, val isExpanded: Boolean) : ProductDetailsItem() {
         companion object {
 
-
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
@@ -236,7 +231,6 @@ sealed class ProductDetailsItem {
                 adapterDelegateViewBinding<ReviewsPreview, ProductDetailsItem, ReviewsPreviewBinding>(
                     ::inflateBinding,
                 ) {
-
 
                     bind {
                         binding.ivReviewPreviewAvatar.load(item.review.reviewAuthorIcon) {
@@ -274,10 +268,9 @@ sealed class ProductDetailsItem {
     }
 
     data class SimilarProducts(
-        val similarProductsList: List<SimilarProduct>,
+        val similarProductsList: List<PresentationSimilarProduct>,
     ) : ProductDetailsItem() {
         companion object {
-
 
             @JvmStatic
             private fun inflateBinding(
@@ -310,7 +303,7 @@ sealed class ProductDetailsItem {
 
                     bind {
                         adapter.items = item.similarProductsList.map {
-                            SimilarProductListItem.SimilarProductItem(it)
+                            SimilarProductListItem.SimilarProductItem(it.similarProduct, it.isButtonAddToCartActive)
                         }
                     }
                 }
@@ -334,7 +327,6 @@ sealed class ProductDetailsItem {
                     }
         }
     }
-
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProductDetailsItem>() {
@@ -360,7 +352,6 @@ sealed class ProductDetailsItem {
             ): Boolean {
                 return oldItem == newItem
             }
-
         }
         private const val REVIEW_EXPANDED_MAX_LINES = 16
         private const val REVIEW_COLLAPSED_MAX_LINES = 4
@@ -369,5 +360,3 @@ sealed class ProductDetailsItem {
         private const val EXTRA_LEFT_MARGIN = 8
     }
 }
-
-
