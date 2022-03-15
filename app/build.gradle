@@ -52,8 +52,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${coroutines_version}"
-    
+
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
+
     implementation "androidx.navigation:navigation-ui:2.4.1"
     implementation "androidx.navigation:navigation-runtime:2.4.1"
     implementation "androidx.navigation:navigation-fragment:2.4.1"

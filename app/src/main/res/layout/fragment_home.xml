@@ -26,40 +26,10 @@
         android:overScrollMode="never"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vpBanners"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="16dp"
-                android:clipToPadding="false" />
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tlPages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:clipToPadding="false"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                app:tabBackground="@color/white"
-                app:tabIndicator="@null"
-                app:tabMode="scrollable"
-                app:tabPaddingBottom="8dp"
-                app:tabPaddingEnd="12dp"
-                app:tabPaddingTop="8dp"
-                app:tabRippleColor="@null"
-                tools:tabTextAppearance="@style/MarketplaceTextAppearance.b1" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vpPages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout_height="200dp" />
-        </LinearLayout>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="wrap_content"/>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

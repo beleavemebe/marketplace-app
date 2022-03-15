@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tlPages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:tabIndicator="@null"
+        app:tabMode="scrollable"
+        app:tabBackground="@color/white"
+        app:tabPaddingBottom="8dp"
+        app:tabPaddingEnd="12dp"
+        app:tabPaddingTop="8dp"
+        app:tabRippleColor="@null"
+        tools:tabTextAppearance="@style/MarketplaceTextAppearance.b1"/>
+</LinearLayout>

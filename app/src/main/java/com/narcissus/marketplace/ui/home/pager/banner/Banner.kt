@@ -16,7 +16,7 @@ data class Banner(val imgUrl: String, val onClick: () -> Unit) {
 
         fun delegate() =
             adapterDelegateViewBinding<Banner, Banner, ListItemBannerBinding>(
-                ::inflateBinding
+                ::inflateBinding,
             ) {
                 bind {
                     binding.ivImage.load(item.imgUrl)

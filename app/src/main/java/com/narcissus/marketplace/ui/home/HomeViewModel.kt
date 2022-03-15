@@ -2,38 +2,103 @@ package com.narcissus.marketplace.ui.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.narcissus.marketplace.R
 import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.ui.home.pager.banner.Banner
+import com.narcissus.marketplace.ui.home.recycler.FeaturedTab
+import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
+import com.narcissus.marketplace.ui.home.recycler.ProductOfTheDay
 import com.narcissus.marketplace.ui.products.ProductListItem
 import com.narcissus.marketplace.usecase.GetRandomProducts
 import com.narcissus.marketplace.usecase.GetRecentlyVisitedProducts
 import com.narcissus.marketplace.usecase.GetTopRatedProducts
 import com.narcissus.marketplace.usecase.GetTopSalesProducts
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getTopRatedProducts: GetTopRatedProducts,
     private val getTopSalesProducts: GetTopSalesProducts,
     private val getRandomProducts: GetRandomProducts,
-    private val getRecentlyVisitedProducts: GetRecentlyVisitedProducts,
+    getRecentlyVisitedProducts: GetRecentlyVisitedProducts,
 ) : ViewModel() {
-    val topRatedFlow = productListFlow {
+    private val topRatedFlow = productListFlow {
         getTopRatedProducts().getOrThrow()
     }
 
-    val topSalesFlow = productListFlow {
+    private val topSalesFlow = productListFlow {
         getTopSalesProducts().getOrThrow()
     }
 
-    val randomFlow = productListFlow {
+    private val randomFlow = productListFlow {
         getRandomProducts().getOrThrow()
     }
 
-     val recentlyVisitedFlow = getRecentlyVisitedProducts()
-         .map { recentlyVisited ->
-             recentlyVisited.map { preview -> ProductListItem.Product(preview) }
+    private val featuredTabFlow = MutableStateFlow(FeaturedTab.TOP_RATED)
+    private val featuredContentFlow = featuredTabFlow
+        .flatMapLatest { featuredTab ->
+            when (featuredTab) {
+                FeaturedTab.TOP_RATED -> topRatedFlow
+                FeaturedTab.TOP_SALES -> topSalesFlow
+                FeaturedTab.EXPLORE -> randomFlow
+            }
         }
+
+    fun switchFeaturedTab(selectedTab: FeaturedTab) {
+        viewModelScope.launch {
+            featuredTabFlow.emit(selectedTab)
+        }
+    }
+
+    private val recentlyVisitedFlow = getRecentlyVisitedProducts()
+        .map { recentlyVisited ->
+            recentlyVisited.map { preview -> ProductListItem.Product(preview) }
+        }
+
+    private val bannerFlow = flow {
+        emit(
+            Banner("https://png.pngtree.com/background/20210714/original/pngtree-black-friday-banners-sale-web-market-picture-image_1239954.jpg") {}
+        )
+    }
+
+    private val productOfTheDayFlow = flow {
+        emit(
+            ProductOfTheDay(
+                "5fffaea083fde83c1b4ead5b",
+                "https://dummyproducts-api.herokuapp.com/appliances/wallfan_600.png",
+                "Wall fan",
+                936,
+                624,
+                30,
+            ),
+        )
+    }
+
+    val contentFlow: Flow<List<HomeScreenItem>> = combine(
+        bannerFlow,
+        productOfTheDayFlow,
+        featuredContentFlow,
+        recentlyVisitedFlow,
+    ) { banner, productOfTheDay, featuredContent, recentlyVisited ->
+        listOf(
+            HomeScreenItem.Headline(R.string.special_offer),
+            HomeScreenItem.Banners(banner),
+            HomeScreenItem.Headline(R.string.product_of_the_day),
+            HomeScreenItem.ProductOfTheDayItem(productOfTheDay),
+            HomeScreenItem.Headline(R.string.featured),
+            HomeScreenItem.FeaturedTabs(),
+            HomeScreenItem.ProductList(featuredContent),
+            HomeScreenItem.Headline(R.string.you_viewed),
+            HomeScreenItem.ProductList(recentlyVisited),
+            HomeScreenItem.Headline(R.string.home_screen_footer),
+        )
+    }
 
     private fun productListFlow(block: suspend () -> List<ProductPreview>): Flow<List<ProductListItem>> {
         return flow {
