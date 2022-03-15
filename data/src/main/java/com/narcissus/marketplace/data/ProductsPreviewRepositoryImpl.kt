@@ -7,7 +7,7 @@ import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository
 import com.narcissus.marketplace.util.ActionResult
 import com.narcissus.marketplace.util.SearchParams
 
-private const val PREVIEWS_AMOUNT = 15
+private const val PREVIEWS_AMOUNT = 8
 
 internal class ProductsPreviewRepositoryImpl(
     private val apiService: ApiService,

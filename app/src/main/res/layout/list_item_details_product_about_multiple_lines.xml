@@ -3,30 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/product_details_side_margin"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="@dimen/product_details_side_margin">
 
 
     <TextView
-        android:id="@+id/tvAboutTitleMultipleLine"
+        android:id="@+id/tvDetailsAboutTitleMultipleLine"
+        style="@style/B2_body_grey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="title" />
+
+    <TextView
+        android:id="@+id/tvDetailsAboutValueMultipleLine"
+        style="@style/B2_body_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/description"
-        android:textColor="@color/grey_light"
-        android:textSize="12sp"
+        android:maxLines="5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="title"/>
-
-    <TextView
-        android:id="@+id/tvAboutValueMultipleLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAboutTitleMultipleLine"
-        tools:text="aaa\nsdada\ndasdads"/>
+        app:layout_constraintTop_toBottomOf="@id/tvDetailsAboutTitleMultipleLine"
+        tools:text="description" />
 </androidx.constraintlayout.widget.ConstraintLayout>

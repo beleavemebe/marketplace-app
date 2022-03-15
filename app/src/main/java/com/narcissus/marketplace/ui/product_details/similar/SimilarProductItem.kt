@@ -9,37 +9,57 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemDetailsSimilarProductItemBinding
 import com.narcissus.marketplace.databinding.ListItemProductPreviewLoadingBinding
 import com.narcissus.marketplace.model.SimilarProduct
+import com.narcissus.marketplace.ui.product_details.utils.getTextLinearGradient
 
 typealias SimilarProductBinding = ListItemDetailsSimilarProductItemBinding
 typealias SimilarProductLoadingBinding = ListItemProductPreviewLoadingBinding
 
 sealed class SimilarProductListItem {
-    data class SimilarProductItem(val product: SimilarProduct) : SimilarProductListItem() {
+    data class SimilarProductItem(
+        val product: SimilarProduct,
+        val isButtonAddToCartActive: Boolean,
+    ) :
+        SimilarProductListItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = SimilarProductBinding.inflate(layoutInflater, root, false)
 
-            fun delegate(onProductClicked: (id: String) -> Unit) =
+            fun delegate(
+                onProductClicked: (productId: String) -> Unit,
+                onAddToCartClicked: (productId: String) -> Unit,
+            ) =
                 adapterDelegateViewBinding<SimilarProductItem, SimilarProductListItem, SimilarProductBinding>(
-                    ::inflateBinding
+                    ::inflateBinding,
                 ) {
                     bind {
                         binding.ivSimilarProduct.load(item.product.icon)
                         binding.tvSimilarProductName.text = item.product.name
                         binding.tvSimilarProductPrice.text = binding.root.context.getString(
                             R.string.price_placeholder,
-                            item.product.price
+                            item.product.price,
                         )
                         binding.similarProductRatingBar.progress = item.product.rating
                         binding.tvSimilarProductStock.text = binding.root.context.getString(
                             R.string.in_stock_placeholder,
-                            item.product.stock
+                            item.product.stock,
                         )
                         binding.root.setOnClickListener { onProductClicked(item.product.id) }
-                        binding.btnSimilarProductAddToCart.setOnClickListener {}
+                        if (item.isButtonAddToCartActive) {
+                            binding.tvBtnSimilarProductAddToCart.text = context.getString(R.string.add_to_cart)
+                            binding.tvBtnSimilarProductAddToCart.paint.shader = null
+                            binding.layoutBtnSimilarProductAddToCart.background = getDrawable(R.drawable.button_5dp_corners_gradient_background)
+                        } else {
+                            binding.tvBtnSimilarProductAddToCart.text = context.getString(R.string.go_to_cart)
+                            binding.tvBtnSimilarProductAddToCart.paint.shader = getTextLinearGradient(context)
+                            binding.layoutBtnSimilarProductAddToCart.background = getDrawable(R.drawable.button_5dp_corners_gradient_inactive_background)
+                        }
+
+                        binding.layoutBtnSimilarProductAddToCart.setOnClickListener {
+                            onAddToCartClicked(item.product.id)
+                        }
                     }
                 }
         }
@@ -50,14 +70,15 @@ sealed class SimilarProductListItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = SimilarProductLoadingBinding.inflate(layoutInflater, root, false)
 
-            val delegate get() =
-                adapterDelegateViewBinding<SimilarProductLoadingItem, SimilarProductListItem, SimilarProductLoadingBinding>(
-                    ::inflateBinding
-                ) {
-                }
+            val delegate
+                get() =
+                    adapterDelegateViewBinding<SimilarProductLoadingItem, SimilarProductListItem, SimilarProductLoadingBinding>(
+                        ::inflateBinding,
+                    ) {
+                    }
         }
     }
 
@@ -65,17 +86,19 @@ sealed class SimilarProductListItem {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SimilarProductListItem>() {
             override fun areItemsTheSame(
                 oldItem: SimilarProductListItem,
-                newItem: SimilarProductListItem
+                newItem: SimilarProductListItem,
             ): Boolean {
                 return when (oldItem) {
-                    is SimilarProductItem -> newItem is SimilarProductItem && oldItem.product.id == newItem.product.id
+                    is SimilarProductItem ->
+                        newItem is SimilarProductItem && oldItem.product.id == newItem.product.id &&
+                            oldItem.isButtonAddToCartActive == newItem.isButtonAddToCartActive
                     is SimilarProductLoadingItem -> newItem is SimilarProductLoadingItem && oldItem === newItem
                 }
             }
 
             override fun areContentsTheSame(
                 oldItem: SimilarProductListItem,
-                newItem: SimilarProductListItem
+                newItem: SimilarProductListItem,
             ): Boolean {
                 return oldItem == newItem
             }

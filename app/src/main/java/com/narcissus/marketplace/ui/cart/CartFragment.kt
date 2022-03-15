@@ -26,10 +26,17 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         subscribeToViewModel()
     }
 
-    private val adapter = object : AsyncListDifferDelegationAdapter<CartListItem>(
-        CartListItem.DIFF_CALLBACK,
-        CartListItem.Item.delegate,
-    ) {}
+    private val adapter by lazy {
+        object : AsyncListDifferDelegationAdapter<CartListItem>(
+            CartListItem.DIFF_CALLBACK,
+            CartListItem.Item.delegate(
+                viewModel::deleteItem,
+                viewModel::onItemChecked,
+                viewModel::onItemAmountChanged,
+                viewLifecycleOwner.lifecycleScope,
+            ),
+        ) {}
+    }
 
     private fun initRecyclerView() {
         binding.rvCartContent.adapter = adapter
@@ -54,6 +61,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             binding.tvProductsAmount.text = amount
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
+
     private fun observeCart() {
         viewModel.getCartFlow.onEach { items ->
             val isNotEmpty = items.isNotEmpty()
@@ -67,13 +75,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun CartItem.toCartListItem() = CartListItem.Item(
-        this,
-        viewModel::deleteItem,
-        viewModel::onItemChecked,
-        viewModel::onItemAmountChanged,
-        viewLifecycleOwner.lifecycleScope
-    )
+    private fun CartItem.toCartListItem() = CartListItem.Item(this)
 
     private fun initButtons() {
         binding.cbSelectAll.setOnCheckedChangeListener { _, isChecked ->

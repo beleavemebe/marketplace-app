@@ -4,6 +4,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.appdistribution'
     id 'androidx.navigation.safeargs'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -42,7 +43,7 @@ dependencies {
 
     implementation "io.insert-koin:koin-core:3.1.5"
     implementation "io.insert-koin:koin-android:3.1.5"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "io.insert-koin:koin-androidx-navigation:3.1.5"
     testImplementation "io.insert-koin:koin-test:3.1.5"
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
@@ -51,7 +52,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${coroutines_version}"
-    
+
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
 
     implementation "androidx.navigation:navigation-ui:2.4.1"
@@ -70,6 +71,7 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
     implementation project(path: ':ui:user')
+    implementation project(path: ':ui:search')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

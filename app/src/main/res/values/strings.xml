@@ -13,7 +13,7 @@
     <string name="sales_placeholder">%1$d sales</string>
     <string name="top_sales">Top sales</string>
     <string name="top_rated">Top rated</string>
-    <string name="you_visited">You visited</string>
+    <string name="you_viewed">You viewed</string>
     <string name="explore">Explore</string>
     <string name="application_logo">Application Logo</string>
     <string name="working_title">NN SHOP</string>
@@ -32,4 +32,12 @@
     <string name="hide_all_reviews">Hide all reviews</string>
     <string name="cart_is_empty">Cart is empty</string>
     <string name="browse_catalog">Browse Catalog</string>
+    <string name="all_reviews">All reviews</string>
+    <string name="go_to_cart">Go to Cart</string>
+    <string name="special_offer">Special offer</string>
+    <string name="products_of_the_day">Products of the day</string>
+    <string name="percent_off_placeholder">-%1$d%%</string>
+    <string name="featured">Featured</string>
+    <string name="home_screen_footer">That\'s it! 🙃\nVisit our catalog\nfor more cool offers</string>
+    <string name="special_offer_banner">Special offer banner</string>
 </resources>

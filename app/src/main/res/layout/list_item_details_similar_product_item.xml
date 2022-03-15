@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="160dp"
-    android:layout_height="320dp"
+    android:layout_height="290dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="@dimen/card_elevation">
@@ -60,6 +60,7 @@
             android:layout_marginHorizontal="8dp"
             android:isIndicator="true"
             android:numStars="5"
+            android:stepSize="1"
             android:progressBackgroundTint="@color/grey_light"
             android:progressTint="@color/ratingbar_active"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,22 +82,34 @@
             app:layout_constraintTop_toBottomOf="@id/similarProductRatingBar"
             tools:text="In stock: 1021" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSimilarProductAddToCart"
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutBtnSimilarProductAddToCart"
             android:layout_width="match_parent"
-            android:layout_height="28dp"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/button_small_gradient_background"
-            android:fontFamily="@font/montserrat_semibold"
-            android:text="@string/add_to_cart"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/minimal_text_size"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="28dp"
+            android:background="@drawable/button_8dp_corners_gradient_background"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tvBtnSimilarProductAddToCart"
+                android:textSize="12sp"
+                android:fontFamily="@font/montserrat_bold_ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -15,10 +15,6 @@ import kotlinx.coroutines.flow.onEach
 sealed class CartListItem {
     data class Item(
         val cartItem: CartItem,
-        val onRemoveClicked: (CartItem) -> Unit,
-        val onItemChecked: (CartItem, Boolean) -> Unit,
-        val onItemAmountChanged: (CartItem, Int) -> Unit,
-        val scope: CoroutineScope,
     ) : CartListItem() {
         companion object {
             @JvmStatic
@@ -27,36 +23,40 @@ sealed class CartListItem {
                 root: ViewGroup
             ) = ListItemCartBinding.inflate(layoutInflater, root, false)
 
-            val delegate get() =
-                adapterDelegateViewBinding<Item, CartListItem, ListItemCartBinding>(
-                    ::inflateBinding
-                ) {
-                    bind {
-                        binding.tvName.text = item.cartItem.data.name
-                        binding.tvPrice.text = itemView.context.getString(
-                            R.string.price_placeholder,
-                            item.cartItem.data.price
-                        )
+            fun delegate(
+                onRemoveClicked: (CartItem) -> Unit,
+                onItemChecked: (CartItem, Boolean) -> Unit,
+                onItemAmountChanged: (CartItem, Int) -> Unit,
+                scope: CoroutineScope,
+            ) = adapterDelegateViewBinding<Item, CartListItem, ListItemCartBinding>(
+                ::inflateBinding
+            ) {
+                bind {
+                    binding.tvName.text = item.cartItem.data.name
+                    binding.tvPrice.text = itemView.context.getString(
+                        R.string.price_placeholder,
+                        item.cartItem.data.price
+                    )
 
-                        binding.ivIcon.load(item.cartItem.data.icon)
+                    binding.ivIcon.load(item.cartItem.data.icon)
 
-                        binding.cbSelected.isChecked = item.cartItem.isSelected
-                        binding.cbSelected.setOnCheckedChangeListener { _, isChecked ->
-                            item.onItemChecked(item.cartItem, isChecked)
-                        }
-
-                        binding.ibDelete.setOnClickListener {
-                            item.onRemoveClicked(item.cartItem)
-                        }
-
-                        binding.productAmount.setAmount(item.cartItem.count)
-                        binding.productAmount.amountFlow
-                            .onEach { amount ->
-                                item.onItemAmountChanged(item.cartItem, amount)
-                            }
-                            .launchIn(item.scope)
+                    binding.cbSelected.isChecked = item.cartItem.isSelected
+                    binding.cbSelected.setOnCheckedChangeListener { _, isChecked ->
+                        onItemChecked(item.cartItem, isChecked)
                     }
+
+                    binding.ibDelete.setOnClickListener {
+                        onRemoveClicked(item.cartItem)
+                    }
+
+                    binding.productAmount.setAmount(item.cartItem.count)
+                    binding.productAmount.amountFlow
+                        .onEach { amount ->
+                            onItemAmountChanged(item.cartItem, amount)
+                        }
+                        .launchIn(scope)
                 }
+            }
         }
     }
 

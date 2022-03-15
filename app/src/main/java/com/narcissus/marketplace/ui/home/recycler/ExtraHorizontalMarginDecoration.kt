@@ -25,26 +25,6 @@ class ExtraHorizontalMarginDecoration(
     }
 }
 
-class ExtraVerticalMarginDecoration(
-    private val margin: Int,
-) : RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position = parent.getChildAdapterPosition(view)
-        val lastIndex = parent.adapter?.itemCount?.minus(1) ?: -1
-        val marginDp = margin.toDp(parent.context)
-        if (position == 0) {
-            outRect.top = marginDp
-        } else if (position == lastIndex) {
-            outRect.bottom = marginDp
-        }
-    }
-}
-
 private fun Int.toDp(context: Context): Int {
     val density: Float = context.resources.displayMetrics.density
     return (this * density).toInt()

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/product_details_side_margin"
+    android:layout_marginEnd="@dimen/product_details_side_margin"
+    android:layout_marginTop="14dp">
+
+    <TextView
+        android:id="@+id/tvDetailsButtonTitle"
+        style="@style/H6_headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title" />
+
+    <TextView
+        android:id="@+id/tvBtnDetailsTitle"
+        style="@style/Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/ratingbar_active"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="true"
+        tools:text="ALL REVIEWS"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvDetailsButtonTitle"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
