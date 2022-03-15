@@ -102,7 +102,7 @@ class HomeViewModel(
         listOf(
             HomeScreenItem.Headline(R.string.special_offer),
             HomeScreenItem.Banners(banner),
-            HomeScreenItem.Headline(R.string.product_of_the_day),
+            HomeScreenItem.Headline(R.string.products_of_the_day),
             HomeScreenItem.ProductsOfTheDay(productsOfTheDay),
             HomeScreenItem.Headline(R.string.featured),
             HomeScreenItem.FeaturedTabs(),
