@@ -18,11 +18,10 @@
         app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:theme="@style/Theme.MarketplaceApp"
         android:id="@+id/bottom_navigation_view"
         style="@style/Widget.Material3.BottomNavigationView.ActiveIndicator"
-        app:backgroundTint="@color/white"
-        app:itemActiveIndicatorStyle="@style/ActiveIndicatorStyle"
-        app:itemRippleColor="@color/search_view"
+        app:backgroundTint="?attr/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:labelVisibilityMode="labeled"

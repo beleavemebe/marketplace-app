@@ -13,6 +13,8 @@
     <color name="ratingbar_active">#9432C2</color>
     <color name="logo_background">#3E5ABE</color>
     <color name="search_view">#EBEFFF</color>
+    <color name="gradient_background_start">#68B4FA</color>
     <color name="gradient_background_end">#8E44EB</color>
     <color name="red">#FF0000</color>
+    <color name="dark_background">#181818</color>
 </resources>

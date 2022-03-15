@@ -10,16 +10,17 @@
 
     <ImageButton
         android:id="@+id/ibDecrease"
+        android:backgroundTint="@color/black"
         android:layout_width="@dimen/cart_item_add_remove_button_size"
         android:layout_height="@dimen/cart_item_add_remove_button_size"
         android:layout_gravity="start|center_vertical"
         android:layout_marginStart="10dp"
         android:background="@drawable/ic_subtract"
-        android:backgroundTint="@color/black"
         android:contentDescription="@string/decrease_cart_item_amount" />
 
     <TextView
         android:id="@+id/tvAmount"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -32,9 +33,9 @@
         android:id="@+id/ibIncrease"
         android:layout_width="@dimen/cart_item_add_remove_button_size"
         android:layout_height="@dimen/cart_item_add_remove_button_size"
+        android:backgroundTint="@color/black"
         android:layout_gravity="end|center_vertical"
         android:layout_marginEnd="10dp"
         android:background="@drawable/ic_add"
-        android:backgroundTint="@color/black"
         android:contentDescription="@string/increase_cart_item_amount" />
 </merge>

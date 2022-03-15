@@ -34,8 +34,6 @@
         android:layout_marginStart="8dp"
         android:isIndicator="true"
         android:numStars="5"
-        android:progressBackgroundTint="@color/grey_light"
-        android:progressTint="@color/ratingbar_active"
         android:stepSize="1"
         app:layout_constraintBottom_toBottomOf="@id/ivReviewPreviewAvatar"
         app:layout_constraintStart_toEndOf="@id/ivReviewPreviewAvatar"
