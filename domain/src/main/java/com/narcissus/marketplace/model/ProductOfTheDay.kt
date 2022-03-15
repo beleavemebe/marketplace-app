@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.home.recycler
+package com.narcissus.marketplace.model
 
 data class ProductOfTheDay(
     val id: String,

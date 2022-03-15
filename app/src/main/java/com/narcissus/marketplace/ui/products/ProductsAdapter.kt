@@ -2,7 +2,7 @@ package com.narcissus.marketplace.ui.products
 
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
-class ProductsDelegationAdapter(
+class ProductsAdapter(
     onProductClicked: (id: String) -> Unit
 ) : AsyncListDifferDelegationAdapter<ProductListItem>(
     ProductListItem.DIFF_CALLBACK,

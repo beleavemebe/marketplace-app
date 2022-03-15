@@ -18,16 +18,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModel()
 
-    private val adapter by lazy {
-        AsyncListDifferDelegationAdapter(
-            HomeScreenItem.DIFF_CALLBACK,
-            HomeScreenItem.Headline.delegate,
-            HomeScreenItem.Banners.delegate,
-            HomeScreenItem.ProductOfTheDayItem.delegate,
-            HomeScreenItem.FeaturedTabs.delegate(viewModel::switchFeaturedTab),
-            HomeScreenItem.ProductList.delegate(::navigateToProductDetails),
-        )
-    }
+    private val adapter = AsyncListDifferDelegationAdapter(
+        HomeScreenItem.DIFF_CALLBACK,
+        HomeScreenItem.Headline.delegate,
+        HomeScreenItem.Banners.delegate(::navigateToSpecialOffer),
+        HomeScreenItem.ProductsOfTheDay.delegate(::navigateToProductDetails),
+        HomeScreenItem.FeaturedTabs.delegate { viewModel.switchFeaturedTab(it) },
+        HomeScreenItem.Products.delegate(::navigateToProductDetails),
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +56,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         findNavController().navigate(
             HomeFragmentDirections.actionFragmentHomeToSearch(),
         )
+    }
+
+    private fun navigateToSpecialOffer(link: String) {
+        // todo: handle deep link
     }
 
     private fun navigateToProductDetails(id: String) {

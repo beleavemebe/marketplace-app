@@ -2,6 +2,7 @@ package com.narcissus.marketplace.ui.home.recycler
 
 import android.animation.Animator
 import android.animation.AnimatorInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -16,15 +17,14 @@ import com.narcissus.marketplace.databinding.ListItemBannerBinding
 import com.narcissus.marketplace.databinding.ListItemFeaturedContentBinding
 import com.narcissus.marketplace.databinding.ListItemHeadlineBinding
 import com.narcissus.marketplace.databinding.ListItemProductListBinding
-import com.narcissus.marketplace.databinding.ListItemProductOfTheDayBinding
-import com.narcissus.marketplace.ui.home.pager.banner.Banner
-import com.narcissus.marketplace.ui.home.util.crossOut
+import com.narcissus.marketplace.model.SpecialOfferBanner
 import com.narcissus.marketplace.ui.products.ProductListItem
-import com.narcissus.marketplace.ui.products.ProductsDelegationAdapter
+import com.narcissus.marketplace.ui.products.ProductsAdapter
+import java.lang.Exception
 
 typealias HeadlineBinding = ListItemHeadlineBinding
 typealias BannerBinding = ListItemBannerBinding
-typealias ProductOfTheDayBinding = ListItemProductOfTheDayBinding
+typealias ProductsOfTheDayBinding = ListItemProductListBinding
 typealias FeaturedContentBinding = ListItemFeaturedContentBinding
 typealias FeaturedDelegate = AdapterDelegateViewBindingViewHolder<HomeScreenItem.FeaturedTabs, FeaturedContentBinding>
 typealias ProductListBinding = ListItemProductListBinding
@@ -51,57 +51,46 @@ sealed class HomeScreenItem {
         }
     }
 
-    data class Banners(val banner: Banner) : HomeScreenItem() {
+    data class Banners(val banner: SpecialOfferBanner) : HomeScreenItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 inflater: LayoutInflater,
                 parent: ViewGroup,
-            ) = ListItemBannerBinding.inflate(inflater, parent, false)
+            ) = BannerBinding.inflate(inflater, parent, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<Banners, HomeScreenItem, BannerBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.ivImage.load(item.banner.imgUrl)
-                            binding.root.setOnClickListener {
-                                item.banner.onClick
-                            }
+            fun delegate(onClick: (link: String) -> Unit) =
+                adapterDelegateViewBinding<Banners, HomeScreenItem, BannerBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.ivImage.load(item.banner.imgUrl)
+                        binding.root.setOnClickListener {
+                            onClick(item.banner.destinationLink)
                         }
                     }
+                }
         }
     }
 
-    data class ProductOfTheDayItem(val product: ProductOfTheDay) : HomeScreenItem() {
+    data class ProductsOfTheDay(val products: List<ProductOfTheDayItem>) : HomeScreenItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 inflater: LayoutInflater,
                 parent: ViewGroup,
-            ) = ListItemProductOfTheDayBinding.inflate(inflater, parent, false)
+            ) = ProductsOfTheDayBinding.inflate(inflater, parent, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<ProductOfTheDayItem, HomeScreenItem, ProductOfTheDayBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.tvProductTitle.text = item.product.name
-                            binding.tvOldPrice.text = context.getString(
-                                R.string.price_placeholder, item.product.oldPrice,
-                            )
-                            binding.tvOldPrice.crossOut()
-                            binding.tvNewPrice.text = context.getString(
-                                R.string.price_placeholder, item.product.newPrice,
-                            )
-                            binding.tvPercentOff.text = context.getString(
-                                R.string.percent_off_placeholder, item.product.percentOff
-                            )
-                            binding.ivImage.load(item.product.imageUrl)
-                        }
+            fun delegate(onProductClicked: (id: String) -> Unit) =
+                adapterDelegateViewBinding<ProductsOfTheDay, HomeScreenItem, ProductsOfTheDayBinding>(
+                    ::inflateBinding,
+                ) {
+                    val adapter = ProductsOfTheDayAdapter(onProductClicked)
+                    binding.rvProducts.adapter = adapter
+                    bind {
+                        adapter.items = item.products
                     }
+                }
         }
     }
 
@@ -113,21 +102,16 @@ sealed class HomeScreenItem {
                 parent: ViewGroup,
             ) = FeaturedContentBinding.inflate(inflater, parent, false)
 
-            fun delegate(
-                onTabSelected: (FeaturedTab) -> Unit,
-            ) = adapterDelegateViewBinding<FeaturedTabs, HomeScreenItem, FeaturedContentBinding>(
-                ::inflateBinding,
-            ) {
-                val increaseTabAnimator by lazy {
-                    AnimatorInflater.loadAnimator(context, R.animator.increase_tab)
-                }
-                val decreaseTabAnimator by lazy {
-                    AnimatorInflater.loadAnimator(context, R.animator.decrease_tab)
-                }
+            fun delegate(onTabSelected: (FeaturedTab) -> Unit) =
+                adapterDelegateViewBinding<FeaturedTabs, HomeScreenItem, FeaturedContentBinding>(
+                    ::inflateBinding,
+                ) {
+                    val increaseTabAnimator = AnimatorInflater.loadAnimator(context, R.animator.increase_tab)
+                    val decreaseTabAnimator = AnimatorInflater.loadAnimator(context, R.animator.decrease_tab)
 
-                initOnTabSelectedListener(onTabSelected, increaseTabAnimator, decreaseTabAnimator)
-                inflateTabs()
-            }
+                    initOnTabSelectedListener(onTabSelected, increaseTabAnimator, decreaseTabAnimator)
+                    inflateTabs()
+                }
 
             private fun FeaturedDelegate.initOnTabSelectedListener(
                 onTabSelected: (FeaturedTab) -> Unit,
@@ -136,9 +120,7 @@ sealed class HomeScreenItem {
             ) {
                 val onTabSelectedListener =
                     createOnProductsTabSelectedListener(
-                        onTabSelected,
-                        increaseTabAnimator,
-                        decreaseTabAnimator,
+                        onTabSelected, increaseTabAnimator, decreaseTabAnimator,
                     )
                 binding.tlPages.addOnTabSelectedListener(onTabSelectedListener)
             }
@@ -149,10 +131,10 @@ sealed class HomeScreenItem {
                 unselectedAnimator: Animator,
             ) = object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
+                    onTabSelected(tab.getFeaturedTabEnum())
                     val tvToIncrease = tab.customView as? TextView ?: return
                     selectedTabAnimator.setTarget(tvToIncrease)
                     selectedTabAnimator.start()
-                    onTabSelected(tab.getFeaturedTabEnum())
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -174,6 +156,9 @@ sealed class HomeScreenItem {
             }
 
             private fun FeaturedDelegate.inflateTabs() {
+                // TODO: logged multiple times. fix pls
+                Log.d("FeaturedTabs", "inflate tabs called")
+
                 fun newTab(@StringRes titleResId: Int) =
                     binding.tlPages.newTab().apply {
                         setCustomView(R.layout.tab_view)
@@ -187,7 +172,7 @@ sealed class HomeScreenItem {
         }
     }
 
-    data class ProductList(val products: List<ProductListItem>) : HomeScreenItem() {
+    data class Products(val products: List<ProductListItem>) : HomeScreenItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -196,10 +181,10 @@ sealed class HomeScreenItem {
             ) = ProductListBinding.inflate(inflater, parent, false)
 
             fun delegate(onProductClicked: (id: String) -> Unit) =
-                adapterDelegateViewBinding<ProductList, HomeScreenItem, ProductListBinding>(
+                adapterDelegateViewBinding<Products, HomeScreenItem, ProductListBinding>(
                     ::inflateBinding,
                 ) {
-                    val adapter = ProductsDelegationAdapter(onProductClicked)
+                    val adapter = ProductsAdapter(onProductClicked)
                     binding.rvProducts.adapter = adapter
                     bind {
                         adapter.items = item.products
@@ -217,9 +202,9 @@ sealed class HomeScreenItem {
                 return when (oldItem) {
                     is Banners -> newItem is Banners
                     is FeaturedTabs -> newItem is FeaturedTabs
-                    is ProductOfTheDayItem -> newItem is ProductOfTheDayItem
+                    is ProductsOfTheDay -> newItem is ProductsOfTheDay
                     is Headline -> newItem is Headline && oldItem.titleResId == newItem.titleResId
-                    is ProductList -> newItem is ProductList && oldItem.products == newItem.products
+                    is Products -> newItem is Products && oldItem.products == newItem.products
                 }
             }
 

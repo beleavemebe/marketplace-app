@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.model.ProductPreview
-import com.narcissus.marketplace.ui.home.pager.banner.Banner
 import com.narcissus.marketplace.ui.home.recycler.FeaturedTab
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
-import com.narcissus.marketplace.ui.home.recycler.ProductOfTheDay
+import com.narcissus.marketplace.model.ProductOfTheDay
+import com.narcissus.marketplace.model.SpecialOfferBanner
+import com.narcissus.marketplace.ui.home.recycler.ProductOfTheDayItem
 import com.narcissus.marketplace.ui.products.ProductListItem
 import com.narcissus.marketplace.usecase.GetRandomProducts
 import com.narcissus.marketplace.usecase.GetRecentlyVisitedProducts
@@ -61,41 +62,53 @@ class HomeViewModel(
             recentlyVisited.map { preview -> ProductListItem.Product(preview) }
         }
 
-    private val bannerFlow = flow {
+    private val bannersFlow = flow {
         emit(
-            Banner("https://png.pngtree.com/background/20210714/original/pngtree-black-friday-banners-sale-web-market-picture-image_1239954.jpg") {}
+            SpecialOfferBanner("https://png.pngtree.com/background/20210714/original/pngtree-black-friday-banners-sale-web-market-picture-image_1239954.jpg", ""),
         )
     }
 
-    private val productOfTheDayFlow = flow {
+    private val productsOfTheDayFlow = flow {
         emit(
-            ProductOfTheDay(
-                "5fffaea083fde83c1b4ead5b",
-                "https://dummyproducts-api.herokuapp.com/appliances/wallfan_600.png",
-                "Wall fan",
-                936,
-                624,
-                30,
-            ),
+            listOf(
+                ProductOfTheDay(
+                    "5fffaea083fde83c1b4ead5b",
+                    "https://dummyproducts-api.herokuapp.com/appliances/wallfan_600.png",
+                    "Wall fan",
+                    936,
+                    624,
+                    30,
+                ),
+                ProductOfTheDay(
+                    "5fffaea083fde83c1b4ead5b",
+                    "https://dummyproducts-api.herokuapp.com/appliances/wallfan_600.png",
+                    "Wall fan",
+                    936,
+                    624,
+                    30,
+                ),
+            ).map {
+                ProductOfTheDayItem(it)
+            }
         )
     }
 
     val contentFlow: Flow<List<HomeScreenItem>> = combine(
-        bannerFlow,
-        productOfTheDayFlow,
+        bannersFlow,
+        productsOfTheDayFlow,
         featuredContentFlow,
         recentlyVisitedFlow,
-    ) { banner, productOfTheDay, featuredContent, recentlyVisited ->
+    ) { banner, productsOfTheDay, featuredContent, recentlyVisited ->
         listOf(
             HomeScreenItem.Headline(R.string.special_offer),
             HomeScreenItem.Banners(banner),
             HomeScreenItem.Headline(R.string.product_of_the_day),
-            HomeScreenItem.ProductOfTheDayItem(productOfTheDay),
+            HomeScreenItem.ProductsOfTheDay(productsOfTheDay),
             HomeScreenItem.Headline(R.string.featured),
             HomeScreenItem.FeaturedTabs(),
-            HomeScreenItem.ProductList(featuredContent),
+            HomeScreenItem.Products(featuredContent),
             HomeScreenItem.Headline(R.string.you_viewed),
-            HomeScreenItem.ProductList(recentlyVisited),
+            HomeScreenItem.Products(recentlyVisited),
             HomeScreenItem.Headline(R.string.home_screen_footer),
         )
     }
