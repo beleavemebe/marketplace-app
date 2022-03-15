@@ -9,7 +9,9 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductPreviewBinding
 import com.narcissus.marketplace.databinding.ListItemProductPreviewLoadingBinding
 import com.narcissus.marketplace.model.ProductPreview
-import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
+
+typealias LoadingBinding = ListItemProductPreviewLoadingBinding
+typealias ProductPreviewBinding = ListItemProductPreviewBinding
 
 sealed class ProductListItem {
     data class Product(val productPreview: ProductPreview) : ProductListItem() {
@@ -17,10 +19,10 @@ sealed class ProductListItem {
             @JvmStatic private fun inflateBinding(
                 inflater: LayoutInflater,
                 parent: ViewGroup,
-            ) = ListItemProductPreviewBinding.inflate(inflater, parent, false)
+            ) = ProductPreviewBinding.inflate(inflater, parent, false)
 
             fun delegate(onClicked: (id: String) -> Unit) =
-                adapterDelegateViewBinding<Product, ProductListItem, ListItemProductPreviewBinding>(
+                adapterDelegateViewBinding<Product, ProductListItem, ProductPreviewBinding>(
                     ::inflateBinding,
                 ) {
                     bind {
@@ -43,10 +45,10 @@ sealed class ProductListItem {
             @JvmStatic private fun inflateBinding(
                 inflater: LayoutInflater,
                 parent: ViewGroup,
-            ) = ListItemProductPreviewLoadingBinding.inflate(inflater, parent, false)
+            ) = LoadingBinding.inflate(inflater, parent, false)
 
             val delegate get() =
-                adapterDelegateViewBinding<LoadingProduct, ProductListItem, ListItemProductPreviewLoadingBinding>(
+                adapterDelegateViewBinding<LoadingProduct, ProductListItem, LoadingBinding>(
                     ::inflateBinding,
                 ) {
 

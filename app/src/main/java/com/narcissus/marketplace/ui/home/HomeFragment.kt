@@ -10,6 +10,8 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -18,14 +20,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModel()
 
-    private val adapter = AsyncListDifferDelegationAdapter(
-        HomeScreenItem.DIFF_CALLBACK,
-        HomeScreenItem.Headline.delegate,
-        HomeScreenItem.Banners.delegate(::navigateToSpecialOffer),
-        HomeScreenItem.ProductsOfTheDay.delegate(::navigateToProductDetails),
-        HomeScreenItem.FeaturedTabs.delegate { viewModel.switchFeaturedTab(it) },
-        HomeScreenItem.Products.delegate(::navigateToProductDetails),
-    )
+    private val adapter by lazy {
+        AsyncListDifferDelegationAdapter(
+            HomeScreenItem.DIFF_CALLBACK,
+            HomeScreenItem.Headline.delegate,
+            HomeScreenItem.Banners.delegate(::navigateToSpecialOffer),
+            HomeScreenItem.ProductsOfTheDay.delegate(::navigateToProductDetails),
+            HomeScreenItem.FeaturedTabs.delegate(viewModel::switchFeaturedTab),
+            HomeScreenItem.Products.delegate(::navigateToProductDetails),
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,12 +40,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun subscribeToViewModel() {
-//        viewModel.contentFlow
-//            .onEach(adapter::setItems)
-//            .launchIn(viewLifecycleOwner.lifecycleScope)
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.contentFlow.collect(adapter::setItems)
-        }
+        viewModel.contentFlow
+            .onEach(adapter::setItems)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initSearchViewListener() {

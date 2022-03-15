@@ -16,18 +16,17 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemBannerBinding
 import com.narcissus.marketplace.databinding.ListItemFeaturedContentBinding
 import com.narcissus.marketplace.databinding.ListItemHeadlineBinding
-import com.narcissus.marketplace.databinding.ListItemProductListBinding
+import com.narcissus.marketplace.databinding.ListItemRecyclerBinding
 import com.narcissus.marketplace.model.SpecialOfferBanner
 import com.narcissus.marketplace.ui.products.ProductListItem
 import com.narcissus.marketplace.ui.products.ProductsAdapter
-import java.lang.Exception
 
 typealias HeadlineBinding = ListItemHeadlineBinding
 typealias BannerBinding = ListItemBannerBinding
-typealias ProductsOfTheDayBinding = ListItemProductListBinding
+typealias ProductsOfTheDayBinding = ListItemRecyclerBinding
 typealias FeaturedContentBinding = ListItemFeaturedContentBinding
 typealias FeaturedDelegate = AdapterDelegateViewBindingViewHolder<HomeScreenItem.FeaturedTabs, FeaturedContentBinding>
-typealias ProductListBinding = ListItemProductListBinding
+typealias ProductListBinding = ListItemRecyclerBinding
 
 sealed class HomeScreenItem {
     data class Headline(@StringRes val titleResId: Int) : HomeScreenItem() {
@@ -86,7 +85,7 @@ sealed class HomeScreenItem {
                     ::inflateBinding,
                 ) {
                     val adapter = ProductsOfTheDayAdapter(onProductClicked)
-                    binding.rvProducts.adapter = adapter
+                    binding.recyclerView.adapter = adapter
                     bind {
                         adapter.items = item.products
                     }
@@ -106,10 +105,16 @@ sealed class HomeScreenItem {
                 adapterDelegateViewBinding<FeaturedTabs, HomeScreenItem, FeaturedContentBinding>(
                     ::inflateBinding,
                 ) {
-                    val increaseTabAnimator = AnimatorInflater.loadAnimator(context, R.animator.increase_tab)
-                    val decreaseTabAnimator = AnimatorInflater.loadAnimator(context, R.animator.decrease_tab)
+                    val increaseTabAnimator =
+                        AnimatorInflater.loadAnimator(context, R.animator.increase_tab)
+                    val decreaseTabAnimator =
+                        AnimatorInflater.loadAnimator(context, R.animator.decrease_tab)
 
-                    initOnTabSelectedListener(onTabSelected, increaseTabAnimator, decreaseTabAnimator)
+                    initOnTabSelectedListener(
+                        onTabSelected,
+                        increaseTabAnimator,
+                        decreaseTabAnimator,
+                    )
                     inflateTabs()
                 }
 
@@ -185,7 +190,7 @@ sealed class HomeScreenItem {
                     ::inflateBinding,
                 ) {
                     val adapter = ProductsAdapter(onProductClicked)
-                    binding.rvProducts.adapter = adapter
+                    binding.recyclerView.adapter = adapter
                     bind {
                         adapter.items = item.products
                     }
