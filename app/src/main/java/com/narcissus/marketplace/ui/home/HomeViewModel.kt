@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.model.ProductOfTheDay
 import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.model.SpecialOfferBanner
 import com.narcissus.marketplace.ui.home.recycler.FeaturedTab
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
-import com.narcissus.marketplace.model.ProductOfTheDay
-import com.narcissus.marketplace.model.SpecialOfferBanner
 import com.narcissus.marketplace.ui.home.recycler.ProductOfTheDayItem
 import com.narcissus.marketplace.ui.products.ProductListItem
 import com.narcissus.marketplace.usecase.GetRandomProducts

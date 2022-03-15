@@ -9,4 +9,3 @@ class ProductsAdapter(
     ProductListItem.LoadingProduct.delegate,
     ProductListItem.Product.delegate(onProductClicked),
 )
-

@@ -51,7 +51,6 @@ sealed class ProductListItem {
                 adapterDelegateViewBinding<LoadingProduct, ProductListItem, LoadingBinding>(
                     ::inflateBinding,
                 ) {
-
                 }
         }
     }
