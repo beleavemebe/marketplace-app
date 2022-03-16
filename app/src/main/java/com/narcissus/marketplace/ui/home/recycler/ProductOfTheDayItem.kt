@@ -3,6 +3,7 @@ package com.narcissus.marketplace.ui.home.recycler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import coil.load
+import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductOfTheDayBinding
@@ -19,7 +20,7 @@ data class ProductOfTheDayItem(
             parent: ViewGroup,
         ) = ListItemProductOfTheDayBinding.inflate(inflater, parent, false)
 
-        fun delegate(onProductClicked: (id: String) -> Unit) =
+        fun delegate(onProductClicked: (id: String, cardView: MaterialCardView) -> Unit) =
             adapterDelegateViewBinding<ProductOfTheDayItem, ProductOfTheDayItem, ListItemProductOfTheDayBinding>(
                 ::inflateBinding,
             ) {
@@ -36,8 +37,9 @@ data class ProductOfTheDayItem(
                         R.string.percent_off_placeholder, item.product.percentOff,
                     )
                     binding.ivImage.load(item.product.imageUrl)
+                    binding.root.transitionName = item.product.id
                     binding.root.setOnClickListener {
-                        onProductClicked(item.product.id)
+                        onProductClicked(item.product.id, binding.root)
                     }
                 }
             }

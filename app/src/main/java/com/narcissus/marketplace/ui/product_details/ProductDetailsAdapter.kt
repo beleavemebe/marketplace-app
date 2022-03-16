@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.ui.product_details
 
+import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 class ProductDetailsAdapter(
@@ -7,7 +8,7 @@ class ProductDetailsAdapter(
     goToCartClicked: () -> Unit,
     allReviewsClicked: () -> Unit,
     reviewTextClicked: () -> Unit,
-    similarProductClicked: (productId: String) -> Unit,
+    similarProductClicked: (productId: String, cardView: MaterialCardView) -> Unit,
     addSimilarProductToCartClicked: (ProductId: String) -> Unit,
 ) : AsyncListDifferDelegationAdapter<ProductDetailsItem>(
     ProductDetailsItem.DIFF_CALLBACK,

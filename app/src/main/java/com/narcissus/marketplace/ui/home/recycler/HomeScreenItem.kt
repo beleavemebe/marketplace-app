@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.hannesdorfmann.adapterdelegates4.dsl.AdapterDelegateViewBindingViewHolder
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
@@ -80,7 +81,7 @@ sealed class HomeScreenItem {
                 parent: ViewGroup,
             ) = ProductsOfTheDayBinding.inflate(inflater, parent, false)
 
-            fun delegate(onProductClicked: (id: String) -> Unit) =
+            fun delegate(onProductClicked: (id: String, cardView: MaterialCardView) -> Unit) =
                 adapterDelegateViewBinding<ProductsOfTheDay, HomeScreenItem, ProductsOfTheDayBinding>(
                     ::inflateBinding,
                 ) {
@@ -185,7 +186,7 @@ sealed class HomeScreenItem {
                 parent: ViewGroup,
             ) = ProductListBinding.inflate(inflater, parent, false)
 
-            fun delegate(onProductClicked: (id: String) -> Unit) =
+            fun delegate(onProductClicked: (id: String, cardView: MaterialCardView) -> Unit) =
                 adapterDelegateViewBinding<Products, HomeScreenItem, ProductListBinding>(
                     ::inflateBinding,
                 ) {

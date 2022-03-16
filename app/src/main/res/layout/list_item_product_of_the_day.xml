@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="100dp"
+    android:layout_height="116dp"
+    android:layout_marginVertical="2dp"
     android:layout_marginStart="16dp"
     app:cardElevation="2dp"
     app:strokeWidth="0dp">
@@ -16,6 +17,7 @@
             android:id="@+id/ivImage"
             android:layout_width="100dp"
             android:layout_height="0dp"
+            android:layout_marginVertical="8dp"
             android:layout_marginStart="8dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"

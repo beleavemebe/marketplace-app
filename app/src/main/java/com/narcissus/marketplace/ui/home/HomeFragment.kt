@@ -5,7 +5,10 @@ import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
@@ -31,9 +34,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFadeThrough()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
+        postponeEnterTransition()
+        binding.rvContent.post { startPostponedEnterTransition() }
         binding.rvContent.adapter = adapter
         initSearchViewListener()
         subscribeToViewModel()
@@ -63,9 +73,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // todo: handle deep link
     }
 
-    private fun navigateToProductDetails(id: String) {
+    private fun navigateToProductDetails(id: String, cardView: MaterialCardView) {
+        val extras = FragmentNavigatorExtras(cardView to id)
         findNavController().navigate(
-            HomeFragmentDirections.actionFragmentHomeToFragmentProductDetails(id),
+            HomeFragmentDirections.actionFragmentHomeToFragmentProductDetails(id), extras
         )
     }
 

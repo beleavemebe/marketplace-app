@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class ProductDetailsViewModel(
     private val productId: String,
@@ -121,10 +122,10 @@ class ProductDetailsViewModel(
             ProductDetailsItem.Divider(),
             ProductDetailsItem.BasicTitle(R.string.similar_products),
             ProductDetailsItem.SimilarProducts(
-                details.similarProducts.map {
+                details.similarProducts.map { product ->
                     PresentationSimilarProduct(
-                        it,
-                        false, // ПЕРЕДЕЛАТЬ С КОРЗИНОЙ
+                        product,
+                        Random.Default.nextBoolean(), // todo: ПЕРЕДЕЛАТЬ С КОРЗИНОЙ
                     )
                 },
             ),

@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentCatalogBinding
@@ -24,12 +25,23 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         )
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFadeThrough()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCatalogBinding.bind(view)
+        renderTransition()
         initDepartmentsRecyclerView()
         initSearchViewListener()
         subscribeToViewModel()
+    }
+
+    private fun renderTransition() {
+        postponeEnterTransition()
+        binding.rvDepartment.post { startPostponedEnterTransition() }
     }
 
     private fun initDepartmentsRecyclerView() {

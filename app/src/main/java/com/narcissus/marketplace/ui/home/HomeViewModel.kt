@@ -80,12 +80,12 @@ class HomeViewModel(
                     30,
                 ),
                 ProductOfTheDay(
-                    "5fffaea083fde83c1b4ead5b",
-                    "https://dummyproducts-api.herokuapp.com/appliances/wallfan_600.png",
-                    "Wall fan",
-                    936,
-                    624,
-                    30,
+                    "5fffb0a82786863d4f4d2798",
+                    "https://dummyproducts-api.herokuapp.com/appliances/vacuumcleaner_600.png",
+                    "Drab vacuum cleaner",
+                    459,
+                    229,
+                    50,
                 ),
             ).map {
                 ProductOfTheDayItem(it)
