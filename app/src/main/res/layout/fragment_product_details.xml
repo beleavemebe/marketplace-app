@@ -60,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                android:background="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -71,7 +70,7 @@
             android:id="@+id/collapsingToolbarDetailsDivider"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/divider_color" />
+            android:background="?attr/background" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

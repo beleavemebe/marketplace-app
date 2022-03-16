@@ -41,6 +41,7 @@
             android:id="@+id/productPriceTextView"
             style="@style/B1_body"
             android:layout_width="0dp"
+            android:textColor="?attr/colorOnPrimary"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="4dp"
@@ -58,8 +59,6 @@
             android:layout_marginTop="4dp"
             android:isIndicator="true"
             android:numStars="5"
-            android:progressBackgroundTint="@color/grey_light"
-            android:progressTint="@color/ratingbar_active"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/productPriceTextView"
             tools:progress="60" />

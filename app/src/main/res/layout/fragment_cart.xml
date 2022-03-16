@@ -88,21 +88,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
-            <Button
+            <TextView
                 android:id="@+id/btnDeleteSelected"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:drawableLeft="@drawable/ic_close"
+                android:drawableTint="?attr/colorOnPrimary"
+                android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/delete_selected_items"
                 android:textAllCaps="false"
                 android:textAppearance="@style/ToolbarTextAppearance"
-                android:textColor="@color/black"
                 android:textSize="14sp"
-                app:icon="@drawable/ic_close"
-                app:iconSize="18dp"
-                app:iconTint="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/divider"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -157,10 +156,10 @@
             android:id="@+id/tvProductsAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnPrimary"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="2dp"
             android:fontFamily="@font/montserrat"
-            android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/tvTotalPrice"
             app:layout_constraintStart_toStartOf="parent"
@@ -169,11 +168,11 @@
             tools:text="5 products" />
 
         <TextView
+            android:textColor="?attr/colorOnPrimary"
             android:id="@+id/tvTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold"
-            android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvProductsAmount"
