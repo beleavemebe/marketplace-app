@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="4dp"
+            android:progressTint="@color/ratingbar_active"
             android:isIndicator="true"
             android:numStars="5"
             app:layout_constraintStart_toStartOf="parent"
