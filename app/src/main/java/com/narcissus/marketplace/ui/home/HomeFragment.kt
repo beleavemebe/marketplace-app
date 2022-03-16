@@ -42,11 +42,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-        postponeEnterTransition()
-        binding.rvContent.post { startPostponedEnterTransition() }
+        renderTransition()
         binding.rvContent.adapter = adapter
         initSearchViewListener()
         subscribeToViewModel()
+    }
+
+    private fun renderTransition() {
+        postponeEnterTransition()
+        binding.rvContent.post { startPostponedEnterTransition() }
     }
 
     private fun subscribeToViewModel() {
