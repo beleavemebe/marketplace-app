@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
+import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemDetailsSimilarProductItemBinding
@@ -28,7 +29,7 @@ sealed class SimilarProductListItem {
             ) = SimilarProductBinding.inflate(layoutInflater, root, false)
 
             fun delegate(
-                onProductClicked: (productId: String) -> Unit,
+                onProductClicked: (productId: String, cardView: MaterialCardView) -> Unit,
                 onAddToCartClicked: (productId: String) -> Unit,
             ) =
                 adapterDelegateViewBinding<SimilarProductItem, SimilarProductListItem, SimilarProductBinding>(
@@ -46,7 +47,10 @@ sealed class SimilarProductListItem {
                             R.string.in_stock_placeholder,
                             item.product.stock,
                         )
-                        binding.root.setOnClickListener { onProductClicked(item.product.id) }
+                        binding.root.transitionName = item.product.id
+                        binding.root.setOnClickListener {
+                            onProductClicked(item.product.id, binding.root)
+                        }
                         if (item.isButtonAddToCartActive) {
                             binding.tvBtnSimilarProductAddToCart.text = context.getString(R.string.add_to_cart)
                             binding.tvBtnSimilarProductAddToCart.paint.shader = null

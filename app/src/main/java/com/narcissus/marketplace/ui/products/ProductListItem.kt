@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
+import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductPreviewBinding
@@ -21,7 +22,7 @@ sealed class ProductListItem {
                 parent: ViewGroup,
             ) = ProductPreviewBinding.inflate(inflater, parent, false)
 
-            fun delegate(onClicked: (id: String) -> Unit) =
+            fun delegate(onClicked: (id: String, cardView: MaterialCardView) -> Unit) =
                 adapterDelegateViewBinding<Product, ProductListItem, ProductPreviewBinding>(
                     ::inflateBinding,
                 ) {
@@ -32,8 +33,9 @@ sealed class ProductListItem {
                         binding.productPriceTextView.text = itemView.context.getString(R.string.price_placeholder, item.productPreview.price)
                         binding.productSalesTextView.text = itemView.context.getString(R.string.sales_placeholder, item.productPreview.sales)
                         binding.productStockTextView.text = itemView.context.getString(R.string.in_stock_placeholder, item.productPreview.stock)
+                        binding.root.transitionName = item.productPreview.id
                         binding.root.setOnClickListener {
-                            onClicked(item.productPreview.id)
+                            onClicked(item.productPreview.id, binding.root)
                         }
                     }
                 }

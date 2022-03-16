@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
@@ -279,7 +280,7 @@ sealed class ProductDetailsItem {
             ) = SimilarProductsListBinding.inflate(layoutInflater, root, false)
 
             fun delegate(
-                itemOnClicked: (productId: String) -> Unit,
+                itemOnClicked: (productId: String, cardView: MaterialCardView) -> Unit,
                 itemAddToCartClicked: (productId: String) -> Unit,
             ) =
                 adapterDelegateViewBinding<SimilarProducts, ProductDetailsItem, SimilarProductsListBinding>(

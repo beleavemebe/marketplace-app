@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentCartBinding
@@ -21,9 +22,15 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCartBinding.bind(view)
+        renderTransition()
         initRecyclerView()
         initButtons()
         subscribeToViewModel()
+    }
+
+    private fun renderTransition() {
+        postponeEnterTransition()
+        binding.rvCartContent.post { startPostponedEnterTransition() }
     }
 
     private val adapter by lazy {
@@ -36,6 +43,11 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 viewLifecycleOwner.lifecycleScope,
             ),
         ) {}
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFadeThrough()
     }
 
     private fun initRecyclerView() {
