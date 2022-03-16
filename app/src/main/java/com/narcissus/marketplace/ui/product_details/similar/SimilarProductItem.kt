@@ -47,8 +47,8 @@ sealed class SimilarProductListItem {
                             R.string.in_stock_placeholder,
                             item.product.stock,
                         )
-                        binding.root.transitionName = item.product.id
                         binding.root.setOnClickListener {
+                            binding.root.transitionName = item.product.id
                             onProductClicked(item.product.id, binding.root)
                         }
                         if (item.isButtonAddToCartActive) {

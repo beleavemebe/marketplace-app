@@ -37,8 +37,8 @@ data class ProductOfTheDayItem(
                         R.string.percent_off_placeholder, item.product.percentOff,
                     )
                     binding.ivImage.load(item.product.imageUrl)
-                    binding.root.transitionName = item.product.id
                     binding.root.setOnClickListener {
+                        binding.root.transitionName = item.product.id
                         onProductClicked(item.product.id, binding.root)
                     }
                 }

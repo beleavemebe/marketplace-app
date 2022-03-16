@@ -33,8 +33,8 @@ sealed class ProductListItem {
                         binding.productPriceTextView.text = itemView.context.getString(R.string.price_placeholder, item.productPreview.price)
                         binding.productSalesTextView.text = itemView.context.getString(R.string.sales_placeholder, item.productPreview.sales)
                         binding.productStockTextView.text = itemView.context.getString(R.string.in_stock_placeholder, item.productPreview.stock)
-                        binding.root.transitionName = item.productPreview.id
                         binding.root.setOnClickListener {
+                            binding.root.transitionName = item.productPreview.id
                             onClicked(item.productPreview.id, binding.root)
                         }
                     }
