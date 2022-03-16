@@ -9,8 +9,8 @@
     <objectAnimator
         android:duration="@integer/tab_animation_duration"
         android:propertyName="textColor"
-        android:valueFrom="@color/grey_light"
-        android:valueTo="@color/black" />
+        android:valueFrom="?attr/colorOnSecondary"
+        android:valueTo="?attr/colorOnPrimary" />
 
     <objectAnimator
         android:duration="@integer/tab_animation_duration"

@@ -47,11 +47,11 @@
             app:lottie_rawRes="@raw/cart_anim" />
 
         <TextView
+            style="@style/H5_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:text="@string/cart_is_empty"
-            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="@+id/lottieCartAnim"
             app:layout_constraintStart_toStartOf="@+id/lottieCartAnim"
             app:layout_constraintTop_toBottomOf="@+id/lottieCartAnim" />
@@ -94,8 +94,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="?attr/selectableItemBackground"
-                android:drawableLeft="@drawable/ic_close"
-                android:drawableTint="?attr/colorOnPrimary"
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/delete_selected_items"
@@ -104,7 +102,9 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/divider"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:drawableLeftCompat="@drawable/ic_close"
+                app:drawableTint="?attr/colorOnPrimary" />
 
             <CheckBox
                 android:id="@+id/cbSelectAll"

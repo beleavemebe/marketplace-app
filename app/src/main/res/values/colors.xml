@@ -16,5 +16,5 @@
     <color name="gradient_background_start">#68B4FA</color>
     <color name="gradient_background_end">#8E44EB</color>
     <color name="red">#FF0000</color>
-    <color name="dark_background">#181818</color>
+    <color name="dark_background">#121212</color>
 </resources>
