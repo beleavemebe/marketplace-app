@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.usecase
 
-import com.narcissus.marketplace.repository.local.CartLocalRepository
+import com.narcissus.marketplace.repository.CartRepository
 
-class RemoveSelectedCartItems(private val cartLocalRepository: CartLocalRepository) {
-    suspend operator fun invoke() = cartLocalRepository.deleteSelectedItems()
+class RemoveSelectedCartItems(private val cartRepository: CartRepository) {
+    suspend operator fun invoke() = cartRepository.deleteSelectedItems()
 }

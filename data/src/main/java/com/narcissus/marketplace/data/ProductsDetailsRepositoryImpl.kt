@@ -7,7 +7,7 @@ import com.narcissus.marketplace.apiclient.api.service.ApiService
 import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.model.Review
 import com.narcissus.marketplace.model.SimilarProduct
-import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
+import com.narcissus.marketplace.repository.ProductsDetailsRepository
 import com.narcissus.marketplace.util.ActionResult
 
 internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService) :

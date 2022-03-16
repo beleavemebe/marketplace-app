@@ -3,7 +3,7 @@ package com.narcissus.marketplace.data
 import com.narcissus.marketplace.apiclient.api.model.ProductPreviewResponseData
 import com.narcissus.marketplace.apiclient.api.service.ApiService
 import com.narcissus.marketplace.model.ProductPreview
-import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository
+import com.narcissus.marketplace.repository.ProductsPreviewRepository
 import com.narcissus.marketplace.util.ActionResult
 import com.narcissus.marketplace.util.SearchParams
 

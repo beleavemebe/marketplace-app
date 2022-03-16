@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.usecase
 
-import com.narcissus.marketplace.repository.local.CartLocalRepository
+import com.narcissus.marketplace.repository.CartRepository
 
-class GetCart(private val cartLocalRepository: CartLocalRepository) {
-    suspend operator fun invoke() = cartLocalRepository.getCart()
+class GetCart(private val cartRepository: CartRepository) {
+    suspend operator fun invoke() = cartRepository.getCart()
 }

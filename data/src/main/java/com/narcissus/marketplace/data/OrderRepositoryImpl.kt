@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.data
 
 import com.narcissus.marketplace.model.Order
-import com.narcissus.marketplace.repository.remote.OrderRepository
+import com.narcissus.marketplace.repository.OrderRepository
 import com.narcissus.marketplace.util.ActionResult
 
 internal class OrderRepositoryImpl : OrderRepository {

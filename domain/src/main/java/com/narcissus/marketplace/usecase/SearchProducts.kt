@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.usecase
 
 import com.narcissus.marketplace.model.ProductPreview
-import com.narcissus.marketplace.repository.remote.ProductsPreviewRepository
+import com.narcissus.marketplace.repository.ProductsPreviewRepository
 import com.narcissus.marketplace.util.ActionResult
 import com.narcissus.marketplace.util.SearchParams
 import com.narcissus.marketplace.util.SearchParams.SortDirection as SortDirection

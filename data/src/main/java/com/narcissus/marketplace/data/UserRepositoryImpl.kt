@@ -5,7 +5,7 @@ import com.narcissus.marketplace.data.persistence.database.ProductDao
 import com.narcissus.marketplace.data.persistence.model.ProductEntity
 import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.model.User
-import com.narcissus.marketplace.repository.remote.UserRepository
+import com.narcissus.marketplace.repository.UserRepository
 import com.narcissus.marketplace.util.ActionResult
 import com.narcissus.marketplace.util.AuthResult
 import kotlinx.coroutines.flow.Flow

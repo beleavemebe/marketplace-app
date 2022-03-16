@@ -1,6 +1,6 @@
 package com.narcissus.marketplace.usecase
 
-import com.narcissus.marketplace.repository.remote.UserRepository
+import com.narcissus.marketplace.repository.UserRepository
 import com.narcissus.marketplace.util.ActionResult
 
 class SignUpWithEmail(private val userRepository: UserRepository) {

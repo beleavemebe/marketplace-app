@@ -2,8 +2,8 @@ package com.narcissus.marketplace.usecase
 
 import com.narcissus.marketplace.model.ProductDetails
 import com.narcissus.marketplace.model.toProductPreview
-import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
-import com.narcissus.marketplace.repository.remote.UserRepository
+import com.narcissus.marketplace.repository.ProductsDetailsRepository
+import com.narcissus.marketplace.repository.UserRepository
 import com.narcissus.marketplace.util.ActionResult
 
 class GetProductDetails(

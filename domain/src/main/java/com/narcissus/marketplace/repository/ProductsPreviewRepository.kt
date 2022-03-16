@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.repository.remote
+package com.narcissus.marketplace.repository
 
 import com.narcissus.marketplace.model.ProductPreview
 import com.narcissus.marketplace.util.ActionResult

@@ -1,9 +1,9 @@
-package com.narcissus.marketplace.repository.local
+package com.narcissus.marketplace.repository
 
 import com.narcissus.marketplace.model.CartItem
 import kotlinx.coroutines.flow.Flow
 
-interface CartLocalRepository {
+interface CartRepository {
     fun getCart(): Flow<List<CartItem>>
     suspend fun addToCart(cartItem: CartItem)
     suspend fun removeFromCart(cartItem: CartItem)
