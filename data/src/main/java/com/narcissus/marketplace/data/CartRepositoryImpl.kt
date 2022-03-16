@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.data
 
-import com.narcissus.marketplace.model.CartItem
-import com.narcissus.marketplace.repository.CartRepository
+import com.narcissus.marketplace.domain.model.CartItem
+import com.narcissus.marketplace.domain.repository.CartRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 

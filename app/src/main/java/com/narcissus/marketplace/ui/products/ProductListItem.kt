@@ -9,7 +9,7 @@ import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductPreviewBinding
 import com.narcissus.marketplace.databinding.ListItemProductPreviewLoadingBinding
-import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.domain.model.ProductPreview
 
 typealias LoadingBinding = ListItemProductPreviewLoadingBinding
 typealias ProductPreviewBinding = ListItemProductPreviewBinding

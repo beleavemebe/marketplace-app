@@ -3,11 +3,11 @@ package com.narcissus.marketplace.data
 import com.narcissus.marketplace.data.mapper.toProductPreview
 import com.narcissus.marketplace.data.persistence.database.ProductDao
 import com.narcissus.marketplace.data.persistence.model.ProductEntity
-import com.narcissus.marketplace.model.ProductPreview
-import com.narcissus.marketplace.model.User
-import com.narcissus.marketplace.repository.UserRepository
-import com.narcissus.marketplace.util.ActionResult
-import com.narcissus.marketplace.util.AuthResult
+import com.narcissus.marketplace.domain.model.ProductPreview
+import com.narcissus.marketplace.domain.model.User
+import com.narcissus.marketplace.domain.repository.UserRepository
+import com.narcissus.marketplace.domain.util.ActionResult
+import com.narcissus.marketplace.domain.util.AuthResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

@@ -18,7 +18,7 @@ import com.narcissus.marketplace.databinding.ListItemBannerBinding
 import com.narcissus.marketplace.databinding.ListItemFeaturedContentBinding
 import com.narcissus.marketplace.databinding.ListItemHeadlineBinding
 import com.narcissus.marketplace.databinding.ListItemRecyclerBinding
-import com.narcissus.marketplace.model.SpecialOfferBanner
+import com.narcissus.marketplace.domain.model.SpecialOfferBanner
 import com.narcissus.marketplace.ui.products.ProductListItem
 import com.narcissus.marketplace.ui.products.ProductsAdapter
 

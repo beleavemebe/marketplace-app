@@ -7,7 +7,7 @@ import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductOfTheDayBinding
-import com.narcissus.marketplace.model.ProductOfTheDay
+import com.narcissus.marketplace.domain.model.ProductOfTheDay
 import com.narcissus.marketplace.ui.home.util.crossOut
 
 data class ProductOfTheDayItem(

@@ -1,7 +1,7 @@
 package com.narcissus.marketplace.data.mapper
 
 import com.narcissus.marketplace.data.persistence.model.ProductEntity
-import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.domain.model.ProductPreview
 
 fun ProductEntity.toProductPreview(): ProductPreview {
     return ProductPreview(

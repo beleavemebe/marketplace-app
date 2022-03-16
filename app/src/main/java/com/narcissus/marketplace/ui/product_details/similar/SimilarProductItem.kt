@@ -9,7 +9,7 @@ import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemDetailsSimilarProductItemBinding
 import com.narcissus.marketplace.databinding.ListItemProductPreviewLoadingBinding
-import com.narcissus.marketplace.model.SimilarProduct
+import com.narcissus.marketplace.domain.model.SimilarProduct
 import com.narcissus.marketplace.ui.product_details.utils.getTextLinearGradient
 
 typealias SimilarProductBinding = ListItemDetailsSimilarProductItemBinding

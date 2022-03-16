@@ -8,12 +8,12 @@ import com.narcissus.marketplace.data.ProductsDetailsRepositoryImpl
 import com.narcissus.marketplace.data.ProductsPreviewRepositoryImpl
 import com.narcissus.marketplace.data.UserRepositoryImpl
 import com.narcissus.marketplace.data.persistence.di.persistenceModule
-import com.narcissus.marketplace.repository.CartRepository
-import com.narcissus.marketplace.repository.DepartmentsRepository
-import com.narcissus.marketplace.repository.OrderRepository
-import com.narcissus.marketplace.repository.ProductsDetailsRepository
-import com.narcissus.marketplace.repository.ProductsPreviewRepository
-import com.narcissus.marketplace.repository.UserRepository
+import com.narcissus.marketplace.domain.repository.CartRepository
+import com.narcissus.marketplace.domain.repository.DepartmentsRepository
+import com.narcissus.marketplace.domain.repository.OrderRepository
+import com.narcissus.marketplace.domain.repository.ProductsDetailsRepository
+import com.narcissus.marketplace.domain.repository.ProductsPreviewRepository
+import com.narcissus.marketplace.domain.repository.UserRepository
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 

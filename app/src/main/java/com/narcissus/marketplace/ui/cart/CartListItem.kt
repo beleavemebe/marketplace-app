@@ -7,7 +7,7 @@ import coil.load
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemCartBinding
-import com.narcissus.marketplace.model.CartItem
+import com.narcissus.marketplace.domain.model.CartItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
