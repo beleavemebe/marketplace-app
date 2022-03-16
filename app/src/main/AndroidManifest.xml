@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".ui.MarketplaceApp"
-        android:theme="@style/Theme.MarketplaceAppTest">
+        android:theme="@style/Theme.MarketplaceApp">
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

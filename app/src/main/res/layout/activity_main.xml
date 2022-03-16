@@ -18,7 +18,7 @@
         app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:theme="@style/Theme.MarketplaceApp"
+        android:theme="@style/Theme.MarketplaceAppBottomNavigation"
         android:id="@+id/bottom_navigation_view"
         style="@style/Widget.Material3.BottomNavigationView.ActiveIndicator"
         app:backgroundTint="?attr/colorPrimary"
