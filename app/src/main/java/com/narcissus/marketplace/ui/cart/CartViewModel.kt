@@ -25,11 +25,7 @@ class CartViewModel(
     private val removeSelectedCartItems: RemoveSelectedCartItems,
 ) : ViewModel() {
 
-    val getCartFlow = flow {
-        getCart().collect { items ->
-            emit(items)
-        }
-    }
+    val getCartFlow = getCart()
 
     val getCartCostFlow = flow {
         getCartCost().collect { price ->

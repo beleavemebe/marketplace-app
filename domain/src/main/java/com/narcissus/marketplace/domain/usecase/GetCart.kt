@@ -3,5 +3,5 @@ package com.narcissus.marketplace.domain.usecase
 import com.narcissus.marketplace.domain.repository.CartRepository
 
 class GetCart(private val cartRepository: CartRepository) {
-    suspend operator fun invoke() = cartRepository.getCart()
+    operator fun invoke() = cartRepository.getCart()
 }
