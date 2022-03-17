@@ -40,4 +40,6 @@
     <string name="featured">Featured</string>
     <string name="home_screen_footer">That\'s it! 🙃\nVisit our catalog\nfor more cool offers</string>
     <string name="special_offer_banner">Special offer banner</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
 </resources>
