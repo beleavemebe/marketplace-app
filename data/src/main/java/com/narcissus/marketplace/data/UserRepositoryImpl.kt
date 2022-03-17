@@ -1,18 +1,24 @@
 package com.narcissus.marketplace.data
 
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.narcissus.marketplace.data.mapper.toProductPreview
 import com.narcissus.marketplace.data.persistence.database.ProductDao
 import com.narcissus.marketplace.data.persistence.model.ProductEntity
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.User
+import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.util.ActionResult
 import com.narcissus.marketplace.domain.util.AuthResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.await
 
 internal class UserRepositoryImpl(
     private val productsDao: ProductDao,
+    private val firebaseAuth: FirebaseAuth,
 ) : UserRepository {
     override fun getRecentlyVisitedProducts(): Flow<List<ProductPreview>> {
         return productsDao.getProducts().map { entities ->
@@ -32,12 +38,17 @@ internal class UserRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun isUserAuthentificated(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override suspend fun isUserAuthentificated(): Boolean = firebaseAuth.currentUser != null
+
 
     override suspend fun signInWithEmail(email: String, password: String): AuthResult {
-        TODO("Not yet implemented")
+        var currentUser = firebaseAuth.currentUser
+        return if (currentUser != null) {
+            currentUser.toAuthResult()
+        } else {
+            currentUser = firebaseAuth.signInWithEmailAndPassword(email, password).await().user
+            currentUser?.toAuthResult() ?: AuthResult.SignInWrongPasswordOrEmail
+        }
     }
 
     override suspend fun signUpWithEmail(email: String, password: String): AuthResult {
@@ -65,6 +76,15 @@ private fun ProductPreview.toProductEntity(): ProductEntity {
         color,
         material,
         rating,
-        sales
+        sales,
+    )
+}
+
+private fun FirebaseUser.toAuthResult(): AuthResult {
+
+    return AuthResult.SignInSuccess(
+        UserProfile(
+            uid, displayName, email!!, photoUrl.toString(),
+        ),
     )
 }

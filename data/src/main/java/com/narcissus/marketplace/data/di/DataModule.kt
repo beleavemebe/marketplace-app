@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.data.di
 
+import com.google.firebase.auth.FirebaseAuth
 import com.narcissus.marketplace.apiclient.di.apiClientModule
 import com.narcissus.marketplace.data.CartRepositoryImpl
 import com.narcissus.marketplace.data.DepartmentsRepositoryImpl
@@ -31,8 +32,7 @@ val dataModule = module {
     single<ProductsPreviewRepository> {
         ProductsPreviewRepositoryImpl(apiService = get())
     }
-
     single<UserRepository> {
-        UserRepositoryImpl(productsDao = get())
+        UserRepositoryImpl(productsDao = get(), FirebaseAuth.getInstance())
     }
 }
