@@ -16,8 +16,7 @@ typealias PurchaseButtonActiveBinding = ListItemDetailsMainInfoListPurchaseButto
 typealias PurchaseButtonInactiveBinding = ListItemDetailsMainInfoListPurchaseButtonInactiveBinding
 
 sealed class ProductMainInfoItem {
-
-    data class ProductMainInfoRatingSection(
+    data class RatingSection(
         val rating: Int,
         val salesCount: Int,
         val stockCount: Int,
@@ -31,7 +30,7 @@ sealed class ProductMainInfoItem {
 
             val delegate
                 get() =
-                    adapterDelegateViewBinding<ProductMainInfoRatingSection, ProductMainInfoItem, RatingSectionBinding>(
+                    adapterDelegateViewBinding<RatingSection, ProductMainInfoItem, RatingSectionBinding>(
                         ::inflateBinding,
                     ) {
                         bind {
@@ -45,7 +44,7 @@ sealed class ProductMainInfoItem {
         }
     }
 
-    data class ProductMainInfoPurchaseButtonActive(
+    data class ActivePurchaseButton(
         @StringRes val titleId: Int,
     ) : ProductMainInfoItem() {
         companion object {
@@ -56,7 +55,7 @@ sealed class ProductMainInfoItem {
             ) = PurchaseButtonActiveBinding.inflate(layoutInflater, root, false)
 
             fun delegate(purchaseButtonListener: () -> Unit) =
-                adapterDelegateViewBinding<ProductMainInfoPurchaseButtonActive, ProductMainInfoItem, PurchaseButtonActiveBinding>(
+                adapterDelegateViewBinding<ActivePurchaseButton, ProductMainInfoItem, PurchaseButtonActiveBinding>(
                     ::inflateBinding,
                 ) {
                     binding.layoutBtnPurchase.setOnClickListener { purchaseButtonListener() }
@@ -67,7 +66,7 @@ sealed class ProductMainInfoItem {
         }
     }
 
-    data class ProductMainInfoPurchaseButtonInactive(
+    data class InactivePurchaseButton(
         @StringRes val titleId: Int,
     ) : ProductMainInfoItem() {
         companion object {
@@ -78,7 +77,7 @@ sealed class ProductMainInfoItem {
             ) = PurchaseButtonInactiveBinding.inflate(layoutInflater, root, false)
 
             fun delegate(goToCartButtonListener: () -> Unit) =
-                adapterDelegateViewBinding<ProductMainInfoPurchaseButtonInactive, ProductMainInfoItem, PurchaseButtonInactiveBinding>(
+                adapterDelegateViewBinding<InactivePurchaseButton, ProductMainInfoItem, PurchaseButtonInactiveBinding>(
                     ::inflateBinding,
                 ) {
                     bind {
@@ -97,7 +96,7 @@ sealed class ProductMainInfoItem {
                 newItem: ProductMainInfoItem,
             ): Boolean {
                 return when (oldItem) {
-                    is ProductMainInfoRatingSection -> newItem is ProductMainInfoRatingSection
+                    is RatingSection -> newItem is RatingSection
                     else -> false
                 }
             }
