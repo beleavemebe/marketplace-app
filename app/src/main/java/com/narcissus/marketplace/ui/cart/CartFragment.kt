@@ -63,19 +63,21 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     }
 
     private fun observeCartCost() {
-        viewModel.getCartCostFlow.onEach { totalPrice ->
-            binding.tvTotalPrice.text = totalPrice
+        viewModel.cartCostFlow.onEach { totalPrice ->
+            binding.tvTotalPrice.text = requireContext()
+                .getString(R.string.price_placeholder, totalPrice)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun observeCartItemAmount() {
-        viewModel.getCartItemsAmountFlow.onEach { amount ->
-            binding.tvProductsAmount.text = amount
+        viewModel.itemAmountFlow.onEach { amount ->
+            binding.tvProductsAmount.text = requireContext()
+                .getString(R.string.products_amount_placeholder, amount)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun observeCart() {
-        viewModel.getCartFlow.onEach { items ->
+        viewModel.cartFlow.onEach { items ->
             val isNotEmpty = items.isNotEmpty()
             binding.checkoutBar.isVisible = isNotEmpty
             binding.nsvCartContent.isVisible = isNotEmpty

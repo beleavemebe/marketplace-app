@@ -7,6 +7,7 @@ import com.google.firebase.database.MutableData
 import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import com.narcissus.marketplace.data.mapper.toBean
 import com.narcissus.marketplace.data.mapper.toCartItem
 import com.narcissus.marketplace.data.model.CartItemBean
 import com.narcissus.marketplace.domain.model.CartItem
@@ -33,11 +34,10 @@ class CartRepositoryImpl(
     private fun ProducerScope<List<CartItem>>.createValueEventListener() =
         object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val cart = snapshot.children
-                    .mapNotNull {
-                        it.getValue<CartItemBean>()
-                            ?.toCartItem()
-                    }
+                val cart = snapshot.children.mapNotNull { child ->
+                    child.getValue<CartItemBean>()
+                        ?.toCartItem()
+                }
 
                 trySendBlocking(cart)
             }
@@ -46,31 +46,35 @@ class CartRepositoryImpl(
         }
 
     override suspend fun addToCart(cartItem: CartItem) {
-        cartRef.child(cartItem.data.id).setValue(cartItem)
+        cartRef.child(cartItem.productId)
+            .setValue(cartItem.toBean())
     }
 
     override suspend fun removeFromCart(cartItem: CartItem) {
-        cartRef.child(cartItem.data.id).removeValue()
+        cartRef.child(cartItem.productId)
+            .removeValue()
     }
 
     override suspend fun setCartItemSelected(cartItem: CartItem, selected: Boolean) {
         val newItem = cartItem.copy(isSelected = selected)
-        cartRef.child(cartItem.data.id).setValue(newItem)
+        cartRef.child(cartItem.productId)
+            .setValue(newItem.toBean())
     }
 
     override suspend fun setCartItemAmount(cartItem: CartItem, amount: Int) {
-        val newItem = cartItem.copy(count = amount)
-        cartRef.child(cartItem.data.id).setValue(newItem)
+        val newItem = cartItem.copy(amount = amount)
+        cartRef.child(cartItem.productId)
+            .setValue(newItem.toBean())
     }
 
     override suspend fun selectAllCartItems(isSelected: Boolean) {
         cartRef.get().addOnSuccessListener { snapshot ->
-            val newItems = snapshot.children.mapNotNull {
-                it.getValue<CartItemBean>()
+            val newItems = snapshot.children.mapNotNull { child ->
+                child.getValue<CartItemBean>()
                     ?.copy(isSelected = isSelected)
             }
 
-            val newChildren = newItems.associateBy { it.data?.id }
+            val newChildren = newItems.associateBy { it.productId }
             cartRef.updateChildren(newChildren)
         }
     }
@@ -95,9 +99,9 @@ class CartRepositoryImpl(
         }
 
     private fun runDeleteSelectedTransaction(currentData: MutableData): Transaction.Result {
-        currentData.children.forEach {
-            val bean = it.getValue<CartItemBean>() ?: return@forEach
-            it.value = bean.takeUnless { it.isSelected == true }
+        currentData.children.forEach { data ->
+            val bean = data.getValue<CartItemBean>() ?: return@forEach
+            data.value = bean.takeUnless { it.isSelected == true }
         }
 
         return Transaction.success(currentData)

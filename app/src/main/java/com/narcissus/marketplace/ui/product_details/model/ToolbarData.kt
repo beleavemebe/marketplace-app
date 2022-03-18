@@ -1,6 +1,6 @@
 package com.narcissus.marketplace.ui.product_details.model
 
-data class ToolBarData(
+data class ToolbarData(
     val productIcon: String,
     val productName: String,
 )
