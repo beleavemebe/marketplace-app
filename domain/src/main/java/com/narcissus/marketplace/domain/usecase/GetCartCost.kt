@@ -2,25 +2,19 @@ package com.narcissus.marketplace.domain.usecase
 
 import com.narcissus.marketplace.domain.repository.CartRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.mapLatest
 
 class GetCartCost(private val cartRepository: CartRepository) {
-    suspend operator fun invoke(): Flow<String> { // temporary implementation
-        return flow {
-            val listFlow = cartRepository.getCart()
-            listFlow.collect { listItems ->
-                var sum = 0
-                if (listItems.isEmpty()) {
-                    emit("")
+    operator fun invoke(): Flow<Int> =
+        cartRepository.getCart()
+            .mapLatest { items ->
+                if (items.isEmpty()) {
+                    0
                 } else {
-                    for (item in listItems) {
-                        if (item.isSelected) {
-                            sum += item.data.price * item.count
-                        }
-                    }
-                    emit("$$sum")
+                    items.asSequence()
+                        .filter { it.isSelected }
+                        .map { it.productPrice * it.amount }
+                        .reduceOrNull(Int::plus) ?: 0
                 }
             }
-        }
-    }
 }

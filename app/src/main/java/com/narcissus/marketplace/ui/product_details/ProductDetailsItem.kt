@@ -27,7 +27,7 @@ import com.narcissus.marketplace.databinding.ListItemDetailsTitileBasicBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsTitleButtonBinding
 import com.narcissus.marketplace.domain.model.Review
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
-import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductDetailsMainInfoAdapter
+import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
 import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
 import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
@@ -68,7 +68,7 @@ sealed class ProductDetailsItem {
     }
 
     data class ProductMainInfo(
-        val mainInfoList: List<ProductMainInfoItem>,
+        val infoItems: List<ProductMainInfoItem>,
     ) : ProductDetailsItem() {
         companion object {
             @JvmStatic
@@ -81,7 +81,7 @@ sealed class ProductDetailsItem {
                 adapterDelegateViewBinding<ProductMainInfo, ProductDetailsItem, ProductMainInfoBinding>(
                     ::inflateBinding,
                 ) {
-                    val adapter = ProductDetailsMainInfoAdapter(
+                    val adapter = ProductMainInfoAdapter(
                         purchaseButtonListener,
                         goToCartButtonListener,
                     )
@@ -89,7 +89,7 @@ sealed class ProductDetailsItem {
                     binding.rvMainInfo.adapter = adapter
                     binding.rvMainInfo.isNestedScrollingEnabled = false
                     bind {
-                        adapter.items = item.mainInfoList
+                        adapter.items = item.infoItems
                     }
                 }
         }
