@@ -52,6 +52,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private fun initRecyclerView() {
         binding.rvCartContent.adapter = adapter
+        binding.rvCartContent.itemAnimator = null
     }
 
     private fun subscribeToViewModel() {
