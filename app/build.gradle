@@ -70,6 +70,7 @@ dependencies {
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
+    implementation project(path: ':core')
     implementation project(path: ':ui:user')
     implementation project(path: ':ui:search')
 

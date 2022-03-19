@@ -8,37 +8,41 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.ui.product_details.model.ToolbarData
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import kotlin.math.abs
 
 class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
-
-    private val args by navArgs<ProductDetailsFragmentArgs>()
-    private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(args.productId) }
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val detailsAdapter = ProductDetailsAdapter(
-        purchaseClicked = ::purchase,
-        goToCartClicked = ::goToCart,
-        allReviewsClicked = ::navigateToReviews,
-        reviewTextClicked = ::changeReviewExpandedState,
-        similarProductClicked = ::navigateToSimilarProduct,
-        addSimilarProductToCartClicked = ::addSimilarProductToCart,
-    )
+    private val args by navArgs<ProductDetailsFragmentArgs>()
+
+    private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(args.productId) }
+
+    private val detailsAdapter by lazy {
+        ProductDetailsAdapter(
+            purchaseClicked = viewModel::purchase,
+            goToCartClicked = ::goToCart,
+            allReviewsClicked = ::navigateToReviews,
+            onReviewClicked = viewModel::changeReviewExpandedState,
+            isReviewExpanded = viewModel.isReviewItemExpanded,
+            scope = viewLifecycleOwner.lifecycleScope,
+            onSimilarProductClicked = ::navigateToSimilarProduct,
+            onAddSimilarProductToCartClicked = ::addSimilarProductToCart,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,62 +76,51 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
     private fun setProductDetailsLoadingState() {
         detailsAdapter.items = listOf(
-            ProductDetailsItem.ProductMainInfoPlaceHolder(),
-            ProductDetailsItem.ProductDetailsPlaceHolder(),
-            ProductDetailsItem.ProductDetailsPlaceHolder(),
-            ProductDetailsItem.ProductDetailsPlaceHolder(),
+            ProductDetailsItem.LoadingMainProductInfo(),
+            ProductDetailsItem.LoadingProductDetails(),
+            ProductDetailsItem.LoadingProductDetails(),
+            ProductDetailsItem.LoadingProductDetails(),
         )
     }
 
     private fun initDetailsRecyclerView() {
-        binding.rvDetails.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvDetails.adapter = detailsAdapter
         binding.rvDetails.smoothScrollToPosition(0)
         binding.rvDetails.itemAnimator = null
     }
 
-    private fun changeReviewExpandedState() {
-        viewModel.changeReviewExpandedState()
-    }
-
     private fun initToolbar() {
         val navController = findNavController()
-        val configuration = AppBarConfiguration(navController.graph)
-        binding.toolBarDetails.setupWithNavController(navController, configuration)
+        binding.toolBarDetails.setupWithNavController(navController)
         binding.appBarDetailsLayout.addOnOffsetChangedListener(
             AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0)
-                    binding.collapsingToolbarDetailsDivider.visibility = View.VISIBLE
-                else binding.collapsingToolbarDetailsDivider.visibility = View.INVISIBLE
+                binding.collapsingToolbarDetailsDivider.visibility =
+                    if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
+                         View.VISIBLE
+                    } else {
+                        View.INVISIBLE
+                    }
             },
         )
     }
 
     private fun observeProductDetails() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.productDetailsToolbarFlow.collect { toolBarData ->
-                    renderToolbar(toolBarData)
-                }
-            }
-            launch {
-                viewModel.contentFlow.collect { details ->
-                    detailsAdapter.items = details
-                }
-            }
-        }
+        viewModel.productDetailsToolbarFlow
+            .onEach(::renderToolbar)
+            .launchWhenStarted(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.contentFlow
+            .onEach(detailsAdapter::setItems)
+            .launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun renderToolbar(toolbarData: ToolbarData) {
+        binding.collapsingToolbarDetailsLayout.title = toolbarData.productName
         binding.ivProductMain.load(toolbarData.productIcon) {
             listener(
-                onSuccess = { _, _ ->
-                    hideShimmerImage()
-                },
+                onSuccess = { _, _ -> hideShimmerImage() },
             )
         }
-        binding.collapsingToolbarDetailsLayout.title = toolbarData.productName
     }
 
     private fun hideShimmerImage() {
@@ -151,10 +144,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     }
 
     private fun addSimilarProductToCart(productId: String) {
-    }
-
-    private fun purchase() {
-        viewModel.purchase()
     }
 
     private fun goToCart() {

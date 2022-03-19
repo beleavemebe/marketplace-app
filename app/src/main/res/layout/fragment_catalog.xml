@@ -25,8 +25,8 @@
         android:layout_marginHorizontal="@dimen/margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchLayout"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:spanCount="2"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         tools:itemCount="5"
         tools:listitem="@layout/list_item_department" />
 

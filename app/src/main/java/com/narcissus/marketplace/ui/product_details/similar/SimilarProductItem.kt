@@ -12,27 +12,26 @@ import com.narcissus.marketplace.databinding.ListItemProductPreviewLoadingBindin
 import com.narcissus.marketplace.domain.model.SimilarProduct
 import com.narcissus.marketplace.ui.product_details.utils.getTextLinearGradient
 
-typealias SimilarProductBinding = ListItemDetailsSimilarProductItemBinding
-typealias SimilarProductLoadingBinding = ListItemProductPreviewLoadingBinding
+typealias ProductBinding = ListItemDetailsSimilarProductItemBinding
+typealias LoadingBinding = ListItemProductPreviewLoadingBinding
 
 sealed class SimilarProductListItem {
     data class SimilarProductItem(
         val product: SimilarProduct,
         val isButtonAddToCartActive: Boolean,
-    ) :
-        SimilarProductListItem() {
+    ) : SimilarProductListItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
                 root: ViewGroup,
-            ) = SimilarProductBinding.inflate(layoutInflater, root, false)
+            ) = ProductBinding.inflate(layoutInflater, root, false)
 
             fun delegate(
                 onProductClicked: (productId: String, cardView: MaterialCardView) -> Unit,
                 onAddToCartClicked: (productId: String) -> Unit,
             ) =
-                adapterDelegateViewBinding<SimilarProductItem, SimilarProductListItem, SimilarProductBinding>(
+                adapterDelegateViewBinding<SimilarProductItem, SimilarProductListItem, ProductBinding>(
                     ::inflateBinding,
                 ) {
                     bind {
@@ -77,14 +76,13 @@ sealed class SimilarProductListItem {
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
                 root: ViewGroup,
-            ) = SimilarProductLoadingBinding.inflate(layoutInflater, root, false)
+            ) = LoadingBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<SimilarProductLoadingItem, SimilarProductListItem, SimilarProductLoadingBinding>(
-                        ::inflateBinding,
-                    ) {
-                    }
+            fun delegate() =
+                adapterDelegateViewBinding<SimilarProductLoadingItem, SimilarProductListItem, LoadingBinding>(
+                    ::inflateBinding,
+                ) {
+                }
         }
     }
 

@@ -76,7 +76,7 @@
         tools:layout="@layout/fragment_reviews">
         <argument
             android:name="productReviews"
-            app:argType="com.narcissus.marketplace.ui.product_details.model.ReviewParcelable[]" />
+            app:argType="com.narcissus.marketplace.ui.product_details.model.ParcelableReview[]" />
     </fragment>
 
     <fragment

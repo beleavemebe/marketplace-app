@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.product_details.ProductDetailsFragment">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarDetailsLayout"
         android:layout_width="match_parent"
@@ -20,8 +21,8 @@
             app:collapsedTitleTextAppearance="@style/ToolbarTextAppearance"
             app:expandedTitleMarginStart="20dp"
             app:expandedTitleTextAppearance="@style/H5_headline"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            >
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,23 +31,22 @@
                 <ImageView
                     android:id="@+id/ivProductMain"
                     android:layout_width="match_parent"
-                    android:layout_marginStart="@dimen/margin_default"
-                    android:layout_marginEnd="@dimen/margin_default"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_default"
                     android:layout_marginTop="?attr/actionBarSize"
+                    android:layout_marginEnd="@dimen/margin_default"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/product_image" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/shimmerProductMainImagePlaceHolder"
                     android:layout_width="match_parent"
-                    android:layout_height="354dp" >
+                    android:layout_height="354dp">
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:cardCornerRadius="@dimen/margin_default"
-                        android:layout_margin="@dimen/margin_default"
-                        app:cardBackgroundColor="#A7A7A7"/>
+                        app:cardBackgroundColor="#A7A7A7" />
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <View
@@ -55,18 +55,20 @@
                     android:layout_height="?attr/actionBarSize" />
 
             </LinearLayout>
+
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolBarDetails"
-                app:titleTextAppearance="@style/AppToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:titleTextAppearance="@style/AppToolbar">
 
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
         <View
             android:id="@+id/collapsingToolbarDetailsDivider"
             android:layout_width="match_parent"
@@ -76,8 +78,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDetails"
-        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

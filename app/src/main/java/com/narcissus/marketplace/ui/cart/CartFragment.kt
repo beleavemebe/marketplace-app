@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -17,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
+
     private val viewModel: CartViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,7 +38,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     }
 
     private val adapter by lazy {
-        object : AsyncListDifferDelegationAdapter<CartListItem>(
+        AsyncListDifferDelegationAdapter(
             CartListItem.DIFF_CALLBACK,
             CartListItem.Item.delegate(
                 viewModel::deleteItem,
@@ -42,7 +46,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 viewModel::onItemAmountChanged,
                 viewLifecycleOwner.lifecycleScope,
             ),
-        ) {}
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,26 +60,24 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     }
 
     private fun subscribeToViewModel() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            observeCartCost()
-            observeCartItemAmount()
-            observeCart()
-            observeAreAllItemsSelected()
-        }
+        observeCartCost()
+        observeCartItemAmount()
+        observeCart()
+        observeAreAllItemsSelected()
     }
 
     private fun observeCartCost() {
         viewModel.cartCostFlow.onEach { totalPrice ->
             binding.tvTotalPrice.text = requireContext()
                 .getString(R.string.price_placeholder, totalPrice)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun observeCartItemAmount() {
         viewModel.itemAmountFlow.onEach { amount ->
             binding.tvProductsAmount.text = requireContext()
                 .getString(R.string.products_amount_placeholder, amount)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun observeCart() {
@@ -88,7 +90,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             adapter.items = items.map { cartItem ->
                 cartItem.toCartListItem()
             }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun observeAreAllItemsSelected() {
@@ -96,7 +98,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             binding.cbSelectAll.setOnCheckedChangeListener(null)
             binding.cbSelectAll.isChecked = flag
             initSelectAllCheckbox()
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun CartItem.toCartListItem() = CartListItem.Item(this)

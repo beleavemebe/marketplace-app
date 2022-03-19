@@ -49,7 +49,7 @@ sealed class ProductListItem {
                 parent: ViewGroup,
             ) = LoadingBinding.inflate(inflater, parent, false)
 
-            val delegate get() =
+            fun delegate() =
                 adapterDelegateViewBinding<LoadingProduct, ProductListItem, LoadingBinding>(
                     ::inflateBinding,
                 ) {

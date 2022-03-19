@@ -7,6 +7,6 @@ class ProductsAdapter(
     onProductClicked: (id: String, cardView: MaterialCardView) -> Unit
 ) : AsyncListDifferDelegationAdapter<ProductListItem>(
     ProductListItem.DIFF_CALLBACK,
-    ProductListItem.LoadingProduct.delegate,
+    ProductListItem.LoadingProduct.delegate(),
     ProductListItem.Product.delegate(onProductClicked),
 )
