@@ -54,11 +54,13 @@ sealed class SimilarProductListItem {
                         if (item.isButtonAddToCartActive) {
                             binding.tvBtnSimilarProductAddToCart.text = context.getString(R.string.add_to_cart)
                             binding.tvBtnSimilarProductAddToCart.paint.shader = null
-                            binding.layoutBtnSimilarProductAddToCart.background = getDrawable(R.drawable.button_5dp_corners_gradient_background)
+                            binding.layoutBtnSimilarProductAddToCart.background =
+                                getDrawable(R.drawable.button_5dp_corners_gradient_background)
                         } else {
                             binding.tvBtnSimilarProductAddToCart.text = context.getString(R.string.go_to_cart)
                             binding.tvBtnSimilarProductAddToCart.paint.shader = getTextLinearGradient(context)
-                            binding.layoutBtnSimilarProductAddToCart.background = getDrawable(R.drawable.button_5dp_corners_gradient_inactive_background)
+                            binding.layoutBtnSimilarProductAddToCart.background =
+                                getDrawable(R.drawable.button_5dp_corners_gradient_inactive_background)
                         }
 
                         binding.layoutBtnSimilarProductAddToCart.setOnClickListener {

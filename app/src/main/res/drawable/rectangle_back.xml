@@ -5,6 +5,6 @@
     <solid
         android:color="@android:color/darker_gray"/>
     <corners
-        android:radius="16dp"
+        android:radius="@dimen/margin_default"
         />
 </shape>

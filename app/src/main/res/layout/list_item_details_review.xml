@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="14dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="@dimen/margin_small"
     >
 
     <ImageView
@@ -21,7 +21,7 @@
         style="@style/S2_subtitle_grey"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/margin_small"
         app:layout_constraintStart_toEndOf="@id/ivReviewPreviewAvatar"
         app:layout_constraintTop_toTopOf="@id/ivReviewPreviewAvatar"
         tools:text="Billy Clow" />
@@ -31,7 +31,7 @@
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/margin_small"
         android:isIndicator="true"
         android:numStars="5"
         android:stepSize="1"
@@ -44,7 +44,7 @@
         style="@style/B2_body_black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_small"
         android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

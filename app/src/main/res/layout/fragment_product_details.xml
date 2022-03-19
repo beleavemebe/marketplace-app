@@ -29,8 +29,8 @@
                 <ImageView
                     android:id="@+id/ivProductMain"
                     android:layout_width="match_parent"
-                    android:layout_marginStart="@dimen/product_details_side_margin"
-                    android:layout_marginEnd="@dimen/product_details_side_margin"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginEnd="@dimen/margin_default"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="?attr/actionBarSize"
                     android:adjustViewBounds="true"
@@ -43,8 +43,8 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:cardCornerRadius="16dp"
-                        android:layout_margin="16dp"
+                        app:cardCornerRadius="@dimen/margin_default"
+                        android:layout_margin="@dimen/margin_default"
                         app:cardBackgroundColor="#A7A7A7"/>
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
