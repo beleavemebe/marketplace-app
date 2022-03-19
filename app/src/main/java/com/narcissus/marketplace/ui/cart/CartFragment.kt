@@ -60,6 +60,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             observeCartCost()
             observeCartItemAmount()
             observeCart()
+            observeAreAllItemsSelected()
         }
     }
 
@@ -90,13 +91,28 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun observeAreAllItemsSelected() {
+        viewModel.isSelectAllCheckboxActive.onEach { flag ->
+            binding.cbSelectAll.setOnCheckedChangeListener(null)
+            binding.cbSelectAll.isChecked = flag
+            initSelectAllCheckbox()
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
     private fun CartItem.toCartListItem() = CartListItem.Item(this)
 
     private fun initButtons() {
+        initSelectAllCheckbox()
+        initDeleteSelectedButton()
+    }
+
+    private fun initSelectAllCheckbox() {
         binding.cbSelectAll.setOnCheckedChangeListener { _, isChecked ->
             viewModel.selectAll(isChecked)
         }
+    }
 
+    private fun initDeleteSelectedButton() {
         binding.btnDeleteSelected.setOnClickListener {
             viewModel.deleteSelectedItems()
         }
