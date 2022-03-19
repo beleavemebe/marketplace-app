@@ -41,7 +41,7 @@ internal class UserRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun isUserAuthentificated(): Boolean = firebaseAuth.currentUser != null
+    override suspend fun isUserAuthenticated(): Boolean = firebaseAuth.currentUser != null
 
 
     override suspend fun signInWithEmail(email: String, password: String): AuthResult {
@@ -50,8 +50,12 @@ internal class UserRepositoryImpl(
             ?: try {
                 currentUser = firebaseAuth.signInWithEmailAndPassword(email, password).await().user
                 currentUser?.toAuthResult() ?: AuthResult.SignInWrongPasswordOrEmail
-            } catch (e: FirebaseAuthException) {
+            } catch (e: FirebaseAuthInvalidCredentialsException) {
                 AuthResult.SignInWrongPasswordOrEmail
+            } catch (e: FirebaseAuthInvalidUserException) {
+                AuthResult.SignInWrongPasswordOrEmail
+            } catch (e: FirebaseAuthException) {
+                AuthResult.Error
             }
     }
 
