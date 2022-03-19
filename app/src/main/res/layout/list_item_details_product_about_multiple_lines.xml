@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/product_details_side_margin"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="@dimen/product_details_side_margin">
+    android:layout_marginStart="@dimen/margin_default"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginEnd="@dimen/margin_default">
 
 
     <TextView
@@ -23,7 +23,7 @@
         style="@style/B2_body_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_small"
         android:maxLines="5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDetailsAboutTitleMultipleLine"

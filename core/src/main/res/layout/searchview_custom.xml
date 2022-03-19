@@ -5,7 +5,7 @@
     android:layout_height="55dp"
     android:background="@drawable/searchview_background"
     android:iconifiedByDefault="false"
-    android:paddingVertical="10dp"
+    android:paddingVertical="@dimen/margin_small"
     android:queryBackground="@android:color/transparent"
     android:queryHint="Search"
     app:layout_constraintEnd_toEndOf="parent"
