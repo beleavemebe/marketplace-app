@@ -11,13 +11,12 @@ import com.narcissus.marketplace.domain.usecase.RemoveSelectedCartItems
 import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
 import com.narcissus.marketplace.domain.usecase.SetCartItemAmount
 import com.narcissus.marketplace.domain.usecase.SetCartItemSelected
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class CartViewModel(
-    private val getCart: GetCart,
-    private val getCartCost: GetCartCost,
-    private val getCartItemsAmount: GetCartItemsAmount,
+    getCart: GetCart,
+    getCartCost: GetCartCost,
+    getCartItemsAmount: GetCartItemsAmount,
     private val removeFromCart: RemoveFromCart,
     private val setCartItemSelected: SetCartItemSelected,
     private val setCartItemAmount: SetCartItemAmount,
@@ -25,23 +24,11 @@ class CartViewModel(
     private val removeSelectedCartItems: RemoveSelectedCartItems,
 ) : ViewModel() {
 
-    val getCartFlow = flow {
-        getCart().collect { items ->
-            emit(items)
-        }
-    }
+    val cartFlow = getCart()
 
-    val getCartCostFlow = flow {
-        getCartCost().collect { price ->
-            emit(price)
-        }
-    }
+    val cartCostFlow = getCartCost()
 
-    val getCartItemsAmountFlow = flow {
-        getCartItemsAmount().collect { amount ->
-            emit(amount)
-        }
-    }
+    val itemAmountFlow = getCartItemsAmount()
 
     fun deleteItem(cartItem: CartItem) {
         viewModelScope.launch {

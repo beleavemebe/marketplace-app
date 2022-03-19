@@ -27,6 +27,7 @@
         android:id="@+id/clCartEmpty"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@+id/checkoutBar"
         app:layout_constraintEnd_toEndOf="parent"

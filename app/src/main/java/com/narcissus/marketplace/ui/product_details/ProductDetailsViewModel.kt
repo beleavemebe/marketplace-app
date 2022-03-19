@@ -3,16 +3,14 @@ package com.narcissus.marketplace.ui.product_details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.domain.model.CartItem
 import com.narcissus.marketplace.domain.model.ProductDetails
 import com.narcissus.marketplace.domain.model.Review
-import com.narcissus.marketplace.domain.model.toProductPreview
-import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
 import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
 import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
-import com.narcissus.marketplace.ui.product_details.model.ToolBarData
+import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import com.narcissus.marketplace.domain.usecase.AddToCart
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
+import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -34,42 +32,46 @@ class ProductDetailsViewModel(
 ) : ViewModel() {
 
     private val reviewsExpandedStateFlow = MutableStateFlow(false)
-    private val purchaseButtonActiveStateFlow = MutableStateFlow(true)
+    private val isPurchaseButtonActiveStateFlow = MutableStateFlow(true)
 
-    private val productDetailsDataFlow: Flow<ProductDetails> = flow {
-        val details =
-            runCatching {
+    private val productDetailsFlow: Flow<ProductDetails> =
+        flow {
+            val details = runCatching {
                 getProductDetails(productId).getOrThrow()
             }.getOrNull()
-        details?.let {
-            emit(it)
-            reviewsFlow.emit(mapReviews(it.reviews))
-        }
-    }.shareIn(
-        CoroutineScope(Dispatchers.IO),
-        replay = 1,
-        started = SharingStarted.WhileSubscribed(),
-    )
 
-    val productDetailsFlow: SharedFlow<List<ProductDetailsItem>> =
-        combine(
-            productDetailsDataFlow,
-            reviewsExpandedStateFlow,
-            purchaseButtonActiveStateFlow,
-        ) { details, reviewsState, purchaseActiveState ->
-            mapDetails(details, reviewsState, purchaseActiveState)
+            details?.let {
+                emit(it)
+                reviewsFlow.emit(mapReviews(it.reviews))
+            }
         }.shareIn(
             CoroutineScope(Dispatchers.IO),
             replay = 1,
             started = SharingStarted.WhileSubscribed(),
         )
 
-    val productDetailsToolBarFlow: SharedFlow<ToolBarData> =
-        productDetailsDataFlow.map { ToolBarData(it.icon, it.name) }.shareIn(
+    val contentFlow: SharedFlow<List<ProductDetailsItem>> =
+        combine(
+            productDetailsFlow,
+            reviewsExpandedStateFlow,
+            isPurchaseButtonActiveStateFlow,
+        ) { details, reviewsState, purchaseActiveState ->
+            assembleContent(details, reviewsState, purchaseActiveState)
+        }.shareIn(
             CoroutineScope(Dispatchers.IO),
             replay = 1,
             started = SharingStarted.WhileSubscribed(),
         )
+
+    val productDetailsToolbarFlow: SharedFlow<ToolbarData> =
+        productDetailsFlow.map {
+            ToolbarData(it.icon, it.name)
+        }.shareIn(
+            CoroutineScope(Dispatchers.IO),
+            replay = 1,
+            started = SharingStarted.WhileSubscribed(),
+        )
+
     val reviewsFlow: MutableStateFlow<List<ReviewParcelable>> = MutableStateFlow(listOf())
 
     fun collapseReviewState() {
@@ -86,14 +88,15 @@ class ProductDetailsViewModel(
 
     fun purchase() {
         viewModelScope.launch {
-            if (purchaseButtonActiveStateFlow.value) {
-                addToCart(CartItem(productDetailsDataFlow.first().toProductPreview(), 1, false))
-                purchaseButtonActiveStateFlow.emit(!purchaseButtonActiveStateFlow.value)
+            if (isPurchaseButtonActiveStateFlow.value) {
+                val product = productDetailsFlow.first()
+                addToCart(product)
+                isPurchaseButtonActiveStateFlow.emit(false)
             }
         }
     }
 
-    private fun mapDetails(
+    private fun assembleContent(
         details: ProductDetails,
         reviewsState: Boolean,
         purchaseActiveState: Boolean,
@@ -102,14 +105,9 @@ class ProductDetailsViewModel(
             ProductDetailsItem.Price(details.price),
             ProductDetailsItem.ProductMainInfo(
                 listOf(
-                    ProductMainInfoItem.ProductMainInfoRatingSection(
-                        details.rating,
-                        details.sales,
-                        details.stock,
-                    ),
+                    ProductMainInfoItem.RatingSection(details.rating, details.sales, details.stock),
                     getProductPurchaseButtonState(purchaseActiveState),
                 ),
-
             ),
             ProductDetailsItem.BasicTitle(R.string.about),
             ProductDetailsItem.AboutSingleLine(R.string.type, details.type),
@@ -142,9 +140,10 @@ class ProductDetailsViewModel(
     }
 
     private fun getProductPurchaseButtonState(purchaseActiveState: Boolean): ProductMainInfoItem {
-        return if (purchaseActiveState)
-            ProductMainInfoItem.ProductMainInfoPurchaseButtonActive(R.string.purchase)
-        else
-            ProductMainInfoItem.ProductMainInfoPurchaseButtonInactive(R.string.go_to_cart)
+        return if (purchaseActiveState) {
+            ProductMainInfoItem.ActivePurchaseButton(R.string.purchase)
+        } else {
+            ProductMainInfoItem.InactivePurchaseButton(R.string.go_to_cart)
+        }
     }
 }

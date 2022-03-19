@@ -32,13 +32,12 @@ sealed class CartListItem {
                 ::inflateBinding
             ) {
                 bind {
-                    binding.tvName.text = item.cartItem.data.name
+                    binding.tvName.text = item.cartItem.productName
                     binding.tvPrice.text = itemView.context.getString(
-                        R.string.price_placeholder,
-                        item.cartItem.data.price
+                        R.string.price_placeholder, item.cartItem.productPrice
                     )
 
-                    binding.ivIcon.load(item.cartItem.data.icon)
+                    binding.ivIcon.load(item.cartItem.productImage)
 
                     binding.cbSelected.isChecked = item.cartItem.isSelected
                     binding.cbSelected.setOnCheckedChangeListener { _, isChecked ->
@@ -49,7 +48,7 @@ sealed class CartListItem {
                         onRemoveClicked(item.cartItem)
                     }
 
-                    binding.productAmount.setAmount(item.cartItem.count)
+                    binding.productAmount.setAmount(item.cartItem.amount)
                     binding.productAmount.amountFlow
                         .onEach { amount ->
                             onItemAmountChanged(item.cartItem, amount)
@@ -67,7 +66,7 @@ sealed class CartListItem {
                 newItem: CartListItem
             ): Boolean {
                 return when (oldItem) {
-                    is Item -> newItem is Item && oldItem.cartItem.data.id == newItem.cartItem.data.id
+                    is Item -> newItem is Item && oldItem.cartItem.productId == newItem.cartItem.productId
                 }
             }
 

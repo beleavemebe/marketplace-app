@@ -52,4 +52,5 @@
     <string name="or">OR</string>
     <string name="i_m_new_user">I\'m new user,\u0020</string>
     <string name="sign_up">Sign up</string>
+    <string name="products_amount_placeholder">Selected: %1$d</string>
 </resources>

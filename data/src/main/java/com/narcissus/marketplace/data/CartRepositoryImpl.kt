@@ -1,63 +1,117 @@
 package com.narcissus.marketplace.data
 
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.MutableData
+import com.google.firebase.database.Transaction
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
+import com.narcissus.marketplace.data.mapper.toBean
+import com.narcissus.marketplace.data.mapper.toCartItem
+import com.narcissus.marketplace.data.model.CartItemBean
 import com.narcissus.marketplace.domain.model.CartItem
 import com.narcissus.marketplace.domain.repository.CartRepository
+import kotlinx.coroutines.channels.ProducerScope
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.callbackFlow
 
-class CartRepositoryImpl : CartRepository {
-    private val items: MutableStateFlow<List<CartItem>> = MutableStateFlow(emptyList())
+class CartRepositoryImpl(
+    private val cartRef: DatabaseReference,
+) : CartRepository {
+    override fun getCart(): Flow<List<CartItem>> =
+        callbackFlow {
+            val eventListener = createValueEventListener()
+            cartRef.addValueEventListener(eventListener)
 
-    override fun getCart(): Flow<List<CartItem>> {
-        return items
-    }
+            awaitClose {
+                cartRef.removeEventListener(eventListener)
+            }
+        }
+
+    private fun ProducerScope<List<CartItem>>.createValueEventListener() =
+        object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val cart = snapshot.children.mapNotNull { child ->
+                    child.getValue<CartItemBean>()
+                        ?.toCartItem()
+                }
+
+                trySendBlocking(cart)
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        }
 
     override suspend fun addToCart(cartItem: CartItem) {
-        items.value = items.value + cartItem
+        cartRef.child(cartItem.productId)
+            .setValue(cartItem.toBean())
     }
 
     override suspend fun removeFromCart(cartItem: CartItem) {
-        items.value = items.value - cartItem
+        cartRef.child(cartItem.productId)
+            .removeValue()
     }
 
     override suspend fun setCartItemSelected(cartItem: CartItem, selected: Boolean) {
-        val newList = items.value.map { item ->
-            if (item == cartItem) {
-                item.copy(isSelected = selected)
-            } else {
-                item
-            }
-        }
-
-        items.value = newList
+        val newItem = cartItem.copy(isSelected = selected)
+        cartRef.child(cartItem.productId)
+            .setValue(newItem.toBean())
     }
 
     override suspend fun setCartItemAmount(cartItem: CartItem, amount: Int) {
-        val newList = items.value.map { item ->
-            if (item == cartItem) {
-                item.copy(count = amount)
-            } else {
-                item
-            }
-        }
-
-        items.value = newList
+        val newItem = cartItem.copy(amount = amount)
+        cartRef.child(cartItem.productId)
+            .setValue(newItem.toBean())
     }
 
     override suspend fun selectAllCartItems(isSelected: Boolean) {
-        val newList = items.value.map { item ->
-            item.copy(isSelected = isSelected)
+        cartRef.get().addOnSuccessListener { snapshot ->
+            val newItems = snapshot.children.mapNotNull { child ->
+                child.getValue<CartItemBean>()
+                    ?.copy(isSelected = isSelected)
+            }
+
+            val newChildren = newItems.associateBy { it.productId }
+            cartRef.updateChildren(newChildren)
         }
-        items.value = newList
     }
 
     override suspend fun deleteSelectedItems() {
-        val updatedList: MutableList<CartItem> = mutableListOf()
+        val transactionHandler = createDeleteSelectedTransactionHandler()
+        cartRef.runTransaction(transactionHandler)
+    }
 
-        items.value.map { item ->
-            if (!item.isSelected) updatedList.add(item)
+    private fun createDeleteSelectedTransactionHandler() =
+        object : Transaction.Handler {
+            override fun doTransaction(currentData: MutableData) =
+                runDeleteSelectedTransaction(currentData)
+
+            override fun onComplete(
+                error: DatabaseError?,
+                committed: Boolean,
+                currentData: DataSnapshot?,
+            ) {
+                handleDeleteSelectedTransactionCompletion(error, committed, currentData)
+            }
         }
 
-        items.value = updatedList
+    private fun runDeleteSelectedTransaction(currentData: MutableData): Transaction.Result {
+        currentData.children.forEach { data ->
+            val bean = data.getValue<CartItemBean>() ?: return@forEach
+            data.value = bean.takeUnless { it.isSelected == true }
+        }
+
+        return Transaction.success(currentData)
+    }
+
+    private fun handleDeleteSelectedTransactionCompletion(
+        error: DatabaseError?,
+        committed: Boolean,
+        currentData: DataSnapshot?,
+    ) {
+        // todo: handle error
     }
 }

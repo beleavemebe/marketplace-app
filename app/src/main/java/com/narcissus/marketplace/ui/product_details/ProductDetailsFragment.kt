@@ -18,7 +18,7 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
-import com.narcissus.marketplace.ui.product_details.model.ToolBarData
+import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -107,27 +107,27 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     private fun observeProductDetails() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
-                viewModel.productDetailsToolBarFlow.collect { toolBarData ->
-                    renderToolBar(toolBarData)
+                viewModel.productDetailsToolbarFlow.collect { toolBarData ->
+                    renderToolbar(toolBarData)
                 }
             }
             launch {
-                viewModel.productDetailsFlow.collect { details ->
+                viewModel.contentFlow.collect { details ->
                     detailsAdapter.items = details
                 }
             }
         }
     }
 
-    private fun renderToolBar(toolBarData: ToolBarData) {
-        binding.ivProductMain.load(toolBarData.productIcon) {
+    private fun renderToolbar(toolbarData: ToolbarData) {
+        binding.ivProductMain.load(toolbarData.productIcon) {
             listener(
                 onSuccess = { _, _ ->
                     hideShimmerImage()
                 },
             )
         }
-        binding.collapsingToolbarDetailsLayout.title = toolBarData.productName
+        binding.collapsingToolbarDetailsLayout.title = toolbarData.productName
     }
 
     private fun hideShimmerImage() {
