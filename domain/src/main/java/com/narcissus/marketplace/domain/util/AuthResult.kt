@@ -8,6 +8,7 @@ sealed class AuthResult {
     data class SignUpSucces(val userProfile: UserProfile):AuthResult()
     object SignOutSucces : AuthResult()
     object SignInWrongPasswordOrEmail : AuthResult()
+    object NotAuthrized:AuthResult()
 //    object SignUpWrongEmail:AuthResult() ЕСЛИ НАДО
 //    object SignUpWrongPassword:AuthResult()
 //    object SignUpToShortPassword:AuthResult()
