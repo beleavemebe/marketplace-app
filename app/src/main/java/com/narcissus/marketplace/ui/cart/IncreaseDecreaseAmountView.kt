@@ -70,12 +70,16 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
 
     override fun onSaveInstanceState(): Parcelable {
         super.onSaveInstanceState()
-        return bundleOf("amount" to _amountFlow.value)
+        return bundleOf(ARG_AMOUNT to _amountFlow.value)
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         super.onRestoreInstanceState(null)
-        val restoredAmount = (state as? Bundle)?.get("amount") as? Int
+        val restoredAmount = (state as? Bundle)?.get(ARG_AMOUNT) as? Int
         _amountFlow.value = restoredAmount ?: 1
+    }
+
+    companion object {
+        const val ARG_AMOUNT = "amount"
     }
 }

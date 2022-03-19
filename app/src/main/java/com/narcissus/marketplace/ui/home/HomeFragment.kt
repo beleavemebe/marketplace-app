@@ -26,7 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val adapter by lazy {
         AsyncListDifferDelegationAdapter(
             HomeScreenItem.DIFF_CALLBACK,
-            HomeScreenItem.Headline.delegate,
+            HomeScreenItem.Headline.delegate(),
             HomeScreenItem.Banners.delegate(::navigateToSpecialOffer),
             HomeScreenItem.ProductsOfTheDay.delegate(::navigateToProductDetails),
             HomeScreenItem.FeaturedTabs.delegate(viewModel::switchFeaturedTab),

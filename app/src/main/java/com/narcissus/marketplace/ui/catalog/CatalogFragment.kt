@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentCatalogBinding
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class CatalogFragment : Fragment(R.layout.fragment_catalog) {
     private var _binding: FragmentCatalogBinding? = null
@@ -45,22 +48,21 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
     }
 
     private fun initDepartmentsRecyclerView() {
-        binding.rvDepartment.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvDepartment.adapter = catalogAdapter
     }
 
     private fun initSearchViewListener() {
         val sv = binding.searchLayout.findViewById<SearchView>(R.id.searchView)
-        sv.setOnQueryTextFocusChangeListener { view, b ->
+        sv.setOnQueryTextFocusChangeListener { _, _ ->
             sv.setOnQueryTextFocusChangeListener(null)
             navigateToSearch()
         }
     }
 
     private fun subscribeToViewModel() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.departments.collect(catalogAdapter::setItems)
-        }
+        viewModel.departments
+            .onEach(catalogAdapter::setItems)
+            .launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun navigateToSearch() {

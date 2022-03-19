@@ -7,7 +7,5 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="@dimen/margin_default"
-        android:layout_margin="@dimen/margin_default"
         app:cardBackgroundColor="#A7A7A7"/>
 </com.facebook.shimmer.ShimmerFrameLayout>

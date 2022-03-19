@@ -7,13 +7,12 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsReviewBinding
-import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
+import com.narcissus.marketplace.ui.product_details.model.ParcelableReview
 
 typealias ReviewBinding = ListItemDetailsReviewBinding
 
 sealed class ReviewsItem {
     companion object {
-
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ReviewsItem>() {
             override fun areItemsTheSame(
                 oldItem: ReviewsItem,
@@ -30,7 +29,7 @@ sealed class ReviewsItem {
         }
     }
 
-    class ReviewItem(val review: ReviewParcelable) : ReviewsItem() {
+    class ReviewItem(val review: ParcelableReview) : ReviewsItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -38,22 +37,19 @@ sealed class ReviewsItem {
                 root: ViewGroup,
             ) = ReviewBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<ReviewItem, ReviewsItem, ReviewBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.tvReviewPreviewAuthor.text = item.review.author
-                            binding.tvReviewPreviewDescription.text = item.review.details
-                            binding.reviewPreviewRatingBar.progress = item.review.rating
-                            binding.ivReviewPreviewAvatar.load(item.review.reviewAuthorIcon) {
-                                transformations(
-                                    CircleCropTransformation(),
-                                )
-                            }
+            fun delegate() =
+                adapterDelegateViewBinding<ReviewItem, ReviewsItem, ReviewBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.tvReviewPreviewAuthor.text = item.review.author
+                        binding.tvReviewPreviewDescription.text = item.review.details
+                        binding.reviewPreviewRatingBar.progress = item.review.rating
+                        binding.ivReviewPreviewAvatar.load(item.review.reviewAuthorIcon) {
+                            transformations(CircleCropTransformation())
                         }
                     }
+                }
         }
     }
 }
