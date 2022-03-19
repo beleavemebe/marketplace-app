@@ -17,9 +17,6 @@
         <action
             android:id="@+id/action_fragment_home_to_search"
             app:destination="@id/nav_graph_search" />
-        <action
-            android:id="@+id/action_fragment_home_to_sign_in"
-            app:destination="@id/fragment_sign_in" />
     </fragment>
 
     <fragment

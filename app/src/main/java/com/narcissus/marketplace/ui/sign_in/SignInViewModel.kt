@@ -12,14 +12,14 @@ import kotlinx.coroutines.launch
 
 
 class SignInViewModel(
-    val signInWithEmail:SignInWithEmail,
-   // val signInWithGoogle:SignInWithGoogle
-): ViewModel() {
+    val signInWithEmail: SignInWithEmail,
+    // val signInWithGoogle:SignInWithGoogle
+) : ViewModel() {
 
-    private val _authFLow = MutableSharedFlow<AuthResult>(replay = 1,1,BufferOverflow.DROP_OLDEST)
-    val authFlow:SharedFlow<AuthResult> = _authFLow.asSharedFlow()
-    fun signInWithEmailPassword(email:String,password:String){
-        if(email.isNotBlank()&&password.isNotBlank())
-        viewModelScope.launch {_authFLow.emit(signInWithEmail(email,password)) }
+    private val _authFLow = MutableSharedFlow<AuthResult>(replay = 1, 1, BufferOverflow.DROP_OLDEST)
+    val authFlow: SharedFlow<AuthResult> = _authFLow.asSharedFlow()
+    fun signInWithEmailPassword(email: String, password: String) {
+        if (email.isNotBlank() && password.isNotBlank())
+            viewModelScope.launch { _authFLow.emit(signInWithEmail(email, password)) }
     }
 }
