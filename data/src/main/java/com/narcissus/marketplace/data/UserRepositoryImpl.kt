@@ -2,6 +2,9 @@ package com.narcissus.marketplace.data
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import com.narcissus.marketplace.data.mapper.toProductPreview
 import com.narcissus.marketplace.data.persistence.database.ProductDao
@@ -43,12 +46,13 @@ internal class UserRepositoryImpl(
 
     override suspend fun signInWithEmail(email: String, password: String): AuthResult {
         var currentUser = firebaseAuth.currentUser
-        return if (currentUser != null) {
-            currentUser.toAuthResult()
-        } else {
-            currentUser = firebaseAuth.signInWithEmailAndPassword(email, password).await().user
-            currentUser?.toAuthResult() ?: AuthResult.SignInWrongPasswordOrEmail
-        }
+        return currentUser?.toAuthResult()
+            ?: try {
+                currentUser = firebaseAuth.signInWithEmailAndPassword(email, password).await().user
+                currentUser?.toAuthResult() ?: AuthResult.SignInWrongPasswordOrEmail
+            } catch (e: FirebaseAuthException) {
+                AuthResult.SignInWrongPasswordOrEmail
+            }
     }
 
     override suspend fun signUpWithEmail(email: String, password: String): AuthResult {

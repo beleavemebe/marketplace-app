@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_fragment_home_to_search"
             app:destination="@id/nav_graph_search" />
+        <action
+            android:id="@+id/action_fragment_home_to_sign_in"
+            app:destination="@id/fragment_sign_in" />
     </fragment>
 
     <fragment
@@ -78,5 +81,18 @@
             android:name="productReviews"
             app:argType="com.narcissus.marketplace.ui.product_details.model.ReviewParcelable[]" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragment_sign_in"
+        android:name="com.narcissus.marketplace.ui.sign_in.SignInFragment"
+        tools:layout="@layout/fragment_sign_in" >
+        <argument
+            android:name="isNavigatedFromUserProfile"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_fragment_sign_in_to_user"
+            app:destination="@id/fragment_user" />
+    </fragment>
+
 
 </navigation>

@@ -25,9 +25,13 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomNavigation(navController: NavController) {
         binding.bottomNavigationView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.fragment_home) {
+            if (destination.id == R.id.fragment_splash || destination.id == R.id.fragment_sign_in) {
+                binding.bottomNavigationView.visibility = View.GONE
+            } else {
                 binding.bottomNavigationView.visibility = View.VISIBLE
             }
         }
+
     }
+
 }

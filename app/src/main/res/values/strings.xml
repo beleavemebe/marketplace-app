@@ -42,4 +42,14 @@
     <string name="special_offer_banner">Special offer banner</string>
     <string name="email">email</string>
     <string name="password">password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome">Welcome!</string>
+    <string name="sign_in_for_full_experience">Sign in for full experience</string>
+    <string name="sign_in">sign in</string>
+    <string name="connect_with_google">Connect With Google</string>
+    <string name="wrong_email_or_password">wrong email or password</string>
+    <string name="or">OR</string>
+    <string name="i_m_new_user">I\'m new user,\u0020</string>
+    <string name="sign_up">Sign up</string>
 </resources>
