@@ -5,12 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.domain.model.ProductDetails
 import com.narcissus.marketplace.domain.model.Review
-import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
-import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
-import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import com.narcissus.marketplace.domain.usecase.AddToCart
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
+import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
+import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
+import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
