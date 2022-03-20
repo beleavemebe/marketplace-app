@@ -4,10 +4,10 @@ import com.narcissus.marketplace.domain.model.UserProfile
 
 sealed class AuthResult {
     data class SignInSuccess(val userProfile: UserProfile) : AuthResult()
-    data class SignUpSucces(val userProfile: UserProfile) : AuthResult()
-    object SignOutSucces : AuthResult()
+    data class SignUpSuccess(val userProfile: UserProfile) : AuthResult()
+    object SignOutSuccess : AuthResult()
     object SignInWrongPasswordOrEmail : AuthResult()
-    object NotAuthrized : AuthResult()
+    object NotAuthorized : AuthResult()
     object Error : AuthResult()
 //    object SignUpWrongEmail:AuthResult() ЕСЛИ НАДО
 //    object SignUpWrongPassword:AuthResult()
