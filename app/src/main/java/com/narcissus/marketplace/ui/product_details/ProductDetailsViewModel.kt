@@ -31,7 +31,7 @@ class ProductDetailsViewModel(
     private val addToCart: AddToCart,
 ) : ViewModel() {
 
-    // todo: sometimes does not toggle
+    // todo: sometimes does not toggle (perhaps pass in LifecycleCoroutineScope instance instead of ususal to the item and use launchWhenStarted
     private val _isReviewItemExpanded = MutableStateFlow(false)
     val isReviewItemExpanded = _isReviewItemExpanded.asStateFlow()
 
