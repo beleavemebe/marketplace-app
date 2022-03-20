@@ -12,7 +12,7 @@ val firebaseModule = module {
         Firebase.database(Constants.DATABASE_URL)
     }
 
-    single(qualifier<CartReference>()) {
+    single(qualifier<Qualifiers.CartReference>()) {
         get<FirebaseDatabase>().getReference(Constants.CHILD_CART)
     }
 }
