@@ -1,9 +1,9 @@
 package com.narcissus.marketplace.ui.sign_in
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,7 +14,6 @@ import com.narcissus.marketplace.databinding.FragmentSignInBinding
 import com.narcissus.marketplace.domain.util.AuthResult
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private var _binding: FragmentSignInBinding? = null
@@ -30,27 +29,26 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.authFlow.collect { authResult ->
                 when (authResult) {
-                    is AuthResult.SignInSuccess->navigateToCallScreen(isNavigatedFromUserProfile)
-                    is AuthResult.SignInWrongPasswordOrEmail->  setInputLayoutError()
-                    is AuthResult.Error->showErrorToast()
+                    is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
+                    is AuthResult.SignInWrongPasswordOrEmail -> setInputLayoutError()
+                    is AuthResult.Error -> showErrorToast()
                 }
             }
         }
     }
 
     private fun showErrorToast() {
-        Toast.makeText(context,getString(R.string.something_went_wrong),Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
     }
 
-    private fun navigateToCallScreen(isNavigatedFromUserProfile:Boolean) {
-    if(isNavigatedFromUserProfile){
-        navigateToUserProfile()
+    private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
+        if (isNavigatedFromUserProfile) {
+            navigateToUserProfile()
+        } else {
+            // navigateToCheckOut
+        }
     }
-    else{
-        //navigateToCheckOut
-    }
-    }
-    private fun setInputLayoutError(){
+    private fun setInputLayoutError() {
         binding.layoutEmailPasswordInputs.passwordTextInputLayout.error =
             getString(R.string.wrong_email_or_password)
     }
