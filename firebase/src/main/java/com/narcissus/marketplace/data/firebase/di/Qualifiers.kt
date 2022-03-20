@@ -1,3 +1,5 @@
 package com.narcissus.marketplace.data.firebase.di
 
-object CartReference
+object Qualifiers {
+    object CartReference
+}

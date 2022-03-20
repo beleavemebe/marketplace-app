@@ -8,7 +8,7 @@ import com.narcissus.marketplace.data.OrderRepositoryImpl
 import com.narcissus.marketplace.data.ProductsDetailsRepositoryImpl
 import com.narcissus.marketplace.data.ProductsPreviewRepositoryImpl
 import com.narcissus.marketplace.data.UserRepositoryImpl
-import com.narcissus.marketplace.data.firebase.di.CartReference
+import com.narcissus.marketplace.data.firebase.di.Qualifiers.CartReference
 import com.narcissus.marketplace.data.firebase.di.firebaseModule
 import com.narcissus.marketplace.data.persistence.di.persistenceModule
 import com.narcissus.marketplace.domain.repository.CartRepository
