@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.data
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -42,7 +41,6 @@ internal class UserRepositoryImpl(
     }
 
     override suspend fun isUserAuthenticated(): Boolean = firebaseAuth.currentUser != null
-
 
     override suspend fun signInWithEmail(email: String, password: String): AuthResult {
         var currentUser = firebaseAuth.currentUser
