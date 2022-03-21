@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.data
 
+import android.util.Patterns
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -43,6 +44,9 @@ internal class UserRepositoryImpl(
     override suspend fun isUserAuthenticated(): Boolean = firebaseAuth.currentUser != null
 
     override suspend fun signInWithEmail(email: String, password: String): AuthResult {
+        if (checkEmailFormatInvalid(email)) {
+            return AuthResult.WrongEmail
+        }
         var currentUser = firebaseAuth.currentUser
         return currentUser?.toAuthResult()
             ?: try {
@@ -56,6 +60,8 @@ internal class UserRepositoryImpl(
                 AuthResult.Error
             }
     }
+
+    private fun checkEmailFormatInvalid(email: String) = !Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     override suspend fun signUpWithEmail(email: String, password: String): AuthResult {
         TODO("Not yet implemented")
