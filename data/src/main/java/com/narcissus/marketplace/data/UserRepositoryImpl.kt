@@ -44,7 +44,7 @@ internal class UserRepositoryImpl(
     override suspend fun isUserAuthenticated(): Boolean = firebaseAuth.currentUser != null
 
     override suspend fun signInWithEmail(email: String, password: String): AuthResult {
-        if (checkEmailFormatInvalid(email)) {
+        if (!checkEmailFormatInvalid(email)) {
             return AuthResult.WrongEmail
         }
         var currentUser = firebaseAuth.currentUser
@@ -61,7 +61,7 @@ internal class UserRepositoryImpl(
             }
     }
 
-    private fun checkEmailFormatInvalid(email: String) = !Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun checkEmailFormatInvalid(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     override suspend fun signUpWithEmail(email: String, password: String): AuthResult {
         TODO("Not yet implemented")
