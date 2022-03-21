@@ -19,6 +19,7 @@
             style="@style/AppToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="?attr/background"
             android:elevation="1dp"
             app:title="@string/cart" />
     </com.google.android.material.appbar.AppBarLayout>
