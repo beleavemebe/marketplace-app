@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name ="Theme.MarketplaceApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/gradient_background_end</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorSecondary">#8E44EB</item>
         <item name="colorSecondaryVariant">@color/search_view</item>
