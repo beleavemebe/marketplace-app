@@ -4,6 +4,13 @@ import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.util.AuthResult
 
 class SignInWithEmail(private val userRepository: UserRepository) {
-    suspend operator fun invoke(email: String, pass: String): AuthResult =
-        userRepository.signInWithEmail(email, pass)
+    suspend operator fun invoke(email: String, pass: String): AuthResult {
+        return if(email.contains("@")&&email.contains(".")){
+            userRepository.signInWithEmail(email, pass)
+        } else{
+            AuthResult.WrongEmail
+        }
+
+    }
+
 }
