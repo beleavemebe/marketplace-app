@@ -17,7 +17,8 @@ typealias ProductPreviewBinding = ListItemProductPreviewBinding
 sealed class ProductListItem {
     data class Product(val productPreview: ProductPreview) : ProductListItem() {
         companion object {
-            @JvmStatic private fun inflateBinding(
+            @JvmStatic
+            private fun inflateBinding(
                 inflater: LayoutInflater,
                 parent: ViewGroup,
             ) = ProductPreviewBinding.inflate(inflater, parent, false)
@@ -44,7 +45,8 @@ sealed class ProductListItem {
 
     class LoadingProduct : ProductListItem() {
         companion object {
-            @JvmStatic private fun inflateBinding(
+            @JvmStatic
+            private fun inflateBinding(
                 inflater: LayoutInflater,
                 parent: ViewGroup,
             ) = LoadingBinding.inflate(inflater, parent, false)

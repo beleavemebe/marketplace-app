@@ -3,6 +3,7 @@ package com.narcissus.marketplace.ui.product_details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.log
 import com.narcissus.marketplace.domain.model.ProductDetails
 import com.narcissus.marketplace.domain.model.Review
 import com.narcissus.marketplace.ui.product_details.model.ParcelableReview
@@ -30,10 +31,6 @@ class ProductDetailsViewModel(
     private val getProductDetails: GetProductDetails,
     private val addToCart: AddToCart,
 ) : ViewModel() {
-
-    // todo: sometimes does not toggle (perhaps pass in LifecycleCoroutineScope instance instead of ususal to the item and use launchWhenStarted
-    private val _isReviewItemExpanded = MutableStateFlow(false)
-    val isReviewItemExpanded = _isReviewItemExpanded.asStateFlow()
 
     private val isPurchaseButtonActiveStateFlow = MutableStateFlow(true)
 
@@ -78,18 +75,6 @@ class ProductDetailsViewModel(
 
     private val _reviewsFlow = MutableStateFlow(listOf<ParcelableReview>())
     val reviewsFlow = _reviewsFlow.asStateFlow()
-
-    fun collapseReviewState() {
-        viewModelScope.launch {
-            _isReviewItemExpanded.emit(false)
-        }
-    }
-
-    fun changeReviewExpandedState() {
-        viewModelScope.launch {
-            _isReviewItemExpanded.emit(!_isReviewItemExpanded.value)
-        }
-    }
 
     fun purchase() {
         viewModelScope.launch {

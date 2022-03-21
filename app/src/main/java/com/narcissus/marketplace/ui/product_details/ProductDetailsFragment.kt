@@ -36,8 +36,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             purchaseClicked = viewModel::purchase,
             goToCartClicked = ::goToCart,
             allReviewsClicked = ::navigateToReviews,
-            onReviewClicked = viewModel::changeReviewExpandedState,
-            isReviewExpanded = viewModel.isReviewItemExpanded,
+            lifecycle = viewLifecycleOwner.lifecycle,
             scope = viewLifecycleOwner.lifecycleScope,
             onSimilarProductClicked = ::navigateToSimilarProduct,
             onAddSimilarProductToCartClicked = ::addSimilarProductToCart,
@@ -71,7 +70,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         initDetailsRecyclerView()
         setProductDetailsLoadingState()
         observeProductDetails()
-        viewModel.collapseReviewState()
     }
 
     private fun setProductDetailsLoadingState() {
@@ -94,9 +92,10 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         binding.toolBarDetails.setupWithNavController(navController)
         binding.appBarDetailsLayout.addOnOffsetChangedListener(
             AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                val hasScrollFinished = abs(verticalOffset) - appBarLayout.totalScrollRange == 0
                 binding.collapsingToolbarDetailsDivider.visibility =
-                    if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
-                         View.VISIBLE
+                    if (hasScrollFinished) {
+                        View.VISIBLE
                     } else {
                         View.INVISIBLE
                     }

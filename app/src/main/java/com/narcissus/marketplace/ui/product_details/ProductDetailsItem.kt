@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
@@ -14,6 +16,7 @@ import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.log
 import com.narcissus.marketplace.databinding.ListItemDetailsDividerBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoPlaceholderBinding
@@ -30,10 +33,11 @@ import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoratio
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
 import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 
 typealias ProductPriceBinding = ListItemDetailsPriceBinding
 typealias ProductMainInfoBinding = ListItemDetailsMainInfoBinding
@@ -217,6 +221,11 @@ sealed class ProductDetailsItem {
 
     data class ReviewsPreview(val review: Review) : ProductDetailsItem() {
         companion object {
+            private const val LINE_COUNT_EXPANDED = 24
+            private const val LINE_COUNT_COLLAPSED = 4
+            private const val ANIM_DURATION = 200L
+            private const val MAX_LINES_PROPERTY_NAME = "maxLines"
+
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
@@ -224,40 +233,54 @@ sealed class ProductDetailsItem {
             ) = ReviewsPreviewBinding.inflate(layoutInflater, root, false)
 
             fun delegate(
-                onReviewClicked: () -> Unit,
-                isExpanded: Flow<Boolean>,
-                scope: CoroutineScope,
+                lifecycle: Lifecycle,
+                scope: LifecycleCoroutineScope,
             ) =
                 adapterDelegateViewBinding<ReviewsPreview, ProductDetailsItem, ReviewsPreviewBinding>(
                     ::inflateBinding,
                 ) {
+                    val isExpanded = MutableStateFlow(false)
+
                     bind {
                         binding.ivReviewPreviewAvatar.load(item.review.reviewAuthorIcon) {
                             transformations(CircleCropTransformation())
                         }
 
-                        binding.tvReviewPreviewDescription.setOnClickListener { onReviewClicked() }
                         binding.reviewPreviewRatingBar.progress = item.review.rating
                         binding.tvReviewPreviewAuthor.text = item.review.author
                         binding.tvReviewPreviewDescription.text = item.review.details
+                        binding.tvReviewPreviewDescription.setOnClickListener {
+                            isExpanded.value = !isExpanded.value
+                        }
 
-                        isExpanded.onEach { isExpanded ->
-                            if (isExpanded) {
-                                binding.tvReviewPreviewDescription
-                                    .animateMaxLines(REVIEW_EXPANDED_MAX_LINES)
-                            } else {
-                                binding.tvReviewPreviewDescription
-                                    .animateMaxLines(REVIEW_COLLAPSED_MAX_LINES)
+                        log { "bind called at ${hashCode()} delegate" }
+
+                        isExpanded
+                            .onStart {
+                                log { "started collecting" }
                             }
-                        }.launchIn(scope)
+                            .onEach { isExpanded ->
+                                log { "isExpanded: $isExpanded at ${hashCode()} delegate" }
+
+                                val lineCount = if (isExpanded) {
+                                    LINE_COUNT_EXPANDED
+                                } else {
+                                    LINE_COUNT_COLLAPSED
+                                }
+
+                                binding.tvReviewPreviewDescription.animateMaxLines(lineCount)
+                            }
+                            .onCompletion { throwable -> log { throwable } }
+                            .launchIn(scope)
+
                     }
                 }
 
-            private fun TextView.animateMaxLines(linesCount: Int) {
+            private fun TextView.animateMaxLines(lineCount: Int) {
                 ObjectAnimator.ofInt(
                     this,
                     MAX_LINES_PROPERTY_NAME,
-                    linesCount,
+                    lineCount,
                 ).apply {
                     duration = ANIM_DURATION
                     interpolator = FastOutSlowInInterpolator()
@@ -270,6 +293,8 @@ sealed class ProductDetailsItem {
         val similarProducts: List<SimilarProductListItem>,
     ) : ProductDetailsItem() {
         companion object {
+            private const val EXTRA_HORIZONTAL_MARGIN = 8
+
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
@@ -290,7 +315,7 @@ sealed class ProductDetailsItem {
                             onAddToCartClicked,
                         ),
                     )
-                    binding.root.addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_LEFT_MARGIN))
+                    binding.root.addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_HORIZONTAL_MARGIN))
                     binding.root.adapter = adapter
 
                     bind {
@@ -341,11 +366,5 @@ sealed class ProductDetailsItem {
                 return oldItem == newItem
             }
         }
-
-        private const val REVIEW_EXPANDED_MAX_LINES = 24
-        private const val REVIEW_COLLAPSED_MAX_LINES = 4
-        private const val ANIM_DURATION = 200L
-        private const val MAX_LINES_PROPERTY_NAME = "maxLines"
-        private const val EXTRA_LEFT_MARGIN = 8
     }
 }
