@@ -39,7 +39,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private fun initSignInListener() {
         binding.btnSignInWithEmail.setOnClickListener {
-            binding.layoutEmailPasswordInputs.passwordTextInputLayout.error = null
+            cleanInputErrors()
             viewModel.signInWithEmailPassword(
                 binding.layoutEmailPasswordInputs.emailTextInputLayout.editText?.text.toString(),
                 binding.layoutEmailPasswordInputs.passwordTextInputLayout.editText?.text.toString(),
@@ -52,29 +52,38 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             viewModel.authResultFlow.collect { authResult ->
                 when (authResult) {
                     is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
-                    is AuthResult.SignInWrongPasswordOrEmail -> setInputLayoutError()
+                    is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
                     is AuthResult.Error -> showErrorToast()
+                    is AuthResult.WrongEmail->setEmailInputLayoutError()
                 }
             }
         }
     }
 
+
+    private fun cleanInputErrors(){
+        binding.layoutEmailPasswordInputs.passwordTextInputLayout.error = null
+        binding.layoutEmailPasswordInputs.emailTextInputLayout.error=null
+    }
     private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
         if (isNavigatedFromUserProfile) {
-            navigateToUserProfile()
+            findNavController().popBackStack()
         } else {
             // navigateToCheckOut
         }
     }
 
-    private fun navigateToUserProfile() {
-        findNavController().navigate(SignInFragmentDirections.actionFragmentSignInToUser())
-    }
 
-    private fun setInputLayoutError() {
+    private fun setPasswordInputLayoutError() {
         binding.layoutEmailPasswordInputs.passwordTextInputLayout.error =
             getString(R.string.wrong_email_or_password)
     }
+
+    private fun setEmailInputLayoutError() {
+        binding.layoutEmailPasswordInputs.emailTextInputLayout.error =
+            getString(R.string.wrong_email_format)
+    }
+
 
     private fun showErrorToast() {
         Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
