@@ -1,17 +1,17 @@
 package com.narcissus.marketplace.ui.product_details
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 class ProductDetailsAdapter(
     purchaseClicked: () -> Unit,
     goToCartClicked: () -> Unit,
     allReviewsClicked: () -> Unit,
-    onReviewClicked: () -> Unit,
-    isReviewExpanded: Flow<Boolean>,
-    scope: CoroutineScope,
+    lifecycle: Lifecycle,
+    scope: LifecycleCoroutineScope,
     onSimilarProductClicked: (productId: String, cardView: MaterialCardView) -> Unit,
     onAddSimilarProductToCartClicked: (ProductId: String) -> Unit,
 ) : AsyncListDifferDelegationAdapter<ProductDetailsItem>(
@@ -25,7 +25,7 @@ class ProductDetailsAdapter(
     ProductDetailsItem.AboutSingleLine.delegate(),
     ProductDetailsItem.AboutMultipleLine.delegate(),
     ProductDetailsItem.ButtonTitle.delegate(allReviewsClicked),
-    ProductDetailsItem.ReviewsPreview.delegate(onReviewClicked, isReviewExpanded, scope),
+    ProductDetailsItem.ReviewsPreview.delegate(lifecycle, scope),
     ProductDetailsItem.SimilarProducts.delegate(
         onSimilarProductClicked, onAddSimilarProductToCartClicked
     ),
