@@ -54,16 +54,15 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                     is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
                     is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
                     is AuthResult.Error -> showErrorToast()
-                    is AuthResult.WrongEmail->setEmailInputLayoutError()
+                    is AuthResult.WrongEmail -> setEmailInputLayoutError()
                 }
             }
         }
     }
 
-
-    private fun cleanInputErrors(){
+    private fun cleanInputErrors() {
         binding.layoutEmailPasswordInputs.passwordTextInputLayout.error = null
-        binding.layoutEmailPasswordInputs.emailTextInputLayout.error=null
+        binding.layoutEmailPasswordInputs.emailTextInputLayout.error = null
     }
     private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
         if (isNavigatedFromUserProfile) {
@@ -72,7 +71,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             // navigateToCheckOut
         }
     }
-
 
     private fun setPasswordInputLayoutError() {
         binding.layoutEmailPasswordInputs.passwordTextInputLayout.error =
@@ -83,7 +81,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         binding.layoutEmailPasswordInputs.emailTextInputLayout.error =
             getString(R.string.wrong_email_format)
     }
-
 
     private fun showErrorToast() {
         Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
