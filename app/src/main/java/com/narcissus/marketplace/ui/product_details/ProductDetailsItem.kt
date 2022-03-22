@@ -16,7 +16,6 @@ import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.util.log
 import com.narcissus.marketplace.databinding.ListItemDetailsDividerBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoPlaceholderBinding
@@ -35,9 +34,7 @@ import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.Prod
 import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 
 typealias ProductPriceBinding = ListItemDetailsPriceBinding
 typealias ProductMainInfoBinding = ListItemDetailsMainInfoBinding
@@ -264,7 +261,6 @@ sealed class ProductDetailsItem {
                                 binding.tvReviewPreviewDescription.animateMaxLines(lineCount)
                             }
                             .launchIn(scope)
-
                     }
                 }
 

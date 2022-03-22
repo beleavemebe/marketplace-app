@@ -14,7 +14,7 @@ interface UserRepository {
     )
 
     suspend fun getUserData(): ActionResult<User>
-    suspend fun isUserAuthentificated(): Boolean // подумать об анонимной аутентификации
+    suspend fun isUserAuthenticated(): Boolean // подумать об анонимной аутентификации
     suspend fun signInWithEmail(email: String, password: String): AuthResult
     suspend fun signUpWithEmail(email: String, password: String): AuthResult
     suspend fun signOut(): AuthResult

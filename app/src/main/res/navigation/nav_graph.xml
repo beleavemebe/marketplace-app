@@ -22,4 +22,17 @@
             app:destination="@id/fragment_home" />
     </fragment>
 
+    <fragment
+        android:id="@+id/fragment_sign_in"
+        android:name="com.narcissus.marketplace.ui.sign_in.SignInFragment"
+        tools:layout="@layout/fragment_sign_in" >
+        <argument
+            android:name="isNavigatedFromUserProfile"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_fragment_sign_in_to_user"
+            app:destination="@id/fragment_user" />
+    </fragment>
+
+
 </navigation>

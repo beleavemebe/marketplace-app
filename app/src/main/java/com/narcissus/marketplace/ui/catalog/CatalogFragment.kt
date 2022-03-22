@@ -6,7 +6,6 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R

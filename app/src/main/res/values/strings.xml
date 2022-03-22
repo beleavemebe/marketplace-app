@@ -40,5 +40,17 @@
     <string name="featured">Featured</string>
     <string name="home_screen_footer">That\'s it! 🙃\nVisit our catalog\nfor more cool offers</string>
     <string name="special_offer_banner">Special offer banner</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="welcome">Welcome!</string>
+    <string name="sign_in_for_full_experience">Sign in for full experience</string>
+    <string name="sign_in">sign in</string>
+    <string name="connect_with_google">Connect With Google</string>
+    <string name="wrong_email_or_password">wrong email or password</string>
+    <string name="or">OR</string>
+    <string name="i_m_new_user">I\'m new user,\u0020</string>
+    <string name="sign_up">Sign up</string>
     <string name="products_amount_placeholder">Selected: %1$d</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="wrong_email_format">Wrong email format</string>
 </resources>

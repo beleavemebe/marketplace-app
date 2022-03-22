@@ -16,6 +16,7 @@
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/background"
             app:collapsedTitleTextAppearance="@style/ToolbarTextAppearance"
             app:expandedTitleMarginStart="20dp"
             app:expandedTitleTextAppearance="@style/H5_headline"
