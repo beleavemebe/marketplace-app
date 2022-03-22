@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.core
+package com.narcissus.marketplace.core.util
 
 import android.util.Log
 

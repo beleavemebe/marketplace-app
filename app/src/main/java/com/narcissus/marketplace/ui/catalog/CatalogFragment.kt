@@ -7,13 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.launchWhenStarted
+import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentCatalogBinding
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class CatalogFragment : Fragment(R.layout.fragment_catalog) {
@@ -66,9 +64,6 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
     }
 
     private fun navigateToSearch() {
-        findNavController().navigate(
-            CatalogFragmentDirections.actionFragmentCatalogToSearch()
-        )
     }
 
     override fun onDestroyView() {

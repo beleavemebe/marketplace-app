@@ -16,7 +16,7 @@ import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.log
+import com.narcissus.marketplace.core.util.log
 import com.narcissus.marketplace.databinding.ListItemDetailsDividerBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoPlaceholderBinding
@@ -253,15 +253,8 @@ sealed class ProductDetailsItem {
                             isExpanded.value = !isExpanded.value
                         }
 
-                        log { "bind called at ${hashCode()} delegate" }
-
                         isExpanded
-                            .onStart {
-                                log { "started collecting" }
-                            }
                             .onEach { isExpanded ->
-                                log { "isExpanded: $isExpanded at ${hashCode()} delegate" }
-
                                 val lineCount = if (isExpanded) {
                                     LINE_COUNT_EXPANDED
                                 } else {
@@ -270,7 +263,6 @@ sealed class ProductDetailsItem {
 
                                 binding.tvReviewPreviewDescription.animateMaxLines(lineCount)
                             }
-                            .onCompletion { throwable -> log { throwable } }
                             .launchIn(scope)
 
                     }

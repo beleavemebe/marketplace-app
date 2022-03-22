@@ -5,11 +5,15 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.launchWhenStarted
+import com.narcissus.marketplace.core.navigation.NavDestination
+import com.narcissus.marketplace.core.navigation.navigator
+import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSplashBinding
+import com.narcissus.marketplace.ui.home.di.HomeDestination
 import kotlinx.coroutines.flow.onEach
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.qualifier
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
     private var _binding: FragmentSplashBinding? = null
@@ -26,9 +30,13 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         _binding = FragmentSplashBinding.bind(view)
 
         splashViewModel.isLaunchedFlow.onEach { isLaunched ->
-            if (isLaunched) {
-                findNavController().navigate(R.id.action_fragment_splash_to_fragment_home)
-            }
+            if (!isLaunched) return@onEach
+
+            val homeDestination: NavDestination by inject(
+                qualifier<HomeDestination>()
+            )
+
+            navigator.navigate(homeDestination)
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 

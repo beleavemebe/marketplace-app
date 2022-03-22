@@ -4,18 +4,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.launchWhenStarted
+import com.narcissus.marketplace.core.navigation.NavDestination
+import com.narcissus.marketplace.core.navigation.navigator
+import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
+import com.narcissus.marketplace.ui.catalog.di.CatalogDestination
 import kotlinx.coroutines.flow.onEach
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.qualifier
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
@@ -106,6 +108,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun initButtons() {
         initSelectAllCheckbox()
         initDeleteSelectedButton()
+        initBrowseCatalogButton()
     }
 
     private fun initSelectAllCheckbox() {
@@ -117,6 +120,14 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun initDeleteSelectedButton() {
         binding.btnDeleteSelected.setOnClickListener {
             viewModel.deleteSelectedItems()
+        }
+    }
+
+
+    private fun initBrowseCatalogButton() {
+        binding.btnBrowseCatalog.setOnClickListener {
+            val catalogDestination: NavDestination by inject(qualifier<CatalogDestination>())
+            navigator.navigate(catalogDestination)
         }
     }
 
