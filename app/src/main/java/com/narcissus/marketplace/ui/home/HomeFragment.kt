@@ -10,17 +10,15 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.navigation.NavDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
-import com.narcissus.marketplace.ui.product_details.di.ProductDetailsDestination
+import com.narcissus.marketplace.core.navigation.destination.ProductDetailsDestination
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.qualifier
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
@@ -82,9 +80,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun navigateToProductDetails(id: String, cardView: MaterialCardView) {
-        val catalogDestination: NavDestination by inject(
-            qualifier<ProductDetailsDestination>()
-        ) {
+        val catalogDestination: ProductDetailsDestination by inject {
             parametersOf(id)
         }
 

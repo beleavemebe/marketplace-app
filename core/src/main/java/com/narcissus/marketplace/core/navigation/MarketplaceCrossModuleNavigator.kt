@@ -2,6 +2,7 @@ package com.narcissus.marketplace.core.navigation
 
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
+import com.narcissus.marketplace.core.navigation.destination.NavDestination
 
 interface MarketplaceCrossModuleNavigator {
     fun navigate(destination: NavDestination)
