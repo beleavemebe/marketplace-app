@@ -59,7 +59,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:background="@drawable/button_8dp_corners_gradient_background"
+        android:background="@drawable/button_gradient"
         android:text="@string/sign_in"
         android:textColor="?attr/colorSurface"
         app:layout_constraintBottom_toTopOf="@id/tvSignInOr"
