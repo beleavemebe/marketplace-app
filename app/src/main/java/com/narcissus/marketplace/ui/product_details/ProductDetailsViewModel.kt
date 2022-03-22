@@ -5,18 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.domain.model.ProductDetails
 import com.narcissus.marketplace.domain.model.Review
+import com.narcissus.marketplace.ui.product_details.model.ParcelableReview
+import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import com.narcissus.marketplace.domain.usecase.AddToCart
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
-import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
-import com.narcissus.marketplace.ui.product_details.model.ReviewParcelable
-import com.narcissus.marketplace.ui.product_details.model.ToolbarData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.narcissus.marketplace.ui.product_details.model.toParcelableReview
+import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -31,7 +31,6 @@ class ProductDetailsViewModel(
     private val addToCart: AddToCart,
 ) : ViewModel() {
 
-    private val reviewsExpandedStateFlow = MutableStateFlow(false)
     private val isPurchaseButtonActiveStateFlow = MutableStateFlow(true)
 
     private val productDetailsFlow: Flow<ProductDetails> =
@@ -40,12 +39,14 @@ class ProductDetailsViewModel(
                 getProductDetails(productId).getOrThrow()
             }.getOrNull()
 
-            details?.let {
-                emit(it)
-                reviewsFlow.emit(mapReviews(it.reviews))
+            if (details != null) {
+                emit(details)
+
+                val parcelableReviews = details.reviews.map(Review::toParcelableReview)
+                _reviewsFlow.emit(parcelableReviews)
             }
         }.shareIn(
-            CoroutineScope(Dispatchers.IO),
+            viewModelScope,
             replay = 1,
             started = SharingStarted.WhileSubscribed(),
         )
@@ -53,12 +54,11 @@ class ProductDetailsViewModel(
     val contentFlow: SharedFlow<List<ProductDetailsItem>> =
         combine(
             productDetailsFlow,
-            reviewsExpandedStateFlow,
             isPurchaseButtonActiveStateFlow,
-        ) { details, reviewsState, purchaseActiveState ->
-            assembleContent(details, reviewsState, purchaseActiveState)
+        ) { details, purchaseActiveState ->
+            assembleContent(details, purchaseActiveState)
         }.shareIn(
-            CoroutineScope(Dispatchers.IO),
+            viewModelScope,
             replay = 1,
             started = SharingStarted.WhileSubscribed(),
         )
@@ -67,24 +67,13 @@ class ProductDetailsViewModel(
         productDetailsFlow.map {
             ToolbarData(it.icon, it.name)
         }.shareIn(
-            CoroutineScope(Dispatchers.IO),
+            viewModelScope,
             replay = 1,
             started = SharingStarted.WhileSubscribed(),
         )
 
-    val reviewsFlow: MutableStateFlow<List<ReviewParcelable>> = MutableStateFlow(listOf())
-
-    fun collapseReviewState() {
-        viewModelScope.launch {
-            reviewsExpandedStateFlow.emit(false)
-        }
-    }
-
-    fun changeReviewExpandedState() {
-        viewModelScope.launch {
-            reviewsExpandedStateFlow.emit(!reviewsExpandedStateFlow.value)
-        }
-    }
+    private val _reviewsFlow = MutableStateFlow(listOf<ParcelableReview>())
+    val reviewsFlow = _reviewsFlow.asStateFlow()
 
     fun purchase() {
         viewModelScope.launch {
@@ -98,10 +87,9 @@ class ProductDetailsViewModel(
 
     private fun assembleContent(
         details: ProductDetails,
-        reviewsState: Boolean,
         purchaseActiveState: Boolean,
-    ) =
-        listOf(
+    ): List<ProductDetailsItem> {
+        return listOf(
             ProductDetailsItem.Price(details.price),
             ProductDetailsItem.ProductMainInfo(
                 listOf(
@@ -110,32 +98,23 @@ class ProductDetailsViewModel(
                 ),
             ),
             ProductDetailsItem.BasicTitle(R.string.about),
+            ProductDetailsItem.AboutMultipleLine(R.string.description, details.description),
             ProductDetailsItem.AboutSingleLine(R.string.type, details.type),
             ProductDetailsItem.AboutSingleLine(R.string.color, details.color),
             ProductDetailsItem.AboutSingleLine(R.string.material, details.material),
-            ProductDetailsItem.AboutMultipleLine(R.string.description, details.description),
             ProductDetailsItem.Divider(),
             ProductDetailsItem.ButtonTitle(R.string.reviews, R.string.all_reviews),
-            ProductDetailsItem.ReviewsPreview(details.reviews[0], reviewsState),
+            ProductDetailsItem.ReviewsPreview(details.reviews[0]),
             ProductDetailsItem.Divider(),
             ProductDetailsItem.BasicTitle(R.string.similar_products),
             ProductDetailsItem.SimilarProducts(
                 details.similarProducts.map { product ->
-                    PresentationSimilarProduct(
+                    SimilarProductListItem.SimilarProductItem(
                         product,
                         Random.Default.nextBoolean(), // todo: ПЕРЕДЕЛАТЬ С КОРЗИНОЙ
                     )
                 },
             ),
-        )
-
-    private fun mapReviews(reviews: List<Review>) = reviews.map { review ->
-        ReviewParcelable(
-            review.reviewId,
-            review.author,
-            review.details,
-            review.rating,
-            review.reviewAuthorIcon,
         )
     }
 

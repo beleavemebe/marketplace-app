@@ -13,9 +13,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 sealed class CartListItem {
-    data class Item(
-        val cartItem: CartItem,
-    ) : CartListItem() {
+    data class Item(val cartItem: CartItem) : CartListItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -52,8 +50,7 @@ sealed class CartListItem {
                     binding.productAmount.amountFlow
                         .onEach { amount ->
                             onItemAmountChanged(item.cartItem, amount)
-                        }
-                        .launchIn(scope)
+                        }.launchIn(scope)
                 }
             }
         }

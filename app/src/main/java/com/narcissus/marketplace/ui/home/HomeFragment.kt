@@ -6,16 +6,19 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
+import com.narcissus.marketplace.core.navigation.destination.ProductDetailsDestination
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
@@ -26,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val adapter by lazy {
         AsyncListDifferDelegationAdapter(
             HomeScreenItem.DIFF_CALLBACK,
-            HomeScreenItem.Headline.delegate,
+            HomeScreenItem.Headline.delegate(),
             HomeScreenItem.Banners.delegate(::navigateToSpecialOffer),
             HomeScreenItem.ProductsOfTheDay.delegate(::navigateToProductDetails),
             HomeScreenItem.FeaturedTabs.delegate(viewModel::switchFeaturedTab),
@@ -67,10 +70,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
+
+
     private fun navigateToSearch() {
-        findNavController().navigate(
-            HomeFragmentDirections.actionFragmentHomeToSearch(),
-        )
     }
 
     private fun navigateToSpecialOffer(link: String) {
@@ -78,10 +80,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun navigateToProductDetails(id: String, cardView: MaterialCardView) {
+        val catalogDestination: ProductDetailsDestination by inject {
+            parametersOf(id)
+        }
+
         val extras = FragmentNavigatorExtras(cardView to id)
-        findNavController().navigate(
-            HomeFragmentDirections.actionFragmentHomeToFragmentProductDetails(id), extras
-        )
+        navigator.navigate(catalogDestination, extras)
     }
 
     override fun onDestroyView() {

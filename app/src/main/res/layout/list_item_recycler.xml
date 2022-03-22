@@ -8,5 +8,5 @@
     android:orientation="horizontal"
     android:overScrollMode="never"
     android:paddingStart="0dp"
-    android:paddingEnd="16dp"
+    android:paddingEnd="@dimen/margin_default"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

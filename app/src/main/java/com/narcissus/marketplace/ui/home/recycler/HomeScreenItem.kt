@@ -38,16 +38,15 @@ sealed class HomeScreenItem {
                 parent: ViewGroup,
             ) = ListItemHeadlineBinding.inflate(inflater, parent, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<Headline, HomeScreenItem, HeadlineBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.tvDetailsTitle.text = context
-                                .getString(item.titleResId)
-                        }
+            fun delegate() =
+                adapterDelegateViewBinding<Headline, HomeScreenItem, HeadlineBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.tvDetailsTitle.text = context
+                            .getString(item.titleResId)
                     }
+                }
         }
     }
 

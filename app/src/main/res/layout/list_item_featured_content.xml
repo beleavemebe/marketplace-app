@@ -11,13 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:paddingHorizontal="@dimen/margin_small"
         app:tabIndicator="@null"
         app:tabMode="scrollable"
-        app:tabPaddingBottom="8dp"
-        app:tabPaddingEnd="12dp"
-        app:tabPaddingTop="8dp"
+        app:tabPaddingBottom="@dimen/margin_small"
+        app:tabPaddingEnd="@dimen/margin_medium"
+        app:tabPaddingTop="@dimen/margin_small"
         app:tabRippleColor="@null"
         tools:tabTextAppearance="@style/MarketplaceTextAppearance.b1"/>
 </LinearLayout>

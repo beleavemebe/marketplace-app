@@ -9,7 +9,7 @@
             android:layout_width="150dp"
             android:layout_height="46dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/button_8dp_corners_gradient_background"
+            android:background="@drawable/button_gradient"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 

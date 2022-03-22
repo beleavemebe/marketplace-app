@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.util.log
 import com.narcissus.marketplace.databinding.ListItemDetailsDividerBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoPlaceholderBinding
@@ -22,30 +25,33 @@ import com.narcissus.marketplace.databinding.ListItemDetailsProductAboutMultiple
 import com.narcissus.marketplace.databinding.ListItemDetailsProductAboutSingleLineBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsProductPlaceholderBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsReviewPreviewBinding
-import com.narcissus.marketplace.databinding.ListItemDetailsSimilarProductsListBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsTitileBasicBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsTitleButtonBinding
+import com.narcissus.marketplace.databinding.ListItemRecyclerBinding
 import com.narcissus.marketplace.domain.model.Review
 import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
-import com.narcissus.marketplace.ui.product_details.model.PresentationSimilarProduct
 import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 
 typealias ProductPriceBinding = ListItemDetailsPriceBinding
 typealias ProductMainInfoBinding = ListItemDetailsMainInfoBinding
-typealias ProductMainInfoPlaceHolderBinding = ListItemDetailsMainInfoPlaceholderBinding
+typealias LoadingMainProductInfoBinding = ListItemDetailsMainInfoPlaceholderBinding
 typealias ProductBasicTitleBinding = ListItemDetailsTitileBasicBinding
 typealias ProductButtonTitleBinding = ListItemDetailsTitleButtonBinding
 typealias AboutSingleLineBinding = ListItemDetailsProductAboutSingleLineBinding
 typealias AboutMultipleLineBinding = ListItemDetailsProductAboutMultipleLinesBinding
-typealias ProductDetailsPlaceHolderBinding = ListItemDetailsProductPlaceholderBinding
+typealias LoadingProductDetailsBinding = ListItemDetailsProductPlaceholderBinding
 typealias ReviewsPreviewBinding = ListItemDetailsReviewPreviewBinding
-typealias SimilarProductsListBinding = ListItemDetailsSimilarProductsListBinding
+typealias SimilarProductsListBinding = ListItemRecyclerBinding
 typealias DividerBinding = ListItemDetailsDividerBinding
 
 sealed class ProductDetailsItem {
-
     data class Price(val price: Int) : ProductDetailsItem() {
         companion object {
             @JvmStatic
@@ -54,16 +60,15 @@ sealed class ProductDetailsItem {
                 root: ViewGroup,
             ) = ProductPriceBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<Price, ProductDetailsItem, ProductPriceBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.tvDetailsPrice.text =
-                                context.getString(R.string.price_placeholder, item.price)
-                        }
+            fun delegate() =
+                adapterDelegateViewBinding<Price, ProductDetailsItem, ProductPriceBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.tvDetailsPrice.text =
+                            context.getString(R.string.price_placeholder, item.price)
                     }
+                }
         }
     }
 
@@ -95,21 +100,19 @@ sealed class ProductDetailsItem {
         }
     }
 
-    class ProductMainInfoPlaceHolder : ProductDetailsItem() {
+    class LoadingMainProductInfo : ProductDetailsItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
                 root: ViewGroup,
-            ) = ProductMainInfoPlaceHolderBinding.inflate(layoutInflater, root, false)
+            ) = LoadingMainProductInfoBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<ProductMainInfoPlaceHolder, ProductDetailsItem, ProductMainInfoPlaceHolderBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {}
-                    }
+            fun delegate() =
+                adapterDelegateViewBinding<LoadingMainProductInfo, ProductDetailsItem, LoadingMainProductInfoBinding>(
+                    ::inflateBinding,
+                ) {
+                }
         }
     }
 
@@ -121,33 +124,30 @@ sealed class ProductDetailsItem {
                 root: ViewGroup,
             ) = ProductBasicTitleBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<BasicTitle, ProductDetailsItem, ProductBasicTitleBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.tvDetailsTitle.text = context.getString(item.titleId)
-                        }
+            fun delegate() =
+                adapterDelegateViewBinding<BasicTitle, ProductDetailsItem, ProductBasicTitleBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.tvDetailsTitle.text = context.getString(item.titleId)
                     }
+                }
         }
     }
 
-    class ProductDetailsPlaceHolder : ProductDetailsItem() {
+    class LoadingProductDetails : ProductDetailsItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
                 root: ViewGroup,
-            ) = ProductDetailsPlaceHolderBinding.inflate(layoutInflater, root, false)
+            ) = LoadingProductDetailsBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<ProductDetailsPlaceHolder, ProductDetailsItem, ProductDetailsPlaceHolderBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {}
-                    }
+            fun delegate() =
+                adapterDelegateViewBinding<LoadingProductDetails, ProductDetailsItem, LoadingProductDetailsBinding>(
+                    ::inflateBinding,
+                ) {
+                }
         }
     }
 
@@ -160,17 +160,16 @@ sealed class ProductDetailsItem {
                 root: ViewGroup,
             ) = AboutSingleLineBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<AboutSingleLine, ProductDetailsItem, AboutSingleLineBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.tvDetailsAboutTitleSingleLine.text =
-                                context.getString(item.titleId)
-                            binding.tvDetailsAboutValueSingleLine.text = item.value
-                        }
+            fun delegate() =
+                adapterDelegateViewBinding<AboutSingleLine, ProductDetailsItem, AboutSingleLineBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.tvDetailsAboutTitleSingleLine.text =
+                            context.getString(item.titleId)
+                        binding.tvDetailsAboutValueSingleLine.text = item.value
                     }
+                }
         }
     }
 
@@ -183,22 +182,23 @@ sealed class ProductDetailsItem {
                 root: ViewGroup,
             ) = AboutMultipleLineBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<AboutMultipleLine, ProductDetailsItem, AboutMultipleLineBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.tvDetailsAboutTitleMultipleLine.text =
-                                context.getString(item.titleId)
-                            binding.tvDetailsAboutValueMultipleLine.text = item.value
-                        }
+            fun delegate() =
+                adapterDelegateViewBinding<AboutMultipleLine, ProductDetailsItem, AboutMultipleLineBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.tvDetailsAboutTitleMultipleLine.text =
+                            context.getString(item.titleId)
+                        binding.tvDetailsAboutValueMultipleLine.text = item.value
                     }
+                }
         }
     }
 
-    data class ButtonTitle(@StringRes val titleId: Int, @StringRes val buttonNameId: Int) :
-        ProductDetailsItem() {
+    data class ButtonTitle(
+        @StringRes val titleId: Int,
+        @StringRes val buttonNameId: Int,
+    ) : ProductDetailsItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -219,8 +219,12 @@ sealed class ProductDetailsItem {
         }
     }
 
-    data class ReviewsPreview(val review: Review, val isExpanded: Boolean) : ProductDetailsItem() {
+    data class ReviewsPreview(val review: Review) : ProductDetailsItem() {
         companion object {
+            private const val LINE_COUNT_EXPANDED = 24
+            private const val LINE_COUNT_COLLAPSED = 4
+            private const val ANIM_DURATION = 200L
+            private const val MAX_LINES_PROPERTY_NAME = "maxLines"
 
             @JvmStatic
             private fun inflateBinding(
@@ -228,50 +232,60 @@ sealed class ProductDetailsItem {
                 root: ViewGroup,
             ) = ReviewsPreviewBinding.inflate(layoutInflater, root, false)
 
-            fun delegate(onReviewClicked: () -> Unit) =
+            fun delegate(
+                lifecycle: Lifecycle,
+                scope: LifecycleCoroutineScope,
+            ) =
                 adapterDelegateViewBinding<ReviewsPreview, ProductDetailsItem, ReviewsPreviewBinding>(
                     ::inflateBinding,
                 ) {
+                    val isExpanded = MutableStateFlow(false)
 
                     bind {
                         binding.ivReviewPreviewAvatar.load(item.review.reviewAuthorIcon) {
-                            transformations(
-                                CircleCropTransformation(),
-                            )
+                            transformations(CircleCropTransformation())
                         }
 
-                        binding.tvReviewPreviewDescription.setOnClickListener { onReviewClicked() }
                         binding.reviewPreviewRatingBar.progress = item.review.rating
                         binding.tvReviewPreviewAuthor.text = item.review.author
                         binding.tvReviewPreviewDescription.text = item.review.details
-                        if (item.isExpanded) {
-                            animateMaxLines(
-                                binding.tvReviewPreviewDescription,
-                                REVIEW_EXPANDED_MAX_LINES,
-                            )
-                        } else if (binding.tvReviewPreviewDescription.maxLines != REVIEW_COLLAPSED_MAX_LINES) {
-                            animateMaxLines(
-                                binding.tvReviewPreviewDescription,
-                                REVIEW_COLLAPSED_MAX_LINES,
-                            )
+                        binding.tvReviewPreviewDescription.setOnClickListener {
+                            isExpanded.value = !isExpanded.value
                         }
+
+                        isExpanded
+                            .onEach { isExpanded ->
+                                val lineCount = if (isExpanded) {
+                                    LINE_COUNT_EXPANDED
+                                } else {
+                                    LINE_COUNT_COLLAPSED
+                                }
+
+                                binding.tvReviewPreviewDescription.animateMaxLines(lineCount)
+                            }
+                            .launchIn(scope)
+
                     }
                 }
 
-            private fun animateMaxLines(view: TextView, linesCount: Int) {
+            private fun TextView.animateMaxLines(lineCount: Int) {
                 ObjectAnimator.ofInt(
-                    view,
+                    this,
                     MAX_LINES_PROPERTY_NAME,
-                    linesCount,
-                ).setDuration(ANIM_DURATION).start()
+                    lineCount,
+                ).apply {
+                    duration = ANIM_DURATION
+                    interpolator = FastOutSlowInInterpolator()
+                }.start()
             }
         }
     }
 
     data class SimilarProducts(
-        val similarProductsList: List<PresentationSimilarProduct>,
+        val similarProducts: List<SimilarProductListItem>,
     ) : ProductDetailsItem() {
         companion object {
+            private const val EXTRA_HORIZONTAL_MARGIN = 8
 
             @JvmStatic
             private fun inflateBinding(
@@ -280,8 +294,8 @@ sealed class ProductDetailsItem {
             ) = SimilarProductsListBinding.inflate(layoutInflater, root, false)
 
             fun delegate(
-                itemOnClicked: (productId: String, cardView: MaterialCardView) -> Unit,
-                itemAddToCartClicked: (productId: String) -> Unit,
+                onClicked: (productId: String, cardView: MaterialCardView) -> Unit,
+                onAddToCartClicked: (productId: String) -> Unit,
             ) =
                 adapterDelegateViewBinding<SimilarProducts, ProductDetailsItem, SimilarProductsListBinding>(
                     ::inflateBinding,
@@ -289,23 +303,15 @@ sealed class ProductDetailsItem {
                     val adapter = AsyncListDifferDelegationAdapter(
                         SimilarProductListItem.DIFF_CALLBACK,
                         SimilarProductListItem.SimilarProductItem.delegate(
-                            itemOnClicked,
-                            itemAddToCartClicked,
+                            onClicked,
+                            onAddToCartClicked,
                         ),
                     )
-                    binding.rvDetailsSimilarProducts.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    binding.rvDetailsSimilarProducts.addItemDecoration(
-                        ExtraHorizontalMarginDecoration(
-                            EXTRA_LEFT_MARGIN,
-                        ),
-                    )
-                    binding.rvDetailsSimilarProducts.adapter = adapter
+                    binding.root.addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_HORIZONTAL_MARGIN))
+                    binding.root.adapter = adapter
 
                     bind {
-                        adapter.items = item.similarProductsList.map {
-                            SimilarProductListItem.SimilarProductItem(it.similarProduct, it.isButtonAddToCartActive)
-                        }
+                        adapter.items = item.similarProducts
                     }
                 }
         }
@@ -319,13 +325,11 @@ sealed class ProductDetailsItem {
                 root: ViewGroup,
             ) = DividerBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
-                    adapterDelegateViewBinding<Divider, ProductDetailsItem, DividerBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {}
-                    }
+            fun delegate() =
+                adapterDelegateViewBinding<Divider, ProductDetailsItem, DividerBinding>(
+                    ::inflateBinding,
+                ) {
+                }
         }
     }
 
@@ -342,7 +346,7 @@ sealed class ProductDetailsItem {
                     is AboutMultipleLine -> newItem is AboutMultipleLine && oldItem.value == newItem.value
                     is ButtonTitle -> newItem is ButtonTitle && oldItem.titleId == newItem.titleId
                     is ReviewsPreview -> newItem is ReviewsPreview && oldItem.review.reviewId == newItem.review.reviewId
-                    is SimilarProducts -> newItem is SimilarProducts && oldItem.similarProductsList === newItem.similarProductsList
+                    is SimilarProducts -> newItem is SimilarProducts && oldItem.similarProducts === newItem.similarProducts
                     else -> false
                 }
             }
@@ -354,10 +358,5 @@ sealed class ProductDetailsItem {
                 return oldItem == newItem
             }
         }
-        private const val REVIEW_EXPANDED_MAX_LINES = 16
-        private const val REVIEW_COLLAPSED_MAX_LINES = 4
-        private const val ANIM_DURATION = 200L
-        private const val MAX_LINES_PROPERTY_NAME = "maxLines"
-        private const val EXTRA_LEFT_MARGIN = 8
     }
 }

@@ -28,8 +28,7 @@ sealed class ProductMainInfoItem {
                 root: ViewGroup,
             ) = RatingSectionBinding.inflate(layoutInflater, root, false)
 
-            val delegate
-                get() =
+            fun delegate() =
                     adapterDelegateViewBinding<RatingSection, ProductMainInfoItem, RatingSectionBinding>(
                         ::inflateBinding,
                     ) {
@@ -54,11 +53,11 @@ sealed class ProductMainInfoItem {
                 root: ViewGroup,
             ) = PurchaseButtonActiveBinding.inflate(layoutInflater, root, false)
 
-            fun delegate(purchaseButtonListener: () -> Unit) =
+            fun delegate(onPurchaseClicked: () -> Unit) =
                 adapterDelegateViewBinding<ActivePurchaseButton, ProductMainInfoItem, PurchaseButtonActiveBinding>(
                     ::inflateBinding,
                 ) {
-                    binding.layoutBtnPurchase.setOnClickListener { purchaseButtonListener() }
+                    binding.layoutBtnPurchase.setOnClickListener { onPurchaseClicked() }
                     bind {
                         binding.tvBtnPurchaseActive.text = context.getString(item.titleId)
                     }
@@ -76,12 +75,12 @@ sealed class ProductMainInfoItem {
                 root: ViewGroup,
             ) = PurchaseButtonInactiveBinding.inflate(layoutInflater, root, false)
 
-            fun delegate(goToCartButtonListener: () -> Unit) =
+            fun delegate(onGoToCartClicked: () -> Unit) =
                 adapterDelegateViewBinding<InactivePurchaseButton, ProductMainInfoItem, PurchaseButtonInactiveBinding>(
                     ::inflateBinding,
                 ) {
                     bind {
-                        binding.layoutBtnPurchase.setOnClickListener { goToCartButtonListener() }
+                        binding.layoutBtnPurchase.setOnClickListener { onGoToCartClicked() }
                         binding.tvBtnPurchaseInactive.paint.shader = getTextLinearGradient(context)
                         binding.tvBtnPurchaseInactive.text = context.getString(item.titleId)
                     }

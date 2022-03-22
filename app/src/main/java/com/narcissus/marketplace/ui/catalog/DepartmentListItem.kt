@@ -17,10 +17,7 @@ import kotlinx.coroutines.withContext
 
 typealias DepartmentBinding = ListItemDepartmentBinding
 
-data class DepartmentListItem(
-    val name: String,
-    val image: String
-) {
+data class DepartmentListItem(val name: String, val image: String) {
     companion object {
         @JvmStatic
         fun inflateBinding(
