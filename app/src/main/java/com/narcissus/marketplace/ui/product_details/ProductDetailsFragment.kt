@@ -15,12 +15,18 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.launchWhenStarted
+import com.narcissus.marketplace.core.navigation.NavDestination
+import com.narcissus.marketplace.core.navigation.navigator
+import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
+import com.narcissus.marketplace.ui.cart.di.CartDestination
+import com.narcissus.marketplace.ui.product_details.di.ProductDetailsDestination
 import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import kotlinx.coroutines.flow.onEach
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.qualifier
 import kotlin.math.abs
 
 class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
@@ -31,17 +37,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(args.productId) }
 
-    private val detailsAdapter by lazy {
-        ProductDetailsAdapter(
-            purchaseClicked = viewModel::purchase,
-            goToCartClicked = ::goToCart,
-            allReviewsClicked = ::navigateToReviews,
-            lifecycle = viewLifecycleOwner.lifecycle,
-            scope = viewLifecycleOwner.lifecycleScope,
-            onSimilarProductClicked = ::navigateToSimilarProduct,
-            onAddSimilarProductToCartClicked = ::addSimilarProductToCart,
-        )
-    }
+    private var detailsAdapter: ProductDetailsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,14 +62,26 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProductDetailsBinding.bind(view)
         binding.root.transitionName = args.productId
+        detailsAdapter = createAdapter()
         initToolbar()
         initDetailsRecyclerView()
         setProductDetailsLoadingState()
         observeProductDetails()
     }
 
+    private fun createAdapter(): ProductDetailsAdapter =
+        ProductDetailsAdapter(
+            purchaseClicked = viewModel::purchase,
+            goToCartClicked = ::goToCart,
+            allReviewsClicked = ::navigateToReviews,
+            lifecycle = viewLifecycleOwner.lifecycle,
+            scope = viewLifecycleOwner.lifecycleScope,
+            onSimilarProductClicked = ::navigateToSimilarProduct,
+            onAddSimilarProductToCartClicked = ::addSimilarProductToCart,
+        )
+
     private fun setProductDetailsLoadingState() {
-        detailsAdapter.items = listOf(
+        detailsAdapter?.items = listOf(
             ProductDetailsItem.LoadingMainProductInfo(),
             ProductDetailsItem.LoadingProductDetails(),
             ProductDetailsItem.LoadingProductDetails(),
@@ -109,7 +117,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             .launchWhenStarted(viewLifecycleOwner.lifecycleScope)
 
         viewModel.contentFlow
-            .onEach(detailsAdapter::setItems)
+            .onEach(detailsAdapter!!::setItems)
             .launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
@@ -126,12 +134,15 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         binding.shimmerProductMainImagePlaceHolder.visibility = View.GONE
     }
 
-    private fun navigateToSimilarProduct(productId: String, cardView: MaterialCardView) {
-        val extras = FragmentNavigatorExtras(cardView to productId)
-        findNavController().navigate(
-            ProductDetailsFragmentDirections.navToProductDetails(productId),
-            extras,
-        )
+    private fun navigateToSimilarProduct(id: String, cardView: MaterialCardView) {
+        val catalogDestination: NavDestination by inject(
+            qualifier<ProductDetailsDestination>()
+        ) {
+            parametersOf(id)
+        }
+
+        val extras = FragmentNavigatorExtras(cardView to id)
+        navigator.navigate(catalogDestination, extras)
     }
 
     private fun navigateToReviews() {
@@ -142,9 +153,17 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
         )
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        detailsAdapter = null
+    }
+
     private fun addSimilarProductToCart(productId: String) {
     }
 
+
     private fun goToCart() {
+        val cartDestination: NavDestination by inject(qualifier<CartDestination>())
+        navigator.navigate(cartDestination)
     }
 }

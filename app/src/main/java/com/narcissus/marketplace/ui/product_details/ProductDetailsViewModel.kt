@@ -3,7 +3,6 @@ package com.narcissus.marketplace.ui.product_details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.log
 import com.narcissus.marketplace.domain.model.ProductDetails
 import com.narcissus.marketplace.domain.model.Review
 import com.narcissus.marketplace.ui.product_details.model.ParcelableReview
