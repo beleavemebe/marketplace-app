@@ -10,8 +10,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.navigation.MarketplaceCrossModuleNavigator
-import com.narcissus.marketplace.core.navigation.NavDestination
-import com.narcissus.marketplace.core.navigation.uri
+import com.narcissus.marketplace.core.navigation.destination.NavDestination
+import com.narcissus.marketplace.core.navigation.destination.uri
 import com.narcissus.marketplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {

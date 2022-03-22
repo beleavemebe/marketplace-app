@@ -8,16 +8,14 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.navigation.NavDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
-import com.narcissus.marketplace.ui.catalog.di.CatalogDestination
+import com.narcissus.marketplace.core.navigation.destination.CatalogDestination
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.qualifier
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
@@ -126,7 +124,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private fun initBrowseCatalogButton() {
         binding.btnBrowseCatalog.setOnClickListener {
-            val catalogDestination: NavDestination by inject(qualifier<CatalogDestination>())
+            val catalogDestination: CatalogDestination by inject()
             navigator.navigate(catalogDestination)
         }
     }

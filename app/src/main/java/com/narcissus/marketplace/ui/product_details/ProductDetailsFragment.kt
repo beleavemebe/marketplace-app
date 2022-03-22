@@ -15,18 +15,16 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.navigation.NavDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
-import com.narcissus.marketplace.ui.cart.di.CartDestination
-import com.narcissus.marketplace.ui.product_details.di.ProductDetailsDestination
+import com.narcissus.marketplace.core.navigation.destination.CartDestination
+import com.narcissus.marketplace.core.navigation.destination.ProductDetailsDestination
 import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.qualifier
 import kotlin.math.abs
 
 class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
@@ -97,11 +95,12 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
     private fun initToolbar() {
         val navController = findNavController()
-        binding.toolBarDetails.setupWithNavController(navController)
-        binding.appBarDetailsLayout.addOnOffsetChangedListener(
+        binding.toolbar.setupWithNavController(navController)
+        binding.appBarLayout.addOnOffsetChangedListener(
             AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                val hasScrollFinished = abs(verticalOffset) - appBarLayout.totalScrollRange == 0
-                binding.collapsingToolbarDetailsDivider.visibility =
+                val diff = abs(verticalOffset) - appBarLayout.totalScrollRange
+                val hasScrollFinished = diff == 0
+                binding.collapsingToolbarDivider.visibility =
                     if (hasScrollFinished) {
                         View.VISIBLE
                     } else {
@@ -117,27 +116,29 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
             .launchWhenStarted(viewLifecycleOwner.lifecycleScope)
 
         viewModel.contentFlow
-            .onEach(detailsAdapter!!::setItems)
+            .onEach(::renderContent)
             .launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun renderToolbar(toolbarData: ToolbarData) {
-        binding.collapsingToolbarDetailsLayout.title = toolbarData.productName
-        binding.ivProductMain.load(toolbarData.productIcon) {
+        binding.collapsingToolbarLayout.title = toolbarData.productName
+        binding.ivProduct.load(toolbarData.productIcon) {
             listener(
                 onSuccess = { _, _ -> hideShimmerImage() },
             )
         }
     }
 
+    private fun renderContent(items: List<ProductDetailsItem>) {
+        detailsAdapter?.items = items
+    }
+
     private fun hideShimmerImage() {
-        binding.shimmerProductMainImagePlaceHolder.visibility = View.GONE
+        binding.shimmerProductImage.visibility = View.GONE
     }
 
     private fun navigateToSimilarProduct(id: String, cardView: MaterialCardView) {
-        val catalogDestination: NavDestination by inject(
-            qualifier<ProductDetailsDestination>()
-        ) {
+        val catalogDestination by inject<ProductDetailsDestination> {
             parametersOf(id)
         }
 
@@ -163,7 +164,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
 
     private fun goToCart() {
-        val cartDestination: NavDestination by inject(qualifier<CartDestination>())
+        val cartDestination by inject<CartDestination>()
         navigator.navigate(cartDestination)
     }
 }
