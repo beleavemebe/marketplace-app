@@ -29,17 +29,17 @@ sealed class ProductMainInfoItem {
             ) = RatingSectionBinding.inflate(layoutInflater, root, false)
 
             fun delegate() =
-                    adapterDelegateViewBinding<RatingSection, ProductMainInfoItem, RatingSectionBinding>(
-                        ::inflateBinding,
-                    ) {
-                        bind {
-                            binding.ratingBarDetailsProduct.progress = item.rating
-                            binding.tvDetailsSales.text =
-                                context.getString(R.string.sales_placeholder, item.salesCount)
-                            binding.tvDetailsStock.text =
-                                context.getString(R.string.in_stock_placeholder, item.stockCount)
-                        }
+                adapterDelegateViewBinding<RatingSection, ProductMainInfoItem, RatingSectionBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.ratingBarDetailsProduct.progress = item.rating
+                        binding.tvDetailsSales.text =
+                            context.getString(R.string.sales_placeholder, item.salesCount)
+                        binding.tvDetailsStock.text =
+                            context.getString(R.string.in_stock_placeholder, item.stockCount)
                     }
+                }
         }
     }
 
