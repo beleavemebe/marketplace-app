@@ -10,10 +10,10 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.navigation.destination.ProductDetailsDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.databinding.FragmentHomeBinding
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
-import com.narcissus.marketplace.core.navigation.destination.ProductDetailsDestination
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
@@ -69,8 +69,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             navigateToSearch()
         }
     }
-
-
 
     private fun navigateToSearch() {
     }

@@ -15,11 +15,11 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.navigation.destination.CartDestination
+import com.narcissus.marketplace.core.navigation.destination.ProductDetailsDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
-import com.narcissus.marketplace.core.navigation.destination.CartDestination
-import com.narcissus.marketplace.core.navigation.destination.ProductDetailsDestination
 import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
@@ -161,7 +161,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
     private fun addSimilarProductToCart(productId: String) {
     }
-
 
     private fun goToCart() {
         val cartDestination by inject<CartDestination>()
