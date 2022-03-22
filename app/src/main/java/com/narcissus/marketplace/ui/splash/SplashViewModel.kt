@@ -14,7 +14,7 @@ class SplashViewModel : ViewModel() {
     val isLaunchedFlow: StateFlow<Boolean> = _isLaunchedFlow.asStateFlow()
 
     fun launch() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             delay(2500L)
             _isLaunchedFlow.value = true
         }

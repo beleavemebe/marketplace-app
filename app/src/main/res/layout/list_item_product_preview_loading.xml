@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="170dp"
     android:layout_height="340dp"
-    android:layout_marginHorizontal="8dp">
+    android:layout_marginHorizontal="@dimen/margin_small">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="#A7A7A7"
-        app:cardCornerRadius="16dp" />
+        app:cardCornerRadius="@dimen/margin_default" />
 </com.facebook.shimmer.ShimmerFrameLayout>

@@ -19,8 +19,7 @@
         android:top="2dp">
         <shape android:shape="rectangle" >
             <corners android:radius="4dp" />
-            <solid android:color="#fffbff" />
-<!--            не разобрался как достать его из темы, пока захардкожено-->
+            <solid android:color="?attr/colorSurface" />
         </shape>
     </item>
 

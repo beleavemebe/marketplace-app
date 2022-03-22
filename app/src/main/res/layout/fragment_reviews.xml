@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.product_details.reviews.ReviewsFragment">
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayoutDetails"
         style="@style/ToolbarTextAppearance"
@@ -15,6 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tbTop"
             style="@style/AppToolbar"
@@ -25,18 +25,18 @@
             app:buttonGravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:layout_constraintTop_toTopOf="parent" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReviews"
         android:layout_width="match_parent"
-        android:overScrollMode="never"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/margin_default"
         android:layout_marginTop="4dp"
-        android:layout_marginStart="@dimen/product_details_side_margin"
-        android:layout_marginEnd="@dimen/product_details_side_margin"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

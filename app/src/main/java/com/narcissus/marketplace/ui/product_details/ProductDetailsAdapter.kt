@@ -1,29 +1,32 @@
 package com.narcissus.marketplace.ui.product_details
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import kotlinx.coroutines.flow.Flow
 
 class ProductDetailsAdapter(
     purchaseClicked: () -> Unit,
     goToCartClicked: () -> Unit,
     allReviewsClicked: () -> Unit,
-    reviewTextClicked: () -> Unit,
-    similarProductClicked: (productId: String, cardView: MaterialCardView) -> Unit,
-    addSimilarProductToCartClicked: (ProductId: String) -> Unit,
+    lifecycle: Lifecycle,
+    scope: LifecycleCoroutineScope,
+    onSimilarProductClicked: (productId: String, cardView: MaterialCardView) -> Unit,
+    onAddSimilarProductToCartClicked: (ProductId: String) -> Unit,
 ) : AsyncListDifferDelegationAdapter<ProductDetailsItem>(
     ProductDetailsItem.DIFF_CALLBACK,
-    ProductDetailsItem.Price.delegate,
+    ProductDetailsItem.Divider.delegate(),
+    ProductDetailsItem.Price.delegate(),
     ProductDetailsItem.ProductMainInfo.delegate(purchaseClicked, goToCartClicked),
-    ProductDetailsItem.ProductMainInfoPlaceHolder.delegate,
-    ProductDetailsItem.BasicTitle.delegate,
-    ProductDetailsItem.ProductDetailsPlaceHolder.delegate,
-    ProductDetailsItem.AboutSingleLine.delegate,
-    ProductDetailsItem.AboutMultipleLine.delegate,
+    ProductDetailsItem.LoadingMainProductInfo.delegate(),
+    ProductDetailsItem.BasicTitle.delegate(),
+    ProductDetailsItem.LoadingProductDetails.delegate(),
+    ProductDetailsItem.AboutSingleLine.delegate(),
+    ProductDetailsItem.AboutMultipleLine.delegate(),
     ProductDetailsItem.ButtonTitle.delegate(allReviewsClicked),
-    ProductDetailsItem.ReviewsPreview.delegate(reviewTextClicked),
+    ProductDetailsItem.ReviewsPreview.delegate(lifecycle, scope),
     ProductDetailsItem.SimilarProducts.delegate(
-        similarProductClicked,
-        addSimilarProductToCartClicked,
+        onSimilarProductClicked, onAddSimilarProductToCartClicked
     ),
-    ProductDetailsItem.Divider.delegate,
 )

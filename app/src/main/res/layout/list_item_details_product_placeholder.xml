@@ -4,10 +4,9 @@
     android:layout_height="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- TODO: mock actual layout    -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="16dp"
-        android:layout_margin="16dp"
         app:cardBackgroundColor="#A7A7A7"/>
 </com.facebook.shimmer.ShimmerFrameLayout>

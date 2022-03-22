@@ -11,6 +11,7 @@ import com.narcissus.marketplace.domain.usecase.RemoveSelectedCartItems
 import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
 import com.narcissus.marketplace.domain.usecase.SetCartItemAmount
 import com.narcissus.marketplace.domain.usecase.SetCartItemSelected
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 
 class CartViewModel(
@@ -29,6 +30,11 @@ class CartViewModel(
     val cartCostFlow = getCartCost()
 
     val itemAmountFlow = getCartItemsAmount()
+
+    val isSelectAllCheckboxActive =
+        cartFlow.mapLatest { cartItems ->
+            cartItems.all(CartItem::isSelected)
+        }
 
     fun deleteItem(cartItem: CartItem) {
         viewModelScope.launch {

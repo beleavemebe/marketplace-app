@@ -4,13 +4,13 @@
     <item>
         <shape>
             <solid android:color="@android:color/white" />
-            <corners android:radius="10dp" />
+            <corners android:radius="@dimen/margin_small" />
         </shape>
     </item>
     <item>
         <shape>
             <solid android:color="@color/background_search_tint" />
-            <corners android:radius="10dp" />
+            <corners android:radius="@dimen/margin_small" />
         </shape>
     </item>
     <item
@@ -19,16 +19,16 @@
         <!-- 18 + 8 + 8 -->
         <shape>
             <solid android:color="@android:color/white" />
-            <corners android:radius="10dp"
-                android:topRightRadius="10dp"
+            <corners android:radius="@dimen/margin_small"
+                android:topRightRadius="@dimen/margin_small"
                 android:topLeftRadius="0dp"
-                android:bottomRightRadius="10dp"
+                android:bottomRightRadius="@dimen/margin_small"
                 android:bottomLeftRadius="0dp"/>
         </shape>
     </item>
     <item>
         <shape>
-            <corners android:radius="10dp" />
+            <corners android:radius="@dimen/margin_small" />
 
             <stroke
                 android:width="0.5dp"

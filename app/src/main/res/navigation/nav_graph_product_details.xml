@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_product_details"
+    app:startDestination="@id/productDetailsFragment">
+
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.narcissus.marketplace.ui.product_details.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details">
+
+        <deepLink app:uri="marketplace-app://product/{productId}" />
+
+        <argument
+            android:name="productId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/navToProductReviews"
+            app:destination="@id/reviewsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reviewsFragment"
+        android:name="com.narcissus.marketplace.ui.product_details.reviews.ReviewsFragment"
+        android:label="@string/reviews"
+        tools:layout="@layout/fragment_reviews">
+        <argument
+            android:name="productReviews"
+            app:argType="com.narcissus.marketplace.ui.product_details.model.ParcelableReview[]" />
+    </fragment>
+</navigation>

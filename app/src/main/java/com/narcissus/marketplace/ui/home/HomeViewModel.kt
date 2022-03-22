@@ -29,6 +29,7 @@ class HomeViewModel(
     private val getRandomProducts: GetRandomProducts,
     getRecentlyVisitedProducts: GetRecentlyVisitedProducts,
 ) : ViewModel() {
+
     private val topRatedFlow = productListFlow {
         getTopRatedProducts().getOrThrow()
     }
