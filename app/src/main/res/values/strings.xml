@@ -44,7 +44,7 @@
     <string name="password">password</string>
     <string name="welcome">Welcome!</string>
     <string name="sign_in_for_full_experience">Sign in for full experience</string>
-    <string name="sign_in">sign in</string>
+    <string name="sign_in">Sign in</string>
     <string name="connect_with_google">Connect With Google</string>
     <string name="wrong_email_or_password">wrong email or password</string>
     <string name="or">OR</string>
@@ -52,4 +52,11 @@
     <string name="sign_up">Sign up</string>
     <string name="products_amount_placeholder">Selected: %1$d</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="i_m_already_a_member">I’m already a member,</string>
+    <string name="full_name">full name</string>
+    <string name="sign_up_to_get_started">Sign up to get started</string>
+    <string name="create_account">Create Account</string>
+    <string name="wrong_email">wrong email</string>
+    <string name="short_password">short password, at least 6 symbols</string>
+    <string name="name_empty">input full name</string>
 </resources>

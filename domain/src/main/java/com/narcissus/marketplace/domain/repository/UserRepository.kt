@@ -10,13 +10,13 @@ interface UserRepository {
     suspend fun addCard(
         cardNumber: Long,
         svv: Int,
-        expirationDate: String
+        expirationDate: String,
     )
 
     suspend fun getUserData(): ActionResult<User>
     suspend fun isUserAuthenticated(): Boolean // подумать об анонимной аутентификации
     suspend fun signInWithEmail(email: String, password: String): AuthResult
-    suspend fun signUpWithEmail(email: String, password: String): AuthResult
+    suspend fun signUpWithEmail(fullName: String, email: String, password: String): AuthResult
     suspend fun signOut(): AuthResult
     suspend fun signInWithGoogle() // TODO
 

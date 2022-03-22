@@ -1,10 +1,12 @@
 package com.narcissus.marketplace.data
 
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.narcissus.marketplace.data.mapper.toProductPreview
 import com.narcissus.marketplace.data.persistence.database.ProductDao
 import com.narcissus.marketplace.data.persistence.model.ProductEntity
@@ -57,8 +59,22 @@ internal class UserRepositoryImpl(
             }
     }
 
-    override suspend fun signUpWithEmail(email: String, password: String): AuthResult {
-        TODO("Not yet implemented")
+    override suspend fun signUpWithEmail(
+        fullName: String,
+        email: String,
+        password: String,
+    ): AuthResult {
+        var currentUser = firebaseAuth.currentUser
+        return currentUser?.toAuthResult() ?: try {
+            currentUser = firebaseAuth.createUserWithEmailAndPassword(email, password).await().user
+            val profileUpdates = userProfileChangeRequest {
+                displayName = fullName
+            }
+            currentUser?.updateProfile(profileUpdates)
+            currentUser?.toAuthResult() ?: AuthResult.Error
+        } catch (e: FirebaseException) {
+            AuthResult.SignInWrongPasswordOrEmail
+        }
     }
 
     override suspend fun signOut(): AuthResult {
@@ -68,29 +84,29 @@ internal class UserRepositoryImpl(
     override suspend fun signInWithGoogle() {
         TODO("Not yet implemented")
     }
-}
 
-private fun ProductPreview.toProductEntity(): ProductEntity {
-    return ProductEntity(
-        id,
-        icon,
-        price,
-        name,
-        department,
-        type,
-        stock,
-        color,
-        material,
-        rating,
-        sales,
-    )
-}
+    private fun ProductPreview.toProductEntity(): ProductEntity {
+        return ProductEntity(
+            id,
+            icon,
+            price,
+            name,
+            department,
+            type,
+            stock,
+            color,
+            material,
+            rating,
+            sales,
+        )
+    }
 
-private fun FirebaseUser.toAuthResult(): AuthResult {
+    private fun FirebaseUser.toAuthResult(): AuthResult {
 
-    return AuthResult.SignInSuccess(
-        UserProfile(
-            uid, displayName, email!!, photoUrl.toString(),
-        ),
-    )
+        return AuthResult.SignInSuccess(
+            UserProfile(
+                uid, displayName, email!!, photoUrl.toString(),
+            ),
+        )
+    }
 }

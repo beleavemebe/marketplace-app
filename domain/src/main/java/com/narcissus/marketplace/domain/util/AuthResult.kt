@@ -9,7 +9,8 @@ sealed class AuthResult {
     object SignInWrongPasswordOrEmail : AuthResult()
     object NotAuthorized : AuthResult()
     object Error : AuthResult()
-//    object SignUpWrongEmail:AuthResult() ЕСЛИ НАДО
-//    object SignUpWrongPassword:AuthResult()
-//    object SignUpToShortPassword:AuthResult()
+    object SignUpWrongEmail : AuthResult()
+    //  object SignUpWrongPassword : AuthResult()
+    object SignUpToShortPassword : AuthResult()
+    object SignUpEmptyInput : AuthResult()
 }
