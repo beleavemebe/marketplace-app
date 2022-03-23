@@ -8,9 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignUpBinding
 import com.narcissus.marketplace.domain.util.AuthResult
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -44,18 +45,16 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun observeSignUpState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.authResultFlow.collect { authResult ->
-                when (authResult) {
-                    is AuthResult.SignInSuccess -> navigateTo()
-                    is AuthResult.SignUpEmptyInput -> setNameLayoutError()
-                    is AuthResult.SignUpWrongEmail -> setEmailLayoutError()
-                    is AuthResult.SignUpToShortPassword -> setPasswordLayoutError()
-                    is AuthResult.Error -> showErrorToast()
-                    else -> {}
-                }
+        viewModel.authResultFlow.onEach { authResult ->
+            when (authResult) {
+                is AuthResult.SignInSuccess -> navigateTo()
+                is AuthResult.SignUpEmptyInput -> setNameLayoutError()
+                is AuthResult.SignUpWrongEmail -> setEmailLayoutError()
+                is AuthResult.SignUpToShortPassword -> setPasswordLayoutError()
+                is AuthResult.Error -> showErrorToast()
+                else -> {}
             }
-        }
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun setNameLayoutError() {
