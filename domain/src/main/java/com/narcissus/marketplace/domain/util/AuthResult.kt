@@ -11,7 +11,6 @@ sealed class AuthResult {
     object NotAuthorized : AuthResult()
     object Error : AuthResult()
     object SignUpWrongEmail : AuthResult()
-    //  object SignUpWrongPassword : AuthResult()
     object SignUpToShortPassword : AuthResult()
     object SignUpEmptyInput : AuthResult()
 }

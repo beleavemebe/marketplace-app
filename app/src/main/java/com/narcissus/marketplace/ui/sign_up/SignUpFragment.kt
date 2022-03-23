@@ -14,7 +14,6 @@ import com.narcissus.marketplace.domain.util.AuthResult
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
@@ -35,7 +34,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private fun initSignUpButton() {
         binding.btnSignUpWithEmail.setOnClickListener {
-            binding.layoutEmailPasswordInputs.passwordTextInputLayout.error = null
             viewModel.signUpWithEmailPassword(
                 binding.etFullName.text.toString(),
                 binding.layoutEmailPasswordInputs.emailTextInputLayout.editText?.text.toString(),
@@ -72,7 +70,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun navigateTo() {
-
     }
 
     private fun showErrorToast() {
