@@ -5,11 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.domain.usecase.SignUpWithEmail
 import com.narcissus.marketplace.domain.util.AuthResult
 import kotlinx.coroutines.channels.BufferOverflow
-
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-
 
 class SignUpViewModel(
     val signUpWithEmail: SignUpWithEmail,

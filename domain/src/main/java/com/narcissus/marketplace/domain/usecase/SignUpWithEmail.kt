@@ -5,7 +5,7 @@ import com.narcissus.marketplace.domain.util.AuthResult
 
 class SignUpWithEmail(private val userRepository: UserRepository) {
     suspend operator fun invoke(fullName: String, email: String, password: String): AuthResult {
-        if (fullName.isBlank()){
+        if (fullName.isBlank()) {
             return AuthResult.SignUpEmptyInput
         }
 
