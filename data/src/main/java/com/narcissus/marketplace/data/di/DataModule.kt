@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.data.di
 
-import com.google.firebase.auth.FirebaseAuth
 import com.narcissus.marketplace.apiclient.di.apiClientModule
 import com.narcissus.marketplace.data.CartRepositoryImpl
 import com.narcissus.marketplace.data.DepartmentsRepositoryImpl
@@ -26,7 +25,7 @@ val dataModule = module {
     loadKoinModules(persistenceModule)
     loadKoinModules(firebaseModule)
 
-    single<CartRepository> { CartRepositoryImpl(get(qualifier<CartReference>())) }
+    single<CartRepository> { CartRepositoryImpl(cartRef = get(qualifier<CartReference>())) }
     single<DepartmentsRepository> { DepartmentsRepositoryImpl() }
     single<OrderRepository> { OrderRepositoryImpl() }
 
@@ -38,6 +37,6 @@ val dataModule = module {
         ProductsPreviewRepositoryImpl(apiService = get())
     }
     single<UserRepository> {
-        UserRepositoryImpl(productsDao = get(), FirebaseAuth.getInstance())
+        UserRepositoryImpl(productsDao = get(), firebaseAuth = get())
     }
 }
