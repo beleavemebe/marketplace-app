@@ -9,9 +9,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignInBinding
 import com.narcissus.marketplace.domain.util.AuthResult
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
@@ -48,22 +49,21 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
 
     private fun observeAuthState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.authResultFlow.collect { authResult ->
-                when (authResult) {
-                    is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
-                    is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
-                    is AuthResult.Error -> showErrorToast()
-                    is AuthResult.WrongEmail -> setEmailInputLayoutError()
-                }
+        viewModel.authResultFlow.onEach { authResult ->
+            when (authResult) {
+                is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
+                is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
+                is AuthResult.Error -> showErrorToast()
+                is AuthResult.WrongEmail -> setEmailInputLayoutError()
             }
-        }
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun cleanInputErrors() {
         binding.layoutEmailPasswordInputs.passwordTextInputLayout.error = null
         binding.layoutEmailPasswordInputs.emailTextInputLayout.error = null
     }
+
     private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
         if (isNavigatedFromUserProfile) {
             findNavController().popBackStack()

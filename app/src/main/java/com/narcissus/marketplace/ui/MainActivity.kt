@@ -30,10 +30,17 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
         initBottomNavigation(navController)
     }
 
+    private val fullScreenDestinations =
+        setOf(
+            R.id.fragment_splash,
+            R.id.fragment_sign_up,
+            R.id.fragment_sign_in
+        )
+
     private fun initBottomNavigation(navController: NavController) {
         binding.bottomNavigationView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.fragment_splash) {
+            if (destination.id in fullScreenDestinations) {
                 binding.bottomNavigationView.visibility = View.GONE
             } else {
                 binding.bottomNavigationView.visibility = View.VISIBLE
