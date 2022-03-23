@@ -34,5 +34,9 @@
             app:destination="@id/fragment_user" />
     </fragment>
 
+    <fragment
+        android:id="@+id/fragment_sign_up"
+        android:name="com.narcissus.marketplace.ui.sign_up.SignUpFragment"
+        tools:layout="@layout/fragment_sign_up" />
 
 </navigation>
