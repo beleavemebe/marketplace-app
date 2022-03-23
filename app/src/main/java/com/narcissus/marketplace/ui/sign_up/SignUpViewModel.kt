@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.sing_up
+package com.narcissus.marketplace.ui.sign_up
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
