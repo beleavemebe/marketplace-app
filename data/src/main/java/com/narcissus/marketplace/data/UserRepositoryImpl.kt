@@ -13,14 +13,17 @@ import com.narcissus.marketplace.data.persistence.database.ProductDao
 import com.narcissus.marketplace.data.persistence.model.ProductEntity
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.User
+import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.util.ActionResult
 import com.narcissus.marketplace.domain.util.AuthResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.await
 
 internal class UserRepositoryImpl(
     private val productsDao: ProductDao,
+    private val firebaseAuth: FirebaseAuth,
 ) : UserRepository {
     override fun getRecentlyVisitedProducts(): Flow<List<ProductPreview>> {
         return productsDao.getProducts().map { entities ->
@@ -41,6 +44,9 @@ internal class UserRepositoryImpl(
     }
 
     override suspend fun isUserAuthenticated(): Boolean = firebaseAuth.currentUser != null
+
+    private fun checkEmailFormatValidity(email: String) =
+        Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     override suspend fun signInWithEmail(email: String, password: String): AuthResult {
         if (!checkEmailFormatValidity(email)) {
@@ -76,20 +82,14 @@ internal class UserRepositoryImpl(
         } catch (e: FirebaseException) {
             AuthResult.SignInWrongPasswordOrEmail
         }
-        private fun checkEmailFormatValidity(email: String) =
-            Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
 
-        override suspend fun signUpWithEmail(email: String, password: String): AuthResult {
-            TODO("Not yet implemented")
-        }
+    override suspend fun signOut(): AuthResult {
+        TODO("Not yet implemented")
+    }
 
-        override suspend fun signOut(): AuthResult {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun signInWithGoogle() {
-            TODO("Not yet implemented")
-        }
+    override suspend fun signInWithGoogle() {
+        TODO("Not yet implemented")
     }
 
     private fun ProductPreview.toProductEntity(): ProductEntity {

@@ -83,7 +83,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="60dp"
         android:layout_marginHorizontal="40dp"
-        android:background="@drawable/button_8dp_corners_gradient_background"
+        android:background="@drawable/button_gradient"
         android:text="@string/sign_up"
         android:textColor="?attr/colorSurface"
 
