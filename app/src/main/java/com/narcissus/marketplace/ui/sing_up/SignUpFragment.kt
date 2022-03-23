@@ -13,7 +13,6 @@ import com.narcissus.marketplace.domain.util.AuthResult
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
@@ -73,7 +72,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun navigateTo() {
-
     }
 
     private fun showErrorToast() {
