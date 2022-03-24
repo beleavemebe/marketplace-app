@@ -20,7 +20,7 @@ class SignInViewModel(
         MutableSharedFlow<AuthResult>(
             replay = 1,
             extraBufferCapacity = 1,
-            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
 
     val authResultFlow = _authResultFlow.asSharedFlow()
