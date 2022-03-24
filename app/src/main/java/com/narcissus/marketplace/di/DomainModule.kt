@@ -16,6 +16,7 @@ import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
 import com.narcissus.marketplace.domain.usecase.SetCartItemAmount
 import com.narcissus.marketplace.domain.usecase.SetCartItemSelected
 import com.narcissus.marketplace.domain.usecase.SignInWithEmail
+import com.narcissus.marketplace.domain.usecase.SignInWithGoogle
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -38,4 +39,5 @@ val domainModule = module {
     factory { RemoveFromCart(get()) }
     factory { AddToCart(get()) }
     factory { SignInWithEmail(get()) }
+    factory { SignInWithGoogle(get()) }
 }

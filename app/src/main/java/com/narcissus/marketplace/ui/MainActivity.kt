@@ -1,13 +1,24 @@
 package com.narcissus.marketplace.ui
 
+import android.content.IntentSender
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ActivityMainBinding
+import android.content.Intent as Intent
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
