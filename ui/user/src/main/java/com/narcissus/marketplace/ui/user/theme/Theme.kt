@@ -51,3 +51,21 @@ fun DefaultTheme(
         content = content
     )
 }
+
+@Composable
+fun LightTheme(
+    content: @Composable () -> Unit
+) {
+    DefaultTheme(darkTheme = false) {
+        content()
+    }
+}
+
+@Composable
+fun DarkTheme(
+    content: @Composable () -> Unit
+) {
+    DefaultTheme(darkTheme = true) {
+        content()
+    }
+}

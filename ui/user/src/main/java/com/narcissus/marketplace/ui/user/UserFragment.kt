@@ -52,6 +52,7 @@ import coil.request.ImageRequest
 import com.narcissus.marketplace.core.R
 import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.model.dummyUser
+import com.narcissus.marketplace.ui.user.theme.DarkTheme
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
 import com.narcissus.marketplace.ui.user.theme.HalfPadding
@@ -59,6 +60,7 @@ import com.narcissus.marketplace.ui.user.theme.HeaderHeight
 import com.narcissus.marketplace.ui.user.theme.IconSize
 import com.narcissus.marketplace.ui.user.theme.IntermediatePadding
 import com.narcissus.marketplace.ui.user.theme.ItemHeight
+import com.narcissus.marketplace.ui.user.theme.LightTheme
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
 import com.narcissus.marketplace.ui.user.theme.regular
@@ -128,8 +130,16 @@ fun Loading() {
 
 @Composable
 @Preview
-fun LoadingPreview() {
-    DefaultTheme {
+fun LoadingPreviewLight() {
+    LightTheme {
+        Loading()
+    }
+}
+
+@Composable
+@Preview
+fun LoadingPreviewDark() {
+    DarkTheme {
         Loading()
     }
 }
@@ -167,8 +177,16 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
 
 @Composable
 @Preview
-fun YouAreNotLoggedInPreview() {
-    DefaultTheme {
+fun YouAreNotLoggedInPreviewLight() {
+    LightTheme {
+        YouAreNotLoggedIn {}
+    }
+}
+
+@Composable
+@Preview
+fun YouAreNotLoggedInPreviewDark() {
+    DarkTheme {
         YouAreNotLoggedIn {}
     }
 }
@@ -257,7 +275,8 @@ fun ProfileInfo(userProfile: UserProfile) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.background),
     ) {
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -293,8 +312,16 @@ fun ProfileInfo(userProfile: UserProfile) {
 
 @Preview
 @Composable
-fun ProfileInfoPreview() {
-    DefaultTheme {
+fun ProfileInfoPreviewLight() {
+    LightTheme {
+        ProfileInfo(dummyUser)
+    }
+}
+
+@Preview
+@Composable
+fun ProfileInfoPreviewDark() {
+    DarkTheme {
         ProfileInfo(dummyUser)
     }
 }
@@ -368,8 +395,16 @@ fun Item(
 
 @Composable
 @Preview
-fun ItemPreview() {
-    DefaultTheme {
+fun ItemPreviewLight() {
+    LightTheme {
+        Item("Orders", R.drawable.ic_cart) {}
+    }
+}
+
+@Composable
+@Preview
+fun ItemPreviewDark() {
+    DarkTheme {
         Item("Orders", R.drawable.ic_cart) {}
     }
 }
@@ -401,8 +436,17 @@ fun SwitchItem(
 
 @Composable
 @Preview
-fun SwitchItemPreview() {
-    DefaultTheme {
+fun SwitchItemPreviewLight() {
+    LightTheme {
+        SwitchItem("Orders", R.drawable.ic_cart, true) {}
+    }
+}
+
+
+@Composable
+@Preview
+fun SwitchItemPreviewDark() {
+    DarkTheme {
         SwitchItem("Orders", R.drawable.ic_cart, true) {}
     }
 }
