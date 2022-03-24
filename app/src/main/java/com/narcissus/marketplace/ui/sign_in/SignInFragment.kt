@@ -18,11 +18,12 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignInBinding
 import com.narcissus.marketplace.domain.util.AuthResult
 import com.narcissus.marketplace.ui.sign_in.until.getOnTapUiSignInRequest
 import com.narcissus.marketplace.ui.sign_in.until.getSignInClient
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -64,16 +65,14 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
 
     private fun observeAuthState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.authResultFlow.collect { authResult ->
-                when (authResult) {
-                    is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
-                    is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
-                    is AuthResult.Error -> showEmailAuthErrorToast()
-                    is AuthResult.WrongEmail -> setEmailInputLayoutError()
-                }
+        viewModel.authResultFlow.onEach { authResult ->
+            when (authResult) {
+                is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
+                is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
+                is AuthResult.Error -> showErrorToast()
+                is AuthResult.WrongEmail -> setEmailInputLayoutError()
             }
-        }
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun cleanInputErrors() {
