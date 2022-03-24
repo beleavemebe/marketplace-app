@@ -9,11 +9,13 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +24,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
@@ -37,108 +41,66 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.narcissus.marketplace.core.R
+import com.narcissus.marketplace.domain.model.UserProfile
+import com.narcissus.marketplace.domain.model.dummyUser
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
 import com.narcissus.marketplace.ui.user.theme.HalfPadding
-import com.narcissus.marketplace.ui.user.theme.HeaderBackgroundColor
 import com.narcissus.marketplace.ui.user.theme.HeaderHeight
 import com.narcissus.marketplace.ui.user.theme.IconSize
 import com.narcissus.marketplace.ui.user.theme.IntermediatePadding
 import com.narcissus.marketplace.ui.user.theme.ItemHeight
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
-import com.narcissus.marketplace.ui.user.theme.SubtitleColor
+import com.narcissus.marketplace.ui.user.theme.regular
+import com.narcissus.marketplace.ui.user.theme.subtitleColor
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 class UserFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View = ComposeView(requireContext()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
+            val viewModel: UserViewModel = getViewModel()
             DefaultTheme {
-                Column(
-                    modifier = Modifier
-                        .background(White)
-                ) {
-                    TopAppBar(
-                        title = {
-                            Text(
-                                text = "Profile",
-                                style = MaterialTheme.typography.h4
-                            )
-                        },
-                        backgroundColor = White,
-                    )
-
-                    Column(
-                        modifier = Modifier
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        ProfileInfo(name = "Joe Ordinary", email = "example@gmail.com")
-
-                        Header(text = "My Profile")
-
-                        Item(
-                            text = "Orders",
-                            iconResId = R.drawable.ic_cart,
-                            onClick = { toast("Orders") }
-                        )
-
-                        Item(
-                            text = "Billing",
-                            iconResId = R.drawable.ic_card,
-                            onClick = { toast("Billing") }
-                        )
-
-                        Item(
-                            text = "Logout",
-                            iconResId = R.drawable.ic_logout,
-                            onClick = { toast("Logout") }
-                        )
-
-                        Header(text = "Application")
-
-                        // TODO: track whether app is in dark theme or not
-                        val isSystemInDarkTheme = false
-                        SwitchItem(
-                            text = "Dark Theme",
-                            iconResId = R.drawable.ic_crescent,
-                            checked = isSystemInDarkTheme
-                        ) { checked ->
-                            toast("Dark Theme: $checked")
-                        }
-
-                        Item(
-                            text = "Clear data",
-                            iconResId = R.drawable.ic_broom,
-                            onClick = { toast("Clear data") }
-                        )
-
-                        Item(
-                            text = "Report bug",
-                            iconResId = R.drawable.ic_bug,
-                            onClick = {
-                                toast("Report bug")
-                            }
-                        )
-
-                        Item(
-                            text = "Source code",
-                            iconResId = R.drawable.ic_code,
-                            onClick = { toast("Source code") }
-                        )
-                    }
-                }
+                UserScreen(viewModel)
             }
+        }
+    }
+
+    @Composable
+    private fun UserScreen(viewModel: UserViewModel) {
+        viewModel.collectSideEffect(::handleSideEffect)
+        val state = viewModel.collectAsState().value
+        when {
+            state.isLoading -> Loading()
+            state.isUserAuthenticated == false -> YouAreNotLoggedIn(viewModel::onSignInClicked)
+            state.user != null ->
+                UserScreenContent(
+                    viewModel = viewModel,
+                    userProfile = state.user,
+                )
+        }
+    }
+
+    private fun handleSideEffect(sideEffect: UserSideEffect) {
+        when (sideEffect) {
+            is UserSideEffect.Toast -> toast(sideEffect.text)
         }
     }
 
@@ -153,38 +115,172 @@ class UserFragment : Fragment() {
 }
 
 @Composable
-fun ProfileInfo(name: String, email: String) {
+fun Loading() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(White),
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+@Preview
+fun LoadingPreview() {
+    DefaultTheme {
+        Loading()
+    }
+}
+
+@Composable
+fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(White),
+    ) {
+        Text(
+            text = "You are not logged in",
+            style = MaterialTheme.typography.h6,
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Image(
+            painter = painterResource(
+                id = R.drawable.profile_avatar_placeholder_large,
+            ),
+            contentDescription = "Not logged in image",
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Button(onClick = onSignInClicked) {
+            Text("Sign In")
+        }
+    }
+}
+
+@Composable
+@Preview
+fun YouAreNotLoggedInPreview() {
+    DefaultTheme {
+        YouAreNotLoggedIn {}
+    }
+}
+
+
+@Composable
+fun UserScreenContent(viewModel: UserViewModel, userProfile: UserProfile) {
+    Column {
+        TopAppBar(
+            title = {
+                Text(
+                    text = "Profile",
+                    style = MaterialTheme.typography.h5.regular,
+                )
+            },
+        )
+
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState()),
+        ) {
+            ProfileInfo(userProfile)
+
+            Header(text = "My Profile")
+
+            Item(
+                text = "Orders",
+                iconResId = R.drawable.ic_cart,
+                onClick = { viewModel.toast("Orders") },
+            )
+
+            Item(
+                text = "Billing",
+                iconResId = R.drawable.ic_card,
+                onClick = { viewModel.toast("Billing") },
+            )
+
+            Item(
+                text = "Logout",
+                iconResId = R.drawable.ic_logout,
+                onClick = { viewModel.toast("Logout") },
+            )
+
+            Header(text = "Application")
+
+            // TODO: track whether app is in dark theme or not
+            val isSystemInDarkTheme = isSystemInDarkTheme()
+            SwitchItem(
+                text = "Dark Theme",
+                iconResId = R.drawable.ic_crescent,
+                checked = isSystemInDarkTheme,
+            ) { checked ->
+                viewModel.toast("Dark Theme: $checked")
+            }
+
+            Item(
+                text = "Clear data",
+                iconResId = R.drawable.ic_broom,
+                onClick = { viewModel.toast("Clear data") },
+            )
+
+            Item(
+                text = "Report bug",
+                iconResId = R.drawable.ic_bug,
+                onClick = {
+                    viewModel.toast("Report bug")
+                },
+            )
+
+            Item(
+                text = "Source code",
+                iconResId = R.drawable.ic_code,
+                onClick = { viewModel.toast("Source code") },
+            )
+        }
+    }
+}
+
+@Composable
+fun ProfileInfo(userProfile: UserProfile) {
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .background(White)
     ) {
-        Spacer(modifier = Modifier.height(DefaultPadding))
+        Spacer(modifier = Modifier.height(32.dp))
 
-        Image(
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(userProfile.iconUrl)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(id = R.drawable.profile_avatar_placeholder_large),
             contentScale = ContentScale.Crop,
-            painter = painterResource(R.drawable.profile_avatar_placeholder_large),
             contentDescription = "Profile picture",
             modifier = Modifier
                 .size(100.dp)
-                .clip(CircleShape)
+                .clip(CircleShape),
         )
 
         Spacer(modifier = Modifier.height(DefaultPadding))
 
         Text(
-            text = name,
-            style = MaterialTheme.typography.h5,
+            text = userProfile.name ?: "nullable? wtf???",
+            style = MaterialTheme.typography.h6,
         )
 
         Text(
             fontFamily = Montserrat,
-            text = email,
-            style = MaterialTheme.typography.subtitle1.copy(
-                color = SubtitleColor,
-            ),
+            text = userProfile.email,
+            style = MaterialTheme.typography.body2.subtitleColor,
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -195,7 +291,7 @@ fun ProfileInfo(name: String, email: String) {
 @Composable
 fun ProfileInfoPreview() {
     DefaultTheme {
-        ProfileInfo(name = "Joe Ordinary", email = "example@gmail.com")
+        ProfileInfo(dummyUser)
     }
 }
 
@@ -208,13 +304,13 @@ fun Header(text: String) {
             .height(HeaderHeight)
             .padding(horizontal = DefaultPadding, vertical = HalfPadding)
             .clip(MaterialTheme.shapes.medium)
-            .background(HeaderBackgroundColor),
+            .background(MaterialTheme.colors.surface),
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.subtitle1,
             modifier = Modifier
-                .padding(horizontal = HalfPadding)
+                .padding(horizontal = HalfPadding),
         )
     }
 }
@@ -232,7 +328,7 @@ fun Item(
     text: String,
     @DrawableRes iconResId: Int,
     onClick: () -> Unit = {},
-    appendContent: @Composable () -> Unit = {},
+    tailContent: @Composable () -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -241,28 +337,28 @@ fun Item(
             .height(ItemHeight)
             .padding(horizontal = DefaultPadding)
             .clip(MaterialTheme.shapes.medium)
-            .background(White)
-            .clickable { onClick() }
+            .background(MaterialTheme.colors.background)
+            .clickable { onClick() },
     ) {
         Spacer(modifier = Modifier.width(HalfPadding))
 
         Image(
             painter = painterResource(id = iconResId),
             contentDescription = text,
-            Modifier.size(IconSize)
+            Modifier.size(IconSize),
         )
 
         Spacer(modifier = Modifier.width(IntermediatePadding))
 
         Text(
             text = text,
-            style = MaterialTheme.typography.subtitle1,
-            modifier = Modifier.padding(vertical = SmallPadding)
+            style = MaterialTheme.typography.body1.regular,
+            modifier = Modifier.padding(vertical = SmallPadding),
         )
 
         Spacer(modifier = Modifier.fillMaxWidth(0.8f))
 
-        appendContent()
+        tailContent()
     }
 }
 
@@ -284,7 +380,7 @@ fun SwitchItem(
     Item(
         text = text,
         iconResId = iconResId,
-        onClick = {}
+        onClick = {},
     ) {
         var isChecked by remember { mutableStateOf(checked) }
         Switch(
@@ -292,7 +388,7 @@ fun SwitchItem(
             onCheckedChange = {
                 isChecked = !isChecked
                 onChecked(isChecked)
-            }
+            },
         )
 
         Spacer(modifier = Modifier.width(DefaultPadding))
