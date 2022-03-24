@@ -75,7 +75,6 @@ internal class UserRepositoryImpl(
     override suspend fun signInWithGoogle(idToken:String):AuthResult {
         val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(firebaseCredential).await()
-
         var currentUser = firebaseAuth.currentUser
         return currentUser?.toAuthResult()
             ?: try {

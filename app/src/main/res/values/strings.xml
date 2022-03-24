@@ -53,4 +53,6 @@
     <string name="products_amount_placeholder">Selected: %1$d</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="wrong_email_format">Wrong email format</string>
+    <string name="google_signin_error">Something went wrong with logging into your Google account. Please sign in with your email and password or try again later</string>
+    <string name="ok">OK</string>
 </resources>
