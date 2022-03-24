@@ -197,20 +197,23 @@ fun UserScreenContent(viewModel: UserViewModel, userProfile: UserProfile) {
             Item(
                 text = "Orders",
                 iconResId = R.drawable.ic_cart,
-                onClick = { viewModel.toast("Orders") },
-            )
+            ) {
+                viewModel.toast("Orders")
+            }
 
             Item(
                 text = "Billing",
                 iconResId = R.drawable.ic_card,
-                onClick = { viewModel.toast("Billing") },
-            )
+            ) {
+                viewModel.toast("Billing")
+            }
 
             Item(
                 text = "Logout",
                 iconResId = R.drawable.ic_logout,
-                onClick = { viewModel.toast("Logout") },
-            )
+            ) {
+                viewModel.toast("Logout")
+            }
 
             Header(text = "Application")
 
@@ -227,22 +230,23 @@ fun UserScreenContent(viewModel: UserViewModel, userProfile: UserProfile) {
             Item(
                 text = "Clear data",
                 iconResId = R.drawable.ic_broom,
-                onClick = { viewModel.toast("Clear data") },
-            )
+            ) {
+                viewModel.toast("Clear data")
+            }
 
             Item(
                 text = "Report bug",
                 iconResId = R.drawable.ic_bug,
-                onClick = {
-                    viewModel.toast("Report bug")
-                },
-            )
+            ) {
+                viewModel.toast("Report bug")
+            }
 
             Item(
                 text = "Source code",
                 iconResId = R.drawable.ic_code,
-                onClick = { viewModel.toast("Source code") },
-            )
+            ) {
+                viewModel.toast("Source code")
+            }
         }
     }
 }
@@ -253,7 +257,7 @@ fun ProfileInfo(userProfile: UserProfile) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -327,8 +331,8 @@ fun HeaderPreview() {
 fun Item(
     text: String,
     @DrawableRes iconResId: Int,
-    onClick: () -> Unit = {},
     tailContent: @Composable () -> Unit = {},
+    onClick: () -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -380,19 +384,19 @@ fun SwitchItem(
     Item(
         text = text,
         iconResId = iconResId,
-        onClick = {},
-    ) {
-        var isChecked by remember { mutableStateOf(checked) }
-        Switch(
-            checked = isChecked,
-            onCheckedChange = {
-                isChecked = !isChecked
-                onChecked(isChecked)
-            },
-        )
+        tailContent = {
+            var isChecked by remember { mutableStateOf(checked) }
+            Switch(
+                checked = isChecked,
+                onCheckedChange = {
+                    isChecked = !isChecked
+                    onChecked(isChecked)
+                },
+            )
 
-        Spacer(modifier = Modifier.width(DefaultPadding))
-    }
+            Spacer(modifier = Modifier.width(DefaultPadding))
+        },
+    ) {}
 }
 
 @Composable
