@@ -26,7 +26,6 @@ import com.narcissus.marketplace.ui.sign_in.until.getSignInClient
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
@@ -82,7 +81,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
         if (isNavigatedFromUserProfile) {
-               findNavController().popBackStack()
+            findNavController().popBackStack()
         } else {
             // navigateToCheckOut
         }
@@ -132,14 +131,12 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             }
         }
 
-
     private fun processGoogleIdTokenResult(idToken: String?) {
         if (idToken != null) {
             viewModel.signInWithGoogleAccount(idToken)
         } else {
             showSignInWithGoogleAccountErrorDialog()
         }
-
     }
 
     private fun showSignInWithGoogleAccountErrorDialog() {
@@ -148,7 +145,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             .setPositiveButton(getString(R.string.ok), null).create()
             .show()
     }
-
 
     private fun signInWithGoogleAccountByOneTapUI() {
         oneTapClient.beginSignIn(getOnTapUiSignInRequest(requireContext()))
@@ -166,10 +162,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             }
     }
 
-
     private fun signInWithGoogleAccount() {
         googleAuthLauncher.launch(getSignInClient(requireContext()).signInIntent)
     }
-
-
 }

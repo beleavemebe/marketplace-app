@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.ui.sign_in
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.domain.usecase.SignInWithEmail

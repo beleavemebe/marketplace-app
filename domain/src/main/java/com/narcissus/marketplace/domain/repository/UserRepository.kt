@@ -18,7 +18,7 @@ interface UserRepository {
     suspend fun signInWithEmail(email: String, password: String): AuthResult
     suspend fun signUpWithEmail(fullName: String, email: String, password: String): AuthResult
     suspend fun signOut(): AuthResult
-    suspend fun signInWithGoogle(idToken:String): AuthResult
+    suspend fun signInWithGoogle(idToken: String): AuthResult
 
     // fun isUserLoggedIn(): Flow<Boolean>
     fun getRecentlyVisitedProducts(): Flow<List<ProductPreview>>

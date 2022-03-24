@@ -1,7 +1,6 @@
 package com.narcissus.marketplace.data
 
 import android.util.Patterns
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -90,13 +89,13 @@ internal class UserRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun signInWithGoogle(idToken:String):AuthResult {
+    override suspend fun signInWithGoogle(idToken: String): AuthResult {
         val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(firebaseCredential).await()
         var currentUser = firebaseAuth.currentUser
         return currentUser?.toAuthResult()
             ?: try {
-                currentUser =  firebaseAuth.signInWithCredential(firebaseCredential).await().user
+                currentUser = firebaseAuth.signInWithCredential(firebaseCredential).await().user
                 currentUser?.toAuthResult() ?: AuthResult.SignInWrongPasswordOrEmail
             } catch (e: FirebaseAuthInvalidCredentialsException) {
                 AuthResult.SignInWrongPasswordOrEmail
@@ -105,7 +104,6 @@ internal class UserRepositoryImpl(
             } catch (e: FirebaseAuthException) {
                 AuthResult.Error
             }
-
     }
 
     private fun ProductPreview.toProductEntity(): ProductEntity {
