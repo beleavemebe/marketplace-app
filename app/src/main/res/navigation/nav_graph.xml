@@ -18,8 +18,8 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_fragment_splash_to_fragment_home"
-            app:destination="@id/fragment_home" />
+            android:id="@+id/action_fragment_splash_to_fragment_sign_in"
+            app:destination="@id/fragment_sign_in" />
     </fragment>
 
     <fragment
@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_fragment_sign_in_to_user"
             app:destination="@id/fragment_user" />
+        <action
+            android:id="@+id/action_fragment_splash_to_fragment_home"
+            app:destination="@id/fragment_home" />
     </fragment>
 
 

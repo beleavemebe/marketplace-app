@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.navigation.destination.HomeDestination
 import com.narcissus.marketplace.core.navigation.navigator
@@ -30,8 +31,9 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         splashViewModel.isLaunchedFlow.onEach { isLaunched ->
             if (!isLaunched) return@onEach
 
-            val homeDestination: HomeDestination by inject()
-            navigator.navigate(homeDestination)
+//            val homeDestination: HomeDestination by inject()
+//            navigator.navigate(homeDestination)
+            findNavController().navigate(SplashFragmentDirections.actionFragmentSplashToFragmentSignIn(true))
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
