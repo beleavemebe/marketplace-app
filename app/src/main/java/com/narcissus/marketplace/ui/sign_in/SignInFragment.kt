@@ -68,7 +68,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             when (authResult) {
                 is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
                 is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
-                is AuthResult.Error -> showErrorToast()
+                is AuthResult.Error -> showEmailAuthErrorToast()
                 is AuthResult.WrongEmail -> setEmailInputLayoutError()
             }
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
