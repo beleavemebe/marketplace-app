@@ -120,7 +120,7 @@ fun Loading() {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(White),
+            .background(MaterialTheme.colors.background),
     ) {
         CircularProgressIndicator()
     }
@@ -141,7 +141,7 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(White),
+            .background(MaterialTheme.colors.background),
     ) {
         Text(
             text = "You are not logged in",
