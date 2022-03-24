@@ -17,9 +17,6 @@
         android:name="com.narcissus.marketplace.ui.splash.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
-        <action
-            android:id="@+id/action_fragment_splash_to_fragment_sign_in"
-            app:destination="@id/fragment_sign_in" />
     </fragment>
 
     <fragment

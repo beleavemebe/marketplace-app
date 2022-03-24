@@ -30,10 +30,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         splashViewModel.isLaunchedFlow.onEach { isLaunched ->
             if (!isLaunched) return@onEach
-
-//            val homeDestination: HomeDestination by inject()
-//            navigator.navigate(homeDestination)
-            findNavController().navigate(SplashFragmentDirections.actionFragmentSplashToFragmentSignIn(true))
+            val homeDestination: HomeDestination by inject()
+            navigator.navigate(homeDestination)
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
