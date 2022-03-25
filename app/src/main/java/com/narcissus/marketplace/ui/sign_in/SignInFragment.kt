@@ -13,20 +13,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignInBinding
 import com.narcissus.marketplace.domain.util.AuthResult
-import com.narcissus.marketplace.ui.sign_in.until.getOnTapUiSignInRequest
-import com.narcissus.marketplace.ui.sign_in.until.getSignInClient
 import kotlinx.coroutines.flow.onEach
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
 
-class SignInFragment : Fragment(R.layout.fragment_sign_in) {
+class SignInFragment : Fragment(R.layout.fragment_sign_in),KoinComponent {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
 
@@ -80,6 +82,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
 
     private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
+        Log.d("DEBUG","AUTH OK")
         if (isNavigatedFromUserProfile) {
             findNavController().popBackStack()
         } else {
@@ -147,7 +150,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
 
     private fun signInWithGoogleAccountByOneTapUI() {
-        oneTapClient.beginSignIn(getOnTapUiSignInRequest(requireContext()))
+        oneTapClient.beginSignIn(oneTapSignInRequest)
             .addOnSuccessListener { beginResult ->
                 try {
                     val intentSenderRequest =
@@ -161,8 +164,10 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 signInWithGoogleAccount()
             }
     }
+    private val signInClient:GoogleSignInClient by inject()
+    private val oneTapSignInRequest:BeginSignInRequest by inject()
 
     private fun signInWithGoogleAccount() {
-        googleAuthLauncher.launch(getSignInClient(requireContext()).signInIntent)
+        googleAuthLauncher.launch(signInClient.signInIntent)
     }
 }
