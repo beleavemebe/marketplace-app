@@ -50,6 +50,3 @@ val Typography = Typography(
 
 val TextStyle.regular: TextStyle
     @Composable get() = copy(fontFamily = Montserrat)
-
-val TextStyle.subtitleColor: TextStyle
-    @Composable get() = copy(color = SubtitleColor)

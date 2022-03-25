@@ -69,4 +69,8 @@ class UserViewModel(
     fun toast(text: String) = intent {
         postSideEffect(UserSideEffect.Toast(text))
     }
+
+    fun switchTheme(checked: Boolean) = intent {
+        postSideEffect(UserSideEffect.SwitchTheme(checked))
+    }
 }

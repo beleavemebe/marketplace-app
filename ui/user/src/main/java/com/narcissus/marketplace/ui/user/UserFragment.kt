@@ -1,15 +1,16 @@
 package com.narcissus.marketplace.ui.user
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,7 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
@@ -46,10 +47,12 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.narcissus.marketplace.core.R
+import com.narcissus.marketplace.core.util.Constants
 import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.model.dummyUser
 import com.narcissus.marketplace.ui.user.theme.DarkTheme
@@ -64,12 +67,15 @@ import com.narcissus.marketplace.ui.user.theme.LightTheme
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
 import com.narcissus.marketplace.ui.user.theme.regular
-import com.narcissus.marketplace.ui.user.theme.subtitleColor
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 class UserFragment : Fragment() {
+
+    private val sharedPref by lazy {
+        requireActivity().getPreferences(Context.MODE_PRIVATE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,13 +102,31 @@ class UserFragment : Fragment() {
                 UserScreenContent(
                     viewModel = viewModel,
                     userProfile = state.user,
+                    isAppInDarkTheme = isAppInDarkTheme()
                 )
         }
+    }
+
+    private fun isAppInDarkTheme(): Boolean {
+        return sharedPref.getBoolean(Constants.THEME_KEY, false)
     }
 
     private fun handleSideEffect(sideEffect: UserSideEffect) {
         when (sideEffect) {
             is UserSideEffect.Toast -> toast(sideEffect.text)
+            is UserSideEffect.SwitchTheme -> switchTheme(sideEffect.checked)
+        }
+    }
+
+    private fun switchTheme(isChecked: Boolean) {
+        if (isChecked) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+        sharedPref.edit {
+            putBoolean(Constants.THEME_KEY, isChecked)
         }
     }
 
@@ -156,6 +180,7 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
         Text(
             text = "You are not logged in",
             style = MaterialTheme.typography.h6,
+            color = MaterialTheme.colors.onPrimary
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -193,7 +218,11 @@ fun YouAreNotLoggedInPreviewDark() {
 
 
 @Composable
-fun UserScreenContent(viewModel: UserViewModel, userProfile: UserProfile) {
+fun UserScreenContent(
+    viewModel: UserViewModel,
+    userProfile: UserProfile,
+    isAppInDarkTheme: Boolean,
+) {
     Column {
         TopAppBar(
             title = {
@@ -202,6 +231,7 @@ fun UserScreenContent(viewModel: UserViewModel, userProfile: UserProfile) {
                     style = MaterialTheme.typography.h5.regular,
                 )
             },
+            backgroundColor = MaterialTheme.colors.surface
         )
 
         Column(
@@ -235,14 +265,12 @@ fun UserScreenContent(viewModel: UserViewModel, userProfile: UserProfile) {
 
             Header(text = "Application")
 
-            // TODO: track whether app is in dark theme or not
-            val isSystemInDarkTheme = isSystemInDarkTheme()
             SwitchItem(
                 text = "Dark Theme",
                 iconResId = R.drawable.ic_crescent,
-                checked = isSystemInDarkTheme,
+                checked = isAppInDarkTheme,
             ) { checked ->
-                viewModel.toast("Dark Theme: $checked")
+                viewModel.switchTheme(checked)
             }
 
             Item(
@@ -276,7 +304,6 @@ fun ProfileInfo(userProfile: UserProfile) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colors.background),
     ) {
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -298,12 +325,14 @@ fun ProfileInfo(userProfile: UserProfile) {
         Text(
             text = userProfile.name ?: "nullable? wtf???",
             style = MaterialTheme.typography.h6,
+            color = MaterialTheme.colors.onPrimary,
         )
 
         Text(
             fontFamily = Montserrat,
             text = userProfile.email,
-            style = MaterialTheme.typography.body2.subtitleColor,
+            style = MaterialTheme.typography.body2,
+            color = MaterialTheme.colors.secondaryVariant
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -335,13 +364,13 @@ fun Header(text: String) {
             .height(HeaderHeight)
             .padding(horizontal = DefaultPadding, vertical = HalfPadding)
             .clip(MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colors.surface),
+            .background(MaterialTheme.colors.onSecondary)
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.subtitle1,
-            modifier = Modifier
-                .padding(horizontal = HalfPadding),
+            color = MaterialTheme.colors.onPrimary,
+            modifier = Modifier.padding(horizontal = HalfPadding)
         )
     }
 }
@@ -368,7 +397,6 @@ fun Item(
             .height(ItemHeight)
             .padding(horizontal = DefaultPadding)
             .clip(MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colors.background)
             .clickable { onClick() },
     ) {
         Spacer(modifier = Modifier.width(HalfPadding))
@@ -376,7 +404,8 @@ fun Item(
         Image(
             painter = painterResource(id = iconResId),
             contentDescription = text,
-            Modifier.size(IconSize),
+            colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
+            modifier = Modifier.size(IconSize)
         )
 
         Spacer(modifier = Modifier.width(IntermediatePadding))
@@ -385,6 +414,7 @@ fun Item(
             text = text,
             style = MaterialTheme.typography.body1.regular,
             modifier = Modifier.padding(vertical = SmallPadding),
+            color = MaterialTheme.colors.onPrimary
         )
 
         Spacer(modifier = Modifier.fillMaxWidth(0.8f))
