@@ -59,5 +59,7 @@
     <string name="wrong_email">wrong email</string>
     <string name="short_password">short password, at least 6 symbols</string>
     <string name="wrong_email_format">Wrong email format</string>
+    <string name="google_signin_error">Something went wrong with logging into your Google account. Please sign in with your email and password or try again later</string>
+    <string name="ok">OK</string>
     <string name="name_empty">input full name</string>
 </resources>
