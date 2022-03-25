@@ -39,9 +39,9 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun switchTheme(){
+    private fun switchTheme() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        if(sharedPref?.getBoolean(Constants.THEME_KEY, false) == true){
+        if (sharedPref?.getBoolean(Constants.THEME_KEY, false) == true) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
