@@ -28,11 +28,14 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
-class SignInFragment : Fragment(R.layout.fragment_sign_in),KoinComponent {
+class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: SignInViewModel by viewModel()
+
+    private val signInClient:GoogleSignInClient by inject()
+    private val oneTapSignInRequest:BeginSignInRequest by inject()
     private val oneTapClient: SignInClient by lazy { Identity.getSignInClient(activity as Activity) }
 
     private val args by navArgs<SignInFragmentArgs>()
@@ -82,7 +85,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in),KoinComponent {
     }
 
     private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
-        Log.d("DEBUG","AUTH OK")
         if (isNavigatedFromUserProfile) {
             findNavController().popBackStack()
         } else {
@@ -164,8 +166,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in),KoinComponent {
                 signInWithGoogleAccount()
             }
     }
-    private val signInClient:GoogleSignInClient by inject()
-    private val oneTapSignInRequest:BeginSignInRequest by inject()
 
     private fun signInWithGoogleAccount() {
         googleAuthLauncher.launch(signInClient.signInIntent)
