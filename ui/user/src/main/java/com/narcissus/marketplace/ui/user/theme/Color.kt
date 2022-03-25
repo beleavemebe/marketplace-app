@@ -13,4 +13,3 @@ val DarkPrimary = Color(0xFF292331)
 val GreyLight = Color(0xFFF6F6F6)
 val Grey = Color(0xFF707070)
 val Red = Color(0xFFF30808)
-

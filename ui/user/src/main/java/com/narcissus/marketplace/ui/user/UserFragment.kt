@@ -55,7 +55,6 @@ import com.narcissus.marketplace.ui.user.theme.ItemHeight
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
 
-
 class UserFragment : Fragment() {
 
     override fun onCreateView(
