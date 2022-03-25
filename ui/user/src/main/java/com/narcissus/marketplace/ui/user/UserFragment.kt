@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.ui.user
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.narcissus.marketplace.core.R
+import com.narcissus.marketplace.core.util.Constants
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
 import com.narcissus.marketplace.ui.user.theme.HalfPadding
@@ -61,14 +63,12 @@ class UserFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View = ComposeView(requireContext()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             DefaultTheme {
-                Column(
-                    modifier = Modifier,
-                ) {
+                Column {
                     TopAppBar(
                         title = {
                             Text(
@@ -108,19 +108,13 @@ class UserFragment : Fragment() {
                         Header(text = "Application")
 
                         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-                        val isSystemInDarkTheme = sharedPref?.getBoolean(THEME_KEY, false)
+                        val isSystemInDarkTheme = sharedPref?.getBoolean(Constants.THEME_KEY, false)
                         SwitchItem(
                             text = "Dark Theme",
                             iconResId = R.drawable.ic_crescent,
                             checked = isSystemInDarkTheme!!,
                         ) { checked ->
-                            if (checked) {
-                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                                sharedPref.edit()?.putBoolean(THEME_KEY, true)?.apply()
-                            } else {
-                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                                sharedPref.edit()?.putBoolean(THEME_KEY, false)?.apply()
-                            }
+                            switchTheme(checked, sharedPref)
                         }
 
                         Item(
@@ -148,8 +142,14 @@ class UserFragment : Fragment() {
         }
     }
 
-    private companion object {
-        const val THEME_KEY = "THEME_KEY"
+    private fun switchTheme(isChecked: Boolean, sharedPref: SharedPreferences) {
+        if (isChecked) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            sharedPref.edit()?.putBoolean(Constants.THEME_KEY, true)?.apply()
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            sharedPref.edit()?.putBoolean(Constants.THEME_KEY, false)?.apply()
+        }
     }
 
     private var currentToast: Toast? = null
@@ -223,8 +223,8 @@ fun Header(text: String) {
         Text(
             text = text,
             style = MaterialTheme.typography.h6,
-            modifier = Modifier.padding(horizontal = HalfPadding),
-            color = MaterialTheme.colors.onPrimary
+            color = MaterialTheme.colors.onPrimary,
+            modifier = Modifier.padding(horizontal = HalfPadding)
         )
     }
 }
@@ -258,8 +258,8 @@ fun Item(
         Image(
             painter = painterResource(id = iconResId),
             contentDescription = text,
-            Modifier.size(IconSize),
-            colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary)
+            colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
+            modifier = Modifier.size(IconSize)
         )
 
         Spacer(modifier = Modifier.width(IntermediatePadding))
