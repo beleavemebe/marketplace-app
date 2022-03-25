@@ -60,4 +60,5 @@
     <string name="short_password">short password, at least 6 symbols</string>
     <string name="wrong_email_format">Wrong email format</string>
     <string name="name_empty">input full name</string>
+    <string name="theme_key">THEME_KEY</string>
 </resources>

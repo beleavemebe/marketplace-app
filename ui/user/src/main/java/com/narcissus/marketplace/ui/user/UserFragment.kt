@@ -1,11 +1,13 @@
 package com.narcissus.marketplace.ui.user
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,7 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -46,14 +48,13 @@ import com.narcissus.marketplace.core.R
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
 import com.narcissus.marketplace.ui.user.theme.HalfPadding
-import com.narcissus.marketplace.ui.user.theme.HeaderBackgroundColor
 import com.narcissus.marketplace.ui.user.theme.HeaderHeight
 import com.narcissus.marketplace.ui.user.theme.IconSize
 import com.narcissus.marketplace.ui.user.theme.IntermediatePadding
 import com.narcissus.marketplace.ui.user.theme.ItemHeight
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
-import com.narcissus.marketplace.ui.user.theme.SubtitleColor
+
 
 class UserFragment : Fragment() {
 
@@ -66,8 +67,7 @@ class UserFragment : Fragment() {
         setContent {
             DefaultTheme {
                 Column(
-                    modifier = Modifier
-                        .background(White)
+                    modifier = Modifier,
                 ) {
                     TopAppBar(
                         title = {
@@ -76,7 +76,7 @@ class UserFragment : Fragment() {
                                 style = MaterialTheme.typography.h4
                             )
                         },
-                        backgroundColor = White,
+                        backgroundColor = MaterialTheme.colors.surface
                     )
 
                     Column(
@@ -107,14 +107,20 @@ class UserFragment : Fragment() {
 
                         Header(text = "Application")
 
-                        // TODO: track whether app is in dark theme or not
-                        val isSystemInDarkTheme = false
+                        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+                        val isSystemInDarkTheme = sharedPref?.getBoolean(THEME_KEY, false)
                         SwitchItem(
                             text = "Dark Theme",
                             iconResId = R.drawable.ic_crescent,
-                            checked = isSystemInDarkTheme
+                            checked = isSystemInDarkTheme!!,
                         ) { checked ->
-                            toast("Dark Theme: $checked")
+                            if (checked) {
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                                sharedPref.edit()?.putBoolean(THEME_KEY, true)?.apply()
+                            } else {
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                                sharedPref.edit()?.putBoolean(THEME_KEY, false)?.apply()
+                            }
                         }
 
                         Item(
@@ -134,12 +140,16 @@ class UserFragment : Fragment() {
                         Item(
                             text = "Source code",
                             iconResId = R.drawable.ic_code,
-                            onClick = { toast("Source code") }
+                            onClick = { toast("Source code") },
                         )
                     }
                 }
             }
         }
+    }
+
+    private companion object {
+        const val THEME_KEY = "THEME_KEY"
     }
 
     private var currentToast: Toast? = null
@@ -159,7 +169,6 @@ fun ProfileInfo(name: String, email: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .background(White)
     ) {
         Spacer(modifier = Modifier.height(DefaultPadding))
 
@@ -177,14 +186,15 @@ fun ProfileInfo(name: String, email: String) {
         Text(
             text = name,
             style = MaterialTheme.typography.h5,
+            color = MaterialTheme.colors.onPrimary
         )
 
         Text(
             fontFamily = Montserrat,
             text = email,
             style = MaterialTheme.typography.subtitle1.copy(
-                color = SubtitleColor,
-            ),
+                color = MaterialTheme.colors.secondaryVariant
+            )
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -208,13 +218,13 @@ fun Header(text: String) {
             .height(HeaderHeight)
             .padding(horizontal = DefaultPadding, vertical = HalfPadding)
             .clip(MaterialTheme.shapes.medium)
-            .background(HeaderBackgroundColor),
+            .background(MaterialTheme.colors.onSecondary)
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.h6,
-            modifier = Modifier
-                .padding(horizontal = HalfPadding)
+            modifier = Modifier.padding(horizontal = HalfPadding),
+            color = MaterialTheme.colors.onPrimary
         )
     }
 }
@@ -241,7 +251,6 @@ fun Item(
             .height(ItemHeight)
             .padding(horizontal = DefaultPadding)
             .clip(MaterialTheme.shapes.medium)
-            .background(White)
             .clickable { onClick() }
     ) {
         Spacer(modifier = Modifier.width(HalfPadding))
@@ -249,7 +258,8 @@ fun Item(
         Image(
             painter = painterResource(id = iconResId),
             contentDescription = text,
-            Modifier.size(IconSize)
+            Modifier.size(IconSize),
+            colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary)
         )
 
         Spacer(modifier = Modifier.width(IntermediatePadding))
@@ -257,7 +267,8 @@ fun Item(
         Text(
             text = text,
             style = MaterialTheme.typography.subtitle1,
-            modifier = Modifier.padding(vertical = SmallPadding)
+            modifier = Modifier.padding(vertical = SmallPadding),
+            color = MaterialTheme.colors.onPrimary
         )
 
         Spacer(modifier = Modifier.fillMaxWidth(0.8f))

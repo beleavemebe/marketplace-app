@@ -1,7 +1,9 @@
 package com.narcissus.marketplace.ui.splash
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +22,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        switchTheme()
         splashViewModel.launch()
     }
 
@@ -33,6 +36,15 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             val homeDestination: HomeDestination by inject()
             navigator.navigate(homeDestination)
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun switchTheme(){
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        if(sharedPref?.getBoolean(getString(R.string.theme_key), false) == false){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
     }
 
     override fun onDestroyView() {
