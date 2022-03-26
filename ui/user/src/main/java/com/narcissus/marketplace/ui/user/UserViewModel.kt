@@ -2,12 +2,9 @@ package com.narcissus.marketplace.ui.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.narcissus.marketplace.domain.model.dummyUser
 import com.narcissus.marketplace.domain.usecase.GetAuthStateFlow
-import com.narcissus.marketplace.domain.usecase.GetIsUserAuthenticated
 import com.narcissus.marketplace.domain.usecase.SignOut
 import com.narcissus.marketplace.domain.util.AuthState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
