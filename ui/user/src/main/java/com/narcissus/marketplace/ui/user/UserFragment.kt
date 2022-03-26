@@ -227,7 +227,6 @@ fun YouAreNotLoggedInPreviewDark() {
     }
 }
 
-
 @Composable
 fun UserScreenContent(
     viewModel: UserViewModel,
@@ -483,7 +482,6 @@ fun SwitchItemPreviewLight() {
         SwitchItem("Orders", R.drawable.ic_cart, true) {}
     }
 }
-
 
 @Composable
 @Preview
