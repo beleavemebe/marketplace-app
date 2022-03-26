@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,6 +27,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
@@ -39,6 +42,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
@@ -59,6 +64,8 @@ import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.ui.user.theme.DarkTheme
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
+import com.narcissus.marketplace.ui.user.theme.GradientBackgroundEnd
+import com.narcissus.marketplace.ui.user.theme.GradientBackgroundStart
 import com.narcissus.marketplace.ui.user.theme.HalfPadding
 import com.narcissus.marketplace.ui.user.theme.HeaderHeight
 import com.narcissus.marketplace.ui.user.theme.IconSize
@@ -67,6 +74,7 @@ import com.narcissus.marketplace.ui.user.theme.ItemHeight
 import com.narcissus.marketplace.ui.user.theme.LightTheme
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
+import com.narcissus.marketplace.ui.user.theme.White
 import com.narcissus.marketplace.ui.user.theme.regular
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -185,13 +193,15 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
     ) {
+        Spacer(modifier = Modifier.fillMaxHeight(0.2f))
+
         Text(
             text = "You are not logged in",
             style = MaterialTheme.typography.h6,
             color = MaterialTheme.colors.onPrimary,
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
         Image(
             painter = painterResource(
@@ -200,10 +210,29 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
             contentDescription = "Not logged in image",
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.fillMaxHeight(0.3f))
 
-        Button(onClick = onSignInClicked) {
-            Text("Sign In")
+        Button(
+            onClick = onSignInClicked,
+            elevation = ButtonDefaults.elevation(0.dp),
+            colors = ButtonDefaults.buttonColors(Color.Transparent),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(horizontal = DefaultPadding)
+                .clip(MaterialTheme.shapes.medium)
+                .background(
+                    Brush.horizontalGradient(
+                        listOf(GradientBackgroundStart, GradientBackgroundEnd)
+                    ),
+                ),
+        ) {
+            Text(
+                text = "Sign In",
+                style = MaterialTheme.typography.button.copy(
+                    color = White
+                )
+            )
         }
     }
 }
