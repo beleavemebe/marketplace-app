@@ -56,7 +56,6 @@ import com.narcissus.marketplace.core.navigation.destination.SignInDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.Constants
 import com.narcissus.marketplace.domain.model.UserProfile
-import com.narcissus.marketplace.domain.model.dummyUser
 import com.narcissus.marketplace.ui.user.theme.DarkTheme
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
@@ -157,7 +156,6 @@ fun Loading() {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background),
     ) {
         CircularProgressIndicator()
     }
@@ -186,7 +184,6 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background),
     ) {
         Text(
             text = "You are not logged in",
@@ -349,6 +346,13 @@ fun ProfileInfo(userProfile: UserProfile) {
         Spacer(modifier = Modifier.height(32.dp))
     }
 }
+
+val dummyUser = UserProfile(
+    "some id",
+    "Joe Ordinary",
+    "example@gmail.com",
+    "https://301-1.ru/uploads/image/ha-ha-ya-zdes-zhivu_pOLMNliEp9.jpeg",
+)
 
 @Preview
 @Composable
