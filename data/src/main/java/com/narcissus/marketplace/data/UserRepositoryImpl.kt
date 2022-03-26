@@ -18,7 +18,11 @@ import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.util.ActionResult
 import com.narcissus.marketplace.domain.util.AuthResult
+import com.narcissus.marketplace.domain.util.AuthState
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 
@@ -45,6 +49,22 @@ internal class UserRepositoryImpl(
     }
 
     override suspend fun isUserAuthenticated(): Boolean = firebaseAuth.currentUser != null
+
+    override fun getAuthStateFlow(): Flow<AuthState> =
+        callbackFlow {
+            trySendBlocking(AuthState(user = null))
+
+            val listener = FirebaseAuth.AuthStateListener { auth ->
+                val authState = AuthState(user = auth.currentUser?.toUserProfile())
+                trySendBlocking(authState)
+            }
+
+            firebaseAuth.addAuthStateListener(listener)
+
+            awaitClose {
+                firebaseAuth.removeAuthStateListener(listener)
+            }
+        }
 
     private fun checkEmailFormatValidity(email: String) =
         Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -86,7 +106,8 @@ internal class UserRepositoryImpl(
     }
 
     override suspend fun signOut(): AuthResult {
-        TODO("Not yet implemented")
+        firebaseAuth.signOut()
+        return AuthResult.SignOutSuccess
     }
 
     override suspend fun signInWithGoogle(idToken: String): AuthResult {
@@ -123,11 +144,10 @@ internal class UserRepositoryImpl(
     }
 
     private fun FirebaseUser.toAuthResult(): AuthResult {
+        return AuthResult.SignInSuccess(this.toUserProfile())
+    }
 
-        return AuthResult.SignInSuccess(
-            UserProfile(
-                uid, displayName, email!!, photoUrl.toString(),
-            ),
-        )
+    private fun FirebaseUser.toUserProfile(): UserProfile {
+        return UserProfile(uid, displayName, email!!, photoUrl.toString())
     }
 }

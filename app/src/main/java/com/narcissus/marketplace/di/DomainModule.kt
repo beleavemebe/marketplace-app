@@ -2,6 +2,7 @@ package com.narcissus.marketplace.di
 
 import com.narcissus.marketplace.data.di.dataModule
 import com.narcissus.marketplace.domain.usecase.AddToCart
+import com.narcissus.marketplace.domain.usecase.GetAuthStateFlow
 import com.narcissus.marketplace.domain.usecase.GetCart
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCartItemsAmount
@@ -17,6 +18,7 @@ import com.narcissus.marketplace.domain.usecase.SetCartItemAmount
 import com.narcissus.marketplace.domain.usecase.SetCartItemSelected
 import com.narcissus.marketplace.domain.usecase.SignInWithEmail
 import com.narcissus.marketplace.domain.usecase.SignInWithGoogle
+import com.narcissus.marketplace.domain.usecase.SignOut
 import com.narcissus.marketplace.domain.usecase.SignUpWithEmail
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
@@ -42,4 +44,6 @@ val domainModule = module {
     factory { SignInWithEmail(get()) }
     factory { SignInWithGoogle(get()) }
     factory { SignUpWithEmail(get()) }
+    factory { SignOut(get()) }
+    factory { GetAuthStateFlow(get()) }
 }

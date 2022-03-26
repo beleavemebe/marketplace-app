@@ -20,6 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.navigation.destination.SignUpDestination
+import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignInBinding
 import com.narcissus.marketplace.domain.util.AuthResult
@@ -34,8 +36,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
 
     private val viewModel: SignInViewModel by viewModel()
 
-    private val signInClient:GoogleSignInClient by inject()
-    private val oneTapSignInRequest:BeginSignInRequest by inject()
+    private val signInClient: GoogleSignInClient by inject()
+    private val oneTapSignInRequest: BeginSignInRequest by inject()
     private val oneTapClient: SignInClient by lazy { Identity.getSignInClient(activity as Activity) }
 
     private val args by navArgs<SignInFragmentArgs>()
@@ -46,6 +48,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         _binding = FragmentSignInBinding.bind(view)
         initToolbar()
         initSignInListener()
+        initSignUpListener()
         observeAuthState()
     }
 
@@ -65,6 +68,12 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         }
         binding.btnSignInWithGoogle.setOnClickListener {
             signInWithGoogleAccountByOneTapUI()
+        }
+    }
+
+    private fun initSignUpListener() {
+        binding.tvSignUpButtonRight.setOnClickListener {
+            navigateToSignUp()
         }
     }
 
@@ -90,6 +99,11 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         } else {
             // navigateToCheckOut
         }
+    }
+
+    private fun navigateToSignUp() {
+        val destination: SignUpDestination by inject()
+        navigator.navigate(destination)
     }
 
     private fun setPasswordInputLayoutError() {

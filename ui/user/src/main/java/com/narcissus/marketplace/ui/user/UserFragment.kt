@@ -52,6 +52,8 @@ import androidx.fragment.app.Fragment
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.narcissus.marketplace.core.R
+import com.narcissus.marketplace.core.navigation.destination.SignInDestination
+import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.Constants
 import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.model.dummyUser
@@ -67,7 +69,9 @@ import com.narcissus.marketplace.ui.user.theme.LightTheme
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
 import com.narcissus.marketplace.ui.user.theme.regular
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -102,7 +106,8 @@ class UserFragment : Fragment() {
                 UserScreenContent(
                     viewModel = viewModel,
                     userProfile = state.user,
-                    isAppInDarkTheme = isAppInDarkTheme()
+                    isAppInDarkTheme = isAppInDarkTheme(),
+                    onSignOutClicked = viewModel::onSignOutClicked,
                 )
         }
     }
@@ -115,7 +120,13 @@ class UserFragment : Fragment() {
         when (sideEffect) {
             is UserSideEffect.Toast -> toast(sideEffect.text)
             is UserSideEffect.SwitchTheme -> switchTheme(sideEffect.checked)
+            is UserSideEffect.NavigateToSignIn -> navigateToSignIn()
         }
+    }
+
+    private fun navigateToSignIn() {
+        val destination: SignInDestination by inject { parametersOf(true) }
+        navigator.navigate(destination)
     }
 
     private fun switchTheme(isChecked: Boolean) {
@@ -180,7 +191,7 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
         Text(
             text = "You are not logged in",
             style = MaterialTheme.typography.h6,
-            color = MaterialTheme.colors.onPrimary
+            color = MaterialTheme.colors.onPrimary,
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -222,6 +233,7 @@ fun UserScreenContent(
     viewModel: UserViewModel,
     userProfile: UserProfile,
     isAppInDarkTheme: Boolean,
+    onSignOutClicked: () -> Unit,
 ) {
     Column {
         TopAppBar(
@@ -231,7 +243,7 @@ fun UserScreenContent(
                     style = MaterialTheme.typography.h5.regular,
                 )
             },
-            backgroundColor = MaterialTheme.colors.surface
+            backgroundColor = MaterialTheme.colors.surface,
         )
 
         Column(
@@ -257,10 +269,10 @@ fun UserScreenContent(
             }
 
             Item(
-                text = "Logout",
-                iconResId = R.drawable.ic_logout,
+                text = "Sign out",
+                iconResId = R.drawable.ic_sign_out,
             ) {
-                viewModel.toast("Logout")
+                onSignOutClicked()
             }
 
             Header(text = "Application")
@@ -303,7 +315,7 @@ fun ProfileInfo(userProfile: UserProfile) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -332,7 +344,7 @@ fun ProfileInfo(userProfile: UserProfile) {
             fontFamily = Montserrat,
             text = userProfile.email,
             style = MaterialTheme.typography.body2,
-            color = MaterialTheme.colors.secondaryVariant
+            color = MaterialTheme.colors.secondaryVariant,
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -364,13 +376,13 @@ fun Header(text: String) {
             .height(HeaderHeight)
             .padding(horizontal = DefaultPadding, vertical = HalfPadding)
             .clip(MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colors.onSecondary)
+            .background(MaterialTheme.colors.onSecondary),
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.subtitle1,
             color = MaterialTheme.colors.onPrimary,
-            modifier = Modifier.padding(horizontal = HalfPadding)
+            modifier = Modifier.padding(horizontal = HalfPadding),
         )
     }
 }
@@ -405,7 +417,7 @@ fun Item(
             painter = painterResource(id = iconResId),
             contentDescription = text,
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
-            modifier = Modifier.size(IconSize)
+            modifier = Modifier.size(IconSize),
         )
 
         Spacer(modifier = Modifier.width(IntermediatePadding))
@@ -414,7 +426,7 @@ fun Item(
             text = text,
             style = MaterialTheme.typography.body1.regular,
             modifier = Modifier.padding(vertical = SmallPadding),
-            color = MaterialTheme.colors.onPrimary
+            color = MaterialTheme.colors.onPrimary,
         )
 
         Spacer(modifier = Modifier.fillMaxWidth(0.8f))
