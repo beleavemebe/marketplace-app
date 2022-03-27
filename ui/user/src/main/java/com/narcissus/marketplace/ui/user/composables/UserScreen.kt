@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.user
+package com.narcissus.marketplace.ui.user.composables
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -39,6 +39,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.narcissus.marketplace.core.R
 import com.narcissus.marketplace.domain.model.UserProfile
+import com.narcissus.marketplace.ui.user.UserViewModel
 import com.narcissus.marketplace.ui.user.theme.DarkTheme
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme

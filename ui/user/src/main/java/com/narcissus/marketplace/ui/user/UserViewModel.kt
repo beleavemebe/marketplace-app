@@ -41,7 +41,7 @@ class UserViewModel(
 
     fun signOut() {
         viewModelScope.launch {
-            signOut()
+            signOut.invoke()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.user
+package com.narcissus.marketplace.ui.user.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

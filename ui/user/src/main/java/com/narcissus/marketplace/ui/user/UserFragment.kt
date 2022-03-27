@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.edit
@@ -17,6 +15,9 @@ import androidx.fragment.app.Fragment
 import com.narcissus.marketplace.core.navigation.destination.SignInDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.Constants
+import com.narcissus.marketplace.ui.user.composables.Loading
+import com.narcissus.marketplace.ui.user.composables.UserScreen
+import com.narcissus.marketplace.ui.user.composables.YouAreNotLoggedIn
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
