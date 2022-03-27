@@ -107,7 +107,6 @@ class UserFragment : Fragment() {
                     viewModel = viewModel,
                     userProfile = state.user,
                     isAppInDarkTheme = isAppInDarkTheme(),
-                    onSignOutClicked = viewModel::onSignOutClicked,
                 )
         }
     }

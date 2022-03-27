@@ -57,7 +57,6 @@ fun UserScreen(
     viewModel: UserViewModel,
     userProfile: UserProfile,
     isAppInDarkTheme: Boolean,
-    onSignOutClicked: () -> Unit,
 ) {
     Column {
         TopAppBar(
@@ -96,7 +95,7 @@ fun UserScreen(
                 text = "Sign out",
                 iconResId = R.drawable.ic_sign_out,
             ) {
-                onSignOutClicked()
+                viewModel.signOut()
             }
 
             Header(text = "Application")
