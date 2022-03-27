@@ -123,7 +123,7 @@ class HomeViewModel(
                 runCatching {
                     block()
                 }.getOrElse {
-                    Log.e("HomeViewModel", "Got error", it)
+                    Log.e("HomeViewModel", "Got error $it", it)
                     emptyList()
                 }
 

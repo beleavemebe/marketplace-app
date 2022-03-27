@@ -7,3 +7,4 @@ import com.narcissus.marketplace.core.R
 val Montserrat = Font(R.font.montserrat_regular_ttf).toFontFamily()
 val MontserratMedium = Font(R.font.montserrat_medium_ttf).toFontFamily()
 val MontserratSemiBold = Font(R.font.montserrat_semibold_ttf).toFontFamily()
+val MontserratBold = Font(R.font.montserrat_bold_ttf).toFontFamily()
