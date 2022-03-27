@@ -57,12 +57,11 @@
         style="@style/Btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/button_gradient"
         android:text="@string/sign_in"
-        android:textColor="?attr/colorSurface"
-        app:layout_constraintBottom_toTopOf="@id/tvSignInOr"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutEmailPasswordInputs" />
@@ -83,13 +82,12 @@
         android:id="@+id/btnSignInWithGoogle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/button_8dp_corners_emty_bg_stroke_background"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintBottom_toTopOf="@id/buttonSignUpLayout"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignUpLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSignInOr">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/imageView"
