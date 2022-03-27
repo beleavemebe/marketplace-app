@@ -1,12 +1,10 @@
 package com.narcissus.marketplace.ui.user
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -72,7 +70,6 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
 
             LottieAnimation(composition, progress)
         }
-
 
         Spacer(modifier = Modifier.fillMaxHeight(0.25f))
 

@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.narcissus.marketplace.ui.user.theme.DarkTheme
 import com.narcissus.marketplace.ui.user.theme.LightTheme
 
-
 @Composable
 fun Loading() {
     Box(
