@@ -70,4 +70,6 @@
     <string name="mm_yy">MM/YY</string>
     <string name="cvc_cvv">CVC/CVV</string>
     <string name="order_summary">Order Summary</string>
+    <string name="place_order">Place Order</string>
+    <string name="total">Total</string>
 </resources>
