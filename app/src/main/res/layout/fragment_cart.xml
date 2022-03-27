@@ -28,8 +28,8 @@
         android:id="@+id/clCartEmpty"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
         android:layout_marginBottom="30dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/checkoutBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,42 +37,29 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieCartAnim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_centerInParent="true"
-            android:padding="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnBrowseCatalog"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/cart_anim" />
+            app:lottie_fileName="your_cart_is_empty.json"
+            app:lottie_loop="true" />
 
         <TextView
-            style="@style/H5_headline"
+            style="@style/H6_headline_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
-            android:text="@string/cart_is_empty"
+            android:text="@string/your_cart_is_empty"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/lottieCartAnim"
             app:layout_constraintStart_toStartOf="@+id/lottieCartAnim"
-            app:layout_constraintTop_toBottomOf="@+id/lottieCartAnim" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBrowseCatalog"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="@dimen/margin_small"
-            android:background="@drawable/button_small_gradient_background"
-            android:fontFamily="@font/montserrat_semibold"
-            android:text="@string/browse_catalog"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/lottieCartAnim"
+            app:layout_constraintVertical_bias="0.75" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -102,11 +89,11 @@
                 android:textAllCaps="false"
                 android:textAppearance="@style/ToolbarTextAppearance"
                 android:textSize="14sp"
+                app:drawableLeftCompat="@drawable/ic_close"
+                app:drawableTint="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/divider"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:drawableLeftCompat="@drawable/ic_close"
-                app:drawableTint="?attr/colorOnPrimary" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <CheckBox
                 android:id="@+id/cbSelectAll"
@@ -158,10 +145,10 @@
             android:id="@+id/tvProductsAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorOnPrimary"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="2dp"
             android:fontFamily="@font/montserrat"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/tvTotalPrice"
             app:layout_constraintStart_toStartOf="parent"
@@ -170,11 +157,11 @@
             tools:text="5 products" />
 
         <TextView
-            android:textColor="?attr/colorOnPrimary"
             android:id="@+id/tvTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvProductsAmount"
