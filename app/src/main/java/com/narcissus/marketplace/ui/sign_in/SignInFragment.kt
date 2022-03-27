@@ -136,6 +136,9 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                     showSignInWithGoogleAccountErrorDialog()
                 }
             }
+            else {
+                showSignInWithGoogleAccountErrorDialog()
+            }
         }
 
     private val googleOneTapUIAuthLauncher =
