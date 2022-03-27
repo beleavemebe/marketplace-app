@@ -56,4 +56,24 @@ class UserViewModel(
     fun switchTheme(checked: Boolean) = intent {
         postSideEffect(UserSideEffect.SwitchTheme(checked))
     }
+
+    fun goToOrders() {
+        toast("Orders")
+    }
+
+    fun goToBilling() {
+        toast("Billing")
+    }
+
+    fun clearData() {
+        toast("Clear data")
+    }
+
+    fun reportBug() {
+        toast("Report bug")
+    }
+
+    fun goToSourceCode() {
+        toast("Source code")
+    }
 }

@@ -82,14 +82,14 @@ fun UserScreen(
                 text = "Orders",
                 iconResId = R.drawable.ic_cart,
             ) {
-                viewModel.toast("Orders")
+                viewModel.goToOrders()
             }
 
             Item(
                 text = "Billing",
                 iconResId = R.drawable.ic_card,
             ) {
-                viewModel.toast("Billing")
+                viewModel.goToBilling()
             }
 
             Item(
@@ -113,21 +113,21 @@ fun UserScreen(
                 text = "Clear data",
                 iconResId = R.drawable.ic_broom,
             ) {
-                viewModel.toast("Clear data")
+                viewModel.clearData()
             }
 
             Item(
                 text = "Report bug",
                 iconResId = R.drawable.ic_bug,
             ) {
-                viewModel.toast("Report bug")
+                viewModel.reportBug()
             }
 
             Item(
                 text = "Source code",
                 iconResId = R.drawable.ic_code,
             ) {
-                viewModel.toast("Source code")
+                viewModel.goToSourceCode()
             }
         }
     }
