@@ -61,4 +61,13 @@
     <string name="google_signin_error">Something went wrong with logging into your Google account. Please sign in with your email and password or try again later</string>
     <string name="ok">OK</string>
     <string name="name_empty">input full name</string>
+    <string name="visa_card">visa_card</string>
+    <string name="mir_card">mir_card</string>
+    <string name="mastercard">mastercard</string>
+    <string name="maestro_card">maestro_card</string>
+    <string name="card_holder">CARD HOLDER</string>
+    <string name="card_number">CARD NUMBER</string>
+    <string name="mm_yy">MM/YY</string>
+    <string name="cvc_cvv">CVC/CVV</string>
+    <string name="order_summary">Order Summary</string>
 </resources>
