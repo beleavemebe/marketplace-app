@@ -148,7 +148,8 @@ fun ProfileInfo(userProfile: UserProfile) {
                 .data(userProfile.iconUrl)
                 .crossfade(true)
                 .build(),
-            placeholder = painterResource(id = R.drawable.profile_avatar_placeholder_large),
+            fallback = painterResource(R.drawable.profile_avatar_placeholder_large),
+            error = painterResource(R.drawable.profile_avatar_placeholder_large),
             contentScale = ContentScale.Crop,
             contentDescription = "Profile picture",
             modifier = Modifier
