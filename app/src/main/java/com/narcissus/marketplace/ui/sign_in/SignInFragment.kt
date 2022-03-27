@@ -38,7 +38,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
 
     private val signInClient: GoogleSignInClient by inject()
     private val oneTapSignInRequest: BeginSignInRequest by inject()
-    private val oneTapClient: SignInClient by lazy { Identity.getSignInClient(activity as Activity) }
+    private val oneTapClient: SignInClient by lazy { Identity.getSignInClient(requireActivity()) }
 
     private val args by navArgs<SignInFragmentArgs>()
     private val isNavigatedFromUserProfile by lazy { args.isNavigatedFromUserProfile }
