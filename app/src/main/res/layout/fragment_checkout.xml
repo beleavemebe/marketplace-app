@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.checkout.CheckoutFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/tbCheckout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="1dp"
+        app:title="@string/checkout"
+        app:titleTextAppearance="@style/S1_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbCheckout">
+
+        <ImageView
+            android:id="@+id/ivVisa"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:background="@drawable/solid_stroke"
+            android:contentDescription="@string/visa_card"
+            android:src="@drawable/ic_visa"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivMastercard"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/solid_stroke"
+            android:contentDescription="@string/mastercard"
+            android:src="@drawable/ic_mastercard"
+            app:layout_constraintStart_toEndOf="@+id/ivVisa"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivMir"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/solid_stroke"
+            android:contentDescription="@string/mir_card"
+            android:src="@drawable/ic_mir"
+            app:layout_constraintStart_toEndOf="@+id/ivMastercard"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id ="@+id/ivMaestro"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/solid_stroke"
+            android:src="@drawable/ic_maestro"
+            app:layout_constraintStart_toEndOf="@+id/ivMir"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/maestro_card" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/etCardHolder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_user"
+        android:drawableTint="?attr/colorSecondary"
+        android:layout_marginTop="40dp"
+        android:hint="@string/card_holder"
+        android:textAppearance="@style/S1_subtitle"
+        android:inputType="textVisiblePassword|textNoSuggestions"
+        android:paddingHorizontal="2dp"
+        android:paddingVertical="8dp"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="@+id/clCards"
+        app:layout_constraintStart_toStartOf="@+id/clCards"
+        app:layout_constraintTop_toBottomOf="@+id/clCards"
+        android:importantForAutofill="no" />
+    <EditText
+        android:id="@+id/etCardNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_card"
+        android:drawableTint="?attr/colorSecondary"
+        android:layout_marginTop="20dp"
+        android:hint="@string/card_number"
+        android:inputType="phone"
+        android:singleLine="true"
+        android:paddingHorizontal="2dp"
+        android:paddingVertical="8dp"
+        android:textAppearance="@style/S1_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/etCardHolder"
+        app:layout_constraintStart_toStartOf="@+id/etCardHolder"
+        app:layout_constraintTop_toBottomOf="@+id/etCardHolder"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/etMonthYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/mm_yy"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:paddingVertical="8dp"
+        android:maxLength="4"
+        android:textAppearance="@style/S1_subtitle"
+        app:layout_constraintStart_toStartOf="@+id/etCardNumber"
+        app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
+
+    <EditText
+        android:id="@+id/etCvv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/cvc_cvv"
+        android:importantForAutofill="no"
+        android:paddingVertical="8dp"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textAppearance="@style/S1_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/etCardNumber"
+        app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
+
+    <TextView
+        android:id="@+id/tvSummary"
+        style="@style/H6_headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/order_summary"
+        android:textColor="?attr/colorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCvv" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvCheckoutContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSummary">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCheckoutDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
