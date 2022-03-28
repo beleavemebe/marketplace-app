@@ -4,6 +4,6 @@ import com.narcissus.marketplace.domain.model.Order
 import com.narcissus.marketplace.domain.util.ActionResult
 
 interface OrderRepository {
-    suspend fun getOrders(): ActionResult<List<Order>>
-    suspend fun makeAnOrder(order: Order): ActionResult<Boolean>
+    suspend fun getOrders(): List<Order>
+    suspend fun makeAnOrder(order: Order): Boolean
 }

@@ -12,9 +12,9 @@ import com.narcissus.marketplace.domain.util.ActionResult
 
 internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService) :
     ProductsDetailsRepository {
-    override suspend fun getProductDetailsById(productId: String): ActionResult<ProductDetails> {
+    override suspend fun getProductDetailsById(productId: String): ProductDetails {
         val productDetails = apiService.getProductDetails(productId)
-        return ActionResult.SuccessResult(mapDetails(productDetails))
+        return mapDetails(productDetails)
     }
 
     private fun mapDetails(detailsResponse: ProductDetailsResponse) = with(detailsResponse.data) {

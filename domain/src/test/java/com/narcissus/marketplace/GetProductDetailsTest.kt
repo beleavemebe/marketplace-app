@@ -15,31 +15,28 @@ import org.junit.Test
 
 class GetProductDetailsTest {
     private val productId = "1"
-    private val productDetailsResultExpected = ActionResult.SuccessResult(
-        mockk<ProductDetails>(relaxed = true) {
-        },
-    )
+    private val productDetailsResultExpected = mockk<ProductDetails>(relaxed = true)
+
     private val productDetailsRepository = mockk<ProductsDetailsRepository> {
         coEvery { getProductDetailsById(productId) } returns productDetailsResultExpected
     }
     private val userRepository = mockk<UserRepository> {
-        coEvery { writeToVisitedProducts(productDetailsResultExpected.data.toProductPreview()) } returns Unit
+        coEvery { writeToVisitedProducts(productDetailsResultExpected.toProductPreview()) } returns Unit
     }
     private val getProductDetails = GetProductDetails(productDetailsRepository, userRepository)
 
     @Test
-    fun `get product details test`() {
+    fun `should return actual details and save it to visited products`() {
         runBlocking {
             val result = getProductDetails(productId)
-            Assert.assertTrue(result is ActionResult.SuccessResult)
             Assert.assertEquals(
-                productDetailsResultExpected.data,
-                (result as ActionResult.SuccessResult).data,
+                productDetailsResultExpected,
+                result
             )
         }
         coVerifyOrder {
             productDetailsRepository.getProductDetailsById(productId)
-            userRepository.writeToVisitedProducts(productDetailsResultExpected.data.toProductPreview())
+            userRepository.writeToVisitedProducts(productDetailsResultExpected.toProductPreview())
         }
 
     }

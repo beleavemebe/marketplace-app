@@ -6,6 +6,7 @@ import com.narcissus.marketplace.domain.util.AuthResult
 import io.mockk.Called
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.coVerifySequence
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -25,7 +26,7 @@ class SignUpWithEmailTest {
     }
     val signUpWithEmail = SignUpWithEmail(userRepository)
     @Test
-    fun `should return sign up error`() {
+    fun `should return sign up error if data incorrect`() {
         runBlocking {
             Assert.assertEquals(
                 AuthResult.SignUpEmptyInput,
@@ -52,18 +53,18 @@ class SignUpWithEmailTest {
                 signUpWithEmail(correctFullName, correctEmail, incorrectPass),
             )
         }
-        coVerify(exactly=1) { userRepository.signUpWithEmail(any(), any(), any()) wasNot Called }
+        coVerifySequence { userRepository.signUpWithEmail(any(), any(), any()) wasNot Called }
     }
 
     @Test
-    fun `should return sign up success`() {
+    fun `should call sign up with email and return result if data correct`() {
         runBlocking {
             Assert.assertEquals(
                 signUpSuccess,
                 signUpWithEmail(correctFullName, correctEmail, correctPass),
             )
         }
-        coVerify(exactly=1) { userRepository.signUpWithEmail(correctFullName, correctEmail, correctPass) }
+        coVerifySequence{ userRepository.signUpWithEmail(correctFullName, correctEmail, correctPass) }
     }
 
 

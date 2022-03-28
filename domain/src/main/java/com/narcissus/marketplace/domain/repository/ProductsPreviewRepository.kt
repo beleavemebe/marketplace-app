@@ -10,10 +10,10 @@ interface ProductsPreviewRepository {
         filters: Set<SearchParams.FilterType>
     ): ActionResult<List<ProductPreview>>
 
-    suspend fun getProducts(): ActionResult<List<ProductPreview>>
-    suspend fun getProductsRandom(): ActionResult<List<ProductPreview>>
-    suspend fun getProductsTopRated(): ActionResult<List<ProductPreview>>
-    suspend fun getProductsTopSales(): ActionResult<List<ProductPreview>>
+    suspend fun getProducts(): List<ProductPreview>
+    suspend fun getProductsRandom(): List<ProductPreview>
+    suspend fun getProductsTopRated(): List<ProductPreview>
+    suspend fun getProductsTopSales(): List<ProductPreview>
     suspend fun getProductsByDepartment(departmentId: String): ActionResult<List<ProductPreview>>
     suspend fun getProductsByDepartmentIdTopRated(departmentId: String): ActionResult<List<ProductPreview>>
     suspend fun getProductsByDepartmentIdTopSales(departmentId: String): ActionResult<List<ProductPreview>>
