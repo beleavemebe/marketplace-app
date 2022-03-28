@@ -12,22 +12,22 @@ import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.narcissus.marketplace.data.mapper.toProductPreview
 import com.narcissus.marketplace.data.persistence.database.ProductDao
 import com.narcissus.marketplace.data.persistence.model.ProductEntity
+import com.narcissus.marketplace.domain.auth.AuthState
+import com.narcissus.marketplace.domain.auth.SignInResult
+import com.narcissus.marketplace.domain.auth.SignOutResult
+import com.narcissus.marketplace.domain.auth.SignUpResult
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.User
 import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.util.ActionResult
-import com.narcissus.marketplace.domain.auth.AuthState
-import com.narcissus.marketplace.domain.auth.SignInResult
-import com.narcissus.marketplace.domain.auth.SignOutResult
-import com.narcissus.marketplace.domain.auth.SignUpResult
-import java.lang.Exception
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 
 internal class UserRepositoryImpl(
     private val productsDao: ProductDao,
@@ -72,7 +72,6 @@ internal class UserRepositoryImpl(
                 firebaseAuth.removeAuthStateListener(listener)
             }
         }
-
 
     private fun checkEmailFormatValidity(email: String) =
         Patterns.EMAIL_ADDRESS.matcher(email).matches()
