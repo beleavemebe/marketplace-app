@@ -135,8 +135,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                 } catch (e: ApiException) {
                     showSignInWithGoogleAccountErrorDialog()
                 }
-            }
-            else {
+            } else {
                 showSignInWithGoogleAccountErrorDialog()
             }
         }

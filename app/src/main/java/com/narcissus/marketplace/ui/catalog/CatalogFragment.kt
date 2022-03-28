@@ -4,24 +4,26 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.MaterialFadeThrough
-import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentCatalogBinding
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CatalogFragment : Fragment(R.layout.fragment_catalog) {
     private var _binding: FragmentCatalogBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CatalogViewModel by viewModels()
+    private val viewModel: CatalogViewModel by viewModel()
 
     private val catalogAdapter by lazy {
-        ListDelegationAdapter(
-            DepartmentListItem.delegate(viewLifecycleOwner.lifecycleScope),
+        AsyncListDifferDelegationAdapter(
+            DepartmentListItem.DIFF_CALLBACK,
+            DepartmentListItem.DepartmentItem.delegate(),
+            DepartmentListItem.LoadingDepartmentItem.delegate(),
         )
     }
 
