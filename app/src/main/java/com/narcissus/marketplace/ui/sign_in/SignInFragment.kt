@@ -24,7 +24,7 @@ import com.narcissus.marketplace.core.navigation.destination.SignUpDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignInBinding
-import com.narcissus.marketplace.domain.util.AuthResult
+import com.narcissus.marketplace.domain.auth.SignInResult
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -78,12 +78,13 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     }
 
     private fun observeAuthState() {
-        viewModel.authResultFlow.onEach { authResult ->
-            when (authResult) {
-                is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
-                is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
-                is AuthResult.Error -> showEmailAuthErrorToast()
-                is AuthResult.WrongEmail -> setEmailInputLayoutError()
+        viewModel.signInResultFlow.onEach { result ->
+            when (result) {
+                is SignInResult.Error -> showEmailAuthErrorToast()
+                is SignInResult.InvalidEmail -> setEmailInputLayoutError()
+                is SignInResult.Success -> navigateToCallScreen(isNavigatedFromUserProfile)
+                is SignInResult.UserNotFound -> showUserNotFoundToast()
+                is SignInResult.WrongCredentials -> setPasswordInputLayoutError()
             }
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
@@ -104,6 +105,10 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     private fun navigateToSignUp() {
         val destination: SignUpDestination by inject()
         navigator.navigate(destination)
+    }
+
+    private fun showUserNotFoundToast() {
+        Toast.makeText(context, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show()
     }
 
     private fun setPasswordInputLayoutError() {
@@ -135,8 +140,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                 } catch (e: ApiException) {
                     showSignInWithGoogleAccountErrorDialog()
                 }
-            }
-            else {
+            } else {
                 showSignInWithGoogleAccountErrorDialog()
             }
         }

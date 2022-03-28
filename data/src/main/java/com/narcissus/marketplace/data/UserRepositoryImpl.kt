@@ -17,8 +17,11 @@ import com.narcissus.marketplace.domain.model.User
 import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.util.ActionResult
-import com.narcissus.marketplace.domain.util.AuthResult
-import com.narcissus.marketplace.domain.util.AuthState
+import com.narcissus.marketplace.domain.auth.AuthState
+import com.narcissus.marketplace.domain.auth.SignInResult
+import com.narcissus.marketplace.domain.auth.SignOutResult
+import com.narcissus.marketplace.domain.auth.SignUpResult
+import java.lang.Exception
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
@@ -30,11 +33,11 @@ internal class UserRepositoryImpl(
     private val productsDao: ProductDao,
     private val firebaseAuth: FirebaseAuth,
 ) : UserRepository {
-    override fun getRecentlyVisitedProducts(): Flow<List<ProductPreview>> {
-        return productsDao.getProducts().map { entities ->
-            entities.map(ProductEntity::toProductPreview)
-        }
-    }
+    override val recentlyVisitedProducts: Flow<List<ProductPreview>> =
+        productsDao.getProducts()
+            .map { entities ->
+                entities.map(ProductEntity::toProductPreview)
+            }
 
     override suspend fun writeToVisitedProducts(productPreview: ProductPreview) {
         productsDao.insertProduct(productPreview.toProductEntity())
@@ -50,13 +53,17 @@ internal class UserRepositoryImpl(
 
     override suspend fun isUserAuthenticated(): Boolean = firebaseAuth.currentUser != null
 
-    override fun getAuthStateFlow(): Flow<AuthState> =
+    override val authStateFlow: Flow<AuthState> =
         callbackFlow {
-            trySendBlocking(AuthState(user = null))
+            trySendBlocking(AuthState.Unknown)
 
             val listener = FirebaseAuth.AuthStateListener { auth ->
-                val authState = AuthState(user = auth.currentUser?.toUserProfile())
-                trySendBlocking(authState)
+                val currentUser = auth.currentUser?.toUserProfile()
+                if (currentUser != null) {
+                    trySendBlocking(AuthState.Authenticated(currentUser))
+                } else {
+                    trySendBlocking(AuthState.NotAuthenticated)
+                }
             }
 
             firebaseAuth.addAuthStateListener(listener)
@@ -66,65 +73,107 @@ internal class UserRepositoryImpl(
             }
         }
 
+
     private fun checkEmailFormatValidity(email: String) =
         Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-    override suspend fun signInWithEmail(email: String, password: String): AuthResult {
+    override suspend fun signInWithEmail(email: String, password: String): SignInResult {
         if (!checkEmailFormatValidity(email)) {
-            return AuthResult.WrongEmail
+            return SignInResult.InvalidEmail
         }
-        var currentUser = firebaseAuth.currentUser
-        return currentUser?.toAuthResult()
-            ?: try {
-                currentUser = firebaseAuth.signInWithEmailAndPassword(email, password).await().user
-                currentUser?.toAuthResult() ?: AuthResult.SignInWrongPasswordOrEmail
-            } catch (e: FirebaseAuthInvalidCredentialsException) {
-                AuthResult.SignInWrongPasswordOrEmail
-            } catch (e: FirebaseAuthInvalidUserException) {
-                AuthResult.SignInWrongPasswordOrEmail
-            } catch (e: FirebaseAuthException) {
-                AuthResult.Error
-            }
+
+        val currentUser = firebaseAuth.currentUser
+        return if (currentUser != null) {
+            SignInResult.Success(currentUser.toUserProfile())
+        } else try {
+            trySignInWithEmail(email, password)
+        } catch (e: FirebaseAuthInvalidCredentialsException) {
+            SignInResult.WrongCredentials
+        } catch (e: FirebaseAuthInvalidUserException) {
+            SignInResult.UserNotFound
+        } catch (e: FirebaseAuthException) {
+            SignInResult.Error
+        }
+    }
+
+    private suspend fun trySignInWithEmail(
+        email: String,
+        password: String,
+    ): SignInResult {
+        val signedInUser = firebaseAuth.signInWithEmailAndPassword(email, password).await().user
+        return if (signedInUser != null) {
+            SignInResult.Success(signedInUser.toUserProfile())
+        } else {
+            SignInResult.Error
+        }
     }
 
     override suspend fun signUpWithEmail(
         fullName: String,
         email: String,
         password: String,
-    ): AuthResult {
-        var currentUser = firebaseAuth.currentUser
-        return currentUser?.toAuthResult() ?: try {
-            currentUser = firebaseAuth.createUserWithEmailAndPassword(email, password).await().user
-            val profileUpdates = userProfileChangeRequest {
-                displayName = fullName
-            }
-            currentUser?.updateProfile(profileUpdates)
-            currentUser?.toAuthResult() ?: AuthResult.Error
+    ): SignUpResult {
+        val currentUser = firebaseAuth.currentUser
+        return if (currentUser != null) {
+            SignUpResult.Success(currentUser.toUserProfile())
+        } else try {
+            trySignUpWithEmail(email, password, fullName)
         } catch (e: FirebaseException) {
-            AuthResult.SignInWrongPasswordOrEmail
+            SignUpResult.Error
         }
     }
 
-    override suspend fun signOut(): AuthResult {
-        firebaseAuth.signOut()
-        return AuthResult.SignOutSuccess
+    private suspend fun trySignUpWithEmail(
+        email: String,
+        password: String,
+        fullName: String,
+    ): SignUpResult {
+        val newUser = firebaseAuth.createUserWithEmailAndPassword(email, password).await().user
+        val updateRequest = userProfileChangeRequest {
+            displayName = fullName
+        }
+
+        return if (newUser == null) {
+            SignUpResult.Error
+        } else {
+            newUser.updateProfile(updateRequest)
+            SignUpResult.Success(newUser.toUserProfile())
+        }
     }
 
-    override suspend fun signInWithGoogle(idToken: String): AuthResult {
+    override suspend fun signOut(): SignOutResult {
+        return try {
+            firebaseAuth.signOut()
+            SignOutResult.Success
+        } catch (e: Exception) {
+            SignOutResult.Error
+        }
+    }
+
+    override suspend fun signInWithGoogle(idToken: String): SignInResult {
+        val user = firebaseAuth.currentUser
+        return if (user != null) {
+            SignInResult.Success(user.toUserProfile())
+        } else try {
+            trySignInWithGoogle(idToken)
+        } catch (e: FirebaseAuthInvalidCredentialsException) {
+            SignInResult.WrongCredentials
+        } catch (e: FirebaseAuthInvalidUserException) {
+            SignInResult.UserNotFound
+        } catch (e: FirebaseAuthException) {
+            SignInResult.Error
+        }
+    }
+
+    private suspend fun trySignInWithGoogle(idToken: String): SignInResult {
         val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(firebaseCredential).await()
-        var currentUser = firebaseAuth.currentUser
-        return currentUser?.toAuthResult()
-            ?: try {
-                currentUser = firebaseAuth.signInWithCredential(firebaseCredential).await().user
-                currentUser?.toAuthResult() ?: AuthResult.SignInWrongPasswordOrEmail
-            } catch (e: FirebaseAuthInvalidCredentialsException) {
-                AuthResult.SignInWrongPasswordOrEmail
-            } catch (e: FirebaseAuthInvalidUserException) {
-                AuthResult.SignInWrongPasswordOrEmail
-            } catch (e: FirebaseAuthException) {
-                AuthResult.Error
-            }
+        val signedInUser = firebaseAuth.signInWithCredential(firebaseCredential).await().user
+        val profile = signedInUser?.toUserProfile()
+        return if (profile != null) {
+            SignInResult.Success(profile)
+        } else {
+            SignInResult.Error
+        }
     }
 
     private fun ProductPreview.toProductEntity(): ProductEntity {
@@ -141,10 +190,6 @@ internal class UserRepositoryImpl(
             rating,
             sales,
         )
-    }
-
-    private fun FirebaseUser.toAuthResult(): AuthResult {
-        return AuthResult.SignInSuccess(this.toUserProfile())
     }
 
     private fun FirebaseUser.toUserProfile(): UserProfile {
