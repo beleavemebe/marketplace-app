@@ -18,6 +18,8 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.ApiException
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.navigation.destination.SignUpDestination
@@ -140,7 +142,9 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                 } catch (e: ApiException) {
                     showSignInWithGoogleAccountErrorDialog()
                 }
-            } else {
+            } else if (GoogleApiAvailability.getInstance()
+                    .isGooglePlayServicesAvailable(requireContext()) != ConnectionResult.SUCCESS
+            ) {
                 showSignInWithGoogleAccountErrorDialog()
             }
         }
