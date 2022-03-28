@@ -2,9 +2,9 @@ package com.narcissus.marketplace.ui.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.narcissus.marketplace.domain.auth.AuthState
 import com.narcissus.marketplace.domain.usecase.GetAuthStateFlow
 import com.narcissus.marketplace.domain.usecase.SignOut
-import com.narcissus.marketplace.domain.util.AuthState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -31,11 +31,26 @@ class UserViewModel(
 
     private fun updateScreenState(authState: AuthState) = intent {
         reduce {
-            UserState(
-                isLoading = false,
-                isUserAuthenticated = authState.user != null,
-                user = authState.user,
-            )
+            when (authState) {
+                AuthState.Unknown ->
+                    UserState(
+                        isLoading = true,
+                        isUserAuthenticated = false,
+                        user = null,
+                    )
+                AuthState.NotAuthenticated ->
+                    UserState(
+                        isLoading = false,
+                        isUserAuthenticated = false,
+                        user = null,
+                    )
+                is AuthState.Authenticated ->
+                    UserState(
+                        isLoading = false,
+                        isUserAuthenticated = true,
+                        user = authState.user,
+                    )
+            }
         }
     }
 

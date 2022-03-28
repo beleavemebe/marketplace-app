@@ -1,70 +1,32 @@
 package com.narcissus.marketplace.ui.catalog
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.narcissus.marketplace.domain.usecase.GetDepartments
+import com.narcissus.marketplace.ui.catalog.DepartmentListItem.DepartmentItem
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.shareIn
 
-class CatalogViewModel : ViewModel() {
-    val departments: Flow<List<DepartmentListItem>> = flow {
-        emit(
-            listOf(
-                DepartmentListItem(
-                    name = "Gadgets",
-                    image = "gadgets.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Appliance",
-                    image = "appliance.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Home & Living",
-                    image = "homeandliving.jpg"
-                ),
-                DepartmentListItem(
-                    name = "School Supplies",
-                    image = "schoolsupplies.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Health & Beauty",
-                    image = "healthandbeauty.jpg"
-                ),
-                DepartmentListItem(
-                    name = "For Babies",
-                    image = "babies.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Groceries",
-                    image = "groceries.jpg"
-                ),
-                DepartmentListItem(
-                    name = "For Pets",
-                    image = "pets.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Fashion Women",
-                    image = "fashionwomen.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Fashion Men",
-                    image = "fashionmen.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Accessories",
-                    image = "accessories.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Sports & Lifestyle",
-                    image = "sport.png"
-                ),
-                DepartmentListItem(
-                    name = "Toys & Collectibles",
-                    image = "toys.jpg"
-                ),
-                DepartmentListItem(
-                    name = "Automotive",
-                    image = "automotive.jpg"
-                )
-            )
-        )
+class CatalogViewModel(
+    private val getDepartments: GetDepartments,
+) : ViewModel() {
+    companion object {
+        private const val DEPARTMENTS_AMOUNT = 14
     }
+
+    val departments: Flow<List<DepartmentListItem>> = flow {
+        val dummyDepartments = Array(DEPARTMENTS_AMOUNT) {
+            DepartmentListItem.LoadingDepartmentItem()
+        }
+        emit(dummyDepartments.toList())
+
+        val departments = getDepartments().map(::DepartmentItem)
+        emit(departments)
+    }.shareIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        1
+    )
 }

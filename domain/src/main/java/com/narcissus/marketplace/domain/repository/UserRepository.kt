@@ -1,27 +1,26 @@
 package com.narcissus.marketplace.domain.repository
 
+import com.narcissus.marketplace.domain.auth.AuthState
+import com.narcissus.marketplace.domain.auth.SignInResult
+import com.narcissus.marketplace.domain.auth.SignOutResult
+import com.narcissus.marketplace.domain.auth.SignUpResult
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.User
 import com.narcissus.marketplace.domain.util.ActionResult
-import com.narcissus.marketplace.domain.util.AuthResult
-import com.narcissus.marketplace.domain.util.AuthState
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    suspend fun addCard(
-        cardNumber: Long,
-        svv: Int,
-        expirationDate: String,
-    )
+    suspend fun addCard(cardNumber: Long, svv: Int, expirationDate: String)
 
     suspend fun getUserData(): ActionResult<User>
-    suspend fun isUserAuthenticated(): Boolean // todo: rollback to flow or uncomment line #23
-    suspend fun signInWithEmail(email: String, password: String): AuthResult
-    suspend fun signUpWithEmail(fullName: String, email: String, password: String): AuthResult
-    suspend fun signOut(): AuthResult
-    suspend fun signInWithGoogle(idToken: String): AuthResult
+    suspend fun isUserAuthenticated(): Boolean
+    suspend fun signInWithEmail(email: String, password: String): SignInResult
+    suspend fun signUpWithEmail(fullName: String, email: String, password: String): SignUpResult
+    suspend fun signOut(): SignOutResult
+    suspend fun signInWithGoogle(idToken: String): SignInResult
 
-    fun getAuthStateFlow(): Flow<AuthState>
-    fun getRecentlyVisitedProducts(): Flow<List<ProductPreview>>
+    val authStateFlow: Flow<AuthState>
+
+    val recentlyVisitedProducts: Flow<List<ProductPreview>>
     suspend fun writeToVisitedProducts(productPreview: ProductPreview)
 }

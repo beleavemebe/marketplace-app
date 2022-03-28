@@ -12,7 +12,8 @@ import com.narcissus.marketplace.core.navigation.destination.SignInDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignUpBinding
-import com.narcissus.marketplace.domain.util.AuthResult
+import com.narcissus.marketplace.domain.auth.PasswordRequirement
+import com.narcissus.marketplace.domain.auth.SignUpResult
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -54,13 +55,13 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun observeSignUpState() {
-        viewModel.authResultFlow.onEach { authResult ->
-            when (authResult) {
-                is AuthResult.SignInSuccess -> navigateTo()
-                is AuthResult.SignUpEmptyInput -> setNameLayoutError()
-                is AuthResult.SignUpWrongEmail -> setEmailLayoutError()
-                is AuthResult.SignUpToShortPassword -> setPasswordLayoutError()
-                is AuthResult.Error -> showErrorToast()
+        viewModel.signUpResultFlow.onEach { result ->
+            when (result) {
+                is SignUpResult.BlankFullName -> setNameLayoutError()
+                is SignUpResult.Error -> showErrorToast()
+                is SignUpResult.InvalidEmail -> setEmailLayoutError()
+                is SignUpResult.InvalidPassword -> setPasswordLayoutError(result.failedRequirements)
+                is SignUpResult.Success -> navigateTo()
                 else -> {}
             }
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
@@ -75,7 +76,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             getString(R.string.wrong_email)
     }
 
-    private fun setPasswordLayoutError() {
+    private fun setPasswordLayoutError(failedRequirements: List<PasswordRequirement>) {
         binding.layoutEmailPasswordInputs.passwordTextInputLayout.helperText =
             getString(R.string.short_password)
     }
