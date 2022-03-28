@@ -143,7 +143,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                     showSignInWithGoogleAccountErrorDialog()
                 }
             } else if (GoogleApiAvailability.getInstance()
-                    .isGooglePlayServicesAvailable(requireContext()) != ConnectionResult.SUCCESS
+                .isGooglePlayServicesAvailable(requireContext()) != ConnectionResult.SUCCESS
             ) {
                 showSignInWithGoogleAccountErrorDialog()
             }
