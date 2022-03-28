@@ -4,6 +4,7 @@ import com.narcissus.marketplace.domain.model.CartItem
 import com.narcissus.marketplace.domain.repository.CartRepository
 import com.narcissus.marketplace.domain.usecase.SetCartItemAmount
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.coVerifySequence
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -22,6 +23,6 @@ class SetCartItemAmountTest {
         runBlocking {
             setCartItemAmount(expectedCartItem, amount)
         }
-        coVerifySequence { cartRepository.setCartItemAmount(expectedCartItem, amount) }
+        coVerify(exactly = 1) { cartRepository.setCartItemAmount(expectedCartItem, amount) }
     }
 }

@@ -3,6 +3,7 @@ package com.narcissus.marketplace
 import com.narcissus.marketplace.domain.repository.CartRepository
 import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.coVerifySequence
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -20,6 +21,6 @@ class SelectAllCartItemsTest {
         runBlocking {
             selectAllCartItems(isSelected)
         }
-        coVerifySequence { cartRepository.selectAllCartItems(isSelected) }
+        coVerify(exactly = 1) { cartRepository.selectAllCartItems(isSelected) }
     }
 }

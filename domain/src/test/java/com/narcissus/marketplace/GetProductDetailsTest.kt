@@ -16,7 +16,6 @@ import org.junit.Test
 class GetProductDetailsTest {
     private val productId = "1"
     private val productDetailsResultExpected = mockk<ProductDetails>(relaxed = true)
-
     private val productDetailsRepository = mockk<ProductsDetailsRepository> {
         coEvery { getProductDetailsById(productId) } returns productDetailsResultExpected
     }
@@ -31,7 +30,7 @@ class GetProductDetailsTest {
             val result = getProductDetails(productId)
             Assert.assertEquals(
                 productDetailsResultExpected,
-                result
+                result,
             )
         }
         coVerifyOrder {

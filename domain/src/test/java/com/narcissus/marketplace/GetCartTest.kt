@@ -4,6 +4,7 @@ import com.narcissus.marketplace.domain.model.CartItem
 import com.narcissus.marketplace.domain.repository.CartRepository
 import com.narcissus.marketplace.domain.usecase.GetCart
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.coVerifySequence
 import io.mockk.mockk
 import io.mockk.verify
@@ -18,12 +19,15 @@ class GetCartTest {
         coEvery { getCart() } returns exceptedResult
     }
     private val getCart = GetCart(cartRepository)
+    private val result = getCart()
+
     @Test
-    fun `should return actual cart`(){
+    fun `should return actual cart`() {
+
         runBlocking {
-            val result = getCart()
-            Assert.assertEquals(exceptedResult,result)
+
+            Assert.assertEquals(exceptedResult, result)
         }
-        coVerifySequence{  cartRepository.getCart()}
+        coVerify(exactly = 1) { cartRepository.getCart() }
     }
 }

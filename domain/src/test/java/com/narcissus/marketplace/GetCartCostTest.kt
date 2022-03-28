@@ -8,6 +8,7 @@ import io.mockk.coVerify
 import io.mockk.coVerifySequence
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.last
@@ -32,7 +33,7 @@ class GetCartCostTest {
             val result = getCartCost().last()
             Assert.assertEquals(exceptedResultOnEmptyList, result)
         }
-        coVerifySequence { cartRepository.getCart() }
+        verify(exactly = 1) { cartRepository.getCart() }
     }
 
     @Test
@@ -71,6 +72,6 @@ class GetCartCostTest {
             val result = getCartCost().last()
             Assert.assertEquals(exceptedResultOnNotEmptyList, result)
         }
-        coVerifySequence{ cartRepository.getCart() }
+        verify(exactly = 1) { cartRepository.getCart() }
     }
 }

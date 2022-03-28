@@ -5,6 +5,7 @@ import com.narcissus.marketplace.domain.repository.ProductsPreviewRepository
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.coVerifySequence
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -17,11 +18,12 @@ class GetTopRatedProductsTest {
         coEvery { getProductsTopRated() } returns expectedProductPreviews
     }
     private val getTopRatedProducts = GetTopRatedProducts(productsPreviewRepository)
+
     @Test
     fun `should return actual top rated products`() {
         runBlocking {
-            Assert.assertEquals(expectedProductPreviews,getTopRatedProducts())
+            Assert.assertEquals(expectedProductPreviews, getTopRatedProducts())
         }
-        coVerifySequence { productsPreviewRepository.getProductsTopRated() }
+        coVerify(exactly = 1) { productsPreviewRepository.getProductsTopRated() }
     }
 }

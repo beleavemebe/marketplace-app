@@ -17,11 +17,12 @@ class GetRandomProductsTest {
         coEvery { getProductsRandom() } returns expectedProductPreviews
     }
     private val getRandomProducts = GetRandomProducts(productsPreviewRepository)
+
     @Test
     fun `should return actual random products`() {
-    runBlocking {
-        Assert.assertEquals(expectedProductPreviews,getRandomProducts())
-    }
-        coVerifySequence { productsPreviewRepository.getProductsRandom() }
+        runBlocking {
+            Assert.assertEquals(expectedProductPreviews, getRandomProducts())
+        }
+        coVerify(exactly = 1) { productsPreviewRepository.getProductsRandom() }
     }
 }
