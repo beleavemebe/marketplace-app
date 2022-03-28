@@ -20,9 +20,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.navigation.destination.SignUpDestination
+import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignInBinding
-import com.narcissus.marketplace.domain.util.AuthResult
+import com.narcissus.marketplace.domain.auth.SignInResult
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,9 +36,9 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
 
     private val viewModel: SignInViewModel by viewModel()
 
-    private val signInClient:GoogleSignInClient by inject()
-    private val oneTapSignInRequest:BeginSignInRequest by inject()
-    private val oneTapClient: SignInClient by lazy { Identity.getSignInClient(activity as Activity) }
+    private val signInClient: GoogleSignInClient by inject()
+    private val oneTapSignInRequest: BeginSignInRequest by inject()
+    private val oneTapClient: SignInClient by lazy { Identity.getSignInClient(requireActivity()) }
 
     private val args by navArgs<SignInFragmentArgs>()
     private val isNavigatedFromUserProfile by lazy { args.isNavigatedFromUserProfile }
@@ -46,6 +48,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         _binding = FragmentSignInBinding.bind(view)
         initToolbar()
         initSignInListener()
+        initSignUpListener()
         observeAuthState()
     }
 
@@ -68,13 +71,20 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         }
     }
 
+    private fun initSignUpListener() {
+        binding.tvSignUpButtonRight.setOnClickListener {
+            navigateToSignUp()
+        }
+    }
+
     private fun observeAuthState() {
-        viewModel.authResultFlow.onEach { authResult ->
-            when (authResult) {
-                is AuthResult.SignInSuccess -> navigateToCallScreen(isNavigatedFromUserProfile)
-                is AuthResult.SignInWrongPasswordOrEmail -> setPasswordInputLayoutError()
-                is AuthResult.Error -> showEmailAuthErrorToast()
-                is AuthResult.WrongEmail -> setEmailInputLayoutError()
+        viewModel.signInResultFlow.onEach { result ->
+            when (result) {
+                is SignInResult.Error -> showEmailAuthErrorToast()
+                is SignInResult.InvalidEmail -> setEmailInputLayoutError()
+                is SignInResult.Success -> navigateToCallScreen(isNavigatedFromUserProfile)
+                is SignInResult.UserNotFound -> showUserNotFoundToast()
+                is SignInResult.WrongCredentials -> setPasswordInputLayoutError()
             }
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
@@ -90,6 +100,15 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         } else {
             // navigateToCheckOut
         }
+    }
+
+    private fun navigateToSignUp() {
+        val destination: SignUpDestination by inject()
+        navigator.navigate(destination)
+    }
+
+    private fun showUserNotFoundToast() {
+        Toast.makeText(context, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show()
     }
 
     private fun setPasswordInputLayoutError() {
@@ -121,6 +140,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                 } catch (e: ApiException) {
                     showSignInWithGoogleAccountErrorDialog()
                 }
+            } else {
+                showSignInWithGoogleAccountErrorDialog()
             }
         }
 

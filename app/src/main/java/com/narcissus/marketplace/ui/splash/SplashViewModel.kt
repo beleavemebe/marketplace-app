@@ -14,7 +14,7 @@ class SplashViewModel : ViewModel() {
 
     fun launch() {
         viewModelScope.launch {
-            delay(2500L)
+            delay(1000L)
             _isLaunchedFlow.value = true
         }
     }
