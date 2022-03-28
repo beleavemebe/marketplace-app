@@ -1,10 +1,9 @@
 package com.narcissus.marketplace.data.di
 
-import com.google.firebase.auth.FirebaseAuth
 import com.narcissus.marketplace.apiclient.di.apiClientModule
 import com.narcissus.marketplace.data.CartRepositoryImpl
-import com.narcissus.marketplace.data.DepartmentRepositoryImpl
 import com.narcissus.marketplace.data.OrderRepositoryImpl
+import com.narcissus.marketplace.data.DepartmentRepositoryImpl
 import com.narcissus.marketplace.data.ProductsDetailsRepositoryImpl
 import com.narcissus.marketplace.data.ProductsPreviewRepositoryImpl
 import com.narcissus.marketplace.data.UserRepositoryImpl
@@ -12,8 +11,8 @@ import com.narcissus.marketplace.data.firebase.di.Qualifiers.CartReference
 import com.narcissus.marketplace.data.firebase.di.firebaseModule
 import com.narcissus.marketplace.data.persistence.di.persistenceModule
 import com.narcissus.marketplace.domain.repository.CartRepository
-import com.narcissus.marketplace.domain.repository.DepartmentRepository
 import com.narcissus.marketplace.domain.repository.OrderRepository
+import com.narcissus.marketplace.domain.repository.DepartmentRepository
 import com.narcissus.marketplace.domain.repository.ProductsDetailsRepository
 import com.narcissus.marketplace.domain.repository.ProductsPreviewRepository
 import com.narcissus.marketplace.domain.repository.UserRepository
@@ -26,7 +25,7 @@ val dataModule = module {
     loadKoinModules(persistenceModule)
     loadKoinModules(firebaseModule)
 
-    single<CartRepository> { CartRepositoryImpl(get(qualifier<CartReference>())) }
+    single<CartRepository> { CartRepositoryImpl(cartRef = get(qualifier<CartReference>())) }
     single<OrderRepository> { OrderRepositoryImpl() }
 
     single<DepartmentRepository> {
@@ -41,6 +40,6 @@ val dataModule = module {
         ProductsPreviewRepositoryImpl(apiService = get())
     }
     single<UserRepository> {
-        UserRepositoryImpl(productsDao = get(), FirebaseAuth.getInstance())
+        UserRepositoryImpl(productsDao = get(), firebaseAuth = get())
     }
 }

@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.narcissus.marketplace.data.mapper.toProductPreview
 import com.narcissus.marketplace.data.persistence.database.ProductDao
@@ -17,7 +18,11 @@ import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.util.ActionResult
 import com.narcissus.marketplace.domain.util.AuthResult
+import com.narcissus.marketplace.domain.util.AuthState
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 
@@ -44,6 +49,22 @@ internal class UserRepositoryImpl(
     }
 
     override suspend fun isUserAuthenticated(): Boolean = firebaseAuth.currentUser != null
+
+    override fun getAuthStateFlow(): Flow<AuthState> =
+        callbackFlow {
+            trySendBlocking(AuthState(user = null))
+
+            val listener = FirebaseAuth.AuthStateListener { auth ->
+                val authState = AuthState(user = auth.currentUser?.toUserProfile())
+                trySendBlocking(authState)
+            }
+
+            firebaseAuth.addAuthStateListener(listener)
+
+            awaitClose {
+                firebaseAuth.removeAuthStateListener(listener)
+            }
+        }
 
     private fun checkEmailFormatValidity(email: String) =
         Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -85,11 +106,25 @@ internal class UserRepositoryImpl(
     }
 
     override suspend fun signOut(): AuthResult {
-        TODO("Not yet implemented")
+        firebaseAuth.signOut()
+        return AuthResult.SignOutSuccess
     }
 
-    override suspend fun signInWithGoogle() {
-        TODO("Not yet implemented")
+    override suspend fun signInWithGoogle(idToken: String): AuthResult {
+        val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(firebaseCredential).await()
+        var currentUser = firebaseAuth.currentUser
+        return currentUser?.toAuthResult()
+            ?: try {
+                currentUser = firebaseAuth.signInWithCredential(firebaseCredential).await().user
+                currentUser?.toAuthResult() ?: AuthResult.SignInWrongPasswordOrEmail
+            } catch (e: FirebaseAuthInvalidCredentialsException) {
+                AuthResult.SignInWrongPasswordOrEmail
+            } catch (e: FirebaseAuthInvalidUserException) {
+                AuthResult.SignInWrongPasswordOrEmail
+            } catch (e: FirebaseAuthException) {
+                AuthResult.Error
+            }
     }
 
     private fun ProductPreview.toProductEntity(): ProductEntity {
@@ -109,11 +144,10 @@ internal class UserRepositoryImpl(
     }
 
     private fun FirebaseUser.toAuthResult(): AuthResult {
+        return AuthResult.SignInSuccess(this.toUserProfile())
+    }
 
-        return AuthResult.SignInSuccess(
-            UserProfile(
-                uid, displayName, email!!, photoUrl.toString(),
-            ),
-        )
+    private fun FirebaseUser.toUserProfile(): UserProfile {
+        return UserProfile(uid, displayName, email!!, photoUrl.toString())
     }
 }

@@ -30,8 +30,7 @@
     <string name="similar_products">Similar Products</string>
     <string name="show_all_reviews">Show all reviews</string>
     <string name="hide_all_reviews">Hide all reviews</string>
-    <string name="cart_is_empty">Cart is empty</string>
-    <string name="browse_catalog">Browse Catalog</string>
+    <string name="your_cart_is_empty">Your cart is empty</string>
     <string name="all_reviews">All reviews</string>
     <string name="go_to_cart">Go to Cart</string>
     <string name="special_offer">Special offer</string>
@@ -59,5 +58,7 @@
     <string name="wrong_email">wrong email</string>
     <string name="short_password">short password, at least 6 symbols</string>
     <string name="wrong_email_format">Wrong email format</string>
+    <string name="google_signin_error">Something went wrong with logging into your Google account. Please sign in with your email and password or try again later</string>
+    <string name="ok">OK</string>
     <string name="name_empty">input full name</string>
 </resources>

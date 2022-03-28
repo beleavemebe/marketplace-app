@@ -4,6 +4,7 @@ import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.User
 import com.narcissus.marketplace.domain.util.ActionResult
 import com.narcissus.marketplace.domain.util.AuthResult
+import com.narcissus.marketplace.domain.util.AuthState
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -14,13 +15,13 @@ interface UserRepository {
     )
 
     suspend fun getUserData(): ActionResult<User>
-    suspend fun isUserAuthenticated(): Boolean // подумать об анонимной аутентификации
+    suspend fun isUserAuthenticated(): Boolean // todo: rollback to flow or uncomment line #23
     suspend fun signInWithEmail(email: String, password: String): AuthResult
     suspend fun signUpWithEmail(fullName: String, email: String, password: String): AuthResult
     suspend fun signOut(): AuthResult
-    suspend fun signInWithGoogle() // TODO
+    suspend fun signInWithGoogle(idToken: String): AuthResult
 
-    // fun isUserLoggedIn(): Flow<Boolean>
+    fun getAuthStateFlow(): Flow<AuthState>
     fun getRecentlyVisitedProducts(): Flow<List<ProductPreview>>
     suspend fun writeToVisitedProducts(productPreview: ProductPreview)
 }
