@@ -9,16 +9,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.navigation.destination.SignInDestination
-import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentSignUpBinding
 import com.narcissus.marketplace.domain.auth.PasswordRequirement
 import com.narcissus.marketplace.domain.auth.SignUpResult
 import kotlinx.coroutines.flow.onEach
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private var _binding: FragmentSignUpBinding? = null
@@ -31,7 +27,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         initToolbar()
         initTextChangedListeners()
         initSignUpButton()
-        initSignInButton()
         observeSignUpState()
     }
 
@@ -51,12 +46,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
         binding.layoutEmailPasswordInputs.etPassword.doAfterTextChanged {
             binding.layoutEmailPasswordInputs.tiPassword.error = null
-        }
-    }
-
-    private fun initSignInButton() {
-        binding.tvSignInBtnRight.setOnClickListener {
-            navigateToSignUp()
         }
     }
 
@@ -109,14 +98,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun navigateTo() {
-    }
-
-    private fun navigateToSignUp() {
-        // todo: infinite loop btw
-        val destination: SignInDestination by inject {
-            parametersOf(false)
-        }
-        navigator.navigate(destination)
     }
 
     private fun showErrorToast() {

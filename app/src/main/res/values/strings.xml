@@ -51,7 +51,6 @@
     <string name="sign_up">Sign up</string>
     <string name="products_amount_placeholder">Selected: %1$d</string>
     <string name="something_went_wrong">Something went wrong</string>
-    <string name="i_m_already_a_member">I’m already a member,</string>
     <string name="full_name">Full name</string>
     <string name="sign_up_to_get_started">Sign up to get started</string>
     <string name="create_account">Create Account</string>
