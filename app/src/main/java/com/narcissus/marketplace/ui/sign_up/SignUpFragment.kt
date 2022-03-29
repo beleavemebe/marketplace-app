@@ -3,6 +3,7 @@ package com.narcissus.marketplace.ui.sign_up
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,10 +28,30 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSignUpBinding.bind(view)
-        initToolBar()
+        initToolbar()
+        initTextChangedListeners()
         initSignUpButton()
         initSignInButton()
         observeSignUpState()
+    }
+
+    private fun initToolbar() {
+        val navController = findNavController()
+        binding.tbSignUp.setupWithNavController(navController)
+    }
+
+    private fun initTextChangedListeners() {
+        binding.etFullName.doAfterTextChanged {
+            binding.tiFullName.error = null
+        }
+
+        binding.layoutEmailPasswordInputs.etEmail.doAfterTextChanged {
+            binding.layoutEmailPasswordInputs.tiEmail.error = null
+        }
+
+        binding.layoutEmailPasswordInputs.etPassword.doAfterTextChanged {
+            binding.layoutEmailPasswordInputs.tiPassword.error = null
+        }
     }
 
     private fun initSignInButton() {
@@ -39,17 +60,12 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
     }
 
-    private fun initToolBar() {
-        val navController = findNavController()
-        binding.tbSignUp.setupWithNavController(navController)
-    }
-
     private fun initSignUpButton() {
         binding.btnSignUpWithEmail.setOnClickListener {
             viewModel.signUpWithEmailPassword(
                 binding.etFullName.text.toString(),
-                binding.layoutEmailPasswordInputs.emailTextInputLayout.editText?.text.toString(),
-                binding.layoutEmailPasswordInputs.passwordTextInputLayout.editText?.text.toString(),
+                binding.layoutEmailPasswordInputs.etEmail.text.toString(),
+                binding.layoutEmailPasswordInputs.etPassword.text.toString(),
             )
         }
     }
@@ -72,13 +88,24 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun setEmailLayoutError() {
-        binding.layoutEmailPasswordInputs.emailTextInputLayout.helperText =
+        binding.layoutEmailPasswordInputs.tiEmail.helperText =
             getString(R.string.wrong_email)
     }
 
     private fun setPasswordLayoutError(failedRequirements: List<PasswordRequirement>) {
-        binding.layoutEmailPasswordInputs.passwordTextInputLayout.helperText =
-            getString(R.string.short_password)
+        binding.layoutEmailPasswordInputs.tiPassword.helperText =
+            when (failedRequirements.first()) {
+                is PasswordRequirement.NotBlank ->
+                    getString(R.string.password_is_blank)
+                is PasswordRequirement.NotTooShort ->
+                    getString(R.string.password_is_too_short)
+                is PasswordRequirement.HasLowercaseLetter ->
+                    getString(R.string.missing_lowercase_letter)
+                is PasswordRequirement.HasNumber ->
+                    getString(R.string.missing_number)
+                is PasswordRequirement.HasUppercaseLetter ->
+                    getString(R.string.missing_uppercase_letter)
+            }
     }
 
     private fun navigateTo() {

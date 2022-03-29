@@ -64,8 +64,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         binding.btnSignInWithEmail.setOnClickListener {
             cleanInputErrors()
             viewModel.signInWithEmailPassword(
-                binding.layoutEmailPasswordInputs.emailTextInputLayout.editText?.text.toString(),
-                binding.layoutEmailPasswordInputs.passwordTextInputLayout.editText?.text.toString(),
+                binding.layoutEmailPasswordInputs.tiEmail.editText?.text.toString(),
+                binding.layoutEmailPasswordInputs.tiPassword.editText?.text.toString(),
             )
         }
         binding.btnSignInWithGoogle.setOnClickListener {
@@ -92,8 +92,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     }
 
     private fun cleanInputErrors() {
-        binding.layoutEmailPasswordInputs.passwordTextInputLayout.error = null
-        binding.layoutEmailPasswordInputs.emailTextInputLayout.error = null
+        binding.layoutEmailPasswordInputs.tiPassword.error = null
+        binding.layoutEmailPasswordInputs.tiEmail.error = null
     }
 
     private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
@@ -114,12 +114,12 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     }
 
     private fun setPasswordInputLayoutError() {
-        binding.layoutEmailPasswordInputs.passwordTextInputLayout.error =
+        binding.layoutEmailPasswordInputs.tiPassword.error =
             getString(R.string.wrong_email_or_password)
     }
 
     private fun setEmailInputLayoutError() {
-        binding.layoutEmailPasswordInputs.emailTextInputLayout.error =
+        binding.layoutEmailPasswordInputs.tiEmail.error =
             getString(R.string.wrong_email_format)
     }
 
