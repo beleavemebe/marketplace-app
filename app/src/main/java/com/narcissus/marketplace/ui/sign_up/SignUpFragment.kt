@@ -62,26 +62,25 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun observeSignUpState() {
         viewModel.signUpResultFlow.onEach { result ->
             when (result) {
-                is SignUpResult.BlankFullName -> setNameLayoutError()
+                is SignUpResult.BlankFullName -> showBlankFullNameError()
                 is SignUpResult.Error -> showErrorToast()
-                is SignUpResult.InvalidEmail -> setEmailLayoutError()
-                is SignUpResult.InvalidPassword -> setPasswordLayoutError(result.failedRequirements)
-                is SignUpResult.Success -> navigateTo()
-                else -> {}
+                is SignUpResult.InvalidEmail -> showInvalidEmailError()
+                is SignUpResult.InvalidPassword -> showInvalidPasswordError(result.failedRequirements)
+                is SignUpResult.Success -> navigateBack()
             }
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun setNameLayoutError() {
+    private fun showBlankFullNameError() {
         binding.tiFullName.helperText = getString(R.string.name_empty)
     }
 
-    private fun setEmailLayoutError() {
+    private fun showInvalidEmailError() {
         binding.layoutEmailPasswordInputs.tiEmail.helperText =
-            getString(R.string.wrong_email)
+            getString(R.string.invalid_email)
     }
 
-    private fun setPasswordLayoutError(failedRequirements: List<PasswordRequirement>) {
+    private fun showInvalidPasswordError(failedRequirements: List<PasswordRequirement>) {
         binding.layoutEmailPasswordInputs.tiPassword.helperText =
             when (failedRequirements.first()) {
                 is PasswordRequirement.NotBlank ->
@@ -97,7 +96,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             }
     }
 
-    private fun navigateTo() {
+    private fun navigateBack() {
     }
 
     private fun showErrorToast() {

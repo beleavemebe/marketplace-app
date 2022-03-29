@@ -54,7 +54,7 @@
     <string name="full_name">Full name</string>
     <string name="sign_up_to_get_started">Sign up to get started</string>
     <string name="create_account">Create Account</string>
-    <string name="wrong_email">Wrong email</string>
+    <string name="invalid_email">Invalid email</string>
     <string name="password_is_too_short">Password must be at least 8 symbols long</string>
     <string name="wrong_email_format">Wrong email format</string>
     <string name="google_signin_error">Something went wrong with logging into your Google account. Please sign in with your email and password or try again later</string>
