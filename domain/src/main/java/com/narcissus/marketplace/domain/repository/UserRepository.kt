@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     suspend fun addCard(cardNumber: Long, svv: Int, expirationDate: String)
 
-    suspend fun getUserData(): ActionResult<User>
+    suspend fun getUserData(): User
     suspend fun isUserAuthenticated(): Boolean
     suspend fun signInWithEmail(email: String, password: String): SignInResult
     suspend fun signUpWithEmail(fullName: String, email: String, password: String): SignUpResult

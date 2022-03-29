@@ -10,11 +10,11 @@ class AddCard(
         cardNumber: Long,
         svv: Int,
         expirationDate: String
-    ): ActionResult<Boolean> {
+    ): Boolean {
         return if (checkIfCardNumberIsValid(cardNumber)) {
             userRepository.addCard(cardNumber, svv, expirationDate)
-            ActionResult.SuccessResult(true)
-        } else ActionResult.ErrorResult("") // подумать, мб делать это не тут
+            true
+        } else false
     }
 
     private fun checkIfCardNumberIsValid(cardNumber: Long): Boolean {

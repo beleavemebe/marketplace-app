@@ -47,7 +47,7 @@ internal class UserRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserData(): ActionResult<User> {
+    override suspend fun getUserData(): User {
         TODO("Not yet implemented")
     }
 
