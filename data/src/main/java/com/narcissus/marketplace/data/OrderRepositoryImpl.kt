@@ -2,7 +2,6 @@ package com.narcissus.marketplace.data
 
 import com.narcissus.marketplace.domain.model.Order
 import com.narcissus.marketplace.domain.repository.OrderRepository
-import com.narcissus.marketplace.domain.util.ActionResult
 import kotlinx.coroutines.flow.Flow
 
 internal class OrderRepositoryImpl : OrderRepository {
