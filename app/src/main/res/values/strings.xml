@@ -62,4 +62,5 @@
     <string name="ok">OK</string>
     <string name="name_empty">input full name</string>
     <string name="user_not_found">User not found</string>
+    <string name="play_services_unavailable">Play services are unavailable on this device.</string>
 </resources>

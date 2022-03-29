@@ -145,7 +145,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
             } else if (GoogleApiAvailability.getInstance()
                 .isGooglePlayServicesAvailable(requireContext()) != ConnectionResult.SUCCESS
             ) {
-                showSignInWithGoogleAccountErrorDialog()
+                showPlayServicesUnavailableErrorDialog()
             }
         }
 
@@ -170,10 +170,25 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     }
 
     private fun showSignInWithGoogleAccountErrorDialog() {
-        AlertDialog.Builder(context)
-            .setMessage(getString(R.string.google_signin_error))
-            .setPositiveButton(getString(R.string.ok), null).create()
-            .show()
+        AlertDialog.Builder(requireContext())
+            .setMessage(
+                getString(
+                    R.string.google_signin_error
+                )
+            )
+            .setPositiveButton(getString(R.string.ok), null)
+            .create().show()
+    }
+
+    private fun showPlayServicesUnavailableErrorDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage(
+                getString(
+                    R.string.play_services_unavailable
+                )
+            )
+            .setPositiveButton(getString(R.string.ok), null)
+            .create().show()
     }
 
     private fun signInWithGoogleAccountByOneTapUI() {
