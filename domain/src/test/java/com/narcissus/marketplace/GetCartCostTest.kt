@@ -4,8 +4,6 @@ import com.narcissus.marketplace.domain.model.CartItem
 import com.narcissus.marketplace.domain.repository.CartRepository
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.coVerifySequence
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

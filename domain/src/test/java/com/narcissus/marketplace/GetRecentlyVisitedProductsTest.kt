@@ -5,9 +5,7 @@ import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.coVerifySequence
 import io.mockk.mockk
-import io.mockk.verifySequence
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert

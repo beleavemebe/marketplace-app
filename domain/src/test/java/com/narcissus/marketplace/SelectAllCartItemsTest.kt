@@ -4,7 +4,6 @@ import com.narcissus.marketplace.domain.repository.CartRepository
 import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.coVerifySequence
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
