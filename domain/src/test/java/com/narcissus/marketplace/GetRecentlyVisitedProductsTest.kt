@@ -16,7 +16,7 @@ import org.junit.Test
 class GetRecentlyVisitedProductsTest {
     private val expectedRecentlyVisitedProductsPreviews = flowOf(mockk<List<ProductPreview>>())
     private val userRepository = mockk<UserRepository> {
-        coEvery { getRecentlyVisitedProducts() } returns expectedRecentlyVisitedProductsPreviews
+        coEvery { recentlyVisitedProducts } returns expectedRecentlyVisitedProductsPreviews
     }
     private val getRecentlyVisitedProducts = GetRecentlyVisitedProducts(userRepository)
 
@@ -28,6 +28,6 @@ class GetRecentlyVisitedProductsTest {
                 getRecentlyVisitedProducts(),
             )
         }
-        coVerify(exactly = 1) { userRepository.getRecentlyVisitedProducts() }
+        coVerify(exactly = 1) { userRepository.recentlyVisitedProducts }
     }
 }

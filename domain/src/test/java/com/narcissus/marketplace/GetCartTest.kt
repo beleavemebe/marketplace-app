@@ -23,9 +23,7 @@ class GetCartTest {
 
     @Test
     fun `should return actual cart`() {
-
         runBlocking {
-
             Assert.assertEquals(exceptedResult, result)
         }
         coVerify(exactly = 1) { cartRepository.getCart() }
