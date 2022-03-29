@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
 
     private val fullScreenDestinations =
         setOf(
-            R.id.fragment_splash,
+//            R.id.fragment_splash, todo: replace with nav graph reference
             R.id.fragment_sign_up,
             R.id.fragment_sign_in
         )
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
     private fun initBottomNavigation(navController: NavController) {
         binding.bottomNavigationView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id in fullScreenDestinations) {
+            if (destination.id in fullScreenDestinations) { // todo: replace with destination.parent?.id
                 binding.bottomNavigationView.visibility = View.GONE
             } else {
                 binding.bottomNavigationView.visibility = View.VISIBLE
