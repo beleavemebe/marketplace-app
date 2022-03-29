@@ -6,7 +6,6 @@ import com.narcissus.marketplace.domain.model.toProductPreview
 import com.narcissus.marketplace.domain.repository.CartRepository
 import com.narcissus.marketplace.domain.usecase.AddToCart
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.coVerifySequence
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -23,7 +22,7 @@ class AddToCartTest {
     @Test
     fun `should add product preview to cart`() {
         runBlocking { addToCart(productDetails.toProductPreview()) }
-        coVerifySequence{
+        coVerifySequence {
             cartRepository.addToCart(cartItemExpected)
         }
     }
@@ -32,9 +31,8 @@ class AddToCartTest {
     fun `should add product details to cart`() {
 
         runBlocking { addToCart(productDetails) }
-        coVerifySequence{
+        coVerifySequence {
             cartRepository.addToCart(cartItemExpected)
         }
     }
-
 }

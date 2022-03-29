@@ -2,11 +2,9 @@ package com.narcissus.marketplace
 
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.repository.ProductsPreviewRepository
-import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopSalesProducts
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.coVerifySequence
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert

@@ -4,7 +4,6 @@ import com.narcissus.marketplace.domain.model.ProductDetails
 import com.narcissus.marketplace.domain.model.toProductPreview
 import com.narcissus.marketplace.domain.repository.ProductsDetailsRepository
 import com.narcissus.marketplace.domain.repository.UserRepository
-import com.narcissus.marketplace.domain.util.ActionResult
 
 class GetProductDetails(
     private val productsDetailsRepository: ProductsDetailsRepository,

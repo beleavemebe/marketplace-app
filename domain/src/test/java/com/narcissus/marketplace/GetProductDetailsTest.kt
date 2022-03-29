@@ -5,7 +5,6 @@ import com.narcissus.marketplace.domain.model.toProductPreview
 import com.narcissus.marketplace.domain.repository.ProductsDetailsRepository
 import com.narcissus.marketplace.domain.repository.UserRepository
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
-import com.narcissus.marketplace.domain.util.ActionResult
 import io.mockk.coEvery
 import io.mockk.coVerifyOrder
 import io.mockk.mockk
@@ -37,6 +36,5 @@ class GetProductDetailsTest {
             productDetailsRepository.getProductDetailsById(productId)
             userRepository.writeToVisitedProducts(productDetailsResultExpected.toProductPreview())
         }
-
     }
 }

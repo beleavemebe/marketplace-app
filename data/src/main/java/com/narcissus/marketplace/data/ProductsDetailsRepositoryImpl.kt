@@ -8,7 +8,6 @@ import com.narcissus.marketplace.domain.model.ProductDetails
 import com.narcissus.marketplace.domain.model.Review
 import com.narcissus.marketplace.domain.model.SimilarProduct
 import com.narcissus.marketplace.domain.repository.ProductsDetailsRepository
-import com.narcissus.marketplace.domain.util.ActionResult
 
 internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService) :
     ProductsDetailsRepository {

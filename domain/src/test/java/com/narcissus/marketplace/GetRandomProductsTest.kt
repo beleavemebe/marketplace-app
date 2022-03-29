@@ -5,7 +5,6 @@ import com.narcissus.marketplace.domain.repository.ProductsPreviewRepository
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.coVerifySequence
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
