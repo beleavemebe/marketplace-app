@@ -142,12 +142,15 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                 } catch (e: ApiException) {
                     showSignInWithGoogleAccountErrorDialog()
                 }
-            } else if (GoogleApiAvailability.getInstance()
-                .isGooglePlayServicesAvailable(requireContext()) != ConnectionResult.SUCCESS
-            ) {
+            } else if (!areGooglePlayServicesAvailable()) {
                 showPlayServicesUnavailableErrorDialog()
             }
         }
+
+    private fun areGooglePlayServicesAvailable() =
+        GoogleApiAvailability
+            .getInstance()
+            .isGooglePlayServicesAvailable(requireContext()) == ConnectionResult.SUCCESS
 
     private val googleOneTapUIAuthLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
