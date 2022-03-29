@@ -6,7 +6,6 @@ import com.narcissus.marketplace.domain.auth.SignOutResult
 import com.narcissus.marketplace.domain.auth.SignUpResult
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.User
-import com.narcissus.marketplace.domain.util.ActionResult
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

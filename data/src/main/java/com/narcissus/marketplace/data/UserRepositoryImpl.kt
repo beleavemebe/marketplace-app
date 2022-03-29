@@ -20,7 +20,6 @@ import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.User
 import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.domain.repository.UserRepository
-import com.narcissus.marketplace.domain.util.ActionResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow

@@ -1,7 +1,6 @@
 package com.narcissus.marketplace.domain.usecase
 
 import com.narcissus.marketplace.domain.repository.UserRepository
-import com.narcissus.marketplace.domain.util.ActionResult
 
 class AddCard(
     private val userRepository: UserRepository,
