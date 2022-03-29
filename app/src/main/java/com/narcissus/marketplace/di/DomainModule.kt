@@ -7,6 +7,7 @@ import com.narcissus.marketplace.domain.usecase.GetCart
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCartItemsAmount
 import com.narcissus.marketplace.domain.usecase.GetDepartments
+import com.narcissus.marketplace.domain.usecase.GetOrderList
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
@@ -34,7 +35,7 @@ val domainModule = module {
     factory { GetProductDetails(get(), get()) }
 
     factory { GetDepartments(get()) }
-
+    factory { GetOrderList(get()) }
     factory { GetCart(get()) }
     factory { GetCartItemsAmount(get()) }
     factory { GetCartCost(get()) }
