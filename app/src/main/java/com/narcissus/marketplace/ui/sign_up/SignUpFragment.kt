@@ -72,16 +72,17 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun showBlankFullNameError() {
-        binding.tiFullName.helperText = getString(R.string.name_empty)
+        binding.tiFullName.error =
+            getString(R.string.name_empty)
     }
 
     private fun showInvalidEmailError() {
-        binding.layoutEmailPasswordInputs.tiEmail.helperText =
+        binding.layoutEmailPasswordInputs.tiEmail.error =
             getString(R.string.invalid_email)
     }
 
     private fun showInvalidPasswordError(failedRequirements: List<PasswordRequirement>) {
-        binding.layoutEmailPasswordInputs.tiPassword.helperText =
+        binding.layoutEmailPasswordInputs.tiPassword.error =
             when (failedRequirements.first()) {
                 is PasswordRequirement.NotBlank ->
                     getString(R.string.password_is_blank)

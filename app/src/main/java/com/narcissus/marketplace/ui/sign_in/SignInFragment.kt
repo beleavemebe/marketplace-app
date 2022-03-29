@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -49,6 +50,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSignInBinding.bind(view)
         initToolbar()
+        initTextChangedListeners()
         initSignInListener()
         initSignUpListener()
         observeAuthState()
@@ -60,12 +62,21 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         binding.tbSignIn.setNavigationIcon(R.drawable.ic_close)
     }
 
+    private fun initTextChangedListeners() {
+        binding.layoutEmailPasswordInputs.etEmail.doAfterTextChanged {
+            binding.layoutEmailPasswordInputs.tiEmail.error = null
+        }
+
+        binding.layoutEmailPasswordInputs.etPassword.doAfterTextChanged {
+            binding.layoutEmailPasswordInputs.tiPassword.error = null
+        }
+    }
+
     private fun initSignInListener() {
         binding.btnSignInWithEmail.setOnClickListener {
-            cleanInputErrors()
             viewModel.signInWithEmailPassword(
-                binding.layoutEmailPasswordInputs.tiEmail.editText?.text.toString(),
-                binding.layoutEmailPasswordInputs.tiPassword.editText?.text.toString(),
+                binding.layoutEmailPasswordInputs.etEmail.text.toString(),
+                binding.layoutEmailPasswordInputs.etPassword.text.toString(),
             )
         }
         binding.btnSignInWithGoogle.setOnClickListener {
@@ -90,11 +101,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                 is SignInResult.Success -> navigateBack(hasNavigatedFromUserProfile)
             }
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun cleanInputErrors() {
-        binding.layoutEmailPasswordInputs.tiPassword.error = null
-        binding.layoutEmailPasswordInputs.tiEmail.error = null
     }
 
     private fun navigateToSignUp() {
