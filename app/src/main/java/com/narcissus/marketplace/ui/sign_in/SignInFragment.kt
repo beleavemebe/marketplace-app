@@ -43,7 +43,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     private val oneTapClient: SignInClient by lazy { Identity.getSignInClient(requireActivity()) }
 
     private val args by navArgs<SignInFragmentArgs>()
-    private val isNavigatedFromUserProfile by lazy { args.isNavigatedFromUserProfile }
+    private val hasNavigatedFromUserProfile by lazy { args.isNavigatedFromUserProfile }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,11 +82,12 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     private fun observeAuthState() {
         viewModel.signInResultFlow.onEach { result ->
             when (result) {
-                is SignInResult.Error -> showEmailAuthErrorToast()
-                is SignInResult.InvalidEmail -> setEmailInputLayoutError()
-                is SignInResult.Success -> navigateToCallScreen(isNavigatedFromUserProfile)
-                is SignInResult.UserNotFound -> showUserNotFoundToast()
-                is SignInResult.WrongCredentials -> setPasswordInputLayoutError()
+                is SignInResult.Error -> toastError()
+                is SignInResult.InvalidEmail -> showInvalidEmailError()
+                is SignInResult.BlankPassword -> showBlankPasswordError()
+                is SignInResult.UserNotFound -> showUserNotFoundError()
+                is SignInResult.WrongPassword -> showWrongPasswordError()
+                is SignInResult.Success -> navigateBack(hasNavigatedFromUserProfile)
             }
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
@@ -96,35 +97,41 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         binding.layoutEmailPasswordInputs.tiEmail.error = null
     }
 
-    private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
-        if (isNavigatedFromUserProfile) {
-            findNavController().popBackStack()
-        } else {
-            // navigateToCheckOut
-        }
-    }
-
     private fun navigateToSignUp() {
         val destination: SignUpDestination by inject()
         navigator.navigate(destination)
     }
 
-    private fun showUserNotFoundToast() {
-        Toast.makeText(context, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show()
+    private fun toastError() {
+        Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
     }
 
-    private fun setPasswordInputLayoutError() {
-        binding.layoutEmailPasswordInputs.tiPassword.error =
-            getString(R.string.wrong_email_or_password)
-    }
-
-    private fun setEmailInputLayoutError() {
+    private fun showInvalidEmailError() {
         binding.layoutEmailPasswordInputs.tiEmail.error =
             getString(R.string.wrong_email_format)
     }
 
-    private fun showEmailAuthErrorToast() {
-        Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+    private fun showBlankPasswordError() {
+        binding.layoutEmailPasswordInputs.tiPassword.error =
+            getString(R.string.password_is_blank)
+    }
+
+    private fun showUserNotFoundError() {
+        binding.layoutEmailPasswordInputs.tiEmail.error =
+            getString(R.string.user_not_found)
+    }
+
+    private fun showWrongPasswordError() {
+        binding.layoutEmailPasswordInputs.tiPassword.error =
+            getString(R.string.wrong_password)
+    }
+
+    private fun navigateBack(hasNavigatedFromUserProfile: Boolean) {
+        if (hasNavigatedFromUserProfile) {
+            findNavController().popBackStack()
+        } else {
+            // navigateToCheckOut
+        }
     }
 
     override fun onDestroy() {
