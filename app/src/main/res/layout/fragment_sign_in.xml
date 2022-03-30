@@ -43,7 +43,7 @@
         layout="@layout/email_password_text_inputs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="48dp"
+        android:layout_marginHorizontal="32dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
         style="@style/Btn"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginHorizontal="48dp"
+        android:layout_marginHorizontal="32dp"
         android:background="@drawable/button_gradient"
         android:text="@string/sign_in"
         android:textColor="@color/white"
@@ -89,7 +89,7 @@
         android:id="@+id/btnSignInWithGoogle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginHorizontal="48dp"
+        android:layout_marginHorizontal="32dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/button_google_background"
         app:layout_constraintBottom_toTopOf="@+id/buttonSignUpLayout"
@@ -108,6 +108,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView"
             style="@style/B1_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
