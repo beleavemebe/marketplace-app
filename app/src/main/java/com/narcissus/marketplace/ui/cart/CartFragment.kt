@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
@@ -103,11 +104,18 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun initButtons() {
         initSelectAllCheckbox()
         initDeleteSelectedButton()
+        initCheckoutButton()
     }
 
     private fun initSelectAllCheckbox() {
         binding.cbSelectAll.setOnCheckedChangeListener { _, isChecked ->
             viewModel.selectAll(isChecked)
+        }
+    }
+
+    private fun initCheckoutButton(){
+        binding.btnCheckout.setOnClickListener{
+            findNavController().navigate(CartFragmentDirections.actionCartToCheckout())
         }
     }
 

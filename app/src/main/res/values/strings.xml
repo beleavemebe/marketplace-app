@@ -72,4 +72,5 @@
     <string name="order_summary">Order Summary</string>
     <string name="place_order">Place Order</string>
     <string name="total">Total</string>
+    <string name ="amount_placeholder">%1$dx</string>
 </resources>
