@@ -11,6 +11,7 @@
     <include app:graph="@navigation/nav_graph_user"/>
     <include app:graph="@navigation/nav_graph_search"/>
     <include app:graph="@navigation/nav_graph_product_details"/>
+    <include app:graph="@navigation/nav_graph_sign_in"/>
 
     <fragment
         android:id="@+id/fragment_splash"
@@ -20,29 +21,6 @@
         <action
             android:id="@+id/action_fragment_splash_to_fragment_home"
             app:destination="@id/fragment_home" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/fragment_sign_in"
-        android:name="com.narcissus.marketplace.ui.sign_in.SignInFragment"
-        tools:layout="@layout/fragment_sign_in" >
-        <argument
-            android:name="isNavigatedFromUserProfile"
-            app:argType="boolean" />
-        <action
-            android:id="@+id/action_fragment_sign_in_to_user"
-            app:destination="@id/fragment_user" />
-
-        <deepLink app:uri="marketplace-app://sign-in/{isNavigatedFromUserProfile}" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/fragment_sign_up"
-        android:name="com.narcissus.marketplace.ui.sign_up.SignUpFragment"
-        tools:layout="@layout/fragment_sign_up">
-
-        <deepLink app:uri="marketplace-app://sign-up" />
-
     </fragment>
 
 </navigation>

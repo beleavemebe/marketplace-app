@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_sign_in"
+    app:startDestination="@id/fragment_sign_in">
+
+    <fragment
+        android:id="@+id/fragment_sign_in"
+        android:name="com.narcissus.marketplace.ui.sign_in.SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+        <argument
+            android:name="isNavigatedFromUserProfile"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_fragment_sign_in_to_user"
+            app:destination="@id/fragment_user" />
+
+        <deepLink app:uri="marketplace-app://sign-in/{isNavigatedFromUserProfile}" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_sign_up"
+        android:name="com.narcissus.marketplace.ui.sign_up.SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+
+        <deepLink app:uri="marketplace-app://sign-up" />
+
+    </fragment>
+</navigation>

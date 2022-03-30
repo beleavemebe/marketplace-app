@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.data
 
-import android.util.Patterns
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
 
 internal class UserRepositoryImpl(
     private val productsDao: ProductDao,
@@ -72,21 +70,14 @@ internal class UserRepositoryImpl(
             }
         }
 
-    private fun checkEmailFormatValidity(email: String) =
-        Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
     override suspend fun signInWithEmail(email: String, password: String): SignInResult {
-        if (!checkEmailFormatValidity(email)) {
-            return SignInResult.InvalidEmail
-        }
-
         val currentUser = firebaseAuth.currentUser
         return if (currentUser != null) {
             SignInResult.Success(currentUser.toUserProfile())
         } else try {
             trySignInWithEmail(email, password)
         } catch (e: FirebaseAuthInvalidCredentialsException) {
-            SignInResult.WrongCredentials
+            SignInResult.WrongPassword
         } catch (e: FirebaseAuthInvalidUserException) {
             SignInResult.UserNotFound
         } catch (e: FirebaseAuthException) {
@@ -155,7 +146,7 @@ internal class UserRepositoryImpl(
         } else try {
             trySignInWithGoogle(idToken)
         } catch (e: FirebaseAuthInvalidCredentialsException) {
-            SignInResult.WrongCredentials
+            SignInResult.WrongPassword
         } catch (e: FirebaseAuthInvalidUserException) {
             SignInResult.UserNotFound
         } catch (e: FirebaseAuthException) {
