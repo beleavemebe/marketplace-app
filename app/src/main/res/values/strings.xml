@@ -44,7 +44,7 @@
     <string name="welcome">Welcome!</string>
     <string name="sign_in_for_full_experience">Sign in for full experience</string>
     <string name="sign_in">Sign in</string>
-    <string name="connect_with_google">Connect With Google</string>
+    <string name="continue_with_google">Continue with Google</string>
     <string name="wrong_password">Wrong password</string>
     <string name="or">OR</string>
     <string name="i_m_new_user">I\'m new user,\u0020</string>
