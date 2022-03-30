@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment_splash">
+    app:startDestination="@id/nav_graph_splash">
 
+    <include app:graph="@navigation/nav_graph_splash"/>
     <include app:graph="@navigation/nav_graph_home"/>
     <include app:graph="@navigation/nav_graph_catalog"/>
     <include app:graph="@navigation/nav_graph_cart"/>
@@ -12,15 +13,5 @@
     <include app:graph="@navigation/nav_graph_search"/>
     <include app:graph="@navigation/nav_graph_product_details"/>
     <include app:graph="@navigation/nav_graph_sign_in"/>
-
-    <fragment
-        android:id="@+id/fragment_splash"
-        android:name="com.narcissus.marketplace.ui.splash.SplashFragment"
-        android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash">
-        <action
-            android:id="@+id/action_fragment_splash_to_fragment_home"
-            app:destination="@id/fragment_home" />
-    </fragment>
 
 </navigation>

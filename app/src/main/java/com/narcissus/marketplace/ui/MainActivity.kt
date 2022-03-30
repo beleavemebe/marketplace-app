@@ -32,15 +32,14 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
 
     private val fullScreenDestinations =
         setOf(
-            R.id.fragment_splash,
-            R.id.fragment_sign_up,
-            R.id.fragment_sign_in
+            com.narcissus.marketplace.ui.splash.R.id.nav_graph_splash,
+            R.id.nav_graph_sign_in,
         )
 
     private fun initBottomNavigation(navController: NavController) {
         binding.bottomNavigationView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id in fullScreenDestinations) {
+            if (destination.parent?.id in fullScreenDestinations) {
                 binding.bottomNavigationView.visibility = View.GONE
             } else {
                 binding.bottomNavigationView.visibility = View.VISIBLE
@@ -50,15 +49,15 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
 
     private val topLevelDestinations =
         setOf(
-            R.id.fragment_home,
-            R.id.catalogFragment,
-            R.id.cartFragment,
-            com.narcissus.marketplace.ui.user.R.id.fragment_user,
+            R.id.nav_graph_home,
+            R.id.nav_graph_catalog,
+            R.id.nav_graph_cart,
+            com.narcissus.marketplace.ui.user.R.id.nav_graph_user,
         )
 
     override fun onBackPressed() {
         // TODO: find a proper way
-        if (navController.currentDestination?.id in topLevelDestinations) {
+        if (navController.currentDestination?.parent?.id in topLevelDestinations) {
             finish()
         } else {
             super.onBackPressed()
