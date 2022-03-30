@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:layout_marginTop="14dp"
+    android:layout_marginBottom="@dimen/margin_small"
+    >
 
     <ImageView
-        android:id="@+id/ivReviewsAvatar"
+        android:id="@+id/ivReviewPreviewAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:contentDescription="@string/reviews"
@@ -16,37 +17,38 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvReviewsAuthor"
+        android:id="@+id/tvReviewPreviewAuthor"
+        style="@style/S2_subtitle_grey"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        app:layout_constraintStart_toEndOf="@+id/ivReviewsAvatar"
-        app:layout_constraintTop_toTopOf="@+id/ivReviewsAvatar"
+        android:layout_marginStart="@dimen/margin_small"
+        app:layout_constraintStart_toEndOf="@id/ivReviewPreviewAvatar"
+        app:layout_constraintTop_toTopOf="@id/ivReviewPreviewAvatar"
         tools:text="Billy Clow" />
 
     <RatingBar
-        android:id="@+id/reviewsRatingBar"
+        android:id="@+id/reviewPreviewRatingBar"
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="@dimen/margin_small"
         android:isIndicator="true"
         android:numStars="5"
-        android:progressBackgroundTint="@color/grey_light"
-        android:progressTint="@color/ratingbar_active"
         android:stepSize="1"
-        app:layout_constraintBottom_toBottomOf="@+id/ivReviewsAvatar"
-        app:layout_constraintStart_toEndOf="@+id/ivReviewsAvatar"
+        app:layout_constraintBottom_toBottomOf="@id/ivReviewPreviewAvatar"
+        app:layout_constraintStart_toEndOf="@id/ivReviewPreviewAvatar"
         tools:progress="60" />
 
     <TextView
-        android:id="@+id/tvReviewsDescription"
+        android:id="@+id/tvReviewPreviewDescription"
+        style="@style/B2_body_black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reviewsRatingBar"
+        app:layout_constraintTop_toBottomOf="@id/reviewPreviewRatingBar"
         tools:text="Aaa\nBbb\nCcc\nDdd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

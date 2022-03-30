@@ -1,6 +1,6 @@
 package com.narcissus.marketplace.data
 
-import com.narcissus.marketplace.model.ProductPreview
+import com.narcissus.marketplace.domain.model.ProductPreview
 
 internal object DummyProducts {
     val previews = listOf(

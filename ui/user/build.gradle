@@ -38,12 +38,32 @@ android {
 
 dependencies {
     implementation project(':core')
+    implementation project(':domain')
+
+    implementation("org.orbit-mvi:orbit-core:4.3.2")
+    implementation("org.orbit-mvi:orbit-viewmodel:4.3.2")
+    implementation("org.orbit-mvi:orbit-compose:4.3.2")
+    testImplementation("org.orbit-mvi:orbit-test:4.3.2")
+
+    implementation("io.coil-kt:coil:2.0.0-rc02")
+    implementation("io.coil-kt:coil-compose:2.0.0-rc02")
+
+    implementation "com.airbnb.android:lottie:5.0.3"
+    implementation "com.airbnb.android:lottie-compose:5.0.3"
 
     implementation "androidx.compose.ui:ui:1.1.1"
     implementation 'androidx.compose.ui:ui-tooling:1.1.1'
     implementation 'androidx.compose.material:material:1.1.1'
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
+
+    implementation "androidx.navigation:navigation-compose:2.4.1"
+    implementation "androidx.navigation:navigation-ui:2.4.1"
+    implementation "androidx.navigation:navigation-runtime:2.4.1"
+    implementation "androidx.navigation:navigation-fragment:2.4.1"
+
+    implementation "io.insert-koin:koin-core:3.1.5"
+    implementation "io.insert-koin:koin-android:3.1.5"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

@@ -4,17 +4,16 @@ import com.narcissus.marketplace.apiclient.api.model.ProductDetailsResponse
 import com.narcissus.marketplace.apiclient.api.model.ReviewResponseData
 import com.narcissus.marketplace.apiclient.api.model.SimilarProductsResponseData
 import com.narcissus.marketplace.apiclient.api.service.ApiService
-import com.narcissus.marketplace.model.ProductDetails
-import com.narcissus.marketplace.model.Review
-import com.narcissus.marketplace.model.SimilarProduct
-import com.narcissus.marketplace.repository.remote.ProductsDetailsRepository
-import com.narcissus.marketplace.util.ActionResult
+import com.narcissus.marketplace.domain.model.ProductDetails
+import com.narcissus.marketplace.domain.model.Review
+import com.narcissus.marketplace.domain.model.SimilarProduct
+import com.narcissus.marketplace.domain.repository.ProductsDetailsRepository
 
 internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService) :
     ProductsDetailsRepository {
-    override suspend fun getProductDetailsById(productId: String): ActionResult<ProductDetails> {
+    override suspend fun getProductDetailsById(productId: String): ProductDetails {
         val productDetails = apiService.getProductDetails(productId)
-        return ActionResult.SuccessResult(mapDetails(productDetails))
+        return mapDetails(productDetails)
     }
 
     private fun mapDetails(detailsResponse: ProductDetailsResponse) = with(detailsResponse.data) {

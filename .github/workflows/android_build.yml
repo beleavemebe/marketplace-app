@@ -23,13 +23,21 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Create `google-services.json` file
+      - name: Create `google-services.json` app file
         run: cat /home/runner/work/marketplace-app/marketplace-app/app/google-services.json | base64
 
-      - name: Fill `google-services.json` with content
+      - name: Create `google-services.json` data file
+        run: cat /home/runner/work/marketplace-app/marketplace-app/data/google-services.json | base64
+
+      - name: Fill :app `google-services.json` with content
         env:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo $DATA > /home/runner/work/marketplace-app/marketplace-app/app/google-services.json
+
+      - name: Fill :data `google-services.json` with content
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/marketplace-app/marketplace-app/data/google-services.json
 
       - name: Add api key to local.properties
         env:

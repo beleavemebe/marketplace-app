@@ -1,63 +1,74 @@
 package com.narcissus.marketplace.ui.catalog
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import coil.load
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.databinding.ListItemDepartmentBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
+import com.narcissus.marketplace.databinding.ListItemLoadingDepartmentBinding
+import com.narcissus.marketplace.domain.model.Department
 
 typealias DepartmentBinding = ListItemDepartmentBinding
+typealias LoadingDepartmentBinding = ListItemLoadingDepartmentBinding
 
-data class DepartmentListItem(
-    val name: String,
-    val image: String
-) {
-    companion object {
-        @JvmStatic
-        fun inflateBinding(
-            inflater: LayoutInflater,
-            parent: ViewGroup,
-        ) = ListItemDepartmentBinding.inflate(inflater, parent, false)
+sealed class DepartmentListItem {
+    data class DepartmentItem(val department: Department) : DepartmentListItem() {
+        companion object {
+            @JvmStatic
+            private fun inflateBinding(
+                inflater: LayoutInflater,
+                parent: ViewGroup,
+            ) = DepartmentBinding.inflate(inflater, parent, false)
 
-        fun delegate(scope: CoroutineScope) =
-            adapterDelegateViewBinding<DepartmentListItem, DepartmentListItem, DepartmentBinding>(
-                ::inflateBinding
-            ) {
-                val storage = Firebase.storage.reference
-                val maxDownloadSize = 1L * 1024 * 1024
-
-                suspend fun fetchBitmap(imgName: String): Bitmap {
-                    val path = storage.child("departmentImage/$imgName")
-
-                    val bytes = withContext(Dispatchers.IO) {
-                        path.getBytes(maxDownloadSize).await()
-                    }
-
-                    val bitmap = withContext(Dispatchers.Default) {
-                        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    }
-
-                    return bitmap
-                }
-
-                bind {
-                    binding.tvName.text = item.name
-                    scope.launch {
-                        val bitmap = fetchBitmap(item.image)
-                        binding.ivImage.load(bitmap) {
+            fun delegate() =
+                adapterDelegateViewBinding<DepartmentItem, DepartmentListItem, DepartmentBinding>(
+                    ::inflateBinding,
+                ) {
+                    bind {
+                        binding.tvName.text = item.department.name
+                        binding.ivImage.load(item.department.imageUrl) {
                             transformations(GradientTransformation())
                         }
                     }
                 }
+        }
+    }
+
+    class LoadingDepartmentItem : DepartmentListItem() {
+        companion object {
+            @JvmStatic
+            private fun inflateBinding(
+                inflater: LayoutInflater,
+                parent: ViewGroup,
+            ) = LoadingDepartmentBinding.inflate(inflater, parent, false)
+
+            fun delegate() =
+                adapterDelegateViewBinding<LoadingDepartmentItem, DepartmentListItem, LoadingDepartmentBinding>(
+                    ::inflateBinding
+                ) {
+                }
+        }
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DepartmentListItem>() {
+            override fun areItemsTheSame(
+                oldItem: DepartmentListItem,
+                newItem: DepartmentListItem,
+            ): Boolean {
+                return when (oldItem) {
+                    is DepartmentItem -> newItem is DepartmentItem && oldItem.department.departmentId == newItem.department.departmentId
+                    is LoadingDepartmentItem -> newItem is LoadingDepartmentItem && oldItem === newItem
+                }
             }
+
+            override fun areContentsTheSame(
+                oldItem: DepartmentListItem,
+                newItem: DepartmentListItem,
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

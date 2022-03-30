@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="116dp"
+    android:layout_marginVertical="2dp"
+    android:layout_marginStart="@dimen/margin_default"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/product_img_example" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvPercentOff"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="@dimen/margin_small"
+            app:cardBackgroundColor="#FF707070"
+            app:cardCornerRadius="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="@+id/ivImage"
+            app:layout_constraintStart_toEndOf="@+id/ivImage"
+            app:layout_constraintTop_toTopOf="@+id/ivImage">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPercentOff"
+                style="@style/Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                tools:text="-39%" />
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvProductTitle"
+            style="@style/B2_body_black"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/tvOldPrice"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineContentEnd"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cvPercentOff"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Product name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvOldPrice"
+            style="@style/S2_subtitle_grey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvNewPrice"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineContentEnd"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/tvProductTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvProductTitle"
+            tools:text="$2499" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvNewPrice"
+            style="@style/B1_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_semibold_ttf"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineContentEnd"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/tvOldPrice"
+            app:layout_constraintTop_toBottomOf="@+id/tvOldPrice"
+            tools:text="$1799" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineContentEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_default" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
