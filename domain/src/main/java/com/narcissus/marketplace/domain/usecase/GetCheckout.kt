@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.domain.usecase
 
-
 import com.narcissus.marketplace.domain.model.CheckoutItem
 import com.narcissus.marketplace.domain.model.toCheckoutItem
 import com.narcissus.marketplace.domain.repository.CartRepository
@@ -12,7 +11,7 @@ class GetCheckout(private val cartRepository: CartRepository) {
         cartRepository.getCart().map { items ->
             items.filter { cartItem ->
                 cartItem.isSelected
-            }.map{
+            }.map {
                 it.toCheckoutItem()
             }
         }

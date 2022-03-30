@@ -113,8 +113,8 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         }
     }
 
-    private fun initCheckoutButton(){
-        binding.btnCheckout.setOnClickListener{
+    private fun initCheckoutButton() {
+        binding.btnCheckout.setOnClickListener {
             findNavController().navigate(CartFragmentDirections.actionCartToCheckout())
         }
     }

@@ -12,5 +12,4 @@ class CheckoutViewModel(
     val getCheckoutFlow = getCheckout()
 
     val getTotalFlow = getCartCost()
-
 }

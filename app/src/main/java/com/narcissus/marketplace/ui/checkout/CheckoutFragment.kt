@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
@@ -54,7 +53,6 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
     }
 
     private fun CheckoutItem.toCheckoutListItem() = CheckoutListItem.Detail(this)
-
 
     override fun onDestroyView() {
         super.onDestroyView()

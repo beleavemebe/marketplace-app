@@ -1,8 +1,8 @@
 package com.narcissus.marketplace.di
 
 import com.narcissus.marketplace.ui.cart.CartViewModel
-import com.narcissus.marketplace.ui.checkout.CheckoutViewModel
 import com.narcissus.marketplace.ui.catalog.CatalogViewModel
+import com.narcissus.marketplace.ui.checkout.CheckoutViewModel
 import com.narcissus.marketplace.ui.home.HomeViewModel
 import com.narcissus.marketplace.ui.product_details.ProductDetailsViewModel
 import com.narcissus.marketplace.ui.sign_in.SignInViewModel
