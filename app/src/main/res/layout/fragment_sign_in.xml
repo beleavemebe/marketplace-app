@@ -10,17 +10,17 @@
         android:id="@+id/tbSignIn"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:elevation="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="1dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvSignInTitle"
         style="@style/H5_headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="64dp"
         android:text="@string/welcome"
         android:textColor="?attr/colorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,81 +38,85 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSignInTitle" />
 
-
     <include
         android:id="@+id/layoutEmailPasswordInputs"
         layout="@layout/email_password_text_inputs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignSubInTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSignSubInTitle"
+        app:layout_constraintVertical_chainStyle="packed" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSignInWithEmail"
         style="@style/Btn"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginHorizontal="32dp"
         android:background="@drawable/button_gradient"
         android:text="@string/sign_in"
-        android:textColor="?attr/colorSurface"
-        app:layout_constraintBottom_toTopOf="@id/tvSignInOr"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/tvSignInOr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutEmailPasswordInputs" />
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/tvSignInOr"
         style="@style/B2_body_grey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/or"
         app:layout_constraintBottom_toTopOf="@id/btnSignInWithGoogle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnSignInWithEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSignInWithEmail" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btnSignInWithGoogle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/button_8dp_corners_emty_bg_stroke_background"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintBottom_toTopOf="@id/buttonSignUpLayout"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_google_background"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignUpLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSignInOr">
+        app:layout_constraintTop_toBottomOf="@+id/tvSignInOr">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/margin_default"
             android:src="@drawable/ic_google"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/connect_with_google" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView"
             style="@style/B1_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/connect_with_google"
+            android:text="@string/continue_with_google"
             android:textColor="?attr/colorOnSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.235"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -121,7 +125,7 @@
         android:id="@+id/buttonSignUpLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/margin_default"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

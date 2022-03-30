@@ -18,7 +18,7 @@ data class ProductDetailsResponseData(
     val price: Int,
     @SerializedName(SerializedNames.type)
     val type: String,
-    @SerializedName(SerializedNames.departmentName)
+    @SerializedName(SerializedNames.productDepartment)
     val departmentName: String,
     @SerializedName(SerializedNames.stock)
     val stock: Int,
@@ -63,7 +63,7 @@ class SimilarProductsResponseData(
     val price: Int,
     @SerializedName(SerializedNames.type)
     val type: String,
-    @SerializedName(SerializedNames.departmentName)
+    @SerializedName(SerializedNames.productDepartment)
     val departmentName: String,
     @SerializedName(SerializedNames.stock)
     val stock: Int,

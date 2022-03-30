@@ -36,7 +36,7 @@ class ProductDetailsViewModel(
     private val productDetailsFlow: Flow<ProductDetails> =
         flow {
             val details = runCatching {
-                getProductDetails(productId).getOrThrow()
+                getProductDetails(productId)
             }.getOrNull()
 
             if (details != null) {

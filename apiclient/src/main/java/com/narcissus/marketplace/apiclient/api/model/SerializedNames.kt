@@ -6,7 +6,7 @@ internal object SerializedNames {
     const val productName = "product_name"
     const val price = "product_price"
     const val type = "product_type"
-    const val departmentName = "product_department"
+    const val productDepartment = "product_department"
     const val stock = "product_stock"
     const val color = "product_color"
     const val material = "product_material"
@@ -21,4 +21,8 @@ internal object SerializedNames {
     const val reviewRating = "review_rating"
     const val reviewAvatar = "review_avatar"
     const val similarProducts = "product_similar"
+    const val departmentId = "department_id"
+    const val departmentName = "department_name"
+    const val departmentNumProducts = "department_numProducts"
+    const val departmentImageUrl = "department_imageUrl"
 }

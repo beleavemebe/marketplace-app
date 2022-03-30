@@ -2,7 +2,6 @@ package com.narcissus.marketplace.apiclient.di
 
 import com.narcissus.marketplace.apiclient.Constants
 import com.narcissus.marketplace.apiclient.Constants.BASE_URL
-import com.narcissus.marketplace.apiclient.api.interceptor.ApiKeyInterceptor
 import com.narcissus.marketplace.apiclient.api.interceptor.CacheInterceptor
 import com.narcissus.marketplace.apiclient.api.service.ApiService
 import okhttp3.Cache
@@ -22,7 +21,6 @@ val apiClientModule = module {
 
     single {
         OkHttpClient().newBuilder()
-            .addInterceptor(ApiKeyInterceptor())
             .addInterceptor(CacheInterceptor())
             .cache(get())
             .build()

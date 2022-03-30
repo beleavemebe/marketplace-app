@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.apiclient.api.service
 
+import com.narcissus.marketplace.apiclient.api.model.DepartmentsResponse
 import com.narcissus.marketplace.apiclient.api.model.ProductDetailsResponse
 import com.narcissus.marketplace.apiclient.api.model.ProductPreviewsResponse
 import retrofit2.http.GET
@@ -31,4 +32,7 @@ interface ApiService {
         @Query("limit") limit: Int,
         @Query("page") page: Int
     ): ProductPreviewsResponse
+
+    @GET("departments")
+    suspend fun getDepartments(): DepartmentsResponse
 }

@@ -7,12 +7,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.navigation.destination.HomeDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.Constants
 import com.narcissus.marketplace.core.util.launchWhenStarted
-import com.narcissus.marketplace.databinding.FragmentSplashBinding
+import com.narcissus.marketplace.ui.splash.databinding.FragmentSplashBinding
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 
