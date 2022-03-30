@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,8 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.ApiException
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.navigation.destination.SignUpDestination
@@ -41,12 +44,13 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     private val oneTapClient: SignInClient by lazy { Identity.getSignInClient(requireActivity()) }
 
     private val args by navArgs<SignInFragmentArgs>()
-    private val isNavigatedFromUserProfile by lazy { args.isNavigatedFromUserProfile }
+    private val hasNavigatedFromUserProfile by lazy { args.isNavigatedFromUserProfile }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSignInBinding.bind(view)
         initToolbar()
+        initTextChangedListeners()
         initSignInListener()
         initSignUpListener()
         observeAuthState()
@@ -58,12 +62,21 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         binding.tbSignIn.setNavigationIcon(R.drawable.ic_close)
     }
 
+    private fun initTextChangedListeners() {
+        binding.layoutEmailPasswordInputs.etEmail.doAfterTextChanged {
+            binding.layoutEmailPasswordInputs.tiEmail.error = null
+        }
+
+        binding.layoutEmailPasswordInputs.etPassword.doAfterTextChanged {
+            binding.layoutEmailPasswordInputs.tiPassword.error = null
+        }
+    }
+
     private fun initSignInListener() {
         binding.btnSignInWithEmail.setOnClickListener {
-            cleanInputErrors()
             viewModel.signInWithEmailPassword(
-                binding.layoutEmailPasswordInputs.emailTextInputLayout.editText?.text.toString(),
-                binding.layoutEmailPasswordInputs.passwordTextInputLayout.editText?.text.toString(),
+                binding.layoutEmailPasswordInputs.etEmail.text.toString(),
+                binding.layoutEmailPasswordInputs.etPassword.text.toString(),
             )
         }
         binding.btnSignInWithGoogle.setOnClickListener {
@@ -80,26 +93,14 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     private fun observeAuthState() {
         viewModel.signInResultFlow.onEach { result ->
             when (result) {
-                is SignInResult.Error -> showEmailAuthErrorToast()
-                is SignInResult.InvalidEmail -> setEmailInputLayoutError()
-                is SignInResult.Success -> navigateToCallScreen(isNavigatedFromUserProfile)
-                is SignInResult.UserNotFound -> showUserNotFoundToast()
-                is SignInResult.WrongCredentials -> setPasswordInputLayoutError()
+                is SignInResult.Error -> toastError()
+                is SignInResult.InvalidEmail -> showInvalidEmailError()
+                is SignInResult.BlankPassword -> showBlankPasswordError()
+                is SignInResult.UserNotFound -> showUserNotFoundError()
+                is SignInResult.WrongPassword -> showWrongPasswordError()
+                is SignInResult.Success -> navigateBack(hasNavigatedFromUserProfile)
             }
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun cleanInputErrors() {
-        binding.layoutEmailPasswordInputs.passwordTextInputLayout.error = null
-        binding.layoutEmailPasswordInputs.emailTextInputLayout.error = null
-    }
-
-    private fun navigateToCallScreen(isNavigatedFromUserProfile: Boolean) {
-        if (isNavigatedFromUserProfile) {
-            findNavController().popBackStack()
-        } else {
-            // navigateToCheckOut
-        }
     }
 
     private fun navigateToSignUp() {
@@ -107,22 +108,36 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
         navigator.navigate(destination)
     }
 
-    private fun showUserNotFoundToast() {
-        Toast.makeText(context, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show()
+    private fun toastError() {
+        Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
     }
 
-    private fun setPasswordInputLayoutError() {
-        binding.layoutEmailPasswordInputs.passwordTextInputLayout.error =
-            getString(R.string.wrong_email_or_password)
-    }
-
-    private fun setEmailInputLayoutError() {
-        binding.layoutEmailPasswordInputs.emailTextInputLayout.error =
+    private fun showInvalidEmailError() {
+        binding.layoutEmailPasswordInputs.tiEmail.error =
             getString(R.string.wrong_email_format)
     }
 
-    private fun showEmailAuthErrorToast() {
-        Toast.makeText(context, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
+    private fun showBlankPasswordError() {
+        binding.layoutEmailPasswordInputs.tiPassword.error =
+            getString(R.string.password_is_blank)
+    }
+
+    private fun showUserNotFoundError() {
+        binding.layoutEmailPasswordInputs.tiEmail.error =
+            getString(R.string.user_not_found)
+    }
+
+    private fun showWrongPasswordError() {
+        binding.layoutEmailPasswordInputs.tiPassword.error =
+            getString(R.string.wrong_password)
+    }
+
+    private fun navigateBack(hasNavigatedFromUserProfile: Boolean) {
+        if (hasNavigatedFromUserProfile) {
+            findNavController().popBackStack()
+        } else {
+            // navigateToCheckOut
+        }
     }
 
     override fun onDestroy() {
@@ -140,10 +155,15 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
                 } catch (e: ApiException) {
                     showSignInWithGoogleAccountErrorDialog()
                 }
-            } else {
-                showSignInWithGoogleAccountErrorDialog()
+            } else if (!areGooglePlayServicesAvailable()) {
+                showPlayServicesUnavailableErrorDialog()
             }
         }
+
+    private fun areGooglePlayServicesAvailable() =
+        GoogleApiAvailability
+            .getInstance()
+            .isGooglePlayServicesAvailable(requireContext()) == ConnectionResult.SUCCESS
 
     private val googleOneTapUIAuthLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
@@ -166,10 +186,25 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     }
 
     private fun showSignInWithGoogleAccountErrorDialog() {
-        AlertDialog.Builder(context)
-            .setMessage(getString(R.string.google_signin_error))
-            .setPositiveButton(getString(R.string.ok), null).create()
-            .show()
+        AlertDialog.Builder(requireContext())
+            .setMessage(
+                getString(
+                    R.string.google_signin_error
+                )
+            )
+            .setPositiveButton(getString(R.string.ok), null)
+            .create().show()
+    }
+
+    private fun showPlayServicesUnavailableErrorDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage(
+                getString(
+                    R.string.play_services_unavailable
+                )
+            )
+            .setPositiveButton(getString(R.string.ok), null)
+            .create().show()
     }
 
     private fun signInWithGoogleAccountByOneTapUI() {

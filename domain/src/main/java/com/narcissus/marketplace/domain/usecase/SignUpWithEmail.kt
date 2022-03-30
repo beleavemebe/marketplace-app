@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.domain.usecase
 
 import com.narcissus.marketplace.domain.auth.PasswordRequirement
+import com.narcissus.marketplace.domain.auth.Patterns.EMAIL
 import com.narcissus.marketplace.domain.auth.SignUpResult
 import com.narcissus.marketplace.domain.repository.UserRepository
 
@@ -20,9 +21,5 @@ class SignUpWithEmail(private val userRepository: UserRepository) {
         }
 
         return userRepository.signUpWithEmail(fullName, email, password)
-    }
-
-    private companion object {
-        const val EMAIL = "^[A-Za-z](.*)([@])(.+)(\\.)(.+)"
     }
 }
