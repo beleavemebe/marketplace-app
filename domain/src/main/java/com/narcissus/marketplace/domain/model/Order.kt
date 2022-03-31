@@ -6,20 +6,22 @@ data class Order(
     val id: Int,
     val date: Date,
     val status: OrderStatus,
-    val items:List<OrderItem>
+    val items: List<OrderItem>,
 )
 
 enum class OrderStatus {
     Paid,
-    Canceled
+    Completed,
+    InDelivering,
+    Canceled,
 }
 
 data class OrderItem(
-    val productId: String ="",
-    val productImage: String ="",
-    val productPrice: Int =0,
-    val productName: String="",
-    val amount: Int =0
+    val productId: String = "",
+    val productImage: String = "",
+    val productPrice: Int = 0,
+    val productName: String = "",
+    val amount: Int = 0,
 )
 
 
