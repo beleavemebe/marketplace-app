@@ -25,5 +25,5 @@ internal object SerializedNames {
     const val departmentName = "department_name"
     const val departmentNumProducts = "department_numProducts"
     const val departmentImageUrl = "department_imageUrl"
-    const val isAlive = "is_alive"
+    const val isAvailable = "is_available"
 }

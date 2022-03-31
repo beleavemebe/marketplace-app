@@ -23,7 +23,7 @@ class SplashViewModel(
         viewModelScope.launch {
             launch {
                 val apiStatus = getApiStatus()
-                if (apiStatus.isAlive) {
+                if (apiStatus.isAvailable) {
                     val home: HomeDestination by inject()
                     _destinationFlow.emit(home)
                 }
