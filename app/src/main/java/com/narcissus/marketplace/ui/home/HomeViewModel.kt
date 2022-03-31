@@ -31,15 +31,15 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private val topRatedFlow = productListFlow {
-        getTopRatedProducts().getOrThrow()
+        getTopRatedProducts()
     }
 
     private val topSalesFlow = productListFlow {
-        getTopSalesProducts().getOrThrow()
+        getTopSalesProducts()
     }
 
     private val randomFlow = productListFlow {
-        getRandomProducts().getOrThrow()
+        getRandomProducts()
     }
 
     private val featuredTabFlow = MutableStateFlow(FeaturedTab.TOP_RATED)

@@ -6,13 +6,12 @@ import com.narcissus.marketplace.domain.auth.SignOutResult
 import com.narcissus.marketplace.domain.auth.SignUpResult
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.User
-import com.narcissus.marketplace.domain.util.ActionResult
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     suspend fun addCard(cardNumber: Long, svv: Int, expirationDate: String)
 
-    suspend fun getUserData(): ActionResult<User>
+    suspend fun getUserData(): User
     suspend fun isUserAuthenticated(): Boolean
     suspend fun signInWithEmail(email: String, password: String): SignInResult
     suspend fun signUpWithEmail(fullName: String, email: String, password: String): SignUpResult

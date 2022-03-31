@@ -6,6 +6,7 @@ import com.narcissus.marketplace.domain.usecase.GetAuthStateFlow
 import com.narcissus.marketplace.domain.usecase.GetCart
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCartItemsAmount
+import com.narcissus.marketplace.domain.usecase.GetCheckout
 import com.narcissus.marketplace.domain.usecase.GetDepartments
 import com.narcissus.marketplace.domain.usecase.GetOrderList
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
@@ -50,4 +51,5 @@ val domainModule = module {
     factory { SignUpWithEmail(get()) }
     factory { SignOut(get()) }
     factory { GetAuthStateFlow(get()) }
+    factory { GetCheckout(get()) }
 }
