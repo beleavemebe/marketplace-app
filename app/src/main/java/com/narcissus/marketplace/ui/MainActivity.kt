@@ -9,12 +9,12 @@ import androidx.navigation.Navigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.navigation.MarketplaceCrossModuleNavigator
+import com.narcissus.marketplace.core.navigation.MarketplaceNavigator
 import com.narcissus.marketplace.core.navigation.destination.NavDestination
 import com.narcissus.marketplace.core.navigation.destination.uri
 import com.narcissus.marketplace.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
+class MainActivity : AppCompatActivity(), MarketplaceNavigator {
     private lateinit var binding: ActivityMainBinding
 
     private val navController by lazy {

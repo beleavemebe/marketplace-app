@@ -10,4 +10,15 @@
         android:name="com.narcissus.marketplace.ui.splash.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash"/>
+
+    <fragment
+        android:id="@+id/fragment_marketplace_unavailable"
+        android:name="com.narcissus.marketplace.ui.splash.marketplaceunavailable.MarketplaceUnavailableFragment"
+        android:label="MarketplaceUnavailableFragment"
+        tools:layout="@layout/fragment_marketplace_unavailable">
+
+        <deepLink app:uri="marketplace-app://splash/unavailable" />
+
+    </fragment>
+
 </navigation>

@@ -1,6 +1,7 @@
 package com.narcissus.marketplace.data.di
 
 import com.narcissus.marketplace.apiclient.di.apiClientModule
+import com.narcissus.marketplace.data.ApiStatusRepositoryImpl
 import com.narcissus.marketplace.data.CartRepositoryImpl
 import com.narcissus.marketplace.data.DepartmentRepositoryImpl
 import com.narcissus.marketplace.data.OrderRepositoryImpl
@@ -10,6 +11,7 @@ import com.narcissus.marketplace.data.UserRepositoryImpl
 import com.narcissus.marketplace.data.firebase.di.Qualifiers.CartReference
 import com.narcissus.marketplace.data.firebase.di.firebaseModule
 import com.narcissus.marketplace.data.persistence.di.persistenceModule
+import com.narcissus.marketplace.domain.repository.ApiStatusRepository
 import com.narcissus.marketplace.domain.repository.CartRepository
 import com.narcissus.marketplace.domain.repository.DepartmentRepository
 import com.narcissus.marketplace.domain.repository.OrderRepository
@@ -41,5 +43,8 @@ val dataModule = module {
     }
     single<UserRepository> {
         UserRepositoryImpl(productsDao = get(), firebaseAuth = get())
+    }
+    single<ApiStatusRepository> {
+        ApiStatusRepositoryImpl(apiService = get())
     }
 }

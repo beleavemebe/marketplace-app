@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="we_re_offline_come_back_another_time">We\'re offline.\nCome back another time!</string>
+    <string name="oops">Oops!</string>
+    <string name="contact_us">Contact us</string>
+</resources>

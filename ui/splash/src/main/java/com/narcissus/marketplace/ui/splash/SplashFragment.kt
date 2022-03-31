@@ -5,20 +5,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.narcissus.marketplace.core.navigation.destination.HomeDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.Constants
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.ui.splash.databinding.FragmentSplashBinding
 import kotlinx.coroutines.flow.onEach
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
     private var _binding: FragmentSplashBinding? = null
 
-    private val splashViewModel: SplashViewModel by viewModels()
+    private val splashViewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +27,13 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSplashBinding.bind(view)
+        observeDestinationFlow()
+    }
 
-        splashViewModel.isLaunchedFlow.onEach { isLaunched ->
-            if (!isLaunched) return@onEach
-
-            val homeDestination: HomeDestination by inject()
-            navigator.navigate(homeDestination)
-        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
+    private fun observeDestinationFlow() {
+        splashViewModel.destinationFlow
+            .onEach(navigator::navigate)
+            .launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun switchTheme() {

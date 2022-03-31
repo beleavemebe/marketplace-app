@@ -2,6 +2,7 @@ package com.narcissus.marketplace.di
 
 import com.narcissus.marketplace.data.di.dataModule
 import com.narcissus.marketplace.domain.usecase.AddToCart
+import com.narcissus.marketplace.domain.usecase.GetApiStatus
 import com.narcissus.marketplace.domain.usecase.GetAuthStateFlow
 import com.narcissus.marketplace.domain.usecase.GetCart
 import com.narcissus.marketplace.domain.usecase.GetCartCost
@@ -49,4 +50,6 @@ val domainModule = module {
     factory { SignUpWithEmail(get()) }
     factory { SignOut(get()) }
     factory { GetAuthStateFlow(get()) }
+
+    factory { GetApiStatus(get()) }
 }

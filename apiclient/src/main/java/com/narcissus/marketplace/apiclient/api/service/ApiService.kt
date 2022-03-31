@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.apiclient.api.service
 
+import com.narcissus.marketplace.apiclient.api.model.ApiStatusResponse
 import com.narcissus.marketplace.apiclient.api.model.DepartmentsResponse
 import com.narcissus.marketplace.apiclient.api.model.ProductDetailsResponse
 import com.narcissus.marketplace.apiclient.api.model.ProductPreviewsResponse
@@ -35,4 +36,7 @@ interface ApiService {
 
     @GET("departments")
     suspend fun getDepartments(): DepartmentsResponse
+
+    @GET("status")
+    suspend fun getApiStatus(): ApiStatusResponse
 }
