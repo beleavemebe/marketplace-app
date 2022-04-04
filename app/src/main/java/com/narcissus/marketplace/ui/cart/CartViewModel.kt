@@ -32,7 +32,6 @@ class CartViewModel(
 
     val itemAmountFlow = getCartItemsAmount()
 
-
     val isSelectAllCheckboxActive =
         cartFlow.mapLatest { cartItems ->
             cartItems.all(CartItem::isSelected)
@@ -69,5 +68,4 @@ class CartViewModel(
     }
 
     val isSelectedItem = cartFlow.map { items -> items.any { cartItem -> cartItem.isSelected } }
-
 }
