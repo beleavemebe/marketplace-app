@@ -41,7 +41,6 @@ internal class OrderRepositoryImpl(
             orderApiService.payForTheOrder(orderList.toOrderQueryBody()).toOrderPaymentResult()
         }
 
-
     private fun ProducerScope<List<Order>>.createValueEventListener() =
         object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -54,21 +53,22 @@ internal class OrderRepositoryImpl(
             override fun onCancelled(error: DatabaseError) {}
         }
 
-
     override suspend fun saveOrder(order: Order) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             orderRef.child(order.number.toString()).setValue(order)
         }
     }
 
     private fun List<CartItem>.toOrderQueryBody(): OrderPaymentQueryBody =
         OrderPaymentQueryBody(
-            (this.map {
-                OrderPaymentQueryBodyItem(
-                    it.productId,
-                    it.amount,
-                )
-            }),
+            (
+                this.map {
+                    OrderPaymentQueryBodyItem(
+                        it.productId,
+                        it.amount,
+                    )
+                }
+                ),
         )
 
     private fun OrderPaymentResponse.toOrderPaymentResult(): OrderPaymentResult =
@@ -88,5 +88,4 @@ internal class OrderRepositoryImpl(
     companion object {
         const val PAYMENT_STATUS_PAID = "paid"
     }
-
 }

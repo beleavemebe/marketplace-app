@@ -28,5 +28,3 @@ data class OrderItem(
 
 fun CartItem.toOrderItem(): OrderItem =
     OrderItem(productId, productImage, productPrice, productName, amount, productPrice * amount)
-
-

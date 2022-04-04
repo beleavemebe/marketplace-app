@@ -7,5 +7,5 @@ data class CartItemBean(
     var productName: String? = null,
     var amount: Int? = null,
     var isSelected: Boolean? = null,
-    var stock:Int?= null
+    var stock: Int? = null
 )

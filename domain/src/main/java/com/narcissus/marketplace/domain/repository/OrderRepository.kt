@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
     fun getOrders(): Flow<List<Order>>
-    suspend fun payForTheOrder(orderList:List<CartItem>):OrderPaymentResult
+    suspend fun payForTheOrder(orderList: List<CartItem>): OrderPaymentResult
     suspend fun saveOrder(order: Order)
 }

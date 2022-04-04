@@ -7,6 +7,6 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val workerModule = module {
-    worker { CheckoutForegroundWorker(androidContext(),get()) }
+    worker { CheckoutForegroundWorker(androidContext(), get()) }
     factory(named("checkout worker result key")) { "checkout result message" }
 }

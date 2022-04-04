@@ -1,7 +1,6 @@
 package com.narcissus.marketplace.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -9,21 +8,12 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.navigation.MarketplaceCrossModuleNavigator
 import com.narcissus.marketplace.core.navigation.destination.NavDestination
 import com.narcissus.marketplace.core.navigation.destination.uri
 import com.narcissus.marketplace.databinding.ActivityMainBinding
-import com.narcissus.marketplace.ui.checkout.CheckoutForegroundWorker
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator, KoinComponent {
     private lateinit var binding: ActivityMainBinding
@@ -33,7 +23,6 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator, KoinC
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navHostFragment.navController
     }
-
 
 //    private val constraints = Constraints.Builder()
 //        .setRequiredNetworkType(NetworkType.CONNECTED)
