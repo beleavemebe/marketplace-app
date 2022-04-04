@@ -35,40 +35,40 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator, KoinC
     }
 
 
-    private val constraints = Constraints.Builder()
-        .setRequiredNetworkType(NetworkType.CONNECTED)
-        .setRequiresStorageNotLow(true)
-        .build()
+//    private val constraints = Constraints.Builder()
+//        .setRequiredNetworkType(NetworkType.CONNECTED)
+//        .setRequiresStorageNotLow(true)
+//        .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initBottomNavigation(navController)
-        val workRequest = OneTimeWorkRequest.Builder(CheckoutForegroundWorker::class.java)
-            .setConstraints(constraints)
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST).build()
-        val workManager = WorkManager.getInstance(this)
-        workManager.getWorkInfoByIdLiveData(workRequest.id)
-            .observe(this) { workInfo: WorkInfo? ->
-                Log.d("DEBUG", workInfo.toString())
-                if (workInfo != null) {
-                    when (workInfo.state) {
-                        WorkInfo.State.SUCCEEDED -> Log.d(
-                            "DEBUG",
-                            "WORKER RETURNED SUCCESS RESULT",
-                        )
-                        WorkInfo.State.FAILED -> workInfo.outputData.getString("checkout result message")
-                            ?.let { Log.d("DEBUG", it) }
-                        WorkInfo.State.RUNNING -> Log.d(
-                            "DEBUG",
-                            "WORKER RUNNING",
-                        )
-                        else -> {}
-                    }
-                }
-            }
-        workManager.enqueue(workRequest)
+//        val workRequest = OneTimeWorkRequest.Builder(CheckoutForegroundWorker::class.java)
+//            .setConstraints(constraints)
+//            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST).build()
+//        val workManager = WorkManager.getInstance(this)
+//        workManager.getWorkInfoByIdLiveData(workRequest.id)
+//            .observe(this) { workInfo: WorkInfo? ->
+//                Log.d("DEBUG", workInfo.toString())
+//                if (workInfo != null) {
+//                    when (workInfo.state) {
+//                        WorkInfo.State.SUCCEEDED -> Log.d(
+//                            "DEBUG",
+//                            "WORKER RETURNED SUCCESS RESULT",
+//                        )
+//                        WorkInfo.State.FAILED -> workInfo.outputData.getString("checkout result message")
+//                            ?.let { Log.d("DEBUG", it) }
+//                        WorkInfo.State.RUNNING -> Log.d(
+//                            "DEBUG",
+//                            "WORKER RUNNING",
+//                        )
+//                        else -> {}
+//                    }
+//                }
+//            }
+//        workManager.enqueue(workRequest)
     }
 
     private val fullScreenDestinations =
