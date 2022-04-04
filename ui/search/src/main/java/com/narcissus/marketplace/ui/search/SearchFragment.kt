@@ -2,20 +2,16 @@ package com.narcissus.marketplace.ui.search
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.narcissus.marketplace.ui.search.databinding.FragmentSearchHistoryBinding
+import androidx.navigation.fragment.navArgs
 
-class SearchFragment : Fragment(R.layout.fragment_search_history) {
-    private var _binding: FragmentSearchHistoryBinding? = null
-    private val binding get() = _binding!!
+class SearchFragment : Fragment(R.layout.fragment_search) {
+    private val args by navArgs<SearchFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentSearchHistoryBinding.bind(view)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        view.findViewById<TextView>(R.id.tvContent).text =
+            args.query + " " + args.department + " " + args.sortBy
     }
 }
