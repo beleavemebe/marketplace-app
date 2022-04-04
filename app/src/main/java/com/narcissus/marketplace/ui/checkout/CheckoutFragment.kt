@@ -1,9 +1,11 @@
 package com.narcissus.marketplace.ui.checkout
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
+import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentCheckoutBinding
@@ -13,14 +15,22 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
+class CheckoutFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CheckoutViewModel by viewModel()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentCheckoutBinding.bind(inflater.inflate(R.layout.fragment_checkout, container))
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentCheckoutBinding.bind(view)
         binding.rvCheckoutDetails.adapter = adapter
         subscribeToViewModel()
     }
@@ -54,7 +64,6 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
     }
 
     private fun CheckoutItem.toCheckoutListItem() = CheckoutListItem.Detail(this)
-
 
     override fun onDestroyView() {
         super.onDestroyView()

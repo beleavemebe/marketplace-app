@@ -18,7 +18,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: CartViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,6 +61,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         observeCartItemAmount()
         observeCart()
         observeAreAllItemsSelected()
+        observeSelectedItems()
     }
 
     private fun observeCartCost() {
@@ -104,7 +104,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun initButtons() {
         initSelectAllCheckbox()
         initDeleteSelectedButton()
-        initCheckoutButton()
     }
 
     private fun initSelectAllCheckbox() {
@@ -113,10 +112,13 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         }
     }
 
-    private fun initCheckoutButton(){
-        binding.btnCheckout.setOnClickListener{
-            findNavController().navigate(CartFragmentDirections.actionCartToCheckout())
-        }
+    private fun observeSelectedItems() {
+        viewModel.isSelectedItem.onEach { selectedItem ->
+            if (selectedItem) binding.btnCheckout.setOnClickListener {
+                findNavController().navigate(CartFragmentDirections.actionCartToCheckout())
+            }
+            binding.btnCheckout.isEnabled = selectedItem
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initDeleteSelectedButton() {

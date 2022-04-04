@@ -174,7 +174,7 @@
             android:layout_height="@dimen/checkout_button_height"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="@dimen/margin_small"
-            android:background="@drawable/button_small_gradient_background"
+            android:background="@drawable/button_background_selector"
             android:fontFamily="@font/montserrat_semibold"
             android:text="@string/checkout"
             android:textAllCaps="false"

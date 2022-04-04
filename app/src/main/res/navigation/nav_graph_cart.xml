@@ -15,10 +15,10 @@
 
     </fragment>
 
-    <fragment
+    <dialog
         android:id="@+id/checkoutFragment"
         android:name="com.narcissus.marketplace.ui.checkout.CheckoutFragment"
         tools:layout="@layout/fragment_checkout">
-    </fragment>
+    </dialog>
 
 </navigation>
