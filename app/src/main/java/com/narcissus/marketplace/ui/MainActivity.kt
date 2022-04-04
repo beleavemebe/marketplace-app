@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator, KoinC
 //        val workManager = WorkManager.getInstance(this)
 //        workManager.getWorkInfoByIdLiveData(workRequest.id)
 //            .observe(this) { workInfo: WorkInfo? ->
-//                Log.d("DEBUG", workInfo.toString())
+//                Log.d("DEBUG","WORKER OBSERVED: $workInfo.toString()" )
 //                if (workInfo != null) {
 //                    when (workInfo.state) {
 //                        WorkInfo.State.SUCCEEDED -> Log.d(
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator, KoinC
 //                            "WORKER RETURNED SUCCESS RESULT",
 //                        )
 //                        WorkInfo.State.FAILED -> workInfo.outputData.getString("checkout result message")
-//                            ?.let { Log.d("DEBUG", it) }
+//                            ?.let { Log.d("DEBUG", "WORKER FAILED: $it") }
 //                        WorkInfo.State.RUNNING -> Log.d(
 //                            "DEBUG",
 //                            "WORKER RUNNING",

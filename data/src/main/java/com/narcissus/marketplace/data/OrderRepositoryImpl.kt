@@ -16,11 +16,13 @@ import com.narcissus.marketplace.domain.model.Order
 import com.narcissus.marketplace.domain.model.OrderPaymentResult
 import com.narcissus.marketplace.domain.model.OrderPaymentStatus
 import com.narcissus.marketplace.domain.repository.OrderRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.withContext
 
 internal class OrderRepositoryImpl(
     private val orderRef: DatabaseReference,
@@ -34,9 +36,11 @@ internal class OrderRepositoryImpl(
         }
     }
 
-    override suspend fun payForTheOrder(orderList: List<CartItem>): OrderPaymentResult {
-        return orderApiService.payForTheOrder(orderList.toOrderQueryBody()).toOrderPaymentResult()
-    }
+    override suspend fun payForTheOrder(orderList: List<CartItem>): OrderPaymentResult =
+        withContext(Dispatchers.IO) {
+            orderApiService.payForTheOrder(orderList.toOrderQueryBody()).toOrderPaymentResult()
+        }
+
 
     private fun ProducerScope<List<Order>>.createValueEventListener() =
         object : ValueEventListener {
@@ -52,7 +56,9 @@ internal class OrderRepositoryImpl(
 
 
     override suspend fun saveOrder(order: Order) {
-        orderRef.child(order.number.toString()).setValue(order)
+        withContext(Dispatchers.IO){
+            orderRef.child(order.number.toString()).setValue(order)
+        }
     }
 
     private fun List<CartItem>.toOrderQueryBody(): OrderPaymentQueryBody =
