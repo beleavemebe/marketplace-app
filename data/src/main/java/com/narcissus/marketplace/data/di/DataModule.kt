@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.data.di
 
+import com.narcissus.marketplace.apiclient.api.service.OrderApiService
 import com.narcissus.marketplace.apiclient.di.apiClientModule
 import com.narcissus.marketplace.data.CartRepositoryImpl
 import com.narcissus.marketplace.data.DepartmentRepositoryImpl
@@ -27,7 +28,12 @@ val dataModule = module {
     loadKoinModules(firebaseModule)
 
     single<CartRepository> { CartRepositoryImpl(cartRef = get(qualifier<CartReference>())) }
-    single<OrderRepository> { OrderRepositoryImpl(orderRef = get(qualifier<Qualifiers.OrdersReference>())) }
+    single<OrderRepository> {
+        OrderRepositoryImpl(
+            orderRef = get(qualifier<Qualifiers.OrdersReference>()),
+            orderApiService = get()
+        )
+    }
 
     single<DepartmentRepository> {
         DepartmentRepositoryImpl(apiService = get())

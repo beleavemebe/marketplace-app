@@ -10,6 +10,7 @@ fun OrderBean.toOrder()= runCatching {
         id!!,
         date!!,
         status!!,
+        summaryPrice!!,
         items!!.map { it.toOrderItem() }
     )
 }.getOrNull()
@@ -19,5 +20,6 @@ fun OrderItemBean.toOrderItem()=OrderItem(
     productImage!!,
     productPrice!!,
     productName!!,
-    amount!!
+    amount!!,
+    amountPrice!!
     )

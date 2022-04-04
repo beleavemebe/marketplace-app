@@ -14,6 +14,7 @@ import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopSalesProducts
+import com.narcissus.marketplace.domain.usecase.MakeAnOrder
 import com.narcissus.marketplace.domain.usecase.RemoveFromCart
 import com.narcissus.marketplace.domain.usecase.RemoveSelectedCartItems
 import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
@@ -34,7 +35,7 @@ val domainModule = module {
     factory { GetRandomProducts(get()) }
     factory { GetRecentlyVisitedProducts(get()) }
     factory { GetProductDetails(get(), get()) }
-
+    factory { MakeAnOrder(get()) }
     factory { GetDepartments(get()) }
     factory { GetOrderList(get()) }
     factory { GetCart(get()) }

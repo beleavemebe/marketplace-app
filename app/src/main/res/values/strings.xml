@@ -76,4 +76,6 @@
     <string name="missing_uppercase_letter">Password must contain an uppercase letter</string>
     <string name="missing_number">Password must contain a number</string>
     <string name="missing_lowercase_letter">Password must contain a lowercase letter</string>
+    <string name="process_your_order">process your order</string>
+    <string name="please_wait">please wait</string>
 </resources>
