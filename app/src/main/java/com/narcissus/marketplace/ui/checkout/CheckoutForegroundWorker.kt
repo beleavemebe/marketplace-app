@@ -28,15 +28,15 @@ import org.koin.core.qualifier.named
 class CheckoutForegroundWorker(
     private val appContext: Context,
     params: WorkerParameters,
-) : CoroutineWorker(appContext, params),KoinComponent {
-    private val makeAnOrder:MakeAnOrder by inject()
-    private val getCart:GetCart by inject()
-    private val returnKey:String by inject(qualifier = named("checkout worker result key"))
+) : CoroutineWorker(appContext, params), KoinComponent {
+    private val makeAnOrder: MakeAnOrder by inject()
+    private val getCart: GetCart by inject()
+    private val returnKey: String by inject(qualifier = named("checkout worker result key"))
     override suspend fun doWork(): Result {
         val orderResult = makeAnOrder(getCart().first())
-        return if(orderResult.status==OrderPaymentStatus.PAID)
+        return if (orderResult.status == OrderPaymentStatus.PAID)
             Result.success()
-        else Result.failure(workDataOf(Pair(returnKey,orderResult.message)))
+        else Result.failure(workDataOf(Pair(returnKey, orderResult.message)))
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
@@ -47,13 +47,13 @@ class CheckoutForegroundWorker(
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_MIN
+                NotificationManager.IMPORTANCE_MIN,
             )
             notificationManager.createNotificationChannel(channel)
         }
 
         val notification = NotificationCompat.Builder(appContext, CHANNEL_ID)
-           // .setContentIntent(PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), Constants.PENDING_INTENT_FLAG_IMMUTABLE))
+            // .setContentIntent(PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), Constants.PENDING_INTENT_FLAG_IMMUTABLE))
             .setSmallIcon(com.narcissus.marketplace.ui.splash.R.drawable.ic_logo)
             .setOngoing(true)
             .setAutoCancel(true)

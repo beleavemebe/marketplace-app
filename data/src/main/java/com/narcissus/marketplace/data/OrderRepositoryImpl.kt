@@ -78,7 +78,8 @@ internal class OrderRepositoryImpl(
             else -> OrderPaymentStatus.CANCELLED
         }
     }
-    companion object{
+
+    companion object {
         const val PAYMENT_STATUS_PAID = "paid"
     }
 

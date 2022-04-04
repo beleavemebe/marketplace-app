@@ -31,7 +31,7 @@ val dataModule = module {
     single<OrderRepository> {
         OrderRepositoryImpl(
             orderRef = get(qualifier<Qualifiers.OrdersReference>()),
-            orderApiService = get()
+            orderApiService = get(),
         )
     }
 

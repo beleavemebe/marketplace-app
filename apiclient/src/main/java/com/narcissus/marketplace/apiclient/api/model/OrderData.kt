@@ -2,22 +2,24 @@ package com.narcissus.marketplace.apiclient.api.model
 
 import com.google.gson.annotations.SerializedName
 
-data class OrderPaymentResponse (
+data class OrderPaymentResponse(
     @SerializedName("order_number")
-    val orderNumber:Int?,
+    val orderNumber: Int?,
     @SerializedName("order_payment_status")
-    val orderPaymentStatus:String,
+    val orderPaymentStatus: String,
     @SerializedName("message")
-    val message:String
-    )
+    val message: String,
+)
+
 data class OrderPaymentQueryBody(
     @SerializedName("order_items")
-    val orderedItemsList:List<OrderPaymentQueryBodyItem>
+    val orderedItemsList: List<OrderPaymentQueryBodyItem>,
 )
+
 data class OrderPaymentQueryBodyItem(
     @SerializedName("product_id")
-    val productId:String,
+    val productId: String,
     @SerializedName("product_amount")
-    val productAmount:Int,
+    val productAmount: Int,
 )
 

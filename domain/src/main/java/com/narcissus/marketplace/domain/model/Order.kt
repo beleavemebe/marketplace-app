@@ -6,7 +6,7 @@ data class Order(
     val number: Int,
     val date: Date,
     val status: OrderStatus,
-    val summaryPrice:Int,
+    val summaryPrice: Int,
     val items: List<OrderItem>,
 )
 
@@ -23,8 +23,10 @@ data class OrderItem(
     val productPrice: Int,
     val productName: String,
     val amount: Int,
-    val amountPrice:Int,
+    val amountPrice: Int,
 )
-fun CartItem.toOrderItem():OrderItem = OrderItem(productId,productImage,productPrice,productName,amount,productPrice*amount)
+
+fun CartItem.toOrderItem(): OrderItem =
+    OrderItem(productId, productImage, productPrice, productName, amount, productPrice * amount)
 
 

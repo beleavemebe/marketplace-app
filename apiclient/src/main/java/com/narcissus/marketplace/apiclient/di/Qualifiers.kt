@@ -1,6 +1,6 @@
 package com.narcissus.marketplace.apiclient.di
 
-object Qualifiers{
+object Qualifiers {
     object OrderApiService
     object ContentApiService
 }
