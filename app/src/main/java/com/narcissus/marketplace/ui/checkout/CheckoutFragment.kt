@@ -85,7 +85,6 @@ class CheckoutFragment : BottomSheetDialogFragment() {
 
     private fun initPlaceOrderButton() {
         binding.btnPlaceOrder.setOnClickListener {
-
         }
     }
 
