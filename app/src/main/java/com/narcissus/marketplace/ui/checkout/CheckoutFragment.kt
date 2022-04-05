@@ -67,12 +67,12 @@ class CheckoutFragment : BottomSheetDialogFragment() {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun watchEditText(){
+    private fun watchEditText() {
         watchCardNumberEditText()
         watchCardMonthYearEditText()
     }
 
-    private fun watchCardMonthYearEditText(){
+    private fun watchCardMonthYearEditText() {
         val slots = UnderscoreDigitSlotsParser().parseSlots(MASK_MONTH_YEAR)
         MaskFormatWatcher(MaskImpl.createTerminated(slots)).installOn(binding.etMonthYear)
     }
@@ -89,7 +89,7 @@ class CheckoutFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    private companion object{
+    private companion object {
         const val MASK_MONTH_YEAR = "__/__"
     }
 }
