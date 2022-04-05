@@ -37,6 +37,7 @@ class CheckoutFragment : BottomSheetDialogFragment() {
         binding.rvCheckoutDetails.adapter = adapter
         subscribeToViewModel()
         watchEditText()
+        initPlaceOrderButton()
     }
 
     private val adapter by lazy {
@@ -80,6 +81,12 @@ class CheckoutFragment : BottomSheetDialogFragment() {
     private fun watchCardNumberEditText() {
         val maskCardNumber = MaskImpl.createTerminated(PredefinedSlots.CARD_NUMBER_STANDARD)
         MaskFormatWatcher(maskCardNumber).installOn(binding.etCardNumber)
+    }
+
+    private fun initPlaceOrderButton() {
+        binding.btnPlaceOrder.setOnClickListener {
+
+        }
     }
 
     private fun CheckoutItem.toCheckoutListItem() = CheckoutListItem.Detail(this)
