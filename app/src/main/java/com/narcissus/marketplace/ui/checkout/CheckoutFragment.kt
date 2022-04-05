@@ -13,6 +13,10 @@ import com.narcissus.marketplace.domain.model.CheckoutItem
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.tinkoff.decoro.MaskImpl
+import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
+import ru.tinkoff.decoro.slots.PredefinedSlots
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher
 
 class CheckoutFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentCheckoutBinding? = null
@@ -32,6 +36,7 @@ class CheckoutFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvCheckoutDetails.adapter = adapter
         subscribeToViewModel()
+        watchEditText()
     }
 
     private val adapter by lazy {
@@ -62,10 +67,29 @@ class CheckoutFragment : BottomSheetDialogFragment() {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun watchEditText(){
+        watchCardNumberEditText()
+        watchCardMonthYearEditText()
+    }
+
+    private fun watchCardMonthYearEditText(){
+        val slots = UnderscoreDigitSlotsParser().parseSlots(MASK_MONTH_YEAR)
+        MaskFormatWatcher(MaskImpl.createTerminated(slots)).installOn(binding.etMonthYear)
+    }
+
+    private fun watchCardNumberEditText() {
+        val maskCardNumber = MaskImpl.createTerminated(PredefinedSlots.CARD_NUMBER_STANDARD)
+        MaskFormatWatcher(maskCardNumber).installOn(binding.etCardNumber)
+    }
+
     private fun CheckoutItem.toCheckoutListItem() = CheckoutListItem.Detail(this)
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object{
+        const val MASK_MONTH_YEAR = "__/__"
     }
 }

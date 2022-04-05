@@ -10,15 +10,26 @@
         android:layout_height="wrap_content"
         tools:context=".ui.checkout.CheckoutFragment">
 
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="150dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_shape"
+            app:dividerThickness="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clCards"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/md">
 
             <ImageView
                 android:id="@+id/ivVisa"
@@ -103,13 +114,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/mm_yy"
-            android:importantForAutofill="no"
-            android:inputType="number"
-            android:maxLength="4"
+            android:textAlignment="center"
             android:paddingVertical="8dp"
             android:textAppearance="@style/S1_subtitle"
             app:layout_constraintStart_toStartOf="@+id/etCardNumber"
-            app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/etCardNumber"
+            android:inputType="date"
+            android:autofillHints="creditCardExpirationMonth" />
 
         <EditText
             android:id="@+id/etCvv"
@@ -117,8 +128,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/cvc_cvv"
+            android:textAlignment="center"
             android:importantForAutofill="no"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:maxLength="3"
             android:paddingVertical="8dp"
             android:textAppearance="@style/S1_subtitle"
@@ -207,7 +219,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="@dimen/margin_small"
             android:background="@drawable/button_small_gradient_background"
             android:text="@string/place_order"
             android:textAllCaps="false"
