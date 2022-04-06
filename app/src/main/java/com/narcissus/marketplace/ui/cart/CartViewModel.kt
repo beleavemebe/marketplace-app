@@ -11,6 +11,7 @@ import com.narcissus.marketplace.domain.usecase.RemoveSelectedCartItems
 import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
 import com.narcissus.marketplace.domain.usecase.SetCartItemAmount
 import com.narcissus.marketplace.domain.usecase.SetCartItemSelected
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 
@@ -65,4 +66,6 @@ class CartViewModel(
             setCartItemAmount(cartItem, amount)
         }
     }
+
+    val isSelectedItem = cartFlow.map { items -> items.any { cartItem -> cartItem.isSelected } }
 }
