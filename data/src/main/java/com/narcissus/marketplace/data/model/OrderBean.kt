@@ -8,7 +8,7 @@ data class OrderBean(
     val id:String?=null,
     val date: Date? = null,
     val status: OrderStatus? = null,
-    val summaryPrice:Int?=null,
+    val summaryPrice: Int? = null,
     val items: List<OrderItemBean>? = null,
 )
 
@@ -18,5 +18,5 @@ data class OrderItemBean(
     val productPrice: Int? = null,
     val productName: String? = null,
     val amount: Int? = null,
-    val amountPrice:Int? = null
-    )
+    val amountPrice: Int? = null
+)

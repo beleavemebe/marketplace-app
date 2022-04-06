@@ -7,7 +7,7 @@ data class CartItem(
     val productName: String,
     val amount: Int,
     val isSelected: Boolean,
-    val stock:Int
+    val stock: Int
 )
 
 fun ProductPreview.toCartItem() =

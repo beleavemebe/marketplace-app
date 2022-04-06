@@ -26,4 +26,3 @@ data class OrderPaymentQueryBodyItem(
     @SerializedName("product_amount")
     val productAmount: Int,
 )
-

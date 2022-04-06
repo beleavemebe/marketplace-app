@@ -23,4 +23,3 @@ fun List<CartItem>.toOrder(orderUUID:String,orderNumber: Int, orderDate: Date, o
         this.sumOf { it.amount * it.productPrice },
         this.map { it.toOrderItem() },
     )
-

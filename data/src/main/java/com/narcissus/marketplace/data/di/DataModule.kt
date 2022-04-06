@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.data.di
 
-import com.narcissus.marketplace.apiclient.api.service.OrderApiService
 import com.narcissus.marketplace.apiclient.di.apiClientModule
 import com.narcissus.marketplace.data.CartRepositoryImpl
 import com.narcissus.marketplace.data.DepartmentRepositoryImpl

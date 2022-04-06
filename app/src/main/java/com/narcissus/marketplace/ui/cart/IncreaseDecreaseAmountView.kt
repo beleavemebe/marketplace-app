@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -83,7 +82,6 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
                 invalidate()
             }
         }
-
     }
 
     private fun callBoundaryReachedAnimation() {
