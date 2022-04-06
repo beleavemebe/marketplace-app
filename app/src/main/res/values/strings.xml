@@ -68,7 +68,7 @@
     <string name="order_summary">Order Summary</string>
     <string name="place_order">Place Order</string>
     <string name="total">Total</string>
-    <string name ="amount_placeholder">%1$dx</string>
+    <string name="amount_placeholder">%1$dx</string>
     <string name="name_empty">Please, enter your full name</string>
     <string name="user_not_found">User not found</string>
     <string name="play_services_unavailable">Play services are unavailable on this device.</string>
@@ -78,4 +78,6 @@
     <string name="missing_lowercase_letter">Password must contain a lowercase letter</string>
     <string name="process_your_order">process your order</string>
     <string name="please_wait">please wait</string>
+    <string name="success">Success!</string>
+    <string name="your_order_has_been_paid">your order has been paid and will be shipped soon</string>
 </resources>

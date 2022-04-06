@@ -36,9 +36,9 @@ internal class OrderRepositoryImpl(
         }
     }
 
-    override suspend fun payForTheOrder(orderList: List<CartItem>): OrderPaymentResult =
+    override suspend fun payForTheOrder(orderList: List<CartItem>,orderUUID: String): OrderPaymentResult =
         withContext(Dispatchers.IO) {
-            orderApiService.payForTheOrder(orderList.toOrderQueryBody()).toOrderPaymentResult()
+            orderApiService.payForTheOrder(orderList.toOrderQueryBody(orderUUID)).toOrderPaymentResult()
         }
 
 
@@ -57,12 +57,13 @@ internal class OrderRepositoryImpl(
 
     override suspend fun saveOrder(order: Order) {
         withContext(Dispatchers.IO){
-            orderRef.child(order.number.toString()).setValue(order)
+            orderRef.child(order.id).setValue(order)
         }
     }
 
-    private fun List<CartItem>.toOrderQueryBody(): OrderPaymentQueryBody =
+    private fun List<CartItem>.toOrderQueryBody(orderUUID:String): OrderPaymentQueryBody =
         OrderPaymentQueryBody(
+            orderUUID,
             (this.map {
                 OrderPaymentQueryBodyItem(
                     it.productId,
@@ -73,6 +74,7 @@ internal class OrderRepositoryImpl(
 
     private fun OrderPaymentResponse.toOrderPaymentResult(): OrderPaymentResult =
         OrderPaymentResult(
+            orderId,
             orderNumber,
             orderPaymentResponseStatusToOrderPaymentStatus(orderPaymentStatus),
             message,

@@ -8,6 +8,7 @@ import com.narcissus.marketplace.domain.model.OrderItem
 fun OrderBean.toOrder() = runCatching {
     Order(
         id!!,
+        number!!,
         date!!,
         status!!,
         summaryPrice!!,

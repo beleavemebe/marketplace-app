@@ -4,7 +4,8 @@ import com.narcissus.marketplace.domain.model.OrderStatus
 import java.util.Date
 
 data class OrderBean(
-    val id: Int? = null,
+    val number: Int? = null,
+    val id:String?=null,
     val date: Date? = null,
     val status: OrderStatus? = null,
     val summaryPrice:Int?=null,
