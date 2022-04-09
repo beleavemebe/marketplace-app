@@ -17,4 +17,5 @@ interface ProductsPreviewRepository {
     suspend fun getProductsByDepartment(departmentId: String): ActionResult<List<ProductPreview>>
     suspend fun getProductsByDepartmentIdTopRated(departmentId: String): ActionResult<List<ProductPreview>>
     suspend fun getProductsByDepartmentIdTopSales(departmentId: String): ActionResult<List<ProductPreview>>
+    suspend fun getSimilarProducts(productId: String): List<ProductPreview>
 }
