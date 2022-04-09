@@ -27,7 +27,6 @@ import com.narcissus.marketplace.databinding.ListItemDetailsTitileBasicBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsTitleButtonBinding
 import com.narcissus.marketplace.databinding.ListItemRecyclerBinding
 import com.narcissus.marketplace.domain.model.Review
-import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
 import com.narcissus.marketplace.ui.products.ProductListItem
