@@ -12,7 +12,7 @@ import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.Prod
 import com.narcissus.marketplace.ui.product_details.model.ParcelableReview
 import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import com.narcissus.marketplace.ui.product_details.model.toParcelableReview
-import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
+import com.narcissus.marketplace.ui.products.ProductListItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class ProductDetailsViewModel(
     private val productId: String,
@@ -53,12 +52,21 @@ class ProductDetailsViewModel(
             started = SharingStarted.WhileSubscribed(),
         )
 
+    private val similarProductsFlow: Flow<List<ProductListItem>> = flow {
+        val placeholders = Array(5) { ProductListItem.LoadingProduct() }
+        emit(placeholders.toList())
+        val similarProducts = getSimilarProducts(productId)
+        val items = similarProducts.map { ProductListItem.Product(it) }
+        emit(items)
+    }
+
     val contentFlow: SharedFlow<List<ProductDetailsItem>> =
         combine(
             productDetailsFlow,
             isPurchaseButtonActiveStateFlow,
-        ) { details, purchaseActiveState ->
-            assembleContent(details, purchaseActiveState)
+            similarProductsFlow,
+        ) { details, purchaseActiveState, similarProducts ->
+            assembleContent(details, purchaseActiveState, similarProducts)
         }.shareIn(
             viewModelScope,
             replay = 1,
@@ -90,6 +98,7 @@ class ProductDetailsViewModel(
     private fun assembleContent(
         details: ProductDetails,
         purchaseActiveState: Boolean,
+        similarProducts: List<ProductListItem>,
     ): List<ProductDetailsItem> {
         return listOf(
             ProductDetailsItem.Price(details.price),
@@ -109,14 +118,7 @@ class ProductDetailsViewModel(
             ProductDetailsItem.ReviewsPreview(details.reviews[0]),
             ProductDetailsItem.Divider(),
             ProductDetailsItem.BasicTitle(R.string.similar_products),
-            ProductDetailsItem.SimilarProducts(
-                details.similarProducts.map { product ->
-                    SimilarProductListItem.SimilarProductItem(
-                        product,
-                        Random.Default.nextBoolean(), // todo: ПЕРЕДЕЛАТЬ С КОРЗИНОЙ
-                    )
-                },
-            ),
+            ProductDetailsItem.SimilarProducts(similarProducts),
         )
     }
 

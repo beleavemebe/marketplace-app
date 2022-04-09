@@ -31,7 +31,6 @@ internal class ProductsDetailsRepositoryImpl(private val apiService: ApiService)
             rating,
             sales,
             reviewsList.map(ReviewResponseData::toReview),
-            similarProductsList.map(SimilarProductsResponseData::toSimilarProducts)
         )
     }
 }
