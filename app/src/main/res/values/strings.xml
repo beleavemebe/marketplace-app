@@ -79,5 +79,6 @@
     <string name="process_your_order">process your order</string>
     <string name="please_wait">please wait</string>
     <string name="success">Success!</string>
+    <string name="payment_failed">Payment failed</string>
     <string name="your_order_has_been_paid">your order has been paid and will be shipped soon</string>
 </resources>

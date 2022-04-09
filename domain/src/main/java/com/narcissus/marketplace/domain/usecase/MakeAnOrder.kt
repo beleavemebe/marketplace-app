@@ -5,18 +5,16 @@ import com.narcissus.marketplace.domain.model.OrderPaymentResult
 import com.narcissus.marketplace.domain.model.OrderPaymentStatus
 import com.narcissus.marketplace.domain.model.OrderStatus
 import com.narcissus.marketplace.domain.model.toOrder
+import com.narcissus.marketplace.domain.repository.CartRepository
 import com.narcissus.marketplace.domain.repository.OrderRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-class MakeAnOrder(private val orderRepository: OrderRepository) {
+class MakeAnOrder(private val orderRepository: OrderRepository,private val cartRepository: CartRepository) {
     suspend operator fun invoke(orderList: List<CartItem>,orderUUID:String): OrderPaymentResult {
-//        val scope = CoroutineScope(SupervisorJob())
-//        scope.launch {
-//            val paymentResult = orderRepository.payForTheOrder(orderList,orderUUID)
-//        }
+        cartRepository.deleteSelectedItems()
         val paymentResult = orderRepository.payForTheOrder(orderList,orderUUID)
         if (paymentResult.status == OrderPaymentStatus.PAID) {
             orderRepository.saveOrder(
