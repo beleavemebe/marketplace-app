@@ -35,10 +35,13 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private val binding get() = _binding!!
     private val viewModel: CheckoutViewModel by viewModel()
     private val orderUUID = UUID.randomUUID().toString()
-//    val data = Data.Builder().putString(OrderConsts.ORDER_UUID_KEY, orderUUID)
+
+    //    val data = Data.Builder().putString(OrderConsts.ORDER_UUID_KEY, orderUUID)
 //        .putString(OrderConsts.NOTIFICATION_ID_KEY, UUID.randomUUID().toString())
 //        .putString(OrderConsts.RESULT_KEY, UUID.randomUUID().toString()).build()
-    val data:Data by inject(qualifier<NotificationQualifiers.PaymentInputDataBuilder>()) { parametersOf(orderUUID) }
+    val data: Data by inject(qualifier<NotificationQualifiers.PaymentInputDataBuilder>()) {
+        parametersOf(orderUUID)
+    }
     private val paymentWorkRequest: OneTimeWorkRequest by inject(qualifier<NotificationQualifiers.PaymentRequestBuilder>()) {
         parametersOf(data)
     }
@@ -74,7 +77,7 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     }
 
     private fun observeCheckout() {
-        viewModel.getCheckoutFlow.onEach { items ->
+        viewModel.checkoutFlow.onEach { items ->
             adapter.items = items.map { checkoutItem ->
                 checkoutItem.toCheckoutListItem()
             }
@@ -82,7 +85,7 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     }
 
     private fun observeTotalCost() {
-        viewModel.getTotalFlow.onEach { total ->
+        viewModel.totalCostFlow.onEach { total ->
             binding.tvOrderTotalPrice.text = context?.getString(
                 R.string.price_placeholder, total,
             )
@@ -106,36 +109,38 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
 
     private fun initPlaceOrderButton() {
         binding.btnPlaceOrder.setOnClickListener {
-            Log.d("DEBUG","CHECKOUT BUTTON CLICKED")
-            val workManager = WorkManager.getInstance(requireContext())
-            workManager.getWorkInfoByIdLiveData(paymentWorkRequest.id)
-                .observe(this) { workInfo: WorkInfo? ->
-                    Log.d("DEBUG", "WORKER OBSERVED: $workInfo.toString()")
-                    if (workInfo != null) {
-                        when (workInfo.state) {
-                            WorkInfo.State.SUCCEEDED -> Log.d(
+         makeAnOrder()
+        }
+    }
+    private fun makeAnOrder(){
+        val workManager = WorkManager.getInstance(requireContext())
+        workManager.getWorkInfoByIdLiveData(paymentWorkRequest.id)
+            .observe(this) { workInfo: WorkInfo? ->
+                if (workInfo != null) {
+                    when (workInfo.state) {
+                        WorkInfo.State.SUCCEEDED -> workInfo.outputData.getString(orderUUID)
+                            ?.let { Log.d("DEBUG", "WORKER NUMBER: $it SUCCESS") }
+                        WorkInfo.State.FAILED -> workInfo.outputData.getString(orderUUID)
+                            ?.let { Log.d("DEBUG", "WORKER FAILED: $it") }
+                        WorkInfo.State.RUNNING ->
+                            Log.d(
                                 "DEBUG",
-                                "WORKER RETURNED SUCCESS RESULT",
+                                "WORKER RUNNING",
                             )
-                            WorkInfo.State.FAILED -> workInfo.outputData.getString("checkout result message")
-                                ?.let { Log.d("DEBUG", "WORKER FAILED: $it") }
-                            WorkInfo.State.RUNNING ->
-                                Log.d(
-                                    "DEBUG",
-                                    "WORKER RUNNING",
-                                )
-                            else -> {
-                                Log.d(
-                                    "DEBUG",
-                                    "WORKER SOME SHIT",
-                                )
-                            }
+                        else -> {
+                            Log.d(
+                                "DEBUG",
+                                "SOMETHING WENT WRONG",
+                            )
                         }
                     }
                 }
-            workManager.enqueue(paymentWorkRequest)
-       //     workManager.cancelAllWork()
-        }
+                else Log.d(
+                    "DEBUG",
+                    "OH SHIIT",
+                )
+            }
+        workManager.enqueue(paymentWorkRequest)
     }
 
     private fun CheckoutItem.toCheckoutListItem() = CheckoutListItem.Detail(this)
@@ -143,7 +148,12 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        requireContext().sendBroadcast(Intent(OrderConsts.PAY_INTENT_FILTER).putExtra(orderUUID,true))
+        requireContext().sendBroadcast(
+            Intent(OrderConsts.PAY_INTENT_FILTER).putExtra(
+                orderUUID,
+                true,
+            ),
+        )
     }
 
     private companion object {

@@ -13,9 +13,8 @@ import com.narcissus.marketplace.core.navigation.MarketplaceCrossModuleNavigator
 import com.narcissus.marketplace.core.navigation.destination.NavDestination
 import com.narcissus.marketplace.core.navigation.destination.uri
 import com.narcissus.marketplace.databinding.ActivityMainBinding
-import org.koin.core.component.KoinComponent
 
-class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator, KoinComponent {
+class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
     private lateinit var binding: ActivityMainBinding
 
     private val navController by lazy {

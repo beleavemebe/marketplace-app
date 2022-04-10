@@ -7,12 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GetCheckout(private val cartRepository: CartRepository) {
-    operator fun invoke(): Flow<List<CheckoutItem>> =
-        cartRepository.getCart().map { items ->
-            items.filter { cartItem ->
-                cartItem.isSelected
-            }.map {
-                it.toCheckoutItem()
-            }
-        }
+    suspend operator fun invoke(): List<CheckoutItem> =
+        cartRepository.getCurrentCartSelected().map {it.toCheckoutItem()}
 }

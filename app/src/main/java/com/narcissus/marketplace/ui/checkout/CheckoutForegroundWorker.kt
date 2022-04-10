@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.ui.checkout
 
+import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -20,17 +21,13 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.di.NotificationQualifiers
 import com.narcissus.marketplace.di.OrderWorkerIds
 import com.narcissus.marketplace.domain.model.OrderPaymentStatus
-import com.narcissus.marketplace.domain.usecase.GetCart
-import com.narcissus.marketplace.domain.usecase.GetCartSnapshot
+import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsSnapshot
 import com.narcissus.marketplace.domain.usecase.MakeAnOrder
-import com.narcissus.marketplace.domain.usecase.RemoveSelectedCartItems
 import com.narcissus.marketplace.domain.usecase.RestoreCartItems
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
+import okhttp3.internal.notify
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.qualifier
-import java.net.UnknownHostException
 import java.util.UUID
 
 class CheckoutForegroundWorker(
@@ -38,23 +35,21 @@ class CheckoutForegroundWorker(
     params: WorkerParameters,
 ) : CoroutineWorker(appContext, params), KoinComponent {
     private val makeAnOrder: MakeAnOrder by inject()
-    private val getCartSnapshot:GetCartSnapshot by inject()
+    private val getCartSelectedItemsSnapshot:GetCartSelectedItemsSnapshot by inject()
     private val restoreCartItems:RestoreCartItems by inject()
     private val processNotificationId = UUID.randomUUID().hashCode()
     private var isFragmentViewDestroyed: Boolean = false
     private var orderUUID: String? = null
     private val processNotification: Notification by inject(qualifier<NotificationQualifiers.ProcessPaymentNotification>())
-    @RequiresApi(Build.VERSION_CODES.O)
-    private val notificationChannel =
-        NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+
     private val notificationManager =NotificationManagerCompat.from(appContext)
 
+
     override suspend fun doWork(): Result {
-        val orderData = getCartSnapshot()
+        val orderData = getCartSelectedItemsSnapshot()
         orderUUID = inputData.getString(OrderConsts.ORDER_UUID_KEY)
         val finalNotificationId = inputData.getInt(OrderConsts.NOTIFICATION_ID_KEY, 0)
-        val resultKey = inputData.getString(OrderConsts.RESULT_KEY)
-        if (orderUUID == null || finalNotificationId == 0 || resultKey == null) {
+        if (orderUUID == null || finalNotificationId == 0 || orderUUID == null) {
             Result.failure(workDataOf(Pair("0", "Worker initialize error")))
         }
         appContext.registerReceiver(
@@ -69,7 +64,7 @@ class CheckoutForegroundWorker(
                     finalNotificationId,
                     orderResult.message,
                 )
-                Result.success(workDataOf(Pair(resultKey!!, orderResult.message)))
+                Result.success(workDataOf(Pair(orderUUID!!, orderResult.message)))
             } else {
                 if (isFragmentViewDestroyed) showFinallyNotification(
                     false,
@@ -77,7 +72,7 @@ class CheckoutForegroundWorker(
                     orderResult.message,
                 )
                 restoreCartItems(orderData)
-                Result.failure(workDataOf(Pair(resultKey!!, orderResult.message)))
+                Result.failure(workDataOf(Pair(orderUUID!!, orderResult.message)))
             }
 
         }
@@ -93,9 +88,11 @@ class CheckoutForegroundWorker(
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel =
+                NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(notificationChannel)
         }
-        return ForegroundInfo(processNotificationId, processNotification)
+               return ForegroundInfo(processNotificationId, processNotification)
     }
 
     private fun showFinallyNotification(
@@ -110,6 +107,7 @@ class CheckoutForegroundWorker(
             )
                 .setSmallIcon(com.narcissus.marketplace.ui.splash.R.drawable.ic_logo)
                 .setOngoing(false)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setAutoCancel(true).apply {
                     when (isSuccess) {
                         true -> setContentTitle(appContext.getString(R.string.success))
@@ -118,8 +116,13 @@ class CheckoutForegroundWorker(
                             .setContentText(message)
                     }
                 }.build()
-        notificationManager.notify(notificationId, notification)
-     //   NotificationManagerCompat.from(appContext).notify(notificationId, notification)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel =
+                NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+        notificationManager.notify(notificationId,notification)
+
 
     }
 

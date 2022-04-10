@@ -23,13 +23,13 @@ val workerModule = module {
             .setOngoing(true)
             .setAutoCancel(true)
             .setSilent(true)
-            .setPriority(NotificationCompat.PRIORITY_MIN)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setLocalOnly(true)
             .setContentText(androidContext().getString(R.string.please_wait))
             .build()
     }
     val constraints = Constraints.Builder()
-        .setRequiresStorageNotLow(true)
+       // .setRequiresStorageNotLow(true)
         .build()
     factory(qualifier<NotificationQualifiers.PaymentRequestBuilder>()) { (data: Data) ->
         OneTimeWorkRequest.Builder(CheckoutForegroundWorker::class.java)
