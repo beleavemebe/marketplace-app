@@ -109,10 +109,10 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
 
     private fun initPlaceOrderButton() {
         binding.btnPlaceOrder.setOnClickListener {
-         makeAnOrder()
+            makeAnOrder()
         }
     }
-    private fun makeAnOrder(){
+    private fun makeAnOrder() {
         val workManager = WorkManager.getInstance(requireContext())
         workManager.getWorkInfoByIdLiveData(paymentWorkRequest.id)
             .observe(this) { workInfo: WorkInfo? ->
@@ -134,8 +134,7 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
                             )
                         }
                     }
-                }
-                else Log.d(
+                } else Log.d(
                     "DEBUG",
                     "OH SHIIT",
                 )

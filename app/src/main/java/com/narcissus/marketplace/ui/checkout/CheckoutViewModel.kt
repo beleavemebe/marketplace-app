@@ -14,15 +14,14 @@ class CheckoutViewModel(
     private val getCheckout: GetCheckout,
     private val getCartCost: GetCartSelectedItemsCostSnapshot,
 ) : ViewModel() {
-    private val _checkoutFlow = MutableSharedFlow<List<CheckoutItem>>(replay=1)
+    private val _checkoutFlow = MutableSharedFlow<List<CheckoutItem>>(replay = 1)
     val checkoutFlow = _checkoutFlow.asSharedFlow()
-    private val _totalCostFlow = MutableSharedFlow<Int>(replay=1)
-    val totalCostFlow = MutableSharedFlow<Int>(replay=1).asSharedFlow()
+    private val _totalCostFlow = MutableSharedFlow<Int>(replay = 1)
+    val totalCostFlow = MutableSharedFlow<Int>(replay = 1).asSharedFlow()
     init {
-       viewModelScope.launch(Dispatchers.IO) {
-           _checkoutFlow.emit(getCheckout())
-           _totalCostFlow.emit(getCartCost())
-       }
+        viewModelScope.launch(Dispatchers.IO) {
+            _checkoutFlow.emit(getCheckout())
+            _totalCostFlow.emit(getCartCost())
+        }
     }
-
 }

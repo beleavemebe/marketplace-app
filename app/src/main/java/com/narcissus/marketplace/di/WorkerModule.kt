@@ -3,7 +3,6 @@ package com.narcissus.marketplace.di
 import androidx.core.app.NotificationCompat
 import androidx.work.Constraints
 import androidx.work.Data
-import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OutOfQuotaPolicy
 import com.narcissus.marketplace.R
@@ -29,7 +28,7 @@ val workerModule = module {
             .build()
     }
     val constraints = Constraints.Builder()
-       // .setRequiresStorageNotLow(true)
+        // .setRequiresStorageNotLow(true)
         .build()
     factory(qualifier<NotificationQualifiers.PaymentRequestBuilder>()) { (data: Data) ->
         OneTimeWorkRequest.Builder(CheckoutForegroundWorker::class.java)
@@ -37,11 +36,13 @@ val workerModule = module {
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setInputData(data).build()
     }
-    factory(qualifier<NotificationQualifiers.PaymentInputDataBuilder>()) {(orderUUID:String)-> Data.Builder().putString(
-        OrderConsts.ORDER_UUID_KEY, orderUUID)
-        .putString(OrderConsts.NOTIFICATION_ID_KEY, UUID.randomUUID().toString())
-        .putString(OrderConsts.RESULT_KEY, UUID.randomUUID().toString()).build() }
-
+    factory(qualifier<NotificationQualifiers.PaymentInputDataBuilder>()) { (orderUUID: String) ->
+        Data.Builder().putString(
+            OrderConsts.ORDER_UUID_KEY, orderUUID
+        )
+            .putString(OrderConsts.NOTIFICATION_ID_KEY, UUID.randomUUID().toString())
+            .putString(OrderConsts.RESULT_KEY, UUID.randomUUID().toString()).build()
+    }
 }
 
 object OrderWorkerIds {
