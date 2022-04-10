@@ -22,6 +22,7 @@ import com.narcissus.marketplace.domain.usecase.SignInWithEmail
 import com.narcissus.marketplace.domain.usecase.SignInWithGoogle
 import com.narcissus.marketplace.domain.usecase.SignOut
 import com.narcissus.marketplace.domain.usecase.SignUpWithEmail
+import com.narcissus.marketplace.domain.usecase.ValidateCard
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -51,4 +52,5 @@ val domainModule = module {
     factory { SignOut(get()) }
     factory { GetAuthStateFlow(get()) }
     factory { GetCheckout(get()) }
+    factory { ValidateCard() }
 }

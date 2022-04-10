@@ -82,7 +82,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:hint="@string/card_holder"
-            android:importantForAutofill="no"
             android:inputType="textVisiblePassword|textNoSuggestions"
             android:paddingHorizontal="2dp"
             android:paddingVertical="8dp"
@@ -90,7 +89,9 @@
             android:textAppearance="@style/S1_subtitle"
             app:layout_constraintEnd_toEndOf="@+id/clCards"
             app:layout_constraintStart_toStartOf="@+id/clCards"
-            app:layout_constraintTop_toBottomOf="@+id/clCards" />
+            app:layout_constraintTop_toBottomOf="@+id/clCards"
+            android:autofillHints="AUTOFILL_HINT_PERSON_NAME"
+            android:importantForAutofill="yes"/>
 
         <EditText
             android:id="@+id/etCardNumber"
@@ -98,7 +99,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/card_number"
-            android:importantForAutofill="no"
             android:inputType="phone"
             android:paddingHorizontal="2dp"
             android:paddingVertical="8dp"
@@ -106,7 +106,9 @@
             android:textAppearance="@style/S1_subtitle"
             app:layout_constraintEnd_toEndOf="@+id/etCardHolder"
             app:layout_constraintStart_toStartOf="@+id/etCardHolder"
-            app:layout_constraintTop_toBottomOf="@+id/etCardHolder" />
+            app:layout_constraintTop_toBottomOf="@+id/etCardHolder"
+            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_NUMBER "
+            android:importantForAutofill="yes"/>
 
         <EditText
             android:id="@+id/etMonthYear"
@@ -120,7 +122,8 @@
             app:layout_constraintStart_toStartOf="@+id/etCardNumber"
             app:layout_constraintTop_toBottomOf="@+id/etCardNumber"
             android:inputType="date"
-            android:autofillHints="creditCardExpirationMonth" />
+            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DATE"
+            android:importantForAutofill="yes"/>
 
         <EditText
             android:id="@+id/etCvv"
@@ -219,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="20dp"
-            android:background="@drawable/button_small_gradient_background"
+            android:background="@drawable/button_background_selector"
             android:text="@string/place_order"
             android:textAllCaps="false"
             android:textColor="@color/white"

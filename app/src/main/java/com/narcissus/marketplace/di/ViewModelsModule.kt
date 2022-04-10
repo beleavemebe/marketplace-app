@@ -17,5 +17,5 @@ val viewModelsModule = module {
     viewModel { CartViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SignInViewModel(get(), get()) }
     viewModel { SignUpViewModel(get()) }
-    viewModel { CheckoutViewModel(get(), get()) }
+    viewModel { CheckoutViewModel(get(), get(), get()) }
 }

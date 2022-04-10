@@ -76,4 +76,7 @@
     <string name="missing_uppercase_letter">Password must contain an uppercase letter</string>
     <string name="missing_number">Password must contain a number</string>
     <string name="missing_lowercase_letter">Password must contain a lowercase letter</string>
+    <string name="invalid_card_number">Invalid card number</string>
+    <string name="invalid_expire_date">Invalid expire date</string>
+    <string name="invalid_cvv">Please enter full CVV</string>
 </resources>
