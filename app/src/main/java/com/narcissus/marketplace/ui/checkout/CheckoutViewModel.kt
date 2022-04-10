@@ -29,11 +29,10 @@ class CheckoutViewModel(
 
     val cardValidateFlow = _cardValidateFlow.asSharedFlow()
 
-    fun checkCard(cardHolder:String, cardNumber:String, cardExpireDate:String, cardCvv:String){
+    fun checkCard(cardHolder: String, cardNumber: String, cardExpireDate: String, cardCvv: String) {
         viewModelScope.launch {
-            val validateResult = validateCard(cardHolder,cardNumber,cardExpireDate,cardCvv)
+            val validateResult = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
             _cardValidateFlow.emit(validateResult)
         }
     }
-
 }

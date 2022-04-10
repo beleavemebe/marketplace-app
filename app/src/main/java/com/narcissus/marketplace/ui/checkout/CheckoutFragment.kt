@@ -106,7 +106,6 @@ class CheckoutFragment : BottomSheetDialogFragment() {
 
     private fun showCardHolderNameError() {
         binding.etCardHolder.error = getString(R.string.name_empty)
-
     }
 
     private fun showCardNumberError() {
@@ -151,11 +150,9 @@ class CheckoutFragment : BottomSheetDialogFragment() {
 
     private fun textWatcher() = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
         }
 
         override fun afterTextChanged(s: Editable?) {
