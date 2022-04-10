@@ -36,4 +36,3 @@ fun orderPaymentResponseStatusToOrderPaymentStatus(paymentStatusResponse: String
         else -> OrderPaymentStatus.CANCELLED
     }
 }
-

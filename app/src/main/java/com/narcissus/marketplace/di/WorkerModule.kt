@@ -44,7 +44,6 @@ val workerModule = module {
             .putString(OrderConsts.NOTIFICATION_ID_KEY, UUID.randomUUID().toString())
             .putString(OrderConsts.RESULT_KEY, UUID.randomUUID().toString()).build()
     }
-
 }
 
 object OrderWorkerIds {

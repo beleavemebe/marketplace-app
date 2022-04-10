@@ -138,7 +138,6 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
                 )
             }
         workManager.enqueue(paymentWorkRequest)
-
     }
 
     private fun CheckoutItem.toCheckoutListItem() = CheckoutListItem.Detail(this)
@@ -158,4 +157,3 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
         const val MASK_MONTH_YEAR = "__/__"
     }
 }
-

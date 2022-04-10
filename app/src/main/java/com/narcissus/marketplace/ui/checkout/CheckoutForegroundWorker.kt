@@ -40,7 +40,6 @@ class CheckoutForegroundWorker(
 
     private val notificationManager = NotificationManagerCompat.from(appContext)
 
-
     override suspend fun doWork(): Result {
         val orderData = getCartSelectedItemsSnapshot()
         orderUUID = inputData.getString(OrderConsts.ORDER_UUID_KEY)
@@ -72,14 +71,12 @@ class CheckoutForegroundWorker(
                 restoreCartItems(orderData)
                 Result.failure(workDataOf(Pair(orderUUID!!, orderResult.message)))
             }
-
         } catch (e: Exception) {
             restoreCartItems(orderData)
             return Result.failure(workDataOf(Pair("0", e.message)))
         } finally {
             appContext.unregisterReceiver(fragmentViewStateReceiver)
         }
-
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
@@ -99,7 +96,7 @@ class CheckoutForegroundWorker(
         isSuccess: Boolean,
         notificationId: Int,
         message: String,
-        orderNumber:Int? = null,
+        orderNumber: Int? = null,
     ) {
         val notification =
             NotificationCompat.Builder(
@@ -112,7 +109,7 @@ class CheckoutForegroundWorker(
                 .setAutoCancel(true).apply {
                     when (isSuccess) {
                         true -> setContentTitle(appContext.getString(R.string.success))
-                            .setContentText(appContext.getString(R.string.your_order_has_been_paid_placeholder,orderNumber))
+                            .setContentText(appContext.getString(R.string.your_order_has_been_paid_placeholder, orderNumber))
                         false -> setContentTitle(appContext.getString(R.string.payment_failed))
                             .setContentText(message)
                     }
@@ -127,8 +124,6 @@ class CheckoutForegroundWorker(
             notificationManager.createNotificationChannel(notificationChannel)
         }
         notificationManager.notify(notificationId, notification)
-
-
     }
 
     private val fragmentViewStateReceiver = object : BroadcastReceiver() {
@@ -142,6 +137,4 @@ class CheckoutForegroundWorker(
     companion object {
         const val CHANNEL_ID = "MarketplaceChannelId"
     }
-
 }
-
