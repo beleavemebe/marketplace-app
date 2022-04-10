@@ -36,13 +36,10 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private val viewModel: CheckoutViewModel by viewModel()
     private val orderUUID = UUID.randomUUID().toString()
 
-    //    val data = Data.Builder().putString(OrderConsts.ORDER_UUID_KEY, orderUUID)
-//        .putString(OrderConsts.NOTIFICATION_ID_KEY, UUID.randomUUID().toString())
-//        .putString(OrderConsts.RESULT_KEY, UUID.randomUUID().toString()).build()
-    val data: Data by inject(qualifier<NotificationQualifiers.PaymentInputDataBuilder>()) {
+    val data: Data by inject(qualifier<NotificationQualifiers.PaymentWorkerInputData>()) {
         parametersOf(orderUUID)
     }
-    private val paymentWorkRequest: OneTimeWorkRequest by inject(qualifier<NotificationQualifiers.PaymentRequestBuilder>()) {
+    private val paymentWorkRequest: OneTimeWorkRequest by inject(qualifier<NotificationQualifiers.PaymentOneTimeRequest>()) {
         parametersOf(data)
     }
 
@@ -109,10 +106,11 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
 
     private fun initPlaceOrderButton() {
         binding.btnPlaceOrder.setOnClickListener {
-         makeAnOrder()
+            makeAnOrder()
         }
     }
-    private fun makeAnOrder(){
+
+    private fun makeAnOrder() {
         val workManager = WorkManager.getInstance(requireContext())
         workManager.getWorkInfoByIdLiveData(paymentWorkRequest.id)
             .observe(this) { workInfo: WorkInfo? ->
@@ -134,13 +132,13 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
                             )
                         }
                     }
-                }
-                else Log.d(
+                } else Log.d(
                     "DEBUG",
-                    "OH SHIIT",
+                    "OH VSO PLOHO",
                 )
             }
         workManager.enqueue(paymentWorkRequest)
+
     }
 
     private fun CheckoutItem.toCheckoutListItem() = CheckoutListItem.Detail(this)
@@ -160,3 +158,4 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
         const val MASK_MONTH_YEAR = "__/__"
     }
 }
+

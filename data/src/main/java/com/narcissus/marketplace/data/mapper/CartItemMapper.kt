@@ -12,7 +12,7 @@ fun CartItemBean.toCartItem(): CartItem? =
             productName!!,
             amount!!,
             isSelected!!,
-            stock!!
+            stock!!,
         )
     }.getOrDefault(null)
 

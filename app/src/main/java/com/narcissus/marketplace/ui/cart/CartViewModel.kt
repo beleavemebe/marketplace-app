@@ -67,5 +67,6 @@ class CartViewModel(
         }
     }
 
-    val isSelectedItem = cartFlow.map { items -> items.any { cartItem -> cartItem.isSelected } }
+    val isCheckoutButtonActive =
+        cartFlow.map { items -> items.any { cartItem -> cartItem.isSelected } }
 }

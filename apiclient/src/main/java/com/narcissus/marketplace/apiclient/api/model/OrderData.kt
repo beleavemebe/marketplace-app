@@ -17,10 +17,10 @@ data class OrderPaymentQueryBody(
     @SerializedName("id")
     val id:String,
     @SerializedName("order_items")
-    val orderedItemsList: List<OrderPaymentQueryBodyItem>,
+    val orderedItemsList: List<OrderPaymentRequestBodyItem>,
 )
 
-data class OrderPaymentQueryBodyItem(
+data class OrderPaymentRequestBodyItem(
     @SerializedName("product_id")
     val productId: String,
     @SerializedName("product_amount")

@@ -1,5 +1,6 @@
-package com.narcissus.marketplace.domain.model
+package com.narcissus.marketplace.domain.model.orders
 
+import com.narcissus.marketplace.domain.model.CartItem
 import java.util.Date
 
 class OrderPaymentResult(
@@ -9,12 +10,7 @@ class OrderPaymentResult(
     val message: String,
 )
 
-enum class OrderPaymentStatus {
-    PAID,
-    CANCELLED
-}
-
-fun List<CartItem>.toOrder(orderUUID:String,orderNumber: Int, orderDate: Date, orderStatus: OrderStatus): Order =
+fun List<CartItem>.toOrder(orderUUID:String, orderNumber: Int, orderDate: Date, orderStatus: OrderStatus): Order =
     Order(
         orderUUID,
         orderNumber,

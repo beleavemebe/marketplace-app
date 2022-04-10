@@ -104,6 +104,13 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun initButtons() {
         initSelectAllCheckbox()
         initDeleteSelectedButton()
+        initCheckOutListeners()
+    }
+
+    private fun initCheckOutListeners() {
+        binding.btnCheckout.setOnClickListener {
+            findNavController().navigate(CartFragmentDirections.actionCartToCheckout())
+        }
     }
 
     private fun initSelectAllCheckbox() {
@@ -113,10 +120,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     }
 
     private fun observeSelectedItems() {
-        viewModel.isSelectedItem.onEach { selectedItem ->
-            if (selectedItem) binding.btnCheckout.setOnClickListener {
-                findNavController().navigate(CartFragmentDirections.actionCartToCheckout())
-            }
+        viewModel.isCheckoutButtonActive.onEach { selectedItem ->
             binding.btnCheckout.isEnabled = selectedItem
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }

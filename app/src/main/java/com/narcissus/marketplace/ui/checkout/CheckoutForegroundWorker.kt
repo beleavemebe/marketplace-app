@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.ui.checkout
 
-import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,8 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
@@ -20,11 +17,10 @@ import androidx.work.workDataOf
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.di.NotificationQualifiers
 import com.narcissus.marketplace.di.OrderWorkerIds
-import com.narcissus.marketplace.domain.model.OrderPaymentStatus
+import com.narcissus.marketplace.domain.model.orders.OrderPaymentStatus
 import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsSnapshot
 import com.narcissus.marketplace.domain.usecase.MakeAnOrder
 import com.narcissus.marketplace.domain.usecase.RestoreCartItems
-import okhttp3.internal.notify
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.qualifier
@@ -35,14 +31,14 @@ class CheckoutForegroundWorker(
     params: WorkerParameters,
 ) : CoroutineWorker(appContext, params), KoinComponent {
     private val makeAnOrder: MakeAnOrder by inject()
-    private val getCartSelectedItemsSnapshot:GetCartSelectedItemsSnapshot by inject()
-    private val restoreCartItems:RestoreCartItems by inject()
+    private val getCartSelectedItemsSnapshot: GetCartSelectedItemsSnapshot by inject()
+    private val restoreCartItems: RestoreCartItems by inject()
     private val processNotificationId = UUID.randomUUID().hashCode()
     private var isFragmentViewDestroyed: Boolean = false
     private var orderUUID: String? = null
     private val processNotification: Notification by inject(qualifier<NotificationQualifiers.ProcessPaymentNotification>())
 
-    private val notificationManager =NotificationManagerCompat.from(appContext)
+    private val notificationManager = NotificationManagerCompat.from(appContext)
 
 
     override suspend fun doWork(): Result {
@@ -57,7 +53,8 @@ class CheckoutForegroundWorker(
             IntentFilter(OrderConsts.PAY_INTENT_FILTER),
         )
 
-        try{val orderResult = makeAnOrder(orderData, orderUUID!!)
+        try {
+            val orderResult = makeAnOrder(orderData, orderUUID!!)
             return if (orderResult.status == OrderPaymentStatus.PAID) {
                 if (isFragmentViewDestroyed) showFinallyNotification(
                     true,
@@ -70,17 +67,16 @@ class CheckoutForegroundWorker(
                     false,
                     finalNotificationId,
                     orderResult.message,
+                    orderResult.number
                 )
                 restoreCartItems(orderData)
                 Result.failure(workDataOf(Pair(orderUUID!!, orderResult.message)))
             }
 
-        }
-        catch (e:Exception){
+        } catch (e: Exception) {
             restoreCartItems(orderData)
             return Result.failure(workDataOf(Pair("0", e.message)))
-        }
-        finally {
+        } finally {
             appContext.unregisterReceiver(fragmentViewStateReceiver)
         }
 
@@ -89,16 +85,21 @@ class CheckoutForegroundWorker(
     override suspend fun getForegroundInfo(): ForegroundInfo {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel =
-                NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
+                NotificationChannel(
+                    CHANNEL_ID,
+                    appContext.getString(R.string.orders),
+                    NotificationManager.IMPORTANCE_HIGH,
+                )
             notificationManager.createNotificationChannel(notificationChannel)
         }
-               return ForegroundInfo(processNotificationId, processNotification)
+        return ForegroundInfo(processNotificationId, processNotification)
     }
 
     private fun showFinallyNotification(
         isSuccess: Boolean,
         notificationId: Int,
         message: String,
+        orderNumber:Int? = null,
     ) {
         val notification =
             NotificationCompat.Builder(
@@ -111,17 +112,21 @@ class CheckoutForegroundWorker(
                 .setAutoCancel(true).apply {
                     when (isSuccess) {
                         true -> setContentTitle(appContext.getString(R.string.success))
-                            .setContentText(appContext.getString(R.string.your_order_has_been_paid))
+                            .setContentText(appContext.getString(R.string.your_order_has_been_paid_placeholder,orderNumber))
                         false -> setContentTitle(appContext.getString(R.string.payment_failed))
                             .setContentText(message)
                     }
                 }.build()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel =
-                NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
+                NotificationChannel(
+                    CHANNEL_ID,
+                    appContext.getString(R.string.orders),
+                    NotificationManager.IMPORTANCE_HIGH,
+                )
             notificationManager.createNotificationChannel(notificationChannel)
         }
-        notificationManager.notify(notificationId,notification)
+        notificationManager.notify(notificationId, notification)
 
 
     }
@@ -136,7 +141,6 @@ class CheckoutForegroundWorker(
 
     companion object {
         const val CHANNEL_ID = "MarketplaceChannelId"
-        const val CHANNEL_NAME = "MarketplaceNotificationChannelName"
     }
 
 }

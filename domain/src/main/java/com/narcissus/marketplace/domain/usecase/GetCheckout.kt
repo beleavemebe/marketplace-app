@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.map
 
 class GetCheckout(private val cartRepository: CartRepository) {
     suspend operator fun invoke(): List<CheckoutItem> =
-        cartRepository.getCurrentCartSelected().map {it.toCheckoutItem()}
+        cartRepository.getCurrentCartSelected().map { it.toCheckoutItem() }
 }

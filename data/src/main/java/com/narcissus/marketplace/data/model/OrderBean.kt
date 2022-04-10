@@ -1,6 +1,6 @@
 package com.narcissus.marketplace.data.model
 
-import com.narcissus.marketplace.domain.model.OrderStatus
+import com.narcissus.marketplace.domain.model.orders.OrderStatus
 import java.util.Date
 
 data class OrderBean(

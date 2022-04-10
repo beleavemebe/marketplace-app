@@ -6,23 +6,21 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.narcissus.marketplace.apiclient.api.model.OrderPaymentQueryBody
-import com.narcissus.marketplace.apiclient.api.model.OrderPaymentQueryBodyItem
+import com.narcissus.marketplace.apiclient.api.model.OrderPaymentRequestBodyItem
 import com.narcissus.marketplace.apiclient.api.model.OrderPaymentResponse
 import com.narcissus.marketplace.apiclient.api.service.OrderApiService
+import com.narcissus.marketplace.data.mapper.orderPaymentResponseStatusToOrderPaymentStatus
 import com.narcissus.marketplace.data.mapper.toOrder
 import com.narcissus.marketplace.data.model.OrderBean
 import com.narcissus.marketplace.domain.model.CartItem
-import com.narcissus.marketplace.domain.model.Order
-import com.narcissus.marketplace.domain.model.OrderPaymentResult
-import com.narcissus.marketplace.domain.model.OrderPaymentStatus
+import com.narcissus.marketplace.domain.model.orders.Order
+import com.narcissus.marketplace.domain.model.orders.OrderPaymentResult
 import com.narcissus.marketplace.domain.repository.OrderRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.withContext
 
 internal class OrderRepositoryImpl(
     private val orderRef: DatabaseReference,
@@ -36,10 +34,11 @@ internal class OrderRepositoryImpl(
         }
     }
 
-    override suspend fun payForTheOrder(orderList: List<CartItem>,orderUUID: String): OrderPaymentResult =
-        withContext(Dispatchers.IO) {
-            orderApiService.payForTheOrder(orderList.toOrderQueryBody(orderUUID)).toOrderPaymentResult()
-        }
+    override suspend fun payForTheOrder(
+        orderList: List<CartItem>,
+        orderUUID: String,
+    ): OrderPaymentResult =
+        orderApiService.payForTheOrder(orderList.toOrderQueryBody(orderUUID)).toOrderPaymentResult()
 
 
     private fun ProducerScope<List<Order>>.createValueEventListener() =
@@ -56,16 +55,14 @@ internal class OrderRepositoryImpl(
 
 
     override suspend fun saveOrder(order: Order) {
-        withContext(Dispatchers.IO){
-            orderRef.child(order.id).setValue(order)
-        }
+        orderRef.child(order.id).setValue(order)
     }
 
-    private fun List<CartItem>.toOrderQueryBody(orderUUID:String): OrderPaymentQueryBody =
+    private fun List<CartItem>.toOrderQueryBody(orderUUID: String): OrderPaymentQueryBody =
         OrderPaymentQueryBody(
             orderUUID,
             (this.map {
-                OrderPaymentQueryBodyItem(
+                OrderPaymentRequestBodyItem(
                     it.productId,
                     it.amount,
                 )
@@ -80,12 +77,6 @@ internal class OrderRepositoryImpl(
             message,
         )
 
-    private fun orderPaymentResponseStatusToOrderPaymentStatus(paymentStatusResponse: String): OrderPaymentStatus {
-        return when (paymentStatusResponse) {
-            PAYMENT_STATUS_PAID -> OrderPaymentStatus.PAID
-            else -> OrderPaymentStatus.CANCELLED
-        }
-    }
 
     companion object {
         const val PAYMENT_STATUS_PAID = "paid"
