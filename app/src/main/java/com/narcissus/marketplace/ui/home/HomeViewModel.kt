@@ -7,6 +7,7 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.domain.model.ProductOfTheDay
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.SpecialOfferBanner
+import com.narcissus.marketplace.domain.usecase.GetPeopleAreBuyingProducts
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
@@ -27,6 +28,7 @@ class HomeViewModel(
     private val getTopRatedProducts: GetTopRatedProducts,
     private val getTopSalesProducts: GetTopSalesProducts,
     private val getRandomProducts: GetRandomProducts,
+    private val getPeopleAreBuyingProducts: GetPeopleAreBuyingProducts,
     getRecentlyVisitedProducts: GetRecentlyVisitedProducts,
 ) : ViewModel() {
 
@@ -40,6 +42,10 @@ class HomeViewModel(
 
     private val randomFlow = productListFlow {
         getRandomProducts()
+    }
+
+    private val peopleAreBuyingFlow = productListFlow {
+        getPeopleAreBuyingProducts()
     }
 
     private val featuredTabFlow = MutableStateFlow(FeaturedTab.TOP_RATED)
@@ -99,7 +105,8 @@ class HomeViewModel(
         productsOfTheDayFlow,
         featuredContentFlow,
         recentlyVisitedFlow,
-    ) { banner, productsOfTheDay, featuredContent, recentlyVisited ->
+        peopleAreBuyingFlow,
+    ) { banner, productsOfTheDay, featuredContent, recentlyVisited, peopleAreBuying ->
         listOf(
             HomeScreenItem.Headline(R.string.special_offer),
             HomeScreenItem.Banners(banner),
@@ -108,6 +115,8 @@ class HomeViewModel(
             HomeScreenItem.Headline(R.string.featured),
             HomeScreenItem.FeaturedTabs(),
             HomeScreenItem.Products(featuredContent),
+            HomeScreenItem.Headline(R.string.people_are_buying),
+            HomeScreenItem.Products(peopleAreBuying),
             HomeScreenItem.Headline(R.string.you_viewed),
             HomeScreenItem.Products(recentlyVisited),
             HomeScreenItem.Headline(R.string.home_screen_footer),
