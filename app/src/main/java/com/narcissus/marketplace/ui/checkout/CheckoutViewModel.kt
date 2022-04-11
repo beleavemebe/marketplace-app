@@ -3,8 +3,6 @@ package com.narcissus.marketplace.ui.checkout
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.domain.card.CardValidateResult
-import com.narcissus.marketplace.domain.usecase.GetCartCost
-import com.narcissus.marketplace.domain.usecase.GetCheckout
 import com.narcissus.marketplace.domain.usecase.ValidateCard
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,3 +38,5 @@ class CheckoutViewModel(
             val validateResult = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
             _cardValidateFlow.emit(validateResult)
         }
+    }
+}
