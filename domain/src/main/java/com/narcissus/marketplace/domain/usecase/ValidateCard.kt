@@ -15,7 +15,7 @@ class ValidateCard {
             return CardValidateResult.InvalidCardHolderName
         }
 
-        if (isCardNumberCorrect(cardNumber.replace(" ", ""))) {
+        if (!isCardNumberCorrect(cardNumber.replace(" ", ""))) {
             return CardValidateResult.InvalidCardNumber
         }
 
@@ -44,22 +44,22 @@ class ValidateCard {
     }
 
     private fun isCardNumberCorrect(cardNumber: String): Boolean {
-        var checksum = 0
+        var sum = 0
 
         if (cardNumber.length != CARD_NUMBER_LENGTH) {
             return false
         }
 
         for (i in cardNumber.length - 1 downTo 0 step 2) {
-            checksum += cardNumber[i].digitToInt()
+            sum += cardNumber[i].digitToInt()
         }
 
         for (i in cardNumber.length - 2 downTo 0 step 2) {
-            val n = (cardNumber[i].digitToInt()) * 2
-            checksum += if (n > 9) n - 9 else n
+            val oddNumber = (cardNumber[i].digitToInt()) * 2
+            sum += if (oddNumber > 9) oddNumber - 9 else oddNumber
         }
 
-        return checksum % 10 == 0
+        return sum % 10 == 0
     }
 
     private companion object {

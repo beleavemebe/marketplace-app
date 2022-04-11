@@ -1,8 +1,6 @@
 package com.narcissus.marketplace.ui.checkout
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +37,7 @@ class CheckoutFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvCheckoutDetails.adapter = adapter
-        watchEditText()
+        setMaskOnCard()
         subscribeToViewModel()
         initPlaceOrderButton()
     }
@@ -73,28 +71,20 @@ class CheckoutFragment : BottomSheetDialogFragment() {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun errorState(cardState: CardValidateResult) {
-        binding.btnPlaceOrder.isEnabled = false
-        when (cardState) {
-            is CardValidateResult.InvalidCardHolderName -> showCardHolderNameError()
-            is CardValidateResult.InvalidCardNumber -> showCardNumberError()
-            is CardValidateResult.InvalidExpireDate -> showCardExpireDateError()
-            is CardValidateResult.InvalidCvv -> showCardCvvError()
-        }
-    }
-
     private fun observeCardState() {
         viewModel.cardValidateFlow.onEach { result ->
             when (result) {
+                is CardValidateResult.InvalidCardHolderName -> showCardHolderNameError()
+                is CardValidateResult.InvalidCardNumber -> showCardNumberError()
+                is CardValidateResult.InvalidExpireDate -> showCardExpireDateError()
+                is CardValidateResult.InvalidCvv -> showCardCvvError()
                 is CardValidateResult.Success -> cardValidated()
-                else -> errorState(result)
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun cardValidated() {
         clearErrorState()
-        binding.btnPlaceOrder.isEnabled = true
     }
 
     private fun clearErrorState() {
@@ -120,44 +110,19 @@ class CheckoutFragment : BottomSheetDialogFragment() {
         binding.etCvv.error = getString(R.string.invalid_cvv)
     }
 
-    private fun watchEditText() {
-        binding.btnPlaceOrder.isEnabled = false
-        watchCardHolderName()
-        watchCardNumber()
-        watchCardMonthYear()
-        watchCardCvv()
+    private fun setMaskOnCard() {
+        setMaskOnCardNumber()
+        setMaskOnExpireDate()
     }
 
-    private fun watchCardHolderName() {
-        binding.etCardHolder.addTextChangedListener(textWatcher())
-    }
-
-    private fun watchCardNumber() {
+    private fun setMaskOnCardNumber() {
         val maskCardNumber = MaskImpl.createTerminated(PredefinedSlots.CARD_NUMBER_STANDARD)
         MaskFormatWatcher(maskCardNumber).installOn(binding.etCardNumber)
-        binding.etCardNumber.addTextChangedListener(textWatcher())
     }
 
-    private fun watchCardMonthYear() {
+    private fun setMaskOnExpireDate() {
         val slots = UnderscoreDigitSlotsParser().parseSlots(MASK_MONTH_YEAR)
         MaskFormatWatcher(MaskImpl.createTerminated(slots)).installOn(binding.etMonthYear)
-        binding.etCardNumber.addTextChangedListener(textWatcher())
-    }
-
-    private fun watchCardCvv() {
-        binding.etCvv.addTextChangedListener(textWatcher())
-    }
-
-    private fun textWatcher() = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            checkCard()
-        }
     }
 
     private fun checkCard() {
@@ -171,6 +136,7 @@ class CheckoutFragment : BottomSheetDialogFragment() {
 
     private fun initPlaceOrderButton() {
         binding.btnPlaceOrder.setOnClickListener {
+            checkCard()
         }
     }
 
