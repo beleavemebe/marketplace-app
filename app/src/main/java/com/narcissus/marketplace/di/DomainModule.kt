@@ -6,15 +6,20 @@ import com.narcissus.marketplace.domain.usecase.GetAuthStateFlow
 import com.narcissus.marketplace.domain.usecase.GetCart
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCartItemsAmount
+import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsCostSnapshot
+import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsSnapshot
 import com.narcissus.marketplace.domain.usecase.GetCheckout
 import com.narcissus.marketplace.domain.usecase.GetDepartments
+import com.narcissus.marketplace.domain.usecase.GetOrderList
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopSalesProducts
+import com.narcissus.marketplace.domain.usecase.MakeAnOrder
 import com.narcissus.marketplace.domain.usecase.RemoveFromCart
 import com.narcissus.marketplace.domain.usecase.RemoveSelectedCartItems
+import com.narcissus.marketplace.domain.usecase.RestoreCartItems
 import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
 import com.narcissus.marketplace.domain.usecase.SetCartItemAmount
 import com.narcissus.marketplace.domain.usecase.SetCartItemSelected
@@ -34,17 +39,20 @@ val domainModule = module {
     factory { GetRandomProducts(get()) }
     factory { GetRecentlyVisitedProducts(get()) }
     factory { GetProductDetails(get(), get()) }
-
+    factory { MakeAnOrder(get(), get()) }
     factory { GetDepartments(get()) }
-
+    factory { GetOrderList(get()) }
     factory { GetCart(get()) }
     factory { GetCartItemsAmount(get()) }
     factory { GetCartCost(get()) }
+    factory { GetCartSelectedItemsSnapshot(get()) }
     factory { SetCartItemAmount(get()) }
     factory { SetCartItemSelected(get()) }
     factory { SelectAllCartItems(get()) }
     factory { RemoveSelectedCartItems(get()) }
     factory { RemoveFromCart(get()) }
+    factory { RestoreCartItems(get()) }
+    factory { GetCartSelectedItemsCostSnapshot(get()) }
     factory { AddToCart(get()) }
     factory { SignInWithEmail(get()) }
     factory { SignInWithGoogle(get()) }

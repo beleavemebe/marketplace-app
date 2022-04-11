@@ -10,16 +10,22 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsCostSnapshot
+import com.narcissus.marketplace.domain.usecase.GetCheckout
+import kotlinx.coroutines.flow.flow
 
 class CheckoutViewModel(
-    getCheckout: GetCheckout,
-    getCartCost: GetCartCost,
+    private val getCheckout: GetCheckout,
+    private val getCartCost: GetCartSelectedItemsCostSnapshot,
     private val validateCard: ValidateCard
 ) : ViewModel() {
 
-    val getCheckoutFlow = getCheckout()
-
-    val getTotalFlow = getCartCost()
+    val checkoutFlow = flow {
+        emit(getCheckout())
+    }
+    val totalCostFlow = flow {
+        emit(getCartCost())
+    }
 
     private val _cardValidateFlow = MutableSharedFlow<CardValidateResult>(
         replay = 1,
@@ -34,5 +40,3 @@ class CheckoutViewModel(
             val validateResult = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
             _cardValidateFlow.emit(validateResult)
         }
-    }
-}

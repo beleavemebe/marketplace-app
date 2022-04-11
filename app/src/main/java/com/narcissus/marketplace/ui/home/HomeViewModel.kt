@@ -93,7 +93,6 @@ class HomeViewModel(
             }
         )
     }
-
     val contentFlow: Flow<List<HomeScreenItem>> = combine(
         bannersFlow,
         productsOfTheDayFlow,

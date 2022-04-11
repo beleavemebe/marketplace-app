@@ -17,6 +17,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
 class CartRepositoryImpl(
     private val cartRef: DatabaseReference,
@@ -49,6 +50,24 @@ class CartRepositoryImpl(
         cartRef.child(cartItem.productId)
             .setValue(cartItem.toBean())
     }
+
+    override suspend fun addAllSelectedToCart(cartItems: List<CartItem>) {
+        cartItems.onEach { cartItem ->
+            val amount = getCartItemCount(cartItem.productId) + cartItem.amount
+            val updatedCartItem = cartItem.copy(amount = amount)
+            cartRef.child(cartItem.productId).setValue(updatedCartItem)
+        }
+    }
+
+    private suspend fun getCartItemCount(productId: String) =
+        cartRef.get().await().children.mapNotNull { child ->
+            child.getValue<CartItemBean>()?.toCartItem()
+        }.firstOrNull { it.productId == productId }?.amount ?: 0
+
+    override suspend fun getCurrentCartSelected() =
+        cartRef.get().await().children.mapNotNull { child ->
+            child.getValue<CartItemBean>()?.toCartItem()
+        }.filter { it.isSelected }
 
     override suspend fun removeFromCart(cartItem: CartItem) {
         cartRef.child(cartItem.productId)

@@ -68,7 +68,7 @@
     <string name="order_summary">Order Summary</string>
     <string name="place_order">Place Order</string>
     <string name="total">Total</string>
-    <string name ="amount_placeholder">%1$dx</string>
+    <string name="amount_placeholder">%1$dx</string>
     <string name="name_empty">Please, enter your full name</string>
     <string name="user_not_found">User not found</string>
     <string name="play_services_unavailable">Play services are unavailable on this device.</string>
@@ -79,4 +79,10 @@
     <string name="invalid_card_number">Invalid card number</string>
     <string name="invalid_expire_date">Invalid expire date</string>
     <string name="invalid_cvv">Please enter full CVV</string>
+    <string name="process_your_order">process your order</string>
+    <string name="please_wait">please wait</string>
+    <string name="success">Success!</string>
+    <string name="payment_failed">Payment failed</string>
+    <string name="your_order_has_been_paid_placeholder">your order number %1$d has been paid and will be shipped soon</string>
+    <string name="orders">Orders</string>
 </resources>
