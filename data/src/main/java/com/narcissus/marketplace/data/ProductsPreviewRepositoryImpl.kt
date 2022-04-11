@@ -38,6 +38,11 @@ internal class ProductsPreviewRepositoryImpl(
         return topSalesProducts.map(ProductPreviewResponseData::toProductPreview)
     }
 
+    override suspend fun getProductsPeopleAreBuying(): List<ProductPreview> {
+        val peopleAreBuyingProducts = apiService.getPeopleAreBuyingProducts().data
+        return peopleAreBuyingProducts.map(ProductPreviewResponseData::toProductPreview)
+    }
+
     override suspend fun getProductsByDepartment(departmentId: String): ActionResult<List<ProductPreview>> {
         TODO("Not yet implemented")
     }
