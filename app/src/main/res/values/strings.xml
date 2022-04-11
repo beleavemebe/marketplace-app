@@ -64,4 +64,5 @@
     <string name="missing_uppercase_letter">Password must contain an uppercase letter</string>
     <string name="missing_number">Password must contain a number</string>
     <string name="missing_lowercase_letter">Password must contain a lowercase letter</string>
+    <string name="people_are_buying">People are buying</string>
 </resources>

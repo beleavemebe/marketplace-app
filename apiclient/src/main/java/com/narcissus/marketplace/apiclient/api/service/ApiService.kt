@@ -33,6 +33,9 @@ interface ApiService {
         @Query("page") page: Int
     ): ProductPreviewsResponse
 
+    @GET("products/people-are-buying")
+    suspend fun getPeopleAreBuyingProducts(): ProductPreviewsResponse
+
     @GET("departments")
     suspend fun getDepartments(): DepartmentsResponse
 

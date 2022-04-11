@@ -14,6 +14,7 @@ interface ProductsPreviewRepository {
     suspend fun getProductsRandom(): List<ProductPreview>
     suspend fun getProductsTopRated(): List<ProductPreview>
     suspend fun getProductsTopSales(): List<ProductPreview>
+    suspend fun getProductsPeopleAreBuying(): List<ProductPreview>
     suspend fun getProductsByDepartment(departmentId: String): ActionResult<List<ProductPreview>>
     suspend fun getProductsByDepartmentIdTopRated(departmentId: String): ActionResult<List<ProductPreview>>
     suspend fun getProductsByDepartmentIdTopSales(departmentId: String): ActionResult<List<ProductPreview>>
