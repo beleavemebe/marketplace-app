@@ -1,11 +1,15 @@
 package com.narcissus.marketplace.ui.checkout
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.domain.card.CardValidateResult
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCheckout
 import com.narcissus.marketplace.domain.usecase.ValidateCard
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 
 class CheckoutViewModel(
     getCheckout: GetCheckout,
@@ -13,14 +17,23 @@ class CheckoutViewModel(
     private val validateCard: ValidateCard,
 ) : ViewModel() {
 
-    lateinit var cardValidateResult: CardValidateResult
+    private val _cardValidateFlow = MutableSharedFlow<CardValidateResult>()
+
+    val cardValidateFlow = _cardValidateFlow.asSharedFlow()
 
     val checkoutFlow = flow {
         emit(getCheckout())
     }
-    val totalCostFlow = getCartCost()
+
+    val totalCostFlow = flow {
+        getCartCost().collect{ emit(it) }
+    }
+
 
     fun checkCard(cardHolder: String, cardNumber: String, cardExpireDate: String, cardCvv: String) {
-        cardValidateResult = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
+        viewModelScope.launch {
+            val validateResult = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
+            _cardValidateFlow.emit(validateResult)
+        }
     }
 }

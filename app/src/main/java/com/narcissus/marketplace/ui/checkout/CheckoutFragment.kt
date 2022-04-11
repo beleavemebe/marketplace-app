@@ -15,8 +15,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.FragmentCheckoutBinding
-import com.narcissus.marketplace.domain.card.CardValidateResult
 import com.narcissus.marketplace.di.NotificationQualifiers
+import com.narcissus.marketplace.domain.card.CardValidateResult
 import com.narcissus.marketplace.domain.model.CheckoutItem
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -29,7 +29,7 @@ import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
 import ru.tinkoff.decoro.slots.PredefinedSlots
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
-import java.util.UUID
+import java.util.*
 
 class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private var _binding: FragmentCheckoutBinding? = null
@@ -72,6 +72,7 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private fun subscribeToViewModel() {
         observeCheckout()
         observeTotalCost()
+        observeCardState()
     }
 
     private fun observeCheckout() {
@@ -85,19 +86,21 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private fun observeTotalCost() {
         viewModel.totalCostFlow.onEach { total ->
             binding.tvOrderTotalPrice.text = context?.getString(
-                R.string.price_placeholder, total
+                R.string.price_placeholder, total,
             )
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun handleCardState() {
-        when (viewModel.cardValidateResult) {
-            is CardValidateResult.InvalidCardHolderName -> showCardHolderNameError()
-            is CardValidateResult.InvalidCardNumber -> showCardNumberError()
-            is CardValidateResult.InvalidExpireDate -> showCardExpireDateError()
-            is CardValidateResult.InvalidCvv -> showCardCvvError()
-            is CardValidateResult.Success -> cardValidated()
-        }
+    private fun observeCardState() {
+        viewModel.cardValidateFlow.onEach { result ->
+            when (result) {
+                is CardValidateResult.InvalidCardHolderName -> showCardHolderNameError()
+                is CardValidateResult.InvalidCardNumber -> showCardNumberError()
+                is CardValidateResult.InvalidExpireDate -> showCardExpireDateError()
+                is CardValidateResult.InvalidCvv -> showCardCvvError()
+                is CardValidateResult.Success -> cardValidated()
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun cardValidated() {
@@ -142,7 +145,6 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
             binding.etMonthYear.text.toString(),
             binding.etCvv.text.toString(),
         )
-        handleCardState()
     }
 
     private fun initPlaceOrderButton() {
