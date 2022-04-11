@@ -7,6 +7,7 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.domain.model.ProductOfTheDay
 import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.domain.model.SpecialOfferBanner
+import com.narcissus.marketplace.domain.usecase.GetPeopleAreBuyingProducts
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
@@ -27,6 +28,7 @@ class HomeViewModel(
     private val getTopRatedProducts: GetTopRatedProducts,
     private val getTopSalesProducts: GetTopSalesProducts,
     private val getRandomProducts: GetRandomProducts,
+    private val getPeopleAreBuyingProducts: GetPeopleAreBuyingProducts,
     getRecentlyVisitedProducts: GetRecentlyVisitedProducts,
 ) : ViewModel() {
 
@@ -40,6 +42,10 @@ class HomeViewModel(
 
     private val randomFlow = productListFlow {
         getRandomProducts()
+    }
+
+    private val peopleAreBuyingFlow = productListFlow {
+        getPeopleAreBuyingProducts()
     }
 
     private val featuredTabFlow = MutableStateFlow(FeaturedTab.TOP_RATED)
@@ -98,19 +104,50 @@ class HomeViewModel(
         productsOfTheDayFlow,
         featuredContentFlow,
         recentlyVisitedFlow,
-    ) { banner, productsOfTheDay, featuredContent, recentlyVisited ->
-        listOf(
+        peopleAreBuyingFlow,
+    ) { banner, productsOfTheDay, featuredContent, recentlyVisited, peopleAreBuying ->
+        val sectionBanners = listOf(
             HomeScreenItem.Headline(R.string.special_offer),
             HomeScreenItem.Banners(banner),
+        )
+
+        val sectionProductsOfTheDay = listOf(
             HomeScreenItem.Headline(R.string.products_of_the_day),
             HomeScreenItem.ProductsOfTheDay(productsOfTheDay),
+        )
+
+        val sectionFeatured = listOf(
             HomeScreenItem.Headline(R.string.featured),
             HomeScreenItem.FeaturedTabs(),
             HomeScreenItem.Products(featuredContent),
+        )
+
+        val sectionPeopleAreBuying = listOf(
+            HomeScreenItem.Headline(R.string.people_are_buying),
+            HomeScreenItem.Products(peopleAreBuying),
+        ).takeIf {
+            peopleAreBuying.isNotEmpty()
+        }.orEmpty()
+
+        val sectionYouViewed = listOf(
             HomeScreenItem.Headline(R.string.you_viewed),
             HomeScreenItem.Products(recentlyVisited),
+        ).takeIf {
+            recentlyVisited.isNotEmpty()
+        }.orEmpty()
+
+        val sectionThatsIt = listOf(
             HomeScreenItem.Headline(R.string.home_screen_footer),
         )
+
+        listOf(
+            sectionBanners,
+            sectionProductsOfTheDay,
+            sectionFeatured,
+            sectionPeopleAreBuying,
+            sectionYouViewed,
+            sectionThatsIt
+        ).flatten()
     }
 
     private fun productListFlow(block: suspend () -> List<ProductPreview>): Flow<List<ProductListItem>> {

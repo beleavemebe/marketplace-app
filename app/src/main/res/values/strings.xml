@@ -85,4 +85,5 @@
     <string name="payment_failed">Payment failed</string>
     <string name="your_order_has_been_paid_placeholder">your order number %1$d has been paid and will be shipped soon</string>
     <string name="orders">Orders</string>
+    <string name="people_are_buying">People are buying</string>
 </resources>
