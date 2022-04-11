@@ -29,13 +29,13 @@ internal class ProductsPreviewRepositoryImpl(
     }
 
     override suspend fun getProductsTopRated(): List<ProductPreview> {
-        val randomProducts = apiService.getTopRatedProducts(PREVIEWS_AMOUNT, 1).data
-        return randomProducts.map(ProductPreviewResponseData::toProductPreview)
+        val topRatedProducts = apiService.getTopRatedProducts(PREVIEWS_AMOUNT, 1).data
+        return topRatedProducts.map(ProductPreviewResponseData::toProductPreview)
     }
 
     override suspend fun getProductsTopSales(): List<ProductPreview> {
-        val randomProducts = apiService.getTopSalesProducts(PREVIEWS_AMOUNT, 1).data
-        return randomProducts.map(ProductPreviewResponseData::toProductPreview)
+        val topSalesProducts = apiService.getTopSalesProducts(PREVIEWS_AMOUNT, 1).data
+        return topSalesProducts.map(ProductPreviewResponseData::toProductPreview)
     }
 
     override suspend fun getProductsByDepartment(departmentId: String): ActionResult<List<ProductPreview>> {
