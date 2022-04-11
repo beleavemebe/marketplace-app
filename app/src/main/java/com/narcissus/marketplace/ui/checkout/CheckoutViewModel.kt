@@ -1,42 +1,28 @@
 package com.narcissus.marketplace.ui.checkout
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.domain.card.CardValidateResult
-import com.narcissus.marketplace.domain.usecase.ValidateCard
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
-import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsCostSnapshot
+import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCheckout
-import kotlinx.coroutines.flow.flow
+import com.narcissus.marketplace.domain.usecase.ValidateCard
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CheckoutViewModel(
-    private val getCheckout: GetCheckout,
-    private val getCartCost: GetCartSelectedItemsCostSnapshot,
-    private val validateCard: ValidateCard
+    getCheckout: GetCheckout,
+    getCartCost: GetCartCost,
+    private val validateCard: ValidateCard,
 ) : ViewModel() {
 
-    val checkoutFlow = flow {
-        emit(getCheckout())
-    }
-    val totalCostFlow = flow {
-        emit(getCartCost())
-    }
+    val getCheckoutFlow = getCheckout()
 
-    private val _cardValidateFlow = MutableSharedFlow<CardValidateResult>(
-        replay = 1,
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    val getTotalFlow = getCartCost()
 
-    val cardValidateFlow = _cardValidateFlow.asSharedFlow()
+    private val _cardValidateFlow = MutableStateFlow<CardValidateResult>(CardValidateResult.Success)
+
+    val cardValidateFlow = _cardValidateFlow.asStateFlow()
 
     fun checkCard(cardHolder: String, cardNumber: String, cardExpireDate: String, cardCvv: String) {
-        viewModelScope.launch {
-            val validateResult = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
-            _cardValidateFlow.emit(validateResult)
-        }
+        _cardValidateFlow.value = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
     }
 }

@@ -34,7 +34,7 @@ class ValidateCard {
     private fun isExpireDateCorrect(cardExpireDate: String): Boolean {
         if (cardExpireDate.isNotBlank() && cardExpireDate.length == EXPIRE_DATE_LENGTH) {
             val isMonthCorrect =
-                cardExpireDate[0].digitToInt() * 10 + cardExpireDate[1].digitToInt() < MONTHS ||
+                cardExpireDate[0].digitToInt() * 10 + cardExpireDate[1].digitToInt() < MONTHS &&
                     cardExpireDate[1].digitToInt() != 0
             val isYearCorrect =
                 cardExpireDate[3].digitToInt() * 10 + cardExpireDate[4].digitToInt() <= CURRENT_YEAR
@@ -56,7 +56,7 @@ class ValidateCard {
 
         for (i in cardNumber.length - 2 downTo 0 step 2) {
             val oddNumber = (cardNumber[i].digitToInt()) * 2
-            sum += if (oddNumber > 9) oddNumber - 9 else oddNumber
+            sum += if (oddNumber > CARD_MAX_DIGIT) oddNumber - CARD_MAX_DIGIT else oddNumber
         }
 
         return sum % 10 == 0
@@ -68,5 +68,6 @@ class ValidateCard {
         const val CARD_NUMBER_LENGTH = 16
         const val CVV_LENGTH = 3
         const val CURRENT_YEAR = 22
+        const val CARD_MAX_DIGIT = 9
     }
 }

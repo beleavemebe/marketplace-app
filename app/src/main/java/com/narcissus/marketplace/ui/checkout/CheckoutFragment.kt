@@ -72,7 +72,6 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private fun subscribeToViewModel() {
         observeCheckout()
         observeTotalCost()
-        observeCardState()
     }
 
     private fun observeCheckout() {
@@ -92,26 +91,18 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     }
 
     private fun observeCardState() {
-        viewModel.cardValidateFlow.onEach { result ->
-            when (result) {
-                is CardValidateResult.InvalidCardHolderName -> showCardHolderNameError()
-                is CardValidateResult.InvalidCardNumber -> showCardNumberError()
-                is CardValidateResult.InvalidExpireDate -> showCardExpireDateError()
-                is CardValidateResult.InvalidCvv -> showCardCvvError()
-                is CardValidateResult.Success -> cardValidated()
-            }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        when (viewModel.cardValidateFlow.value) {
+            is CardValidateResult.InvalidCardHolderName -> showCardHolderNameError()
+            is CardValidateResult.InvalidCardNumber -> showCardNumberError()
+            is CardValidateResult.InvalidExpireDate -> showCardExpireDateError()
+            is CardValidateResult.InvalidCvv -> showCardCvvError()
+            is CardValidateResult.Success -> cardValidated()
+        }
     }
+
 
     private fun cardValidated() {
-        clearErrorState()
-    }
 
-    private fun clearErrorState() {
-        binding.etCardHolder.error = null
-        binding.etCardNumber.error = null
-        binding.etMonthYear.error = null
-        binding.etCvv.error = null
     }
 
     private fun showCardHolderNameError() {
@@ -152,6 +143,7 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
             binding.etMonthYear.text.toString(),
             binding.etCvv.text.toString(),
         )
+        observeCardState()
     }
 
     private fun initPlaceOrderButton() {
