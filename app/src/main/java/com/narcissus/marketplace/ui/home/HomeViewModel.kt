@@ -107,20 +107,48 @@ class HomeViewModel(
         recentlyVisitedFlow,
         peopleAreBuyingFlow,
     ) { banner, productsOfTheDay, featuredContent, recentlyVisited, peopleAreBuying ->
-        listOf(
+        val sectionBanners = listOf(
             HomeScreenItem.Headline(R.string.special_offer),
             HomeScreenItem.Banners(banner),
+        )
+
+        val sectionProductsOfTheDay = listOf(
             HomeScreenItem.Headline(R.string.products_of_the_day),
             HomeScreenItem.ProductsOfTheDay(productsOfTheDay),
+        )
+
+        val sectionFeatured = listOf(
             HomeScreenItem.Headline(R.string.featured),
             HomeScreenItem.FeaturedTabs(),
             HomeScreenItem.Products(featuredContent),
+        )
+
+        val sectionPeopleAreBuying = listOf(
             HomeScreenItem.Headline(R.string.people_are_buying),
             HomeScreenItem.Products(peopleAreBuying),
+        ).takeIf {
+            peopleAreBuying.isNotEmpty()
+        }.orEmpty()
+
+        val sectionYouViewed = listOf(
             HomeScreenItem.Headline(R.string.you_viewed),
             HomeScreenItem.Products(recentlyVisited),
+        ).takeIf {
+            recentlyVisited.isNotEmpty()
+        }.orEmpty()
+
+        val sectionThatsIt = listOf(
             HomeScreenItem.Headline(R.string.home_screen_footer),
         )
+
+        listOf(
+            sectionBanners,
+            sectionProductsOfTheDay,
+            sectionFeatured,
+            sectionPeopleAreBuying,
+            sectionYouViewed,
+            sectionThatsIt
+        ).flatten()
     }
 
     private fun productListFlow(block: suspend () -> List<ProductPreview>): Flow<List<ProductListItem>> {
