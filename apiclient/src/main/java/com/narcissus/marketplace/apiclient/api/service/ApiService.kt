@@ -35,4 +35,9 @@ interface ApiService {
 
     @GET("departments")
     suspend fun getDepartments(): DepartmentsResponse
+
+    @GET("products/similar/{id}")
+    suspend fun getSimilarProducts(
+        @Path("id") productId: String
+    ): ProductPreviewsResponse
 }

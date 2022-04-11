@@ -10,6 +10,7 @@ import com.narcissus.marketplace.domain.usecase.GetDepartments
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
+import com.narcissus.marketplace.domain.usecase.GetSimilarProducts
 import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopSalesProducts
 import com.narcissus.marketplace.domain.usecase.RemoveFromCart
@@ -49,4 +50,5 @@ val domainModule = module {
     factory { SignUpWithEmail(get()) }
     factory { SignOut(get()) }
     factory { GetAuthStateFlow(get()) }
+    factory { GetSimilarProducts(get()) }
 }
