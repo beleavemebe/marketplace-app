@@ -5,8 +5,7 @@ import com.narcissus.marketplace.domain.card.CardValidateResult
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCheckout
 import com.narcissus.marketplace.domain.usecase.ValidateCard
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 
 class CheckoutViewModel(
     getCheckout: GetCheckout,
@@ -14,15 +13,14 @@ class CheckoutViewModel(
     private val validateCard: ValidateCard,
 ) : ViewModel() {
 
-    val getCheckoutFlow = getCheckout()
+    lateinit var cardValidateResult: CardValidateResult
 
-    val getTotalFlow = getCartCost()
-
-    private val _cardValidateFlow = MutableStateFlow<CardValidateResult>(CardValidateResult.Success)
-
-    val cardValidateFlow = _cardValidateFlow.asStateFlow()
+    val checkoutFlow = flow {
+        emit(getCheckout())
+    }
+    val totalCostFlow = getCartCost()
 
     fun checkCard(cardHolder: String, cardNumber: String, cardExpireDate: String, cardCvv: String) {
-        _cardValidateFlow.value = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
+        cardValidateResult = validateCard(cardHolder, cardNumber, cardExpireDate, cardCvv)
     }
 }

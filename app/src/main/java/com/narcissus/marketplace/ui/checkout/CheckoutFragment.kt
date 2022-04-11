@@ -85,13 +85,13 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private fun observeTotalCost() {
         viewModel.totalCostFlow.onEach { total ->
             binding.tvOrderTotalPrice.text = context?.getString(
-                R.string.price_placeholder, total,
+                R.string.price_placeholder, total
             )
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun observeCardState() {
-        when (viewModel.cardValidateFlow.value) {
+    private fun handleCardState() {
+        when (viewModel.cardValidateResult) {
             is CardValidateResult.InvalidCardHolderName -> showCardHolderNameError()
             is CardValidateResult.InvalidCardNumber -> showCardNumberError()
             is CardValidateResult.InvalidExpireDate -> showCardExpireDateError()
@@ -100,9 +100,8 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
         }
     }
 
-
     private fun cardValidated() {
-
+        makeAnOrder()
     }
 
     private fun showCardHolderNameError() {
@@ -143,13 +142,12 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
             binding.etMonthYear.text.toString(),
             binding.etCvv.text.toString(),
         )
-        observeCardState()
+        handleCardState()
     }
 
     private fun initPlaceOrderButton() {
         binding.btnPlaceOrder.setOnClickListener {
             checkCard()
-            makeAnOrder()
         }
     }
 
