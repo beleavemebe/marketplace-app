@@ -59,6 +59,7 @@ class CheckoutForegroundWorker(
                     true,
                     finalNotificationId,
                     orderResult.message,
+                    orderResult.number
                 )
                 Result.success(workDataOf(Pair(orderUUID!!, orderResult.message)))
             } else {
@@ -66,7 +67,6 @@ class CheckoutForegroundWorker(
                     false,
                     finalNotificationId,
                     orderResult.message,
-                    orderResult.number
                 )
                 restoreCartItems(orderData)
                 Result.failure(workDataOf(Pair(orderUUID!!, orderResult.message)))
@@ -105,6 +105,7 @@ class CheckoutForegroundWorker(
             )
                 .setSmallIcon(com.narcissus.marketplace.ui.splash.R.drawable.ic_logo)
                 .setOngoing(false)
+                .setStyle(NotificationCompat.BigTextStyle())
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setAutoCancel(true).apply {
                     when (isSuccess) {
