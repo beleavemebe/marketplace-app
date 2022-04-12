@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".ui.checkout.CheckoutFragment">
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupCheckout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="btnPlaceOrder, tvSummary, clCards, clTotal, mdUnderContent, mdUnderContent, mdUnderSummary, etCardHolder, etCardNumber, etCvv, etMonthYear, rvCheckoutDetails" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="lottieAnim, tvMessage" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/md"
@@ -82,7 +94,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:autofillHints="AUTOFILL_HINT_PERSON_NAME"
             android:hint="@string/card_holder"
+            android:importantForAutofill="yes"
             android:inputType="textVisiblePassword|textNoSuggestions"
             android:paddingHorizontal="2dp"
             android:paddingVertical="8dp"
@@ -90,16 +104,16 @@
             android:textAppearance="@style/S1_subtitle"
             app:layout_constraintEnd_toEndOf="@+id/clCards"
             app:layout_constraintStart_toStartOf="@+id/clCards"
-            app:layout_constraintTop_toBottomOf="@+id/clCards"
-            android:autofillHints="AUTOFILL_HINT_PERSON_NAME"
-            android:importantForAutofill="yes"/>
+            app:layout_constraintTop_toBottomOf="@+id/clCards" />
 
         <EditText
             android:id="@+id/etCardNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_NUMBER "
             android:hint="@string/card_number"
+            android:importantForAutofill="yes"
             android:inputType="phone"
             android:paddingHorizontal="2dp"
             android:paddingVertical="8dp"
@@ -107,24 +121,22 @@
             android:textAppearance="@style/S1_subtitle"
             app:layout_constraintEnd_toEndOf="@+id/etCardHolder"
             app:layout_constraintStart_toStartOf="@+id/etCardHolder"
-            app:layout_constraintTop_toBottomOf="@+id/etCardHolder"
-            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_NUMBER "
-            android:importantForAutofill="yes"/>
+            app:layout_constraintTop_toBottomOf="@+id/etCardHolder" />
 
         <EditText
             android:id="@+id/etMonthYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DATE"
             android:hint="@string/mm_yy"
-            android:textAlignment="center"
+            android:importantForAutofill="yes"
+            android:inputType="date"
             android:paddingVertical="8dp"
+            android:textAlignment="center"
             android:textAppearance="@style/S1_subtitle"
             app:layout_constraintStart_toStartOf="@+id/etCardNumber"
-            app:layout_constraintTop_toBottomOf="@+id/etCardNumber"
-            android:inputType="date"
-            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DATE"
-            android:importantForAutofill="yes"/>
+            app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
 
         <EditText
             android:id="@+id/etCvv"
@@ -132,11 +144,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/cvc_cvv"
-            android:textAlignment="center"
             android:importantForAutofill="no"
             android:inputType="numberPassword"
             android:maxLength="3"
             android:paddingVertical="8dp"
+            android:textAlignment="center"
             android:textAppearance="@style/S1_subtitle"
             app:layout_constraintEnd_toEndOf="@+id/etCardNumber"
             app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
@@ -231,5 +243,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clTotal" />
 
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnim"
+            android:layout_width="0dp"
+            tools:lottie_fileName="failure.json"
+            android:layout_height="300dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginBottom="260dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true" />
+
+
+        <TextView
+            android:id="@+id/tvMessage"
+            style="@style/H6_headline_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/lottieAnim"
+            app:layout_constraintStart_toStartOf="@+id/lottieAnim"
+            app:layout_constraintTop_toTopOf="@+id/lottieAnim"
+            app:layout_constraintVertical_bias="0.75"
+            tools:text="Message text" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

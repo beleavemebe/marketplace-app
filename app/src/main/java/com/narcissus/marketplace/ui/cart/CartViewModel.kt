@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.domain.model.CartItem
 import com.narcissus.marketplace.domain.usecase.GetCart
-import com.narcissus.marketplace.domain.usecase.GetCartCost
+import com.narcissus.marketplace.domain.usecase.GetCartCostFlow
 import com.narcissus.marketplace.domain.usecase.GetCartItemsAmount
 import com.narcissus.marketplace.domain.usecase.RemoveFromCart
 import com.narcissus.marketplace.domain.usecase.RemoveSelectedCartItems
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class CartViewModel(
     getCart: GetCart,
-    getCartCost: GetCartCost,
+    getCartCostFlow: GetCartCostFlow,
     getCartItemsAmount: GetCartItemsAmount,
     private val removeFromCart: RemoveFromCart,
     private val setCartItemSelected: SetCartItemSelected,
@@ -28,7 +28,7 @@ class CartViewModel(
 
     val cartFlow = getCart()
 
-    val cartCostFlow = getCartCost()
+    val cartCostFlow = getCartCostFlow()
 
     val itemAmountFlow = getCartItemsAmount()
 

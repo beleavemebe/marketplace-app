@@ -46,6 +46,15 @@ class CartRepositoryImpl(
             override fun onCancelled(error: DatabaseError) {}
         }
 
+    override suspend fun getCartCost(): Int {
+        return cartRef.get().await().children
+            .mapNotNull { child ->
+                child.getValue<CartItemBean>()
+            }
+            .map { it.productPrice * it.amount }
+            .reduceOrNull(Int::plus) ?: 0
+    }
+
     override suspend fun addToCart(cartItem: CartItem) {
         cartRef.child(cartItem.productId)
             .setValue(cartItem.toBean())

@@ -5,7 +5,7 @@ data class CartItemBean(
     var productImage: String? = null,
     var productPrice: Int = 0,
     var productName: String? = null,
-    var amount: Int? = null,
+    var amount: Int = 0,
     var isSelected: Boolean? = null,
     var stock: Int? = null
 )
