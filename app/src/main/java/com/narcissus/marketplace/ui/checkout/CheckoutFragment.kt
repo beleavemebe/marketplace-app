@@ -16,7 +16,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.util.launchWhenStarted
-import com.narcissus.marketplace.core.util.log
 import com.narcissus.marketplace.databinding.FragmentCheckoutBinding
 import com.narcissus.marketplace.di.NotificationQualifiers
 import com.narcissus.marketplace.domain.card.CardValidateResult
@@ -144,7 +143,7 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
             when (result) {
                 is CardValidateResult.InvalidCardHolderName -> showCardHolderNameError()
                 is CardValidateResult.InvalidCardNumber -> showCardNumberError()
-                is CardValidateResult.InvalidExpireDate -> showCardExpireDateError()
+                is CardValidateResult.InvalidExpirationDate -> showCardExpireDateError()
                 is CardValidateResult.InvalidCvv -> showCardCvvError()
                 is CardValidateResult.Success -> cardValidated()
             }

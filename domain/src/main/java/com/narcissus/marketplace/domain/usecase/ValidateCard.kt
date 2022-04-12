@@ -2,6 +2,7 @@ package com.narcissus.marketplace.domain.usecase
 
 import com.narcissus.marketplace.domain.card.CardPatterns
 import com.narcissus.marketplace.domain.card.CardValidateResult
+import java.util.Calendar
 
 class ValidateCard {
     operator fun invoke(
@@ -19,8 +20,8 @@ class ValidateCard {
             return CardValidateResult.InvalidCardNumber
         }
 
-        if (!isExpireDateCorrect(cardExpireDate)) {
-            return CardValidateResult.InvalidExpireDate
+        if (!isExpirationDateCorrect(cardExpireDate)) {
+            return CardValidateResult.InvalidExpirationDate
         }
 
         if (cardCvv.length < CVV_LENGTH) {
@@ -30,17 +31,23 @@ class ValidateCard {
         return CardValidateResult.Success
     }
 
-    // todo: refactor
-    private fun isExpireDateCorrect(cardExpireDate: String): Boolean {
-        if (cardExpireDate.isNotBlank() && cardExpireDate.length == EXPIRE_DATE_LENGTH) {
-            val isMonthCorrect =
-                cardExpireDate[0].digitToInt() * 10 + cardExpireDate[1].digitToInt() < MONTHS &&
-                    cardExpireDate[1].digitToInt() != 0
-            val isYearCorrect =
-                cardExpireDate[3].digitToInt() * 10 + cardExpireDate[4].digitToInt() >= CURRENT_YEAR
-            return isMonthCorrect && isYearCorrect
+    private fun isExpirationDateCorrect(expirationDate: String): Boolean {
+        return when {
+            expirationDate.isBlank() -> false
+            expirationDate.length != EXPIRE_DATE_LENGTH -> false
+            else -> {
+                val monthAndYear = expirationDate.split("/")
+                val month = monthAndYear[0].toInt()
+                val year = monthAndYear[1].toInt()
+
+                val isMonthCorrect = month in 1..12
+
+                val currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100
+                val isYearCorrect = year >= currentYear
+
+                isMonthCorrect && isYearCorrect
+            }
         }
-        return false
     }
 
     private fun isCardNumberCorrect(cardNumber: String): Boolean {
@@ -63,11 +70,9 @@ class ValidateCard {
     }
 
     private companion object {
-        const val MONTHS = 12
         const val EXPIRE_DATE_LENGTH = 5
         const val CARD_NUMBER_LENGTH = 16
         const val CVV_LENGTH = 3
-        const val CURRENT_YEAR = 22
         const val CARD_MAX_DIGIT = 9
     }
 }
