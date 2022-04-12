@@ -26,9 +26,8 @@ class CheckoutViewModel(
     }
 
     val totalCostFlow = flow {
-        getCartCost().collect{ emit(it) }
+        getCartCost().collect { emit(it) }
     }
-
 
     fun checkCard(cardHolder: String, cardNumber: String, cardExpireDate: String, cardCvv: String) {
         viewModelScope.launch {
