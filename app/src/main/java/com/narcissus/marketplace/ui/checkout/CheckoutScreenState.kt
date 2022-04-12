@@ -1,7 +1,6 @@
 package com.narcissus.marketplace.ui.checkout
 
 import com.narcissus.marketplace.domain.model.CheckoutItem
-import com.narcissus.marketplace.domain.model.orders.OrderPaymentResult
 
 sealed class CheckoutScreenState {
     object Loading : CheckoutScreenState()
