@@ -37,7 +37,7 @@ class ValidateCard {
                 cardExpireDate[0].digitToInt() * 10 + cardExpireDate[1].digitToInt() < MONTHS &&
                     cardExpireDate[1].digitToInt() != 0
             val isYearCorrect =
-                cardExpireDate[3].digitToInt() * 10 + cardExpireDate[4].digitToInt() <= CURRENT_YEAR
+                cardExpireDate[3].digitToInt() * 10 + cardExpireDate[4].digitToInt() >= CURRENT_YEAR
             return isMonthCorrect && isYearCorrect
         }
         return false
