@@ -30,7 +30,7 @@ class ValidateCard {
         return CardValidateResult.Success
     }
 
-    // govno code, need to refactor later
+    // todo: refactor
     private fun isExpireDateCorrect(cardExpireDate: String): Boolean {
         if (cardExpireDate.isNotBlank() && cardExpireDate.length == EXPIRE_DATE_LENGTH) {
             val isMonthCorrect =
