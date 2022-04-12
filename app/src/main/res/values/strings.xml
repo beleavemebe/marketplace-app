@@ -76,10 +76,14 @@
     <string name="missing_uppercase_letter">Password must contain an uppercase letter</string>
     <string name="missing_number">Password must contain a number</string>
     <string name="missing_lowercase_letter">Password must contain a lowercase letter</string>
+    <string name="invalid_card_number">Invalid card number</string>
+    <string name="invalid_expire_date">Invalid expire date</string>
+    <string name="invalid_cvv">Please enter full CVV</string>
     <string name="process_your_order">process your order</string>
     <string name="please_wait">please wait</string>
     <string name="success">Success!</string>
     <string name="payment_failed">Payment failed</string>
     <string name="your_order_has_been_paid_placeholder">your order number %1$d has been paid and will be shipped soon</string>
     <string name="orders">Orders</string>
+    <string name="people_are_buying">People are buying</string>
 </resources>

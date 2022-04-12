@@ -11,9 +11,11 @@ import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsSnapshot
 import com.narcissus.marketplace.domain.usecase.GetCheckout
 import com.narcissus.marketplace.domain.usecase.GetDepartments
 import com.narcissus.marketplace.domain.usecase.GetOrderList
+import com.narcissus.marketplace.domain.usecase.GetPeopleAreBuyingProducts
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
+import com.narcissus.marketplace.domain.usecase.GetSimilarProducts
 import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopSalesProducts
 import com.narcissus.marketplace.domain.usecase.MakeAnOrder
@@ -27,6 +29,7 @@ import com.narcissus.marketplace.domain.usecase.SignInWithEmail
 import com.narcissus.marketplace.domain.usecase.SignInWithGoogle
 import com.narcissus.marketplace.domain.usecase.SignOut
 import com.narcissus.marketplace.domain.usecase.SignUpWithEmail
+import com.narcissus.marketplace.domain.usecase.ValidateCard
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -59,4 +62,7 @@ val domainModule = module {
     factory { SignOut(get()) }
     factory { GetAuthStateFlow(get()) }
     factory { GetCheckout(get()) }
+    factory { ValidateCard() }
+    factory { GetSimilarProducts(get()) }
+    factory { GetPeopleAreBuyingProducts(get()) }
 }
