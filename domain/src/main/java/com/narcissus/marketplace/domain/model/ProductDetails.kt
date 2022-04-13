@@ -14,8 +14,8 @@ data class ProductDetails(
     val rating: Int,
     val sales: Int,
     val reviews: List<Review>,
-    val similarProducts: List<SimilarProduct>
 )
+
 fun ProductDetails.toProductPreview(): ProductPreview {
     return ProductPreview(
         id,

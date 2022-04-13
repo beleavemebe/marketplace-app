@@ -29,13 +29,18 @@ internal class ProductsPreviewRepositoryImpl(
     }
 
     override suspend fun getProductsTopRated(): List<ProductPreview> {
-        val randomProducts = apiService.getTopRatedProducts(PREVIEWS_AMOUNT, 1).data
-        return randomProducts.map(ProductPreviewResponseData::toProductPreview)
+        val topRatedProducts = apiService.getTopRatedProducts(PREVIEWS_AMOUNT, 1).data
+        return topRatedProducts.map(ProductPreviewResponseData::toProductPreview)
     }
 
     override suspend fun getProductsTopSales(): List<ProductPreview> {
-        val randomProducts = apiService.getTopSalesProducts(PREVIEWS_AMOUNT, 1).data
-        return randomProducts.map(ProductPreviewResponseData::toProductPreview)
+        val topSalesProducts = apiService.getTopSalesProducts(PREVIEWS_AMOUNT, 1).data
+        return topSalesProducts.map(ProductPreviewResponseData::toProductPreview)
+    }
+
+    override suspend fun getProductsPeopleAreBuying(): List<ProductPreview> {
+        val peopleAreBuyingProducts = apiService.getPeopleAreBuyingProducts().data
+        return peopleAreBuyingProducts.map(ProductPreviewResponseData::toProductPreview)
     }
 
     override suspend fun getProductsByDepartment(departmentId: String): ActionResult<List<ProductPreview>> {
@@ -48,6 +53,11 @@ internal class ProductsPreviewRepositoryImpl(
 
     override suspend fun getProductsByDepartmentIdTopSales(departmentId: String): ActionResult<List<ProductPreview>> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getSimilarProducts(productId: String): List<ProductPreview> {
+        val similarProducts = apiService.getSimilarProducts(productId).data
+        return similarProducts.map(ProductPreviewResponseData::toProductPreview)
     }
 }
 
