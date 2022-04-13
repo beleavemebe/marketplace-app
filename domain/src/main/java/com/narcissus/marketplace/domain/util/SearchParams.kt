@@ -1,5 +1,7 @@
 package com.narcissus.marketplace.domain.util
 
+import com.narcissus.marketplace.domain.model.search.SortDirection
+
 data class SearchParams(
     val query: String,
     val filters: Set<FilterType> = setOf(FilterType.None),
@@ -21,8 +23,4 @@ data class SearchParams(
         NONE
     }
 
-    enum class SortDirection {
-        DESC,
-        ASC
-    }
 }
