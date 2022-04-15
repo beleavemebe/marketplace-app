@@ -51,6 +51,7 @@ class CartRepositoryImpl(
             .mapNotNull { child ->
                 child.getValue<CartItemBean>()
             }
+            .filter { it.isSelected }
             .map { it.productPrice * it.amount }
             .reduceOrNull(Int::plus) ?: 0
     }
