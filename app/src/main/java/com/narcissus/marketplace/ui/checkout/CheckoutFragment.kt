@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.work.Data
@@ -12,16 +13,21 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.airbnb.lottie.LottieDrawable
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.util.launchWhenStarted
+import com.narcissus.marketplace.core.util.log
 import com.narcissus.marketplace.databinding.FragmentCheckoutBinding
 import com.narcissus.marketplace.di.NotificationQualifiers
 import com.narcissus.marketplace.domain.card.CardValidateResult
 import com.narcissus.marketplace.domain.model.CheckoutItem
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -41,11 +47,12 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
 
     private val orderUUID = UUID.randomUUID().toString()
 
-    val data: Data by inject(
+    private val data: Data by inject(
         qualifier<NotificationQualifiers.PaymentWorkerInputData>()
     ) {
         parametersOf(orderUUID)
     }
+
     private val paymentWorkRequest: OneTimeWorkRequest by inject(
         qualifier<NotificationQualifiers.PaymentOneTimeRequest>()
     ) {
@@ -57,17 +64,41 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding =
-            FragmentCheckoutBinding.bind(inflater.inflate(R.layout.fragment_checkout, container))
+        _binding = FragmentCheckoutBinding.bind(
+            inflater.inflate(R.layout.fragment_checkout, container),
+        )
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvCheckoutDetails.adapter = adapter
+        configureBottomSheetBehaviour()
+        initPlaceOrderButton()
+        initDummyView()
         setMaskOnCard()
         subscribeToViewModel()
-        initPlaceOrderButton()
+    }
+
+    private fun configureBottomSheetBehaviour() {
+        with(dialog as BottomSheetDialog) {
+            behavior.state = STATE_EXPANDED
+            behavior.skipCollapsed = true
+        }
+    }
+
+    private fun initDummyView() {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            val sheetHeight = binding.clContent.height
+            val windowHeight = requireActivity().resources.displayMetrics.heightPixels
+            val placeholderHeight = windowHeight - sheetHeight
+
+            if (placeholderHeight > 0) {
+                binding.dummy.layoutParams.height = placeholderHeight
+                binding.dummy.requestLayout()
+            }
+        }
     }
 
     private val adapter by lazy {
@@ -242,5 +273,23 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
 
     private companion object {
         const val MASK_MONTH_YEAR = "__/__"
+    }
+
+    // todo: ne rabotaet. why?
+    private fun _initDummyView() {
+        binding.root.doOnLayout {
+            val sheetHeight = binding.clContent.height
+            val windowHeight = requireActivity().resources.displayMetrics.heightPixels
+            val placeholderHeight = windowHeight - sheetHeight
+
+            log { sheetHeight }         // 2057 -> 2280
+            log { windowHeight }        // 2232 -> 2232
+            log { placeholderHeight }   // 175  -> -48
+
+            if (placeholderHeight > 0) {
+                binding.dummy.layoutParams.height = placeholderHeight
+                binding.dummy.requestLayout()
+            }
+        }
     }
 }
