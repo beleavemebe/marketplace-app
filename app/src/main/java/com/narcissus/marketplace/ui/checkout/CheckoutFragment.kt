@@ -24,10 +24,8 @@ import com.narcissus.marketplace.databinding.FragmentCheckoutBinding
 import com.narcissus.marketplace.di.NotificationQualifiers
 import com.narcissus.marketplace.domain.card.CardValidateResult
 import com.narcissus.marketplace.domain.model.CheckoutItem
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -282,9 +280,9 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
             val windowHeight = requireActivity().resources.displayMetrics.heightPixels
             val placeholderHeight = windowHeight - sheetHeight
 
-            log { sheetHeight }         // 2057 -> 2280
-            log { windowHeight }        // 2232 -> 2232
-            log { placeholderHeight }   // 175  -> -48
+            log { sheetHeight } // 2057 -> 2280
+            log { windowHeight } // 2232 -> 2232
+            log { placeholderHeight } // 175  -> -48
 
             if (placeholderHeight > 0) {
                 binding.dummy.layoutParams.height = placeholderHeight
