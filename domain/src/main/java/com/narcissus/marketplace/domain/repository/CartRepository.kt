@@ -11,4 +11,7 @@ interface CartRepository {
     suspend fun setCartItemAmount(cartItem: CartItem, amount: Int)
     suspend fun selectAllCartItems(isSelected: Boolean)
     suspend fun deleteSelectedItems()
+    suspend fun addAllSelectedToCart(cartItems: List<CartItem>)
+    suspend fun getCurrentCartSelected(): List<CartItem>
+    suspend fun getCartCost(): Int
 }

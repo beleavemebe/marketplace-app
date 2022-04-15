@@ -7,6 +7,7 @@ import com.narcissus.marketplace.data.OrderRepositoryImpl
 import com.narcissus.marketplace.data.ProductsDetailsRepositoryImpl
 import com.narcissus.marketplace.data.ProductsPreviewRepositoryImpl
 import com.narcissus.marketplace.data.UserRepositoryImpl
+import com.narcissus.marketplace.data.firebase.di.Qualifiers
 import com.narcissus.marketplace.data.firebase.di.Qualifiers.CartReference
 import com.narcissus.marketplace.data.firebase.di.firebaseModule
 import com.narcissus.marketplace.data.persistence.di.persistenceModule
@@ -26,7 +27,12 @@ val dataModule = module {
     loadKoinModules(firebaseModule)
 
     single<CartRepository> { CartRepositoryImpl(cartRef = get(qualifier<CartReference>())) }
-    single<OrderRepository> { OrderRepositoryImpl() }
+    single<OrderRepository> {
+        OrderRepositoryImpl(
+            orderRef = get(qualifier<Qualifiers.OrdersReference>()),
+            orderApiService = get(),
+        )
+    }
 
     single<DepartmentRepository> {
         DepartmentRepositoryImpl(apiService = get())

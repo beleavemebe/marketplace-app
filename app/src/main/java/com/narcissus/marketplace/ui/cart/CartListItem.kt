@@ -18,7 +18,7 @@ sealed class CartListItem {
             @JvmStatic
             private fun inflateBinding(
                 layoutInflater: LayoutInflater,
-                root: ViewGroup
+                root: ViewGroup,
             ) = ListItemCartBinding.inflate(layoutInflater, root, false)
 
             fun delegate(
@@ -27,12 +27,12 @@ sealed class CartListItem {
                 onItemAmountChanged: (CartItem, Int) -> Unit,
                 scope: CoroutineScope,
             ) = adapterDelegateViewBinding<Item, CartListItem, ListItemCartBinding>(
-                ::inflateBinding
+                ::inflateBinding,
             ) {
                 bind {
                     binding.tvName.text = item.cartItem.productName
                     binding.tvPrice.text = itemView.context.getString(
-                        R.string.price_placeholder, item.cartItem.productPrice
+                        R.string.price_placeholder, item.cartItem.productPrice,
                     )
 
                     binding.ivIcon.load(item.cartItem.productImage)
@@ -45,12 +45,17 @@ sealed class CartListItem {
                     binding.ibDelete.setOnClickListener {
                         onRemoveClicked(item.cartItem)
                     }
-
+                    binding.productAmount.maxAmount = item.cartItem.stock
                     binding.productAmount.setAmount(item.cartItem.amount)
-                    binding.productAmount.amountFlow
-                        .onEach { amount ->
-                            onItemAmountChanged(item.cartItem, amount)
-                        }.launchIn(scope)
+                    binding.productAmount.amountFlow.onEach { amount ->
+                        onItemAmountChanged(item.cartItem, amount)
+                    }.launchIn(scope)
+                    binding.productAmount.boundaryAmountReachedTriggerFlow.onEach { isReached ->
+                        if (isReached) {
+                            binding.mlCartItem.transitionToStart()
+                            binding.mlCartItem.transitionToEnd()
+                        }
+                    }.launchIn(scope)
                 }
             }
         }
@@ -60,7 +65,7 @@ sealed class CartListItem {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CartListItem>() {
             override fun areItemsTheSame(
                 oldItem: CartListItem,
-                newItem: CartListItem
+                newItem: CartListItem,
             ): Boolean {
                 return when (oldItem) {
                     is Item -> newItem is Item && oldItem.cartItem.productId == newItem.cartItem.productId
@@ -69,7 +74,7 @@ sealed class CartListItem {
 
             override fun areContentsTheSame(
                 oldItem: CartListItem,
-                newItem: CartListItem
+                newItem: CartListItem,
             ): Boolean {
                 return oldItem == newItem
             }

@@ -10,10 +10,11 @@ fun CartItemBean.toCartItem(): CartItem? =
             productImage!!,
             productPrice,
             productName!!,
-            amount!!,
-            isSelected!!
+            amount,
+            isSelected,
+            stock!!,
         )
     }.getOrDefault(null)
 
 fun CartItem.toBean(): CartItemBean =
-    CartItemBean(productId, productImage, productPrice, productName, amount, isSelected)
+    CartItemBean(productId, productImage, productPrice, productName, amount, isSelected, stock)

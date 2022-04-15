@@ -57,6 +57,18 @@
     <string name="wrong_email_format">Wrong email format</string>
     <string name="google_signin_error">Something went wrong with logging into your Google account. Please sign in with your email and password or try again later</string>
     <string name="ok">OK</string>
+    <string name="visa_card">visa_card</string>
+    <string name="mir_card">mir_card</string>
+    <string name="mastercard">mastercard</string>
+    <string name="maestro_card">maestro_card</string>
+    <string name="card_holder">CARD HOLDER</string>
+    <string name="card_number">CARD NUMBER</string>
+    <string name="mm_yy">MM/YY</string>
+    <string name="cvc_cvv">CVC/CVV</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="place_order">Place Order</string>
+    <string name="total">Total</string>
+    <string name="amount_placeholder">%1$dx</string>
     <string name="name_empty">Please, enter your full name</string>
     <string name="user_not_found">User not found</string>
     <string name="play_services_unavailable">Play services are unavailable on this device.</string>
@@ -64,5 +76,14 @@
     <string name="missing_uppercase_letter">Password must contain an uppercase letter</string>
     <string name="missing_number">Password must contain a number</string>
     <string name="missing_lowercase_letter">Password must contain a lowercase letter</string>
+    <string name="invalid_card_number">Invalid card number</string>
+    <string name="invalid_expire_date">Invalid expire date</string>
+    <string name="invalid_cvv">Please enter full CVV</string>
+    <string name="process_your_order">process your order</string>
+    <string name="please_wait">please wait</string>
+    <string name="success">Success!</string>
+    <string name="payment_failed">Payment failed</string>
+    <string name="your_order_has_been_paid_placeholder">your order number %1$d has been paid and will be shipped soon</string>
+    <string name="orders">Orders</string>
     <string name="people_are_buying">People are buying</string>
 </resources>

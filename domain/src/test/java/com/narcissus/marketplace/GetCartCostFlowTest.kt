@@ -2,7 +2,7 @@ package com.narcissus.marketplace
 
 import com.narcissus.marketplace.domain.model.CartItem
 import com.narcissus.marketplace.domain.repository.CartRepository
-import com.narcissus.marketplace.domain.usecase.GetCartCost
+import com.narcissus.marketplace.domain.usecase.GetCartCostFlow
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
 
-class GetCartCostTest {
+class GetCartCostFlowTest {
 
     @Test
     fun `should return 0 if list is empty`() {
@@ -26,7 +26,7 @@ class GetCartCostTest {
         val cartRepository = mockk<CartRepository> {
             coEvery { getCart() } returns cartResultEmpty
         }
-        val getCartCost = GetCartCost(cartRepository)
+        val getCartCost = GetCartCostFlow(cartRepository)
         runBlocking {
             val result = getCartCost().last()
             Assert.assertEquals(exceptedResultOnEmptyList, result)
@@ -65,7 +65,7 @@ class GetCartCostTest {
         val cartRepository = mockk<CartRepository> {
             coEvery { getCart() } returns cartResultNotEmpty
         }
-        val getCartCost = GetCartCost(cartRepository)
+        val getCartCost = GetCartCostFlow(cartRepository)
         runBlocking {
             val result = getCartCost().last()
             Assert.assertEquals(exceptedResultOnNotEmptyList, result)

@@ -2,6 +2,7 @@ package com.narcissus.marketplace.di
 
 import com.narcissus.marketplace.ui.cart.CartViewModel
 import com.narcissus.marketplace.ui.catalog.CatalogViewModel
+import com.narcissus.marketplace.ui.checkout.CheckoutViewModel
 import com.narcissus.marketplace.ui.home.HomeViewModel
 import com.narcissus.marketplace.ui.product_details.ProductDetailsViewModel
 import com.narcissus.marketplace.ui.search.search_history.SearchHistoryViewModel
@@ -17,4 +18,5 @@ val viewModelsModule = module {
     viewModel { CartViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SignInViewModel(get(), get()) }
     viewModel { SignUpViewModel(get()) }
+    viewModel { CheckoutViewModel(get(), get(), get()) }
 }

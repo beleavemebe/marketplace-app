@@ -40,11 +40,13 @@ android {
 
 dependencies {
     implementation "io.coil-kt:coil:2.0.0-rc01"
-
-    implementation "io.insert-koin:koin-core:3.1.5"
-    implementation "io.insert-koin:koin-android:3.1.5"
-    implementation "io.insert-koin:koin-androidx-navigation:3.1.5"
-    testImplementation "io.insert-koin:koin-test:3.1.5"
+    implementation "ru.tinkoff.decoro:decoro:1.4.1"
+    def koin_version = "3.1.5"
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
+    implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
@@ -52,6 +54,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_version}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${coroutines_version}"
+    def work_manager_version = "2.7.1"
+    implementation "androidx.work:work-runtime-ktx:$work_manager_version"
 
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
 

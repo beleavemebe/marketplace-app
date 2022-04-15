@@ -4,19 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.domain.model.CartItem
 import com.narcissus.marketplace.domain.usecase.GetCart
-import com.narcissus.marketplace.domain.usecase.GetCartCost
+import com.narcissus.marketplace.domain.usecase.GetCartCostFlow
 import com.narcissus.marketplace.domain.usecase.GetCartItemsAmount
 import com.narcissus.marketplace.domain.usecase.RemoveFromCart
 import com.narcissus.marketplace.domain.usecase.RemoveSelectedCartItems
 import com.narcissus.marketplace.domain.usecase.SelectAllCartItems
 import com.narcissus.marketplace.domain.usecase.SetCartItemAmount
 import com.narcissus.marketplace.domain.usecase.SetCartItemSelected
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 
 class CartViewModel(
     getCart: GetCart,
-    getCartCost: GetCartCost,
+    getCartCostFlow: GetCartCostFlow,
     getCartItemsAmount: GetCartItemsAmount,
     private val removeFromCart: RemoveFromCart,
     private val setCartItemSelected: SetCartItemSelected,
@@ -27,7 +28,7 @@ class CartViewModel(
 
     val cartFlow = getCart()
 
-    val cartCostFlow = getCartCost()
+    val cartCostFlow = getCartCostFlow()
 
     val itemAmountFlow = getCartItemsAmount()
 
@@ -65,4 +66,7 @@ class CartViewModel(
             setCartItemAmount(cartItem, amount)
         }
     }
+
+    val isCheckoutButtonActive =
+        cartFlow.map { items -> items.any { cartItem -> cartItem.isSelected } }
 }
