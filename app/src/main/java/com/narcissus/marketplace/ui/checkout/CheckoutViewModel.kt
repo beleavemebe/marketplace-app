@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class CheckoutViewModel(
     getCheckout: GetCheckout,
-    getCartCostFlow: GetCartCost,
+    getCartCost: GetCartCost,
     private val validateCard: ValidateCard,
 ) : ViewModel() {
 
@@ -27,7 +27,7 @@ class CheckoutViewModel(
     init {
         viewModelScope.launch {
             val items = getCheckout()
-            val totalCost = getCartCostFlow()
+            val totalCost = getCartCost()
             _screenStateFlow.emit(
                 CheckoutScreenState.Idle(items, totalCost),
             )
