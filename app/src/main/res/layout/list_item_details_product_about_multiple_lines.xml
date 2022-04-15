@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/tvDetailsAboutTitleMultipleLine"
-        style="@style/B2_body_grey"
+        style="@style/B2_body_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/tvDetailsAboutValueMultipleLine"
-        style="@style/B2_body_black"
+        style="@style/B2_body_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"

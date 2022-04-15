@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchHistoryFragment"
-        android:name="com.narcissus.marketplace.ui.search.SearchHistoryFragment"
+        android:name="com.narcissus.marketplace.ui.search.search_history.SearchHistoryFragment"
         android:label="SearchHistoryFragment"
         tools:layout="@layout/fragment_search_history">
 

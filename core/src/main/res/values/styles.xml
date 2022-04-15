@@ -9,4 +9,62 @@
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/montserrat_regular_ttf</item>
     </style>
+    <style name="textPrimary">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="textSecondary">
+        <item name="android:textColor">?attr/colorOnSecondary</item>
+    </style>
+
+    <style name="H4_headline" parent="textPrimary">
+        <item name="android:textSize">34sp</item>
+        <item name="fontFamily">@font/montserrat_semibold_ttf</item>
+    </style>
+
+    <style name="B2_body_secondary" parent="textSecondary">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/montserrat_regular_ttf</item>
+    </style>
+
+    <style name="B2_body_primary" parent="textPrimary">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/montserrat_regular_ttf</item>
+    </style>
+
+    <style name="Btn">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/montserrat_bold_ttf</item>
+    </style>
+
+    <style name="H6_headline" parent="textPrimary">
+        <item name="android:textSize">21sp</item>
+        <item name="fontFamily">@font/montserrat_semibold_ttf</item>
+    </style>
+    <style name="H6_headline_regular" parent="H6_headline">
+        <item name="android:textSize">21sp</item>
+        <item name="fontFamily">@font/montserrat_regular_ttf</item>
+    </style>
+    <style name="S2_subtitle_secondary" parent="textSecondary">
+        <item name="android:textSize">15sp</item>
+        <item name="fontFamily">@font/montserrat_medium_ttf</item>
+    </style>
+    <style name="S1_subtitle_primary" parent="textPrimary">
+        <item name="android:textSize">17sp</item>
+        <item name="fontFamily">@font/montserrat_regular_ttf</item>
+    </style>
+
+
+    <style name="B1_body" parent="textPrimary">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/montserrat_semibold_ttf</item>
+    </style>
+    <style name="Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/montserrat_regular_ttf</item>
+    </style>
+    <style name="H5_headline" parent="textPrimary">
+        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/montserrat_medium_ttf</item>
+    </style>
 </resources>

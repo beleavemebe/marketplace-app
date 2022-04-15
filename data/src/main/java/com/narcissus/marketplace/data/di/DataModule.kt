@@ -40,6 +40,6 @@ val dataModule = module {
         ProductsPreviewRepositoryImpl(apiService = get())
     }
     single<UserRepository> {
-        UserRepositoryImpl(productsDao = get(), firebaseAuth = get())
+        UserRepositoryImpl(productsDao = get(), firebaseAuth = get(), searchHistoryDao = get())
     }
 }

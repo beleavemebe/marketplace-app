@@ -15,7 +15,7 @@ import coil.transform.CircleCropTransformation
 import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.databinding.ListItemDetailsDividerBinding
+import com.narcissus.marketplace.core.databinding.ListItemDividerBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoPlaceholderBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsPriceBinding
@@ -45,7 +45,7 @@ typealias AboutMultipleLineBinding = ListItemDetailsProductAboutMultipleLinesBin
 typealias LoadingProductDetailsBinding = ListItemDetailsProductPlaceholderBinding
 typealias ReviewsPreviewBinding = ListItemDetailsReviewPreviewBinding
 typealias SimilarProductsListBinding = ListItemRecyclerBinding
-typealias DividerBinding = ListItemDetailsDividerBinding
+typealias DividerBinding = ListItemDividerBinding
 
 sealed class ProductDetailsItem {
     data class Price(val price: Int) : ProductDetailsItem() {

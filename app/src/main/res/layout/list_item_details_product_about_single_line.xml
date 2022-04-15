@@ -12,7 +12,7 @@
         android:id="@+id/tvDetailsAboutTitleSingleLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/B2_body_grey"
+        style="@style/B2_body_secondary"
         app:layout_constraintBottom_toBottomOf="@id/tvDetailsAboutValueSingleLine"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvDetailsAboutValueSingleLine"
@@ -33,7 +33,7 @@
         android:id="@+id/tvDetailsAboutValueSingleLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/B2_body_black"
+        style="@style/B2_body_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Laptop"/>

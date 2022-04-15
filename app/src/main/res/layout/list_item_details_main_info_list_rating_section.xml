@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/tvDetailsSales"
-        style="@style/B2_body_grey"
+        style="@style/B2_body_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@+id/tvDetailsStock"
-        style="@style/B2_body_grey"
+        style="@style/B2_body_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
