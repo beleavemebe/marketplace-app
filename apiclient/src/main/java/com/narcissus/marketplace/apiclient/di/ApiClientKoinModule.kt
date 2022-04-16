@@ -35,6 +35,7 @@ val apiClientModule = module {
             .client(get())
             .build()
     }
+
     single(qualifier<Qualifiers.OrderApiService>()) {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -45,6 +46,7 @@ val apiClientModule = module {
     single {
         get<Retrofit>(qualifier<Qualifiers.ContentApiService>()).create<ApiService>()
     }
+
     single {
         get<Retrofit>(qualifier<Qualifiers.OrderApiService>()).create<OrderApiService>()
     }

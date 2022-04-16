@@ -79,11 +79,11 @@
     <string name="invalid_card_number">Invalid card number</string>
     <string name="invalid_expire_date">Invalid expire date</string>
     <string name="invalid_cvv">Please enter full CVV</string>
-    <string name="process_your_order">process your order</string>
-    <string name="please_wait">please wait</string>
-    <string name="success">Success!</string>
+    <string name="please_wait">Checkout in progress, please wait</string>
+    <string name="payment_successful">Payment successful</string>
     <string name="payment_failed">Payment failed</string>
-    <string name="your_order_has_been_paid_placeholder">your order number %1$d has been paid and will be shipped soon</string>
+    <string name="order_is_paid_successfully">Order #%1$d is paid successfully</string>
     <string name="orders">Orders</string>
+    <string name="checkout_channel_name">Checkout status</string>
     <string name="people_are_buying">People are buying</string>
 </resources>

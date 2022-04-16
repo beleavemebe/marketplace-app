@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
@@ -15,85 +16,97 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.di.NotificationQualifiers
-import com.narcissus.marketplace.di.OrderWorkerIds
 import com.narcissus.marketplace.domain.model.orders.OrderPaymentStatus
-import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsSnapshot
+import com.narcissus.marketplace.domain.usecase.GetSelectedCartItems
 import com.narcissus.marketplace.domain.usecase.MakeAnOrder
 import com.narcissus.marketplace.domain.usecase.RestoreCartItems
+import com.narcissus.marketplace.ui.checkout.di.CheckoutQualifiers
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.qualifier
-import java.util.UUID
 
 class CheckoutForegroundWorker(
     private val appContext: Context,
     params: WorkerParameters,
+    private val makeAnOrder: MakeAnOrder,
+    private val getSelectedCartItems: GetSelectedCartItems,
+    private val restoreCartItems: RestoreCartItems,
 ) : CoroutineWorker(appContext, params), KoinComponent {
-    private val makeAnOrder: MakeAnOrder by inject()
-    private val getCartSelectedItemsSnapshot: GetCartSelectedItemsSnapshot by inject()
-    private val restoreCartItems: RestoreCartItems by inject()
-    private val processNotificationId = UUID.randomUUID().hashCode()
-    private var isFragmentViewDestroyed: Boolean = false
-    private var orderUUID: String? = null
-    private val processNotification: Notification by inject(qualifier<NotificationQualifiers.ProcessPaymentNotification>())
+    private val orderUUID = inputData.getString(OrderConstants.KEY_ORDER_UUID)
 
-    private val notificationManager = NotificationManagerCompat.from(appContext)
+    private val paymentInProgressNotificationId = orderUUID.hashCode()
+    private val paymentInProgressNotification: Notification by inject(
+        qualifier<CheckoutQualifiers.PaymentInProgressNotification>(),
+    )
+
+    private val onCompleteNotificationId = inputData.getInt(
+        OrderConstants.KEY_ON_COMPLETE_NOTIFICATION_ID, 0,
+    )
+
+    private var isCheckoutFragmentAlive = false
+    private val isCheckoutFragmentAliveReceiver = object : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, intent: Intent?) {
+            intent
+                ?.getBooleanExtra(orderUUID, false)
+                ?.let { b ->
+                    isCheckoutFragmentAlive = b
+                }
+        }
+    }
 
     override suspend fun doWork(): Result {
-        val orderData = getCartSelectedItemsSnapshot()
-        orderUUID = inputData.getString(OrderConsts.ORDER_UUID_KEY)
-        val finalNotificationId = inputData.getInt(OrderConsts.NOTIFICATION_ID_KEY, 0)
-        if (orderUUID == null || finalNotificationId == 0 || orderUUID == null) {
-            Result.failure(workDataOf(Pair("0", "Worker initialize error")))
-        }
-        appContext.registerReceiver(
-            fragmentViewStateReceiver,
-            IntentFilter(OrderConsts.PAY_INTENT_FILTER),
-        )
+        val orderItems = getSelectedCartItems()
+        return if (orderUUID == null) {
+            Result.failure(workDataOf("0" to "Missing order id"))
+        } else try {
+            appContext.registerReceiver(
+                isCheckoutFragmentAliveReceiver,
+                IntentFilter(OrderConstants.PAY_INTENT_FILTER)
+            )
 
-        try {
-            val orderResult = makeAnOrder(orderData, orderUUID!!)
-            return if (orderResult.status == OrderPaymentStatus.PAID) {
-                if (isFragmentViewDestroyed) showFinallyNotification(
-                    true,
-                    finalNotificationId,
-                    orderResult.message,
-                    orderResult.number
-                )
-                Result.success(workDataOf(Pair(orderUUID!!, orderResult.message)))
+            val orderResult = makeAnOrder(orderItems, orderUUID)
+
+            if (orderResult.status == OrderPaymentStatus.PAID) {
+                if (!isCheckoutFragmentAlive) {
+                    showOnCompleteNotification(
+                        true,
+                        onCompleteNotificationId,
+                        orderResult.message,
+                        orderResult.number,
+                    )
+                }
+
+                Result.success(workDataOf(orderUUID to orderResult.message))
             } else {
-                if (isFragmentViewDestroyed) showFinallyNotification(
-                    false,
-                    finalNotificationId,
-                    orderResult.message,
-                )
-                restoreCartItems(orderData)
-                Result.failure(workDataOf(Pair(orderUUID!!, orderResult.message)))
+                if (!isCheckoutFragmentAlive) {
+                    showOnCompleteNotification(
+                        false,
+                        onCompleteNotificationId,
+                        orderResult.message,
+                    )
+                }
+
+                restoreCartItems(orderItems)
+                Result.failure(workDataOf(orderUUID to orderResult.message))
             }
         } catch (e: Exception) {
-            restoreCartItems(orderData)
-            return Result.failure(workDataOf(Pair("0", e.message)))
+            restoreCartItems(orderItems)
+            return Result.failure(workDataOf("0" to e.message))
         } finally {
-            appContext.unregisterReceiver(fragmentViewStateReceiver)
+            appContext.unregisterReceiver(isCheckoutFragmentAliveReceiver)
         }
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel =
-                NotificationChannel(
-                    CHANNEL_ID,
-                    appContext.getString(R.string.orders),
-                    NotificationManager.IMPORTANCE_HIGH,
-                )
-            notificationManager.createNotificationChannel(notificationChannel)
+            createCheckoutNotificationChannel()
         }
-        return ForegroundInfo(processNotificationId, processNotification)
+
+        return ForegroundInfo(paymentInProgressNotificationId, paymentInProgressNotification)
     }
 
-    private fun showFinallyNotification(
-        isSuccess: Boolean,
+    private fun showOnCompleteNotification(
+        success: Boolean,
         notificationId: Int,
         message: String,
         orderNumber: Int? = null,
@@ -101,41 +114,47 @@ class CheckoutForegroundWorker(
         val notification =
             NotificationCompat.Builder(
                 appContext,
-                OrderWorkerIds.NOTIFICATION_PROCESS_CHANNEL_ID,
+                OrderConstants.CHECKOUT_CHANNEL_ID,
             )
                 .setSmallIcon(com.narcissus.marketplace.ui.splash.R.drawable.ic_logo)
                 .setOngoing(false)
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setAutoCancel(true).apply {
-                    when (isSuccess) {
-                        true -> setContentTitle(appContext.getString(R.string.success))
-                            .setContentText(appContext.getString(R.string.your_order_has_been_paid_placeholder, orderNumber))
-                        false -> setContentTitle(appContext.getString(R.string.payment_failed))
-                            .setContentText(message)
+                .setAutoCancel(true)
+                .setContentTitle(
+                    if (success) {
+                        appContext.getString(R.string.payment_successful)
+                    } else {
+                        appContext.getString(R.string.payment_failed)
                     }
-                }.build()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel =
-                NotificationChannel(
-                    CHANNEL_ID,
-                    appContext.getString(R.string.orders),
-                    NotificationManager.IMPORTANCE_HIGH,
                 )
-            notificationManager.createNotificationChannel(notificationChannel)
+                .setContentText(
+                    if (success) {
+                        appContext.getString(R.string.order_is_paid_successfully, orderNumber)
+                    } else {
+                        message
+                    }
+                )
+                .build()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createCheckoutNotificationChannel()
         }
-        notificationManager.notify(notificationId, notification)
+
+        NotificationManagerCompat.from(appContext)
+            .notify(notificationId, notification)
     }
 
-    private val fragmentViewStateReceiver = object : BroadcastReceiver() {
-        override fun onReceive(p0: Context?, intent: Intent?) {
-            intent?.getBooleanExtra(orderUUID, false)?.let {
-                isFragmentViewDestroyed = it
-            }
-        }
-    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createCheckoutNotificationChannel() {
+        val notificationChannel =
+            NotificationChannel(
+                OrderConstants.CHECKOUT_CHANNEL_ID,
+                appContext.getString(R.string.checkout_channel_name),
+                NotificationManager.IMPORTANCE_HIGH,
+            )
 
-    companion object {
-        const val CHANNEL_ID = "MarketplaceChannelId"
+        NotificationManagerCompat.from(appContext)
+            .createNotificationChannel(notificationChannel)
     }
 }

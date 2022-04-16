@@ -26,7 +26,10 @@ val dataModule = module {
     loadKoinModules(persistenceModule)
     loadKoinModules(firebaseModule)
 
-    single<CartRepository> { CartRepositoryImpl(cartRef = get(qualifier<CartReference>())) }
+    single<CartRepository> {
+        CartRepositoryImpl(cartRef = get(qualifier<CartReference>()))
+    }
+
     single<OrderRepository> {
         OrderRepositoryImpl(
             orderRef = get(qualifier<Qualifiers.OrdersReference>()),
@@ -45,6 +48,7 @@ val dataModule = module {
     single<ProductsPreviewRepository> {
         ProductsPreviewRepositoryImpl(apiService = get())
     }
+
     single<UserRepository> {
         UserRepositoryImpl(productsDao = get(), firebaseAuth = get())
     }

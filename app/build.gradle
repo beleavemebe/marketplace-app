@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.appdistribution'
+    id 'com.google.firebase.crashlytics'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
 }
@@ -63,8 +64,9 @@ dependencies {
     implementation "androidx.navigation:navigation-runtime:2.4.1"
     implementation "androidx.navigation:navigation-fragment:2.4.1"
 
-    implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     implementation 'com.google.firebase:firebase-common-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'

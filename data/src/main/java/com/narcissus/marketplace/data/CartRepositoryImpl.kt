@@ -62,7 +62,7 @@ class CartRepositoryImpl(
     }
 
     override suspend fun addAllSelectedToCart(cartItems: List<CartItem>) {
-        cartItems.onEach { cartItem ->
+        cartItems.forEach { cartItem ->
             val amount = getCartItemCount(cartItem.productId) + cartItem.amount
             val updatedCartItem = cartItem.copy(amount = amount)
             cartRef.child(cartItem.productId).setValue(updatedCartItem)
@@ -74,7 +74,7 @@ class CartRepositoryImpl(
             child.getValue<CartItemBean>()?.toCartItem()
         }.firstOrNull { it.productId == productId }?.amount ?: 0
 
-    override suspend fun getCurrentCartSelected() =
+    override suspend fun getSelectedCartItems() =
         cartRef.get().await().children.mapNotNull { child ->
             child.getValue<CartItemBean>()?.toCartItem()
         }.filter { it.isSelected }
@@ -130,7 +130,7 @@ class CartRepositoryImpl(
     private fun runDeleteSelectedTransaction(currentData: MutableData): Transaction.Result {
         currentData.children.forEach { data ->
             val bean = data.getValue<CartItemBean>() ?: return@forEach
-            data.value = bean.takeUnless { it.isSelected == true }
+            data.value = bean.takeUnless { it.isSelected }
         }
 
         return Transaction.success(currentData)
