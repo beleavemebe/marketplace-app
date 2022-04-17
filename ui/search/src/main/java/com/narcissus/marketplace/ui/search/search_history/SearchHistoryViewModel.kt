@@ -14,12 +14,14 @@ class SearchHistoryViewModel(
     private val clearSearchHistory: ClearSearchHistory,
 ) : ViewModel() {
     val searchHistory = getSearchHistory().map { list ->
-        (list.map {
-            listOf(
-                SearchHistoryItem.HistoryItem(it),
-                SearchHistoryItem.Divider(),
+        (
+            list.map {
+                listOf(
+                    SearchHistoryItem.HistoryItem(it),
+                    SearchHistoryItem.Divider(),
+                )
+            }.flatten()
             )
-        }.flatten())
     }
 
     fun writeToSearchHistory(searchQuery: String) {

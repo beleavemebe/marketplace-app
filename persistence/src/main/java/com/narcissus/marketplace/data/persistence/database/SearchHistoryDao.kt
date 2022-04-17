@@ -1,7 +1,6 @@
 package com.narcissus.marketplace.data.persistence.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,7 +13,7 @@ interface SearchHistoryDao {
     fun getSearchHistory(): Flow<List<SearchHistoryEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSearchHistoryItem(searchItem:SearchHistoryEntity)
+    suspend fun insertSearchHistoryItem(searchItem: SearchHistoryEntity)
     @Query("DELETE FROM search_history")
     suspend fun clearSearchHistory()
 }

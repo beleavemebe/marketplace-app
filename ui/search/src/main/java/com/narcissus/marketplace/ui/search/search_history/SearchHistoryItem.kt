@@ -7,7 +7,7 @@ import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.core.databinding.ListItemDividerBinding
 import com.narcissus.marketplace.ui.search.databinding.ListItemSearchHistoryBinding
 sealed class SearchHistoryItem {
-    data class HistoryItem(val itemName:String): SearchHistoryItem() {
+    data class HistoryItem(val itemName: String) : SearchHistoryItem() {
         companion object {
             @JvmStatic
             private fun inflateBinding(
@@ -35,7 +35,7 @@ sealed class SearchHistoryItem {
             ) = ListItemDividerBinding.inflate(layoutInflater, root, false)
 
             fun delegate() =
-                adapterDelegateViewBinding<Divider, SearchHistoryItem,ListItemDividerBinding>(
+                adapterDelegateViewBinding<Divider, SearchHistoryItem, ListItemDividerBinding>(
                     ::inflateBinding,
                 ) {
                     bind {}
@@ -43,17 +43,15 @@ sealed class SearchHistoryItem {
         }
     }
 
-
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SearchHistoryItem>() {
             override fun areItemsTheSame(
                 oldItem: SearchHistoryItem,
                 newItem: SearchHistoryItem,
-            ): Boolean = when(oldItem){
-                is HistoryItem-> newItem is HistoryItem &&newItem.itemName==oldItem.itemName
-                is Divider->newItem is Divider
+            ): Boolean = when (oldItem) {
+                is HistoryItem -> newItem is HistoryItem && newItem.itemName == oldItem.itemName
+                is Divider -> newItem is Divider
             }
-
 
             override fun areContentsTheSame(
                 oldItem: SearchHistoryItem,
@@ -63,5 +61,4 @@ sealed class SearchHistoryItem {
             }
         }
     }
-
 }

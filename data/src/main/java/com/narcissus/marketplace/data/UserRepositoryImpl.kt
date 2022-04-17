@@ -82,7 +82,7 @@ internal class UserRepositoryImpl(
     }
 
     override val searchHistory: Flow<List<String>> = searchHistoryDao.getSearchHistory()
-            .map { searchHistoryFlow -> searchHistoryFlow.map { it.productName } }
+        .map { searchHistoryFlow -> searchHistoryFlow.map { it.productName } }
 
     override suspend fun signInWithEmail(email: String, password: String): SignInResult {
         val currentUser = firebaseAuth.currentUser

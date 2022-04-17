@@ -62,7 +62,6 @@ class SearchHistoryFragment : Fragment(R.layout.fragment_search_history) {
                 } else {
                     historyAdapter.items = listOf()
                 }
-
             }
         }
     }

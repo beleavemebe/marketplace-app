@@ -19,9 +19,9 @@ interface UserRepository {
     suspend fun signInWithGoogle(idToken: String): SignInResult
 
     val authStateFlow: Flow<AuthState>
-    suspend fun writeToSearchHistory(searchQuery:String)
+    suspend fun writeToSearchHistory(searchQuery: String)
     suspend fun clearSearchHistory()
-    val searchHistory:Flow<List<String>>
+    val searchHistory: Flow<List<String>>
     val recentlyVisitedProducts: Flow<List<ProductPreview>>
     suspend fun writeToVisitedProducts(productPreview: ProductPreview)
 }
