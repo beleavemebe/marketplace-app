@@ -71,7 +71,6 @@ fun NoOrdersYet() {
     }
 }
 
-
 @Preview
 @Composable
 fun NoOrdersYetPreviewLight() {
