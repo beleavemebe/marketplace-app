@@ -80,6 +80,10 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
         navController.navigate(destination.uri, options, extras)
     }
 
+    override fun navigateUp() {
+        navController.navigateUp()
+    }
+
     override fun navigate(
         destination: NavDestination,
         extras: Navigator.Extras,

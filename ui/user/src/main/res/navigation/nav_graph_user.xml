@@ -9,4 +9,12 @@
         android:name="com.narcissus.marketplace.ui.user.UserFragment"
         android:label="UserFragment" />
 
+    <fragment
+        android:id="@+id/fragment_orders"
+        android:name="com.narcissus.marketplace.ui.user.orders.OrdersFragment"
+        android:label="UserFragment">
+
+        <deepLink app:uri="marketplace-app://user/orders" />
+    </fragment>
+
 </navigation>
