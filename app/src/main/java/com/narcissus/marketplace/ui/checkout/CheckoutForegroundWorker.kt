@@ -43,13 +43,13 @@ class CheckoutForegroundWorker(
         OrderConstants.KEY_ON_COMPLETE_NOTIFICATION_ID, 0,
     )
 
-    private var isCheckoutFragmentAlive = false
-    private val isCheckoutFragmentAliveReceiver = object : BroadcastReceiver() {
+    private var isCheckoutFragmentDead = false
+    private val isCheckoutFragmentDeadReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
             intent
                 ?.getBooleanExtra(orderUUID, false)
                 ?.let { b ->
-                    isCheckoutFragmentAlive = b
+                    isCheckoutFragmentDead = b
                 }
         }
     }
@@ -60,14 +60,14 @@ class CheckoutForegroundWorker(
             Result.failure(workDataOf("0" to "Missing order id"))
         } else try {
             appContext.registerReceiver(
-                isCheckoutFragmentAliveReceiver,
+                isCheckoutFragmentDeadReceiver,
                 IntentFilter(OrderConstants.PAY_INTENT_FILTER)
             )
 
             val orderResult = makeAnOrder(orderItems, orderUUID)
 
             if (orderResult.status == OrderPaymentStatus.PAID) {
-                if (!isCheckoutFragmentAlive) {
+                if (isCheckoutFragmentDead) {
                     showOnCompleteNotification(
                         true,
                         onCompleteNotificationId,
@@ -78,7 +78,7 @@ class CheckoutForegroundWorker(
 
                 Result.success(workDataOf(orderUUID to orderResult.message))
             } else {
-                if (!isCheckoutFragmentAlive) {
+                if (isCheckoutFragmentDead) {
                     showOnCompleteNotification(
                         false,
                         onCompleteNotificationId,
@@ -93,7 +93,7 @@ class CheckoutForegroundWorker(
             restoreCartItems(orderItems)
             return Result.failure(workDataOf("0" to e.message))
         } finally {
-            appContext.unregisterReceiver(isCheckoutFragmentAliveReceiver)
+            appContext.unregisterReceiver(isCheckoutFragmentDeadReceiver)
         }
     }
 

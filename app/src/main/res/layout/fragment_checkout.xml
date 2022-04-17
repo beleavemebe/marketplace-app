@@ -15,14 +15,21 @@
             android:id="@+id/groupCheckout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="btnPlaceOrder, tvSummary, clCards, clTotal, mdUnderContent, mdUnderContent, mdUnderSummary, etCardHolder, etCardNumber, etCvv, etMonthYear, rvCheckoutDetails" />
+            app:constraint_referenced_ids="btnPlaceOrder, tvSummary, clCards, clTotal, mdUnderContent, mdUnderContent, mdUnderSummary, etCardHolder, etCardNumber, etCvv, etMonthYear, rvCheckoutDetails, dummy" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="lottieAnim, tvMessage" />
+            app:constraint_referenced_ids="statusAnim, tvMessage" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="loadingAnim" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/md"
@@ -210,7 +217,7 @@
         <View
             android:id="@+id/dummy"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/mdUnderContent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -267,18 +274,27 @@
 
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieAnim"
+            android:id="@+id/statusAnim"
             android:layout_width="0dp"
             android:layout_height="300dp"
-            android:layout_marginTop="200dp"
-            android:layout_marginBottom="260dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="false"
+            tools:lottie_fileName="failure.json" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loadingAnim"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
-            tools:lottie_fileName="failure.json" />
-
+            app:lottie_fileName="circular_progress.json"
+            app:lottie_loop="true" />
 
         <TextView
             android:id="@+id/tvMessage"
@@ -287,9 +303,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/lottieAnim"
-            app:layout_constraintStart_toStartOf="@+id/lottieAnim"
-            app:layout_constraintTop_toTopOf="@+id/lottieAnim"
+            app:layout_constraintEnd_toEndOf="@+id/statusAnim"
+            app:layout_constraintStart_toStartOf="@+id/statusAnim"
+            app:layout_constraintTop_toTopOf="@+id/statusAnim"
             app:layout_constraintVertical_bias="0.75"
             tools:text="Message text" />
     </androidx.constraintlayout.widget.ConstraintLayout>

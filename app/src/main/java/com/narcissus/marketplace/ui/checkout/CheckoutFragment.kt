@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnLayout
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieDrawable
@@ -53,11 +55,10 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvCheckoutDetails.adapter = adapter
         configureBottomSheetBehaviour()
+        initMasks()
+        initRecyclerView()
         initPlaceOrderButton()
-        initDummyView()
-        setMaskOnCard()
         subscribeToViewModel()
     }
 
@@ -68,22 +69,19 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
         }
     }
 
-    private fun initDummyView() {
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
-            val sheetHeight = binding.clContent.height
-            val windowHeight = requireActivity().resources.displayMetrics.heightPixels
-            val placeholderHeight = windowHeight - sheetHeight
+    private fun initRecyclerView() {
+        binding.rvCheckoutDetails.adapter = adapter
+    }
 
-            if (placeholderHeight > 0) {
-                binding.dummy.layoutParams.height = placeholderHeight
-                binding.dummy.requestLayout()
-            }
+    private fun initPlaceOrderButton() {
+        binding.btnPlaceOrder.setOnClickListener {
+            validateCard()
         }
     }
 
-    private fun setMaskOnCard() {
-        setMaskOnCardNumber()
-        setMaskOnExpireDate()
+    private fun initMasks() {
+        initCardNumberMask()
+        initExpirationDateMask()
     }
 
     private fun subscribeToViewModel() {
@@ -100,52 +98,70 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private fun displayState(state: CheckoutScreenState) {
         when (state) {
             is CheckoutScreenState.Loading -> {
-                binding.groupCheckout.isVisible = false
-                binding.groupStatus.isVisible = true
-                showLoadingAnim()
+                switchGroupVisibility(isLoadingGroupVisible = true)
             }
             is CheckoutScreenState.Idle -> {
-                binding.groupCheckout.isVisible = true
-                binding.groupStatus.isVisible = false
+                switchGroupVisibility(isCheckoutGroupVisible = true)
                 showCheckoutContent(state.items, state.totalCost)
             }
             is CheckoutScreenState.PaymentFailed -> {
-                binding.groupCheckout.isVisible = false
-                binding.groupStatus.isVisible = true
+                switchGroupVisibility(isStatusGroupVisible = true)
                 showFailure(state.message)
             }
             is CheckoutScreenState.PaymentSuccessful -> {
-                binding.groupCheckout.isVisible = false
-                binding.groupStatus.isVisible = true
+                switchGroupVisibility(isStatusGroupVisible = true)
                 showSuccess(state.message)
             }
         }
     }
 
-    private fun showLoadingAnim() {
-        binding.lottieAnim.repeatCount = LottieDrawable.INFINITE
-        binding.lottieAnim.setAnimation("circular_progress.json")
+    private fun switchGroupVisibility(
+        isCheckoutGroupVisible: Boolean = false,
+        isLoadingGroupVisible: Boolean = false,
+        isStatusGroupVisible: Boolean = false
+    ) {
+        binding.groupCheckout.isInvisible = !isCheckoutGroupVisible
+        binding.loadingAnim.isVisible = isLoadingGroupVisible
+        binding.groupStatus.isVisible = isStatusGroupVisible
     }
 
     private fun showFailure(message: String) {
-        binding.lottieAnim.repeatCount = LottieDrawable.INFINITE
-        binding.lottieAnim.setAnimation("failure.json")
+        binding.statusAnim.repeatCount = LottieDrawable.INFINITE
+        binding.statusAnim.setAnimation("failure.json")
+        binding.statusAnim.playAnimation()
         binding.tvMessage.text = message
     }
 
     private fun showSuccess(message: String) {
-        binding.lottieAnim.repeatCount = 1
-        binding.lottieAnim.setAnimation("success.json")
+        binding.statusAnim.repeatCount = 0
+        binding.statusAnim.setAnimation("success.json")
+        binding.statusAnim.playAnimation()
         binding.tvMessage.text = message
     }
 
     private fun showCheckoutContent(items: List<CheckoutItem>, totalCost: Int) {
-        adapter.items = items.map { checkoutItem ->
-            checkoutItem.toCheckoutListItem()
-        }
+        adapter.items = items
+            .map { checkoutItem ->
+                checkoutItem.toCheckoutListItem()
+            }
 
         binding.tvOrderTotalPrice.text = requireContext()
             .getString(R.string.price_placeholder, totalCost)
+
+        renderDummyView()
+    }
+
+    private fun renderDummyView() {
+        binding.root.doOnLayout {
+            val sheetHeight = binding.clContent.height
+            val windowHeight = requireActivity().resources.displayMetrics.heightPixels
+            val placeholderHeight = windowHeight - sheetHeight
+
+            if (placeholderHeight > 0) {
+                binding.dummy.layoutParams.height = placeholderHeight
+                binding.dummy.requestLayout()
+            }
+        }
     }
 
     private fun observeCardValidationResult() {
@@ -176,12 +192,12 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
         binding.etCvv.error = getString(R.string.invalid_cvv)
     }
 
-    private fun setMaskOnCardNumber() {
+    private fun initCardNumberMask() {
         val maskCardNumber = MaskImpl.createTerminated(PredefinedSlots.CARD_NUMBER_STANDARD)
         MaskFormatWatcher(maskCardNumber).installOn(binding.etCardNumber)
     }
 
-    private fun setMaskOnExpireDate() {
+    private fun initExpirationDateMask() {
         val slots = UnderscoreDigitSlotsParser().parseSlots(MASK_MONTH_YEAR)
         MaskFormatWatcher(MaskImpl.createTerminated(slots)).installOn(binding.etMonthYear)
     }
@@ -193,12 +209,6 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
             binding.etMonthYear.text.toString(),
             binding.etCvv.text.toString(),
         )
-    }
-
-    private fun initPlaceOrderButton() {
-        binding.btnPlaceOrder.setOnClickListener {
-            validateCard()
-        }
     }
 
     private fun CheckoutItem.toCheckoutListItem() = CheckoutListItem.Detail(this)
