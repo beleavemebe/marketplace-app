@@ -1,5 +1,6 @@
 package com.narcissus.marketplace.ui.cart
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -47,9 +48,15 @@ sealed class CartListItem {
                     }
                     binding.productAmount.maxAmount = item.cartItem.stock
                     binding.productAmount.setAmount(item.cartItem.amount)
-                    binding.productAmount.amountFlow.onEach { amount ->
+
+                    binding.productAmount.setAmountListener {amount->
                         onItemAmountChanged(item.cartItem, amount)
-                    }.launchIn(scope)
+                    }
+//                    binding.productAmount.amountFlow.onEach { amount ->
+//                        if(amount!=-1){
+//                            onItemAmountChanged(item.cartItem, amount)
+//                        }
+//                    }.launchIn(scope)
                     binding.productAmount.boundaryAmountReachedTriggerFlow.onEach { isReached ->
                         if (isReached) {
                             binding.mlCartItem.transitionToStart()

@@ -9,4 +9,36 @@
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/montserrat_regular_ttf</item>
     </style>
+    <style name="LoadingDialogImpassable" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:backgroundDimAmount">0.05</item>
+<!--        <item name="android:colorBackground">?attr/colorPrimary</item>-->
+<!--        <item name="android:colorBackgroundCacheHint">@null</item>-->
+
+<!--        <item name="android:windowFrame">@null</item>-->
+<!--        <item name="android:windowTitleStyle">@style/RtlOverlay.DialogWindowTitle.AppCompat</item>-->
+<!--        <item name="android:windowTitleBackgroundStyle">@style/Base.DialogWindowTitleBackground.AppCompat</item>-->
+<!--        <item name="android:windowIsFloating">true</item>-->
+        <item name="android:backgroundDimEnabled">true</item>
+
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>-->
+<!--        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>-->
+
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="windowActionModeOverlay">true</item>-->
+
+<!--        <item name="listPreferredItemPaddingLeft">24dip</item>-->
+<!--        <item name="listPreferredItemPaddingRight">24dip</item>-->
+
+<!--        <item name="android:listDivider">@null</item>-->
+
+<!--        <item name="android:buttonBarStyle">@style/Widget.AppCompat.ButtonBar.AlertDialog</item>-->
+<!--        <item name="android:borderlessButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>-->
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+    <style name="AA">
+        <item name="android:windowEnterAnimation">@anim/progress_bar_dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/progress_bar_dialog_exit_animation</item>
+    </style>
 </resources>

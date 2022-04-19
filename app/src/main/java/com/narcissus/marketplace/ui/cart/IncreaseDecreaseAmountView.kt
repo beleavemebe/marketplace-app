@@ -16,11 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlin.math.max
 
@@ -32,13 +28,18 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
     private lateinit var ibDecrease: ImageButton
     private lateinit var ibIncrease: ImageButton
     private lateinit var tvAmount: TextView
-
+    private var amountListener: ((Int) -> Unit)? = null
     fun setAmount(value: Int) {
-        _amountFlow.value = value
+        amount = value
+        checkBoundaryAmountReached()
+   //     _amountFlow.value = value
     }
-
-    private val _amountFlow = MutableStateFlow(1)
-    val amountFlow = _amountFlow.asStateFlow()
+    fun setAmountListener(listener:(Int)->Unit){
+        amountListener=listener
+    }
+    private var amount = 0
+//    private val _amountFlow = MutableStateFlow(1)
+//    val amountFlow = _amountFlow.asStateFlow()
     var maxAmount: Int = 0
     private val _boundaryAmountReachedTriggerFlow = MutableSharedFlow<Boolean>()
     val boundaryAmountReachedTriggerFlow = _boundaryAmountReachedTriggerFlow.asSharedFlow()
@@ -62,23 +63,23 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         viewScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-        observeBoundaryAmountReachedFlow()
+     //   observeBoundaryAmountReachedFlow()
     }
 
     private fun initListeners() {
         ibDecrease.setOnClickListener {
-            if (amountFlow.value == MIN_AMOUNT) {
+            if (amount == MIN_AMOUNT) {
                 callBoundaryReachedAnimation()
             } else {
-                _amountFlow.value = max(MIN_AMOUNT, _amountFlow.value - 1)
+                decreaseAmount()
                 invalidate()
             }
         }
         ibIncrease.setOnClickListener {
-            if (maxAmount == _amountFlow.value) {
+            if (maxAmount == amount) {
                 callBoundaryReachedAnimation()
             } else {
-                _amountFlow.value += 1
+                increaseAmount()
                 invalidate()
             }
         }
@@ -88,18 +89,38 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
         viewScope?.launch { _boundaryAmountReachedTriggerFlow.emit(true) }
     }
 
-    private fun observeBoundaryAmountReachedFlow() {
-        viewScope?.let {
-            amountFlow.onEach { currentAmount ->
-                when (currentAmount) {
-                    1 -> ibDecrease.alpha = TRANSLUCENT_ALPHA
-                    else -> ibDecrease.alpha = DENSE_ALPHA
-                }
-                when (currentAmount) {
-                    maxAmount -> ibIncrease.alpha = TRANSLUCENT_ALPHA
-                    else -> ibIncrease.alpha = DENSE_ALPHA
-                }
-            }.launchIn(it)
+//    private fun observeBoundaryAmountReachedFlow() {
+//        viewScope?.let {
+//            amountFlow.onEach { currentAmount ->
+//                when (currentAmount) {
+//                    1 -> ibDecrease.alpha = TRANSLUCENT_ALPHA
+//                    else -> ibDecrease.alpha = DENSE_ALPHA
+//                }
+//                when (currentAmount) {
+//                    maxAmount -> ibIncrease.alpha = TRANSLUCENT_ALPHA
+//                    else -> ibIncrease.alpha = DENSE_ALPHA
+//                }
+//            }.launchIn(it)
+//        }
+//    }
+    private fun increaseAmount(){
+        amount += 1
+        checkBoundaryAmountReached()
+    }
+    private fun decreaseAmount(){
+        amount = max(MIN_AMOUNT, amount - 1)
+        checkBoundaryAmountReached()
+    }
+
+
+    private fun checkBoundaryAmountReached(){
+        when (amount) {
+            1 -> ibDecrease.alpha = TRANSLUCENT_ALPHA
+            else -> ibDecrease.alpha = DENSE_ALPHA
+        }
+        when (amount) {
+            maxAmount -> ibIncrease.alpha = TRANSLUCENT_ALPHA
+            else -> ibIncrease.alpha = DENSE_ALPHA
         }
     }
 
@@ -109,18 +130,18 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
     }
 
     private fun refreshAmount() {
-        tvAmount.text = _amountFlow.value.toString()
+        tvAmount.text = amount.toString()
     }
 
     override fun onSaveInstanceState(): Parcelable {
         super.onSaveInstanceState()
-        return bundleOf(ARG_AMOUNT to _amountFlow.value)
+        return bundleOf(ARG_AMOUNT to amount)
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         super.onRestoreInstanceState(null)
         val restoredAmount = (state as? Bundle)?.get(ARG_AMOUNT) as? Int
-        _amountFlow.value = restoredAmount ?: 1
+        amount = restoredAmount ?: 1
     }
 
     override fun onDetachedFromWindow() {
