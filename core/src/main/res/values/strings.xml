@@ -2,4 +2,6 @@
 <resources>
     <string name="appTitle">NCS SHOP</string>
     <string name="descriptionAppLogo">NCS Shop Logo</string>
+    <string name="you_searched_for">You searched for</string>
+    <string name="clear">Clear</string>
 </resources>

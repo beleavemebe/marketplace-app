@@ -16,17 +16,17 @@
     <TextView
         android:id="@+id/tvSearchHistoryYouSearchedFor"
         style="@style/H6_headline"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="You searched for"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginTop="@dimen/margin_default"
+        android:text="@string/you_searched_for"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/searchView"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:text="Clear"
-        android:layout_marginEnd="20dp"
+        android:text="@string/clear"
+        android:layout_marginEnd="@dimen/margin_default"
         style="@style/Btn"
         android:textColor="?attr/colorPrimary"
         android:id="@+id/tvSearchHistoryClearAll"
@@ -37,9 +37,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@id/tvSearchHistoryYouSearchedFor"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
         android:layout_marginTop="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:overScrollMode="never"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -11,6 +11,8 @@ import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.domain.model.search.SortBy
 import com.narcissus.marketplace.ui.search.R
 import com.narcissus.marketplace.ui.search.databinding.FragmentSearchHistoryBinding
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchHistoryFragment : Fragment(R.layout.fragment_search_history) {
@@ -39,8 +41,6 @@ class SearchHistoryFragment : Fragment(R.layout.fragment_search_history) {
     private fun initRecyclerView() {
         val historyRecyclerView = binding.rvSearchHistory
         historyRecyclerView.adapter = historyAdapter
-        historyRecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun initListeners() {
@@ -50,20 +50,18 @@ class SearchHistoryFragment : Fragment(R.layout.fragment_search_history) {
     }
 
     private fun observeSearchHistory() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.searchHistory.collect { searchHistory ->
-                if (searchHistory.isNotEmpty()) {
-                    historyAdapter.items = (searchHistory as MutableList<SearchHistoryItem>).apply {
-                        add(
-                            0,
-                            SearchHistoryItem.Divider(),
-                        )
-                    }
-                } else {
-                    historyAdapter.items = listOf()
+        viewModel.searchHistory.onEach { searchHistory ->
+            if (searchHistory.isNotEmpty()) {
+                historyAdapter.items = searchHistory.toMutableList().apply {
+                    add(
+                        0,
+                        SearchHistoryItem.Divider(),
+                    )
                 }
+            } else {
+                historyAdapter.items = emptyList()
             }
-        }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun writeQueryToSearchHistory(query: String) {
