@@ -9,4 +9,5 @@ interface MarketplaceCrossModuleNavigator {
     fun navigate(destination: NavDestination, options: NavOptions)
     fun navigate(destination: NavDestination, extras: Navigator.Extras)
     fun navigate(destination: NavDestination, options: NavOptions, extras: Navigator.Extras)
+    fun navigateUp()
 }

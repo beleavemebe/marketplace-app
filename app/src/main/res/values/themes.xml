@@ -3,7 +3,7 @@
     <style name ="Theme.MarketplaceApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/gradient_background_end</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorSecondary">#8E44EB</item>
+        <item name="colorSecondary">#93A8FF</item>
         <item name="colorSecondaryVariant">@color/search_view</item>
         <item name="colorError">@color/red</item>
         <item name="colorSurface">@color/white</item>
@@ -15,6 +15,7 @@
         <item name="colorOnBackground">@color/black</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:windowAnimationStyle">@null</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <style name="Theme.MarketplaceAppBottomNavigation" parent="Theme.Material3.DayNight.NoActionBar">

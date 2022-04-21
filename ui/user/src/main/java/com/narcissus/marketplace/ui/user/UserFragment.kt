@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import com.narcissus.marketplace.core.navigation.destination.OrdersDestination
 import com.narcissus.marketplace.core.navigation.destination.SignInDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.Constants
@@ -74,11 +75,17 @@ class UserFragment : Fragment() {
             is UserSideEffect.Toast -> toast(sideEffect.text)
             is UserSideEffect.SwitchTheme -> switchTheme(sideEffect.checked)
             is UserSideEffect.NavigateToSignIn -> navigateToSignIn()
+            is UserSideEffect.NavigateToOrders -> navigateToOrders()
         }
     }
 
     private fun navigateToSignIn() {
         val destination: SignInDestination by inject { parametersOf(true) }
+        navigator.navigate(destination)
+    }
+
+    private fun navigateToOrders() {
+        val destination = OrdersDestination
         navigator.navigate(destination)
     }
 
