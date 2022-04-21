@@ -1,15 +1,10 @@
-package com.narcissus.marketplace.ui.user.composables
+package com.narcissus.marketplace.ui.user.orders
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -17,28 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.narcissus.marketplace.ui.user.theme.DarkTheme
-import com.narcissus.marketplace.ui.user.theme.DefaultPadding
-import com.narcissus.marketplace.ui.user.theme.GradientBackgroundEnd
-import com.narcissus.marketplace.ui.user.theme.GradientBackgroundStart
 import com.narcissus.marketplace.ui.user.theme.LightTheme
 import com.narcissus.marketplace.ui.user.theme.Montserrat
-import com.narcissus.marketplace.ui.user.theme.White
 import com.narcissus.marketplace.ui.user.theme.regular
 
-private const val ASSET_YOU_ARE_NOT_LOGGED_IN = "you_are_not_logged_in_3d.json"
+private const val ASSET_NO_ORDERS_YET = "no_orders_yet.json"
 
 @Composable
-fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
+fun NoOrdersYet() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -60,7 +47,7 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
                 .fillMaxHeight(0.5f)
         ) {
             val composition by rememberLottieComposition(
-                LottieCompositionSpec.Asset(ASSET_YOU_ARE_NOT_LOGGED_IN)
+                LottieCompositionSpec.Asset(ASSET_NO_ORDERS_YET)
             )
 
             val progress by animateLottieCompositionAsState(
@@ -74,50 +61,28 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
         Spacer(modifier = Modifier.fillMaxHeight(0.25f))
 
         Text(
-            text = "You are not logged in",
+            text = "No orders yet",
             color = MaterialTheme.colors.onPrimary,
             style = MaterialTheme.typography.h6
                 .copy(fontFamily = Montserrat),
         )
 
-        Spacer(modifier = Modifier.height(DefaultPadding * 4))
-
-        Button(
-            onClick = onSignInClicked,
-            elevation = ButtonDefaults.elevation(0.dp),
-            colors = ButtonDefaults.buttonColors(Color.Transparent),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .padding(horizontal = DefaultPadding * 2)
-                .clip(MaterialTheme.shapes.medium)
-                .background(
-                    Brush.horizontalGradient(
-                        listOf(GradientBackgroundStart, GradientBackgroundEnd)
-                    ),
-                ),
-        ) {
-            Text(
-                text = "Sign In",
-                style = MaterialTheme.typography.button
-                    .copy(color = White)
-            )
-        }
+        Spacer(modifier = Modifier.fillMaxHeight())
     }
 }
 
-@Composable
 @Preview
-fun YouAreNotLoggedInPreviewLight() {
+@Composable
+fun NoOrdersYetPreviewLight() {
     LightTheme {
-        YouAreNotLoggedIn {}
+        NoOrdersYet()
     }
 }
 
-@Composable
 @Preview
-fun YouAreNotLoggedInPreviewDark() {
+@Composable
+fun NoOrdersYetPreviewDark() {
     DarkTheme {
-        YouAreNotLoggedIn {}
+        NoOrdersYet()
     }
 }

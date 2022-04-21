@@ -9,6 +9,7 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductOfTheDayBinding
 import com.narcissus.marketplace.domain.model.ProductOfTheDay
 import com.narcissus.marketplace.ui.home.util.crossOut
+import com.narcissus.marketplace.core.R as CORE
 
 data class ProductOfTheDayItem(
     val product: ProductOfTheDay
@@ -27,11 +28,11 @@ data class ProductOfTheDayItem(
                 bind {
                     binding.tvProductTitle.text = item.product.name
                     binding.tvOldPrice.text = context.getString(
-                        R.string.price_placeholder, item.product.oldPrice,
+                        CORE.string.price_placeholder, item.product.oldPrice,
                     )
                     binding.tvOldPrice.crossOut()
                     binding.tvNewPrice.text = context.getString(
-                        R.string.price_placeholder, item.product.newPrice,
+                        CORE.string.price_placeholder, item.product.newPrice,
                     )
                     binding.tvPercentOff.text = context.getString(
                         R.string.percent_off_placeholder, item.product.percentOff,

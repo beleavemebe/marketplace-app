@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemCheckoutDetailBinding
 import com.narcissus.marketplace.domain.model.CheckoutItem
+import com.narcissus.marketplace.core.R as CORE
 
 typealias DetailBinding = ListItemCheckoutDetailBinding
 
@@ -27,10 +27,10 @@ sealed class CheckoutListItem {
                     bind {
                         binding.tvOrderDetailName.text = item.detail.detailName
                         binding.tvOrderDetailAmount.text = itemView.context.getString(
-                            R.string.amount_placeholder, item.detail.detailAmount,
+                            CORE.string.amount_placeholder, item.detail.detailAmount,
                         )
                         binding.tvOrderDetailPrice.text = itemView.context.getString(
-                            R.string.price_placeholder, item.detail.detailPrice,
+                            CORE.string.price_placeholder, item.detail.detailPrice,
                         )
                     }
                 }

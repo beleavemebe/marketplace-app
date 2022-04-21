@@ -37,7 +37,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.narcissus.marketplace.core.R
 import com.narcissus.marketplace.domain.model.UserProfile
 import com.narcissus.marketplace.ui.user.UserViewModel
 import com.narcissus.marketplace.ui.user.theme.DarkTheme
@@ -52,6 +51,7 @@ import com.narcissus.marketplace.ui.user.theme.LightTheme
 import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.SmallPadding
 import com.narcissus.marketplace.ui.user.theme.regular
+import com.narcissus.marketplace.core.R as CORE
 
 @Composable
 fun UserScreen(
@@ -80,21 +80,21 @@ fun UserScreen(
 
             Item(
                 text = "Orders",
-                iconResId = R.drawable.ic_cart,
+                iconResId = CORE.drawable.ic_cart,
             ) {
                 viewModel.goToOrders()
             }
 
             Item(
                 text = "Billing",
-                iconResId = R.drawable.ic_card,
+                iconResId = CORE.drawable.ic_card,
             ) {
                 viewModel.goToBilling()
             }
 
             Item(
                 text = "Sign out",
-                iconResId = R.drawable.ic_sign_out,
+                iconResId = CORE.drawable.ic_sign_out,
             ) {
                 viewModel.signOut()
             }
@@ -103,7 +103,7 @@ fun UserScreen(
 
             SwitchItem(
                 text = "Dark Theme",
-                iconResId = R.drawable.ic_crescent,
+                iconResId = CORE.drawable.ic_crescent,
                 checked = isAppInDarkTheme,
             ) { checked ->
                 viewModel.switchTheme(checked)
@@ -111,21 +111,21 @@ fun UserScreen(
 
             Item(
                 text = "Clear data",
-                iconResId = R.drawable.ic_broom,
+                iconResId = CORE.drawable.ic_broom,
             ) {
                 viewModel.clearData()
             }
 
             Item(
                 text = "Report bug",
-                iconResId = R.drawable.ic_bug,
+                iconResId = CORE.drawable.ic_bug,
             ) {
                 viewModel.reportBug()
             }
 
             Item(
                 text = "Source code",
-                iconResId = R.drawable.ic_code,
+                iconResId = CORE.drawable.ic_code,
             ) {
                 viewModel.goToSourceCode()
             }
@@ -148,8 +148,8 @@ fun ProfileInfo(userProfile: UserProfile) {
                 .data(userProfile.iconUrl)
                 .crossfade(true)
                 .build(),
-            fallback = painterResource(R.drawable.profile_avatar_placeholder_large),
-            error = painterResource(R.drawable.profile_avatar_placeholder_large),
+            fallback = painterResource(CORE.drawable.profile_avatar_placeholder_large),
+            error = painterResource(CORE.drawable.profile_avatar_placeholder_large),
             contentScale = ContentScale.Crop,
             contentDescription = "Profile picture",
             modifier = Modifier
@@ -271,7 +271,7 @@ fun Item(
 @Preview
 fun ItemPreviewLight() {
     LightTheme {
-        Item("Orders", R.drawable.ic_cart) {}
+        Item("Orders", CORE.drawable.ic_cart) {}
     }
 }
 
@@ -279,7 +279,7 @@ fun ItemPreviewLight() {
 @Preview
 fun ItemPreviewDark() {
     DarkTheme {
-        Item("Orders", R.drawable.ic_cart) {}
+        Item("Orders", CORE.drawable.ic_cart) {}
     }
 }
 
@@ -312,7 +312,7 @@ fun SwitchItem(
 @Preview
 fun SwitchItemPreviewLight() {
     LightTheme {
-        SwitchItem("Orders", R.drawable.ic_cart, true) {}
+        SwitchItem("Orders", CORE.drawable.ic_cart, true) {}
     }
 }
 
@@ -320,6 +320,6 @@ fun SwitchItemPreviewLight() {
 @Preview
 fun SwitchItemPreviewDark() {
     DarkTheme {
-        SwitchItem("Orders", R.drawable.ic_cart, true) {}
+        SwitchItem("Orders", CORE.drawable.ic_cart, true) {}
     }
 }

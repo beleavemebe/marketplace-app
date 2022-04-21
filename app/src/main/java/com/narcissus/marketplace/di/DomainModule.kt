@@ -8,8 +8,6 @@ import com.narcissus.marketplace.domain.usecase.GetCart
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCartCostFlow
 import com.narcissus.marketplace.domain.usecase.GetCartItemsAmount
-import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsCostSnapshot
-import com.narcissus.marketplace.domain.usecase.GetCartSelectedItemsSnapshot
 import com.narcissus.marketplace.domain.usecase.GetCheckout
 import com.narcissus.marketplace.domain.usecase.GetDepartments
 import com.narcissus.marketplace.domain.usecase.GetOrderList
@@ -55,14 +53,12 @@ val domainModule = module {
     factory { GetCartItemsAmount(get()) }
     factory { GetCartCost(get()) }
     factory { GetCartCostFlow(get()) }
-    factory { GetCartSelectedItemsSnapshot(get()) }
     factory { SetCartItemAmount(get()) }
     factory { SetCartItemSelected(get()) }
     factory { SelectAllCartItems(get()) }
     factory { RemoveSelectedCartItems(get()) }
     factory { RemoveFromCart(get()) }
     factory { RestoreCartItems(get()) }
-    factory { GetCartSelectedItemsCostSnapshot(get()) }
     factory { AddToCart(get()) }
     factory { SignInWithEmail(get()) }
     factory { SignInWithGoogle(get()) }
