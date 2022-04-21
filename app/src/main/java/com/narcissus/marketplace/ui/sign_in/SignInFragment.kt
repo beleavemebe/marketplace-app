@@ -104,8 +104,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     }
 
     private fun navigateToSignUp() {
-        val destination: SignUpDestination by inject()
-        navigator.navigate(destination)
+        navigator.navigate(SignUpDestination)
     }
 
     private fun toastError() {

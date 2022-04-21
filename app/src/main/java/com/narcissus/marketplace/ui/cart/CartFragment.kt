@@ -5,10 +5,11 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.navigation.destination.CheckoutDestination
+import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
@@ -107,12 +108,12 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun initButtons() {
         initSelectAllCheckbox()
         initDeleteSelectedButton()
-        initCheckOutListeners()
+        initCheckoutButton()
     }
 
-    private fun initCheckOutListeners() {
+    private fun initCheckoutButton() {
         binding.btnCheckout.setOnClickListener {
-            findNavController().navigate(CartFragmentDirections.actionCartToCheckout())
+            navigateToCheckout()
         }
     }
 
@@ -132,6 +133,10 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         binding.btnDeleteSelected.setOnClickListener {
             viewModel.deleteSelectedItems()
         }
+    }
+
+    private fun navigateToCheckout() {
+        navigator.navigate(CheckoutDestination)
     }
 
     override fun onDestroyView() {

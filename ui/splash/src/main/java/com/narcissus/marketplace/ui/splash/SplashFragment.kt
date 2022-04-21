@@ -13,7 +13,6 @@ import com.narcissus.marketplace.core.util.Constants
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.ui.splash.databinding.FragmentSplashBinding
 import kotlinx.coroutines.flow.onEach
-import org.koin.android.ext.android.inject
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
     private var _binding: FragmentSplashBinding? = null
@@ -32,9 +31,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         splashViewModel.isLaunchedFlow.onEach { isLaunched ->
             if (!isLaunched) return@onEach
-
-            val homeDestination: HomeDestination by inject()
-            navigator.navigate(homeDestination)
+            navigator.navigate(HomeDestination)
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 

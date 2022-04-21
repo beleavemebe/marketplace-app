@@ -9,8 +9,7 @@
         android:id="@+id/cartFragment"
         android:name="com.narcissus.marketplace.ui.cart.CartFragment"
         android:label="CartFragment">
-        <action android:id="@+id/action_cart_to_checkout"
-            app:destination="@+id/checkoutFragment"/>
+
         <deepLink app:uri="marketplace-app://cart" />
 
     </fragment>
@@ -19,6 +18,9 @@
         android:id="@+id/checkoutFragment"
         android:name="com.narcissus.marketplace.ui.checkout.CheckoutFragment"
         tools:layout="@layout/fragment_checkout">
+
+        <deepLink app:uri="marketplace-app://cart/checkout" />
+
     </dialog>
 
 </navigation>

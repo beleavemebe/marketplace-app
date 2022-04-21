@@ -1,10 +1,34 @@
 package com.narcissus.marketplace.ui.sign_in.di
 
-import com.narcissus.marketplace.core.navigation.destination.SignInDestination
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.narcissus.marketplace.R
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val signInModule = module {
-    factory { (hasNavigatedFromUserScreen: Boolean) ->
-        SignInDestination(hasNavigatedFromUserScreen)
+    single {
+        GoogleSignIn.getClient(
+            androidContext(),
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(androidContext().getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build(),
+        )
+    }
+
+    single {
+        BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    .setServerClientId(androidContext().getString(R.string.default_web_client_id))
+                    .setFilterByAuthorizedAccounts(true)
+                    .build(),
+            )
+            .setAutoSelectEnabled(true)
+            .build()
     }
 }

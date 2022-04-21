@@ -22,7 +22,6 @@ import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.databinding.FragmentProductDetailsBinding
 import com.narcissus.marketplace.ui.product_details.model.ToolbarData
 import kotlinx.coroutines.flow.onEach
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import kotlin.math.abs
@@ -138,12 +137,9 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     }
 
     private fun navigateToSimilarProduct(id: String, cardView: MaterialCardView) {
-        val catalogDestination by inject<ProductDetailsDestination> {
-            parametersOf(id)
-        }
-
+        val productDetailsDestination = ProductDetailsDestination(id)
         val extras = FragmentNavigatorExtras(cardView to id)
-        navigator.navigate(catalogDestination, extras)
+        navigator.navigate(productDetailsDestination, extras)
     }
 
     private fun navigateToReviews() {
@@ -163,7 +159,6 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
     }
 
     private fun goToCart() {
-        val cartDestination by inject<CartDestination>()
-        navigator.navigate(cartDestination)
+        navigator.navigate(CartDestination)
     }
 }
