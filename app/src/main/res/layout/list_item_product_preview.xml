@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/productNameTextView"
-            style="@style/B2_body_black"
+            style="@style/B2_body_primary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"

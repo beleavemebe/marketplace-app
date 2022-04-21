@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appTitle">NCS SHOP</string>
-    <string name="order">Order</string>
     <string name="descriptionAppLogo">NCS Shop Logo</string>
+    <string name="order">Order</string>
     <string name="price_placeholder">$%1$d</string>
     <string name="amount_placeholder">%1$dx</string>
     <string name="order_number_placeholder">#%1$s</string>
+    <string name="you_searched_for">You searched for</string>
+    <string name="clear">Clear</string>
 </resources>

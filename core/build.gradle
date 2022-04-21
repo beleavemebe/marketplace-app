@@ -20,6 +20,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -30,6 +34,8 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':domain')
+
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
     def coroutines_version = "1.6.0"

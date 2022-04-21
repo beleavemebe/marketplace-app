@@ -18,4 +18,7 @@ val persistenceModule = module {
     single {
         get<AppDatabase>().productDao()
     }
+    single {
+        get<AppDatabase>().searchHistoryDao()
+    }
 }

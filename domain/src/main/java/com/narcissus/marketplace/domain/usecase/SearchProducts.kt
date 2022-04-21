@@ -1,10 +1,10 @@
 package com.narcissus.marketplace.domain.usecase
 
 import com.narcissus.marketplace.domain.model.ProductPreview
+import com.narcissus.marketplace.domain.model.search.SortDirection
 import com.narcissus.marketplace.domain.repository.ProductsPreviewRepository
 import com.narcissus.marketplace.domain.util.ActionResult
 import com.narcissus.marketplace.domain.util.SearchParams
-import com.narcissus.marketplace.domain.util.SearchParams.SortDirection as SortDirection
 import com.narcissus.marketplace.domain.util.SearchParams.SortType as SortType
 
 class SearchProducts(private val productsPreviewRepository: ProductsPreviewRepository) {

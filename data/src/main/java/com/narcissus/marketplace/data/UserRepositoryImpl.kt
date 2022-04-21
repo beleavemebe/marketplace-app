@@ -10,7 +10,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.narcissus.marketplace.data.mapper.toProductPreview
 import com.narcissus.marketplace.data.persistence.database.ProductDao
+import com.narcissus.marketplace.data.persistence.database.SearchHistoryDao
 import com.narcissus.marketplace.data.persistence.model.ProductEntity
+import com.narcissus.marketplace.data.persistence.model.SearchHistoryEntity
 import com.narcissus.marketplace.domain.auth.AuthState
 import com.narcissus.marketplace.domain.auth.SignInResult
 import com.narcissus.marketplace.domain.auth.SignOutResult
@@ -28,6 +30,7 @@ import kotlinx.coroutines.tasks.await
 
 internal class UserRepositoryImpl(
     private val productsDao: ProductDao,
+    private val searchHistoryDao: SearchHistoryDao,
     private val firebaseAuth: FirebaseAuth,
 ) : UserRepository {
     override val recentlyVisitedProducts: Flow<List<ProductPreview>> =
@@ -69,6 +72,17 @@ internal class UserRepositoryImpl(
                 firebaseAuth.removeAuthStateListener(listener)
             }
         }
+
+    override suspend fun writeToSearchHistory(searchQuery: String) {
+        searchHistoryDao.insertSearchHistoryItem(SearchHistoryEntity(searchQuery))
+    }
+
+    override suspend fun clearSearchHistory() {
+        searchHistoryDao.clearSearchHistory()
+    }
+
+    override val searchHistory: Flow<List<String>> = searchHistoryDao.getSearchHistory()
+        .map { searchHistoryFlow -> searchHistoryFlow.map { it.productName } }
 
     override suspend fun signInWithEmail(email: String, password: String): SignInResult {
         val currentUser = firebaseAuth.currentUser

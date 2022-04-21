@@ -2,6 +2,7 @@ package com.narcissus.marketplace.di
 
 import com.narcissus.marketplace.data.di.dataModule
 import com.narcissus.marketplace.domain.usecase.AddToCart
+import com.narcissus.marketplace.domain.usecase.ClearSearchHistory
 import com.narcissus.marketplace.domain.usecase.GetAuthStateFlow
 import com.narcissus.marketplace.domain.usecase.GetCart
 import com.narcissus.marketplace.domain.usecase.GetCartCost
@@ -14,7 +15,7 @@ import com.narcissus.marketplace.domain.usecase.GetPeopleAreBuyingProducts
 import com.narcissus.marketplace.domain.usecase.GetProductDetails
 import com.narcissus.marketplace.domain.usecase.GetRandomProducts
 import com.narcissus.marketplace.domain.usecase.GetRecentlyVisitedProducts
-import com.narcissus.marketplace.domain.usecase.GetSelectedCartItems
+import com.narcissus.marketplace.domain.usecase.GetSearchHistory
 import com.narcissus.marketplace.domain.usecase.GetSimilarProducts
 import com.narcissus.marketplace.domain.usecase.GetTopRatedProducts
 import com.narcissus.marketplace.domain.usecase.GetTopSalesProducts
@@ -30,6 +31,7 @@ import com.narcissus.marketplace.domain.usecase.SignInWithGoogle
 import com.narcissus.marketplace.domain.usecase.SignOut
 import com.narcissus.marketplace.domain.usecase.SignUpWithEmail
 import com.narcissus.marketplace.domain.usecase.ValidateCard
+import com.narcissus.marketplace.domain.usecase.WriteQueryToSearchHistory
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -42,13 +44,15 @@ val domainModule = module {
     factory { GetRecentlyVisitedProducts(get()) }
     factory { GetProductDetails(get(), get()) }
     factory { MakeAnOrder(get(), get()) }
+    factory { WriteQueryToSearchHistory(get()) }
+    factory { GetSearchHistory(get()) }
+    factory { ClearSearchHistory(get()) }
     factory { GetDepartments(get()) }
     factory { GetOrderList(get()) }
     factory { GetCart(get()) }
     factory { GetCartItemsAmount(get()) }
     factory { GetCartCost(get()) }
     factory { GetCartCostFlow(get()) }
-    factory { GetSelectedCartItems(get()) }
     factory { SetCartItemAmount(get()) }
     factory { SetCartItemSelected(get()) }
     factory { SelectAllCartItems(get()) }
