@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.card.MaterialCardView
-import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemDetailsDividerBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoPlaceholderBinding
@@ -28,13 +26,14 @@ import com.narcissus.marketplace.databinding.ListItemDetailsTitileBasicBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsTitleButtonBinding
 import com.narcissus.marketplace.databinding.ListItemRecyclerBinding
 import com.narcissus.marketplace.domain.model.Review
-import com.narcissus.marketplace.ui.home.recycler.ExtraHorizontalMarginDecoration
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
-import com.narcissus.marketplace.ui.product_details.similar.SimilarProductListItem
+import com.narcissus.marketplace.ui.products.ProductListItem
+import com.narcissus.marketplace.ui.products.ProductsAdapter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import com.narcissus.marketplace.core.R as CORE
 
 typealias ProductPriceBinding = ListItemDetailsPriceBinding
 typealias ProductMainInfoBinding = ListItemDetailsMainInfoBinding
@@ -63,7 +62,7 @@ sealed class ProductDetailsItem {
                 ) {
                     bind {
                         binding.tvDetailsPrice.text =
-                            context.getString(R.string.price_placeholder, item.price)
+                            context.getString(CORE.string.price_placeholder, item.price)
                     }
                 }
         }
@@ -278,7 +277,7 @@ sealed class ProductDetailsItem {
     }
 
     data class SimilarProducts(
-        val similarProducts: List<SimilarProductListItem>,
+        val similarProducts: List<ProductListItem>,
     ) : ProductDetailsItem() {
         companion object {
             private const val EXTRA_HORIZONTAL_MARGIN = 8
@@ -296,14 +295,7 @@ sealed class ProductDetailsItem {
                 adapterDelegateViewBinding<SimilarProducts, ProductDetailsItem, SimilarProductsListBinding>(
                     ::inflateBinding,
                 ) {
-                    val adapter = AsyncListDifferDelegationAdapter(
-                        SimilarProductListItem.DIFF_CALLBACK,
-                        SimilarProductListItem.SimilarProductItem.delegate(
-                            onClicked,
-                            onAddToCartClicked,
-                        ),
-                    )
-                    binding.root.addItemDecoration(ExtraHorizontalMarginDecoration(EXTRA_HORIZONTAL_MARGIN))
+                    val adapter = ProductsAdapter(onClicked)
                     binding.root.adapter = adapter
 
                     bind {

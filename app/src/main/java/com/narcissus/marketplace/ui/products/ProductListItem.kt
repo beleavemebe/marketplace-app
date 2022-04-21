@@ -10,6 +10,7 @@ import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemProductPreviewBinding
 import com.narcissus.marketplace.databinding.ListItemProductPreviewLoadingBinding
 import com.narcissus.marketplace.domain.model.ProductPreview
+import com.narcissus.marketplace.core.R as CORE
 
 typealias LoadingBinding = ListItemProductPreviewLoadingBinding
 typealias ProductPreviewBinding = ListItemProductPreviewBinding
@@ -31,7 +32,7 @@ sealed class ProductListItem {
                         binding.productNameTextView.text = item.productPreview.name
                         binding.productImageView.load(item.productPreview.icon)
                         binding.productRatingBar.progress = item.productPreview.rating * 2
-                        binding.productPriceTextView.text = itemView.context.getString(R.string.price_placeholder, item.productPreview.price)
+                        binding.productPriceTextView.text = itemView.context.getString(CORE.string.price_placeholder, item.productPreview.price)
                         binding.productSalesTextView.text = itemView.context.getString(R.string.sales_placeholder, item.productPreview.sales)
                         binding.productStockTextView.text = itemView.context.getString(R.string.in_stock_placeholder, item.productPreview.stock)
                         binding.root.setOnClickListener {

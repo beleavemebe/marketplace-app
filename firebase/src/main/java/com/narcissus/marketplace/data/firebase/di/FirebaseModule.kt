@@ -32,4 +32,11 @@ val firebaseModule = module {
         Log.d("marketplace-debug", "user id: $userId")
         get<FirebaseDatabase>().getReference("${Constants.CHILD_CART}/$userId")
     }
+    single(
+        qualifier<Qualifiers.OrdersReference>()
+    ) {
+        val userId = get<String>(qualifier<Qualifiers.UserUid>())
+        Log.d("marketplace-debug", "user id: $userId")
+        get<FirebaseDatabase>().getReference("${Constants.CHILD_ORDERS}/$userId")
+    }
 }
