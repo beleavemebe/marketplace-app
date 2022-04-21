@@ -14,7 +14,6 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemDetailsDividerBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoPlaceholderBinding
@@ -34,6 +33,7 @@ import com.narcissus.marketplace.ui.products.ProductsAdapter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import com.narcissus.marketplace.core.R as CORE
 
 typealias ProductPriceBinding = ListItemDetailsPriceBinding
 typealias ProductMainInfoBinding = ListItemDetailsMainInfoBinding
@@ -62,7 +62,7 @@ sealed class ProductDetailsItem {
                 ) {
                     bind {
                         binding.tvDetailsPrice.text =
-                            context.getString(R.string.price_placeholder, item.price)
+                            context.getString(CORE.string.price_placeholder, item.price)
                     }
                 }
         }

@@ -4,9 +4,11 @@ import com.narcissus.marketplace.apiclient.Constants
 import com.narcissus.marketplace.apiclient.Constants.BASE_URL
 import com.narcissus.marketplace.apiclient.api.interceptor.CacheInterceptor
 import com.narcissus.marketplace.apiclient.api.service.ApiService
+import com.narcissus.marketplace.apiclient.api.service.OrderApiService
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +28,7 @@ val apiClientModule = module {
             .build()
     }
 
-    single {
+    single(qualifier<Qualifiers.ContentApiService>()) {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -34,7 +36,18 @@ val apiClientModule = module {
             .build()
     }
 
+    single(qualifier<Qualifiers.OrderApiService>()) {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
     single {
-        get<Retrofit>().create<ApiService>()
+        get<Retrofit>(qualifier<Qualifiers.ContentApiService>()).create<ApiService>()
+    }
+
+    single {
+        get<Retrofit>(qualifier<Qualifiers.OrderApiService>()).create<OrderApiService>()
     }
 }

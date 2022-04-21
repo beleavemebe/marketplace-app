@@ -17,6 +17,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
 class CartRepositoryImpl(
     private val cartRef: DatabaseReference,
@@ -45,10 +46,38 @@ class CartRepositoryImpl(
             override fun onCancelled(error: DatabaseError) {}
         }
 
+    override suspend fun getCartCost(): Int {
+        return cartRef.get().await().children
+            .mapNotNull { child ->
+                child.getValue<CartItemBean>()
+            }
+            .filter { it.isSelected }
+            .map { it.productPrice * it.amount }
+            .reduceOrNull(Int::plus) ?: 0
+    }
+
     override suspend fun addToCart(cartItem: CartItem) {
         cartRef.child(cartItem.productId)
             .setValue(cartItem.toBean())
     }
+
+    override suspend fun addAllSelectedToCart(cartItems: List<CartItem>) {
+        cartItems.forEach { cartItem ->
+            val amount = getCartItemCount(cartItem.productId) + cartItem.amount
+            val updatedCartItem = cartItem.copy(amount = amount)
+            cartRef.child(cartItem.productId).setValue(updatedCartItem)
+        }
+    }
+
+    private suspend fun getCartItemCount(productId: String) =
+        cartRef.get().await().children.mapNotNull { child ->
+            child.getValue<CartItemBean>()?.toCartItem()
+        }.firstOrNull { it.productId == productId }?.amount ?: 0
+
+    override suspend fun getSelectedCartItems() =
+        cartRef.get().await().children.mapNotNull { child ->
+            child.getValue<CartItemBean>()?.toCartItem()
+        }.filter { it.isSelected }
 
     override suspend fun removeFromCart(cartItem: CartItem) {
         cartRef.child(cartItem.productId)
@@ -101,7 +130,7 @@ class CartRepositoryImpl(
     private fun runDeleteSelectedTransaction(currentData: MutableData): Transaction.Result {
         currentData.children.forEach { data ->
             val bean = data.getValue<CartItemBean>() ?: return@forEach
-            data.value = bean.takeUnless { it.isSelected == true }
+            data.value = bean.takeUnless { it.isSelected }
         }
 
         return Transaction.success(currentData)

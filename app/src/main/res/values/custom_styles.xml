@@ -19,6 +19,17 @@
         <item name="android:color">@color/search_view</item>
     </style>
 
+    <style name="progressBarDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:background">@null</item>
+    </style>
 
 
 
@@ -67,6 +78,10 @@
         <item name="android:textSize">17sp</item>
         <item name="fontFamily">@font/montserrat_medium_ttf</item>
     </style>
+    <style name="S1_title">
+        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/montserrat_regular_ttf</item>
+    </style>
     <style name="B1_body" parent="textBlack">
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/montserrat_semibold_ttf</item>
@@ -78,6 +93,14 @@
     <style name="H5_headline" parent="textBlack">
         <item name="android:textSize">24sp</item>
         <item name="fontFamily">@font/montserrat_medium_ttf</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_dialog_background</item>
     </style>
 
 

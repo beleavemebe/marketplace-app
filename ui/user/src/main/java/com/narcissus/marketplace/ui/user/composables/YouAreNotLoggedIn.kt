@@ -35,7 +35,7 @@ import com.narcissus.marketplace.ui.user.theme.Montserrat
 import com.narcissus.marketplace.ui.user.theme.White
 import com.narcissus.marketplace.ui.user.theme.regular
 
-private const val YOU_ARE_NOT_LOGGED_IN_ASSET = "you_are_not_logged_in_3d.json"
+private const val ASSET_YOU_ARE_NOT_LOGGED_IN = "you_are_not_logged_in_3d.json"
 
 @Composable
 fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
@@ -60,7 +60,7 @@ fun YouAreNotLoggedIn(onSignInClicked: () -> Unit) {
                 .fillMaxHeight(0.5f)
         ) {
             val composition by rememberLottieComposition(
-                LottieCompositionSpec.Asset(YOU_ARE_NOT_LOGGED_IN_ASSET)
+                LottieCompositionSpec.Asset(ASSET_YOU_ARE_NOT_LOGGED_IN)
             )
 
             val progress by animateLottieCompositionAsState(

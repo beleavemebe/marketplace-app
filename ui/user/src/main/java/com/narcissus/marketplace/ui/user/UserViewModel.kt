@@ -72,8 +72,8 @@ class UserViewModel(
         postSideEffect(UserSideEffect.SwitchTheme(checked))
     }
 
-    fun goToOrders() {
-        toast("Orders")
+    fun goToOrders() = intent {
+        postSideEffect(UserSideEffect.NavigateToOrders)
     }
 
     fun goToBilling() {

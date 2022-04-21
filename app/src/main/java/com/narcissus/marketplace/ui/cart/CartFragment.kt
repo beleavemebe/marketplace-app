@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
@@ -13,11 +14,11 @@ import com.narcissus.marketplace.databinding.FragmentCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.narcissus.marketplace.core.R as CORE
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: CartViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,12 +62,15 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         observeCartItemAmount()
         observeCart()
         observeAreAllItemsSelected()
+        observeSelectedItems()
     }
 
     private fun observeCartCost() {
         viewModel.cartCostFlow.onEach { totalPrice ->
             binding.tvTotalPrice.text = requireContext()
-                .getString(R.string.price_placeholder, totalPrice)
+                .getString(
+                    CORE.string.price_placeholder, totalPrice
+                )
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
@@ -103,12 +107,25 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun initButtons() {
         initSelectAllCheckbox()
         initDeleteSelectedButton()
+        initCheckOutListeners()
+    }
+
+    private fun initCheckOutListeners() {
+        binding.btnCheckout.setOnClickListener {
+            findNavController().navigate(CartFragmentDirections.actionCartToCheckout())
+        }
     }
 
     private fun initSelectAllCheckbox() {
         binding.cbSelectAll.setOnCheckedChangeListener { _, isChecked ->
             viewModel.selectAll(isChecked)
         }
+    }
+
+    private fun observeSelectedItems() {
+        viewModel.isCheckoutButtonActive.onEach { selectedItem ->
+            binding.btnCheckout.isEnabled = selectedItem
+        }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initDeleteSelectedButton() {
