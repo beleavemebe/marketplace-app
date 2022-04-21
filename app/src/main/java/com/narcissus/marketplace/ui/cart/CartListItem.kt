@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.core.R as CORE
 import com.narcissus.marketplace.databinding.ListItemCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import com.narcissus.marketplace.core.R as CORE
 
 sealed class CartListItem {
     data class Item(val cartItem: CartItem) : CartListItem() {

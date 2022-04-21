@@ -14,7 +14,6 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.R
 import com.narcissus.marketplace.databinding.ListItemDetailsDividerBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.databinding.ListItemDetailsMainInfoPlaceholderBinding
