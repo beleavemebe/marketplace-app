@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.R as CORE
 import com.narcissus.marketplace.databinding.ListItemCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +32,7 @@ sealed class CartListItem {
                 bind {
                     binding.tvName.text = item.cartItem.productName
                     binding.tvPrice.text = itemView.context.getString(
-                        R.string.price_placeholder, item.cartItem.productPrice,
+                        CORE.string.price_placeholder, item.cartItem.productPrice,
                     )
 
                     binding.ivIcon.load(item.cartItem.productImage)

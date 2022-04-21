@@ -7,7 +7,11 @@
     <fragment
         android:id="@+id/fragment_user"
         android:name="com.narcissus.marketplace.ui.user.UserFragment"
-        android:label="UserFragment" />
+        android:label="UserFragment">
+
+        <deepLink app:uri="marketplace-app://user" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_orders"

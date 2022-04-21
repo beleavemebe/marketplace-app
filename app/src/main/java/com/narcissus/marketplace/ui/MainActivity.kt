@@ -10,7 +10,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.navigation.MarketplaceCrossModuleNavigator
+import com.narcissus.marketplace.core.navigation.destination.CartDestination
+import com.narcissus.marketplace.core.navigation.destination.CatalogDestination
+import com.narcissus.marketplace.core.navigation.destination.HomeDestination
 import com.narcissus.marketplace.core.navigation.destination.NavDestination
+import com.narcissus.marketplace.core.navigation.destination.UserDestination
 import com.narcissus.marketplace.core.navigation.destination.uri
 import com.narcissus.marketplace.databinding.ActivityMainBinding
 
@@ -65,7 +69,13 @@ class MainActivity : AppCompatActivity(), MarketplaceCrossModuleNavigator {
     }
 
     override fun navigate(destination: NavDestination) {
-        navController.navigate(destination.uri)
+        when (destination) {
+            is HomeDestination -> binding.bottomNavigationView.selectedItemId = R.id.nav_graph_home
+            is CatalogDestination -> binding.bottomNavigationView.selectedItemId = R.id.nav_graph_catalog
+            is CartDestination -> binding.bottomNavigationView.selectedItemId = R.id.nav_graph_cart
+            is UserDestination -> binding.bottomNavigationView.selectedItemId = R.id.nav_graph_user
+            else -> navController.navigate(destination.uri)
+        }
     }
 
     override fun navigate(destination: NavDestination, options: NavOptions) {

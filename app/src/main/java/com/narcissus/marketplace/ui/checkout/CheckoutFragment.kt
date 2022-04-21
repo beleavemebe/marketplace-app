@@ -27,6 +27,7 @@ import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
 import ru.tinkoff.decoro.slots.PredefinedSlots
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher
+import com.narcissus.marketplace.core.R as CORE
 
 class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     private var _binding: FragmentCheckoutBinding? = null
@@ -146,7 +147,7 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
             }
 
         binding.tvOrderTotalPrice.text = requireContext()
-            .getString(R.string.price_placeholder, totalCost)
+            .getString(CORE.string.price_placeholder, totalCost)
 
         renderDummyView()
     }

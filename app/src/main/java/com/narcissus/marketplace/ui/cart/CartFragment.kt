@@ -14,6 +14,7 @@ import com.narcissus.marketplace.databinding.FragmentCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.narcissus.marketplace.core.R as CORE
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
@@ -67,7 +68,9 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private fun observeCartCost() {
         viewModel.cartCostFlow.onEach { totalPrice ->
             binding.tvTotalPrice.text = requireContext()
-                .getString(R.string.price_placeholder, totalPrice)
+                .getString(
+                    CORE.string.price_placeholder, totalPrice
+                )
         }.launchWhenStarted(viewLifecycleOwner.lifecycleScope)
     }
 

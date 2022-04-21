@@ -8,7 +8,6 @@
     <string name="product_image">Product image</string>
     <string name="increase_cart_item_amount">Increase amount</string>
     <string name="decrease_cart_item_amount">Decrease amount</string>
-    <string name="price_placeholder">$%1$d</string>
     <string name="in_stock_placeholder">In stock: %1$d</string>
     <string name="sales_placeholder">%1$d sales</string>
     <string name="top_sales">Top sales</string>
@@ -68,7 +67,6 @@
     <string name="order_summary">Order Summary</string>
     <string name="place_order">Place Order</string>
     <string name="total">Total</string>
-    <string name="amount_placeholder">%1$dx</string>
     <string name="name_empty">Please, enter your full name</string>
     <string name="user_not_found">User not found</string>
     <string name="play_services_unavailable">Play services are unavailable on this device.</string>
