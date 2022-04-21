@@ -10,7 +10,6 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.R
-import com.narcissus.marketplace.core.navigation.destination.NavDestination
 import com.narcissus.marketplace.core.navigation.destination.ProductDetailsDestination
 import com.narcissus.marketplace.core.navigation.destination.SearchHistoryDestination
 import com.narcissus.marketplace.core.navigation.navigator

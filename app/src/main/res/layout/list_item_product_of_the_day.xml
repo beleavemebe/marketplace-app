@@ -48,7 +48,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvProductTitle"
-            style="@style/B2_body_black"
+            style="@style/B2_body_primary"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/margin_default"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvOldPrice"
-            style="@style/S2_subtitle_grey"
+            style="@style/S2_subtitle_secondary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

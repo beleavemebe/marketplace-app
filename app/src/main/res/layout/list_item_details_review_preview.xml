@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tvReviewPreviewAuthor"
-        style="@style/S2_subtitle_grey"
+        style="@style/S2_subtitle_secondary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
@@ -44,7 +44,7 @@
 
     <TextView
         android:id="@+id/tvReviewPreviewDescription"
-        style="@style/B2_body_black"
+        style="@style/B2_body_primary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
