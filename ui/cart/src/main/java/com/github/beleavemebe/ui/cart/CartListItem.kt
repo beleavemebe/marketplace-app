@@ -1,11 +1,11 @@
-package com.narcissus.marketplace.ui.cart
+package com.github.beleavemebe.ui.cart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
+import com.github.beleavemebe.ui.cart.databinding.ListItemCartBinding
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.databinding.ListItemCartBinding
 import com.narcissus.marketplace.domain.model.CartItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
@@ -27,7 +27,7 @@ sealed class CartListItem {
                 onItemAmountChanged: (CartItem, Int) -> Unit,
                 scope: CoroutineScope,
             ) = adapterDelegateViewBinding<Item, CartListItem, ListItemCartBinding>(
-                ::inflateBinding,
+                Companion::inflateBinding,
             ) {
                 bind {
                     binding.tvName.text = item.cartItem.productName

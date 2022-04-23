@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.checkout
+package com.github.beleavemebe.ui.cart.checkout
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -15,15 +15,16 @@ import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.narcissus.marketplace.R
+import com.github.beleavemebe.ui.cart.R
+import com.github.beleavemebe.ui.cart.di.CartQualifiers
 import com.narcissus.marketplace.domain.model.orders.OrderPaymentStatus
 import com.narcissus.marketplace.domain.usecase.GetSelectedCartItems
 import com.narcissus.marketplace.domain.usecase.MakeAnOrder
 import com.narcissus.marketplace.domain.usecase.RestoreCartItems
-import com.narcissus.marketplace.ui.checkout.di.CheckoutQualifiers
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.qualifier
+import com.narcissus.marketplace.core.R as CORE
 
 class CheckoutForegroundWorker(
     private val appContext: Context,
@@ -36,7 +37,7 @@ class CheckoutForegroundWorker(
 
     private val paymentInProgressNotificationId = orderUUID.hashCode()
     private val paymentInProgressNotification: Notification by inject(
-        qualifier<CheckoutQualifiers.PaymentInProgressNotification>(),
+        qualifier<CartQualifiers.PaymentInProgressNotification>(),
     )
 
     private val onCompleteNotificationId = inputData.getInt(
@@ -116,7 +117,7 @@ class CheckoutForegroundWorker(
                 appContext,
                 OrderConstants.CHECKOUT_CHANNEL_ID,
             )
-                .setSmallIcon(com.narcissus.marketplace.ui.splash.R.drawable.ic_logo)
+                .setSmallIcon(CORE.drawable.ic_logo)
                 .setOngoing(false)
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setPriority(NotificationCompat.PRIORITY_MAX)

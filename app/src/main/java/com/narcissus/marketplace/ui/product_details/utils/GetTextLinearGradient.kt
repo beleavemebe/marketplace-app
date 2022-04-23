@@ -3,7 +3,7 @@ package com.narcissus.marketplace.ui.product_details.utils
 import android.content.Context
 import android.graphics.LinearGradient
 import android.graphics.Shader
-import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.R
 
 fun getTextLinearGradient(context: Context) = LinearGradient(
     0f,
@@ -12,9 +12,7 @@ fun getTextLinearGradient(context: Context) = LinearGradient(
     100f,
     arrayOf(
         context.getColor(R.color.gradient_background_start),
-        context.getColor(
-            R.color.gradient_background_end,
-        ),
+        context.getColor(R.color.gradient_background_end),
     ).toIntArray(),
     null,
     Shader.TileMode.CLAMP,

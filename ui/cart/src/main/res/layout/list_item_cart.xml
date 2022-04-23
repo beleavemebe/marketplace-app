@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
         android:textColor="?attr/colorOnPrimary"
-        android:fontFamily="@font/montserrat_semibold"
+        android:fontFamily="@font/montserrat_semibold_ttf"
         android:textSize="@dimen/cart_item_price_text_size"
         app:layout_constraintStart_toStartOf="@+id/tvName"
         app:layout_constraintTop_toBottomOf="@+id/tvName"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_default"
         android:layout_marginTop="@dimen/margin_small"
-        android:fontFamily="@font/montserrat"
+        android:fontFamily="@font/montserrat_regular_ttf"
         android:textSize="@dimen/cart_item_name_text_size"
         app:layout_constraintEnd_toStartOf="@+id/cbSelected"
         app:layout_constraintStart_toEndOf="@+id/ivIcon"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="@+id/productAmount"
         tools:ignore="HardcodedText" />
 
-    <com.narcissus.marketplace.ui.cart.IncreaseDecreaseAmountView
+    <com.github.beleavemebe.ui.cart.IncreaseDecreaseAmountView
         android:id="@+id/productAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

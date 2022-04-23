@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.checkout
+package com.github.beleavemebe.ui.cart.checkout
 
 import com.narcissus.marketplace.domain.model.CheckoutItem
 

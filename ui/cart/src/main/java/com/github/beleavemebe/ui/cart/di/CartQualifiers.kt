@@ -1,6 +1,6 @@
-package com.narcissus.marketplace.ui.checkout.di
+package com.github.beleavemebe.ui.cart.di
 
-object CheckoutQualifiers {
+object CartQualifiers {
     object PaymentInProgressNotification
     object PaymentOneTimeRequest
     object PaymentWorkerInputData

@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.cart
+package com.github.beleavemebe.ui.cart
 
 import android.content.Context
 import android.graphics.Canvas
@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
-import com.narcissus.marketplace.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

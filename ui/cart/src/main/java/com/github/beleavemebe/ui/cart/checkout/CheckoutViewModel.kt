@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.checkout
+package com.github.beleavemebe.ui.cart.checkout
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,14 +10,13 @@ import com.narcissus.marketplace.domain.card.CardValidationResult
 import com.narcissus.marketplace.domain.usecase.GetCartCost
 import com.narcissus.marketplace.domain.usecase.GetCheckout
 import com.narcissus.marketplace.domain.usecase.ValidateCard
-import com.narcissus.marketplace.ui.checkout.di.CheckoutQualifiers
+import com.github.beleavemebe.ui.cart.di.CartQualifiers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.component.inject
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.qualifier
@@ -62,13 +61,13 @@ class CheckoutViewModel(
     private val workManager: WorkManager by inject()
 
     private val paymentWorkData: Data by inject(
-        qualifier<CheckoutQualifiers.PaymentWorkerInputData>()
+        qualifier<CartQualifiers.PaymentWorkerInputData>()
     ) {
         parametersOf(orderId)
     }
 
     private val paymentWorkRequest: OneTimeWorkRequest by inject(
-        qualifier<CheckoutQualifiers.PaymentOneTimeRequest>()
+        qualifier<CartQualifiers.PaymentOneTimeRequest>()
     ) {
 
         parametersOf(paymentWorkData)

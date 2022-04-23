@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
+import com.narcissus.marketplace.core.R as CORE
 
 class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     private var _binding: FragmentSignInBinding? = null
@@ -59,7 +60,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in), KoinComponent {
     private fun initToolbar() {
         val navController = findNavController()
         binding.tbSignIn.setupWithNavController(navController)
-        binding.tbSignIn.setNavigationIcon(R.drawable.ic_close)
+        binding.tbSignIn.setNavigationIcon(CORE.drawable.ic_close)
     }
 
     private fun initTextChangedListeners() {

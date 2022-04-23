@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.checkout.di
+package com.github.beleavemebe.ui.cart.di
 
 import androidx.core.app.NotificationCompat
 import androidx.work.Constraints
@@ -6,16 +6,23 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
-import com.narcissus.marketplace.R
-import com.narcissus.marketplace.ui.checkout.CheckoutForegroundWorker
-import com.narcissus.marketplace.ui.checkout.OrderConstants
+import com.github.beleavemebe.ui.cart.CartViewModel
+import com.github.beleavemebe.ui.cart.R
+import com.github.beleavemebe.ui.cart.checkout.CheckoutForegroundWorker
+import com.github.beleavemebe.ui.cart.checkout.CheckoutViewModel
+import com.github.beleavemebe.ui.cart.checkout.OrderConstants
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 import java.util.UUID
+import com.narcissus.marketplace.core.R as CORE
 
-val checkoutModule = module {
+val cartModule = module {
+    viewModel { CartViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { CheckoutViewModel(get(), get(), get()) }
+
     factory {
         WorkManager.getInstance(androidContext())
     }
@@ -31,7 +38,7 @@ val checkoutModule = module {
     }
 
     factory(
-        qualifier<CheckoutQualifiers.PaymentWorkerInputData>()
+        qualifier<CartQualifiers.PaymentWorkerInputData>()
     ) { (orderUUID: String) ->
         Data.Builder()
             .putString(OrderConstants.KEY_ORDER_UUID, orderUUID)
@@ -40,7 +47,7 @@ val checkoutModule = module {
     }
 
     factory(
-        qualifier<CheckoutQualifiers.PaymentOneTimeRequest>()
+        qualifier<CartQualifiers.PaymentOneTimeRequest>()
     ) { (data: Data) ->
         OneTimeWorkRequest.Builder(CheckoutForegroundWorker::class.java)
             .setConstraints(
@@ -53,10 +60,10 @@ val checkoutModule = module {
     }
 
     factory(
-        qualifier<CheckoutQualifiers.PaymentInProgressNotification>()
+        qualifier<CartQualifiers.PaymentInProgressNotification>()
     ) {
         NotificationCompat.Builder(androidContext(), OrderConstants.CHECKOUT_CHANNEL_ID)
-            .setSmallIcon(com.narcissus.marketplace.ui.splash.R.drawable.ic_logo)
+            .setSmallIcon(CORE.drawable.ic_logo)
             .setOngoing(true)
             .setAutoCancel(true)
             .setSilent(true)

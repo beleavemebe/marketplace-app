@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.checkout
+package com.github.beleavemebe.ui.cart.checkout
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,13 +10,13 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieDrawable
+import com.github.beleavemebe.ui.cart.R
+import com.github.beleavemebe.ui.cart.databinding.FragmentCheckoutBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.util.launchWhenStarted
-import com.narcissus.marketplace.databinding.FragmentCheckoutBinding
 import com.narcissus.marketplace.domain.card.CardValidationResult
 import com.narcissus.marketplace.domain.model.CheckoutItem
 import kotlinx.coroutines.flow.launchIn
@@ -178,7 +178,7 @@ class CheckoutFragment : BottomSheetDialogFragment(), KoinComponent {
     }
 
     private fun showCardHolderNameError() {
-        binding.etCardHolder.error = getString(R.string.name_empty)
+        binding.etCardHolder.error = getString(CORE.string.name_empty)
     }
 
     private fun showCardNumberError() {

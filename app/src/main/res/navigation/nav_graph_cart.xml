@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.narcissus.marketplace.ui.cart.CartFragment"
+        android:name="com.github.beleavemebe.ui.cart.CartFragment"
         android:label="CartFragment">
 
         <deepLink app:uri="marketplace-app://cart" />
@@ -16,7 +16,7 @@
 
     <dialog
         android:id="@+id/checkoutFragment"
-        android:name="com.narcissus.marketplace.ui.checkout.CheckoutFragment"
+        android:name="com.github.beleavemebe.ui.cart.checkout.CheckoutFragment"
         tools:layout="@layout/fragment_checkout">
 
         <deepLink app:uri="marketplace-app://cart/checkout" />

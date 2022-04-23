@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.cart
+package com.github.beleavemebe.ui.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

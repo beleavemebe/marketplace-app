@@ -15,6 +15,7 @@ import com.narcissus.marketplace.domain.auth.PasswordRequirement
 import com.narcissus.marketplace.domain.auth.SignUpResult
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.narcissus.marketplace.core.R as CORE
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private var _binding: FragmentSignUpBinding? = null
@@ -73,7 +74,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private fun showBlankFullNameError() {
         binding.tiFullName.error =
-            getString(R.string.name_empty)
+            getString(CORE.string.name_empty)
     }
 
     private fun showInvalidEmailError() {
