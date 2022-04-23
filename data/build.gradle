@@ -30,23 +30,21 @@ android {
 }
 
 dependencies {
-    implementation "io.insert-koin:koin-core:3.1.5"
-    testImplementation "io.insert-koin:koin-test:3.1.5"
+    implementation(Koin.koinCore)
+    testImplementation(Koin.koinTest)
 
-    implementation 'com.google.firebase:firebase-database-ktx'
-    implementation platform('com.google.firebase:firebase-bom:29.0.4')
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation platform(Firebase.firebaseBom)
+    implementation(Firebase.auth)
+    implementation(Firebase.database)
+    implementation(Google.playServicesAuth)
 
-    implementation project(path: ':domain')
-    implementation project(path: ':apiclient')
-    implementation project(path: ':persistence')
-    implementation project(path: ':firebase')
+    implementation project(Modules.domain)
+    implementation project(Modules.apiClient)
+    implementation project(Modules.persistence)
+    implementation project(Modules.firebase)
 
-    def coroutines_version = "1.6.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
+    implementation(Coroutines.coroutinesCore)
+    implementation(Coroutines.coroutinesPlayServices)
 
-    testImplementation 'junit:junit:4.13.2'
-    implementation platform('com.google.firebase:firebase-bom:29.2.0')
-    implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0'
+    testImplementation(Junit.junit)
 }
