@@ -1,4 +1,4 @@
-package com.narcissus.marketplace.ui.catalog
+package com.github.beleavemebe.ui.catalog
 
 import android.graphics.Bitmap
 import android.graphics.Color

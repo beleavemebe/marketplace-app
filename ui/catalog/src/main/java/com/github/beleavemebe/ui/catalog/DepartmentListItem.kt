@@ -1,12 +1,12 @@
-package com.narcissus.marketplace.ui.catalog
+package com.github.beleavemebe.ui.catalog
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
+import com.github.beleavemebe.ui.catalog.databinding.ListItemDepartmentBinding
+import com.github.beleavemebe.ui.catalog.databinding.ListItemLoadingDepartmentBinding
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.databinding.ListItemDepartmentBinding
-import com.narcissus.marketplace.databinding.ListItemLoadingDepartmentBinding
 import com.narcissus.marketplace.domain.model.Department
 
 typealias DepartmentBinding = ListItemDepartmentBinding

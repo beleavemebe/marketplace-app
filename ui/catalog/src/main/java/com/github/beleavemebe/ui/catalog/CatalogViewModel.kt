@@ -1,9 +1,9 @@
-package com.narcissus.marketplace.ui.catalog
+package com.github.beleavemebe.ui.catalog
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.narcissus.marketplace.domain.usecase.GetDepartments
-import com.narcissus.marketplace.ui.catalog.DepartmentListItem.DepartmentItem
+import com.github.beleavemebe.ui.catalog.DepartmentListItem.DepartmentItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow

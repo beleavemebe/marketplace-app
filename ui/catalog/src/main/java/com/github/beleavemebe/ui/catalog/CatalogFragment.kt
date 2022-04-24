@@ -1,17 +1,17 @@
-package com.narcissus.marketplace.ui.catalog
+package com.github.beleavemebe.ui.catalog
 
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.github.beleavemebe.ui.catalog.databinding.FragmentCatalogBinding
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import com.narcissus.marketplace.R
 import com.narcissus.marketplace.core.util.launchWhenStarted
-import com.narcissus.marketplace.databinding.FragmentCatalogBinding
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.narcissus.marketplace.core.R as CORE
 
 class CatalogFragment : Fragment(R.layout.fragment_catalog) {
     private var _binding: FragmentCatalogBinding? = null
@@ -51,7 +51,7 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
     }
 
     private fun initSearchViewListener() {
-        val sv = binding.searchLayout.findViewById<SearchView>(R.id.searchView)
+        val sv = binding.searchLayout.findViewById<SearchView>(CORE.id.searchView)
         sv.setOnQueryTextFocusChangeListener { _, _ ->
             sv.setOnQueryTextFocusChangeListener(null)
             navigateToSearch()
