@@ -9,7 +9,7 @@
         android:id="@+id/clContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.github.beleavemebe.ui.cart.checkout.CheckoutFragment">
+        tools:context="com.narcissus.marketplace.ui.cart.checkout.CheckoutFragment">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupCheckout"

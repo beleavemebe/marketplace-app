@@ -12,4 +12,5 @@
     <string name="amount_placeholder">%1$dx</string>
     <string name="order_number_placeholder">#%1$s</string>
     <string name="name_empty">Please, enter your full name</string>
+    <string name="add_to_cart">Add to cart</string>
 </resources>

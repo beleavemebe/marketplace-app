@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="@+id/productAmount"
         tools:ignore="HardcodedText" />
 
-    <com.github.beleavemebe.ui.cart.IncreaseDecreaseAmountView
+    <com.narcissus.marketplace.ui.cart.IncreaseDecreaseAmountView
         android:id="@+id/productAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

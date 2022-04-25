@@ -14,13 +14,13 @@ import com.google.android.material.tabs.TabLayout
 import com.hannesdorfmann.adapterdelegates4.dsl.AdapterDelegateViewBindingViewHolder
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.R
+import com.narcissus.marketplace.core.databinding.ListItemRecyclerBinding
 import com.narcissus.marketplace.databinding.ListItemBannerBinding
 import com.narcissus.marketplace.databinding.ListItemFeaturedContentBinding
 import com.narcissus.marketplace.databinding.ListItemHeadlineBinding
-import com.narcissus.marketplace.databinding.ListItemRecyclerBinding
 import com.narcissus.marketplace.domain.model.SpecialOfferBanner
-import com.narcissus.marketplace.ui.products.ProductListItem
-import com.narcissus.marketplace.ui.products.ProductsAdapter
+import com.narcissus.marketplace.ui.product_details.ProductListItem
+import com.narcissus.marketplace.ui.product_details.ProductsAdapter
 
 typealias HeadlineBinding = ListItemHeadlineBinding
 typealias BannerBinding = ListItemBannerBinding

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/catalogFragment"
-        android:name="com.github.beleavemebe.ui.catalog.CatalogFragment"
+        android:name="com.narcissus.marketplace.ui.catalog.CatalogFragment"
         android:label="CatalogFragment">
 
         <deepLink app:uri="marketplace-app://catalog" />

@@ -15,7 +15,7 @@ import com.narcissus.marketplace.domain.usecase.GetTopSalesProducts
 import com.narcissus.marketplace.ui.home.recycler.FeaturedTab
 import com.narcissus.marketplace.ui.home.recycler.HomeScreenItem
 import com.narcissus.marketplace.ui.home.recycler.ProductOfTheDayItem
-import com.narcissus.marketplace.ui.products.ProductListItem
+import com.narcissus.marketplace.ui.product_details.ProductListItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
