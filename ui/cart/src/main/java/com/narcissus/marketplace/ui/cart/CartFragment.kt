@@ -5,13 +5,13 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.narcissus.marketplace.ui.cart.databinding.FragmentCartBinding
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.core.navigation.destination.CheckoutDestination
 import com.narcissus.marketplace.core.navigation.navigator
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.domain.model.CartItem
+import com.narcissus.marketplace.ui.cart.databinding.FragmentCartBinding
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.narcissus.marketplace.core.R as CORE

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
-import com.narcissus.marketplace.ui.catalog.databinding.ListItemDepartmentBinding
-import com.narcissus.marketplace.ui.catalog.databinding.ListItemLoadingDepartmentBinding
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.domain.model.Department
+import com.narcissus.marketplace.ui.catalog.databinding.ListItemDepartmentBinding
+import com.narcissus.marketplace.ui.catalog.databinding.ListItemLoadingDepartmentBinding
 
 typealias DepartmentBinding = ListItemDepartmentBinding
 typealias LoadingDepartmentBinding = ListItemLoadingDepartmentBinding

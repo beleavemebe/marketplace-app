@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
+import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.ui.product_details.R
 import com.narcissus.marketplace.ui.product_details.databinding.FragmentReviewsBinding
-import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.ui.product_details.model.ParcelableReview
 
 class ReviewsFragment : Fragment(R.layout.fragment_reviews) {

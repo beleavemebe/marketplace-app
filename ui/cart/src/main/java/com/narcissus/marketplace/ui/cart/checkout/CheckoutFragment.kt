@@ -10,8 +10,6 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieDrawable
-import com.narcissus.marketplace.ui.cart.R
-import com.narcissus.marketplace.ui.cart.databinding.FragmentCheckoutBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,6 +17,8 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.core.util.launchWhenStarted
 import com.narcissus.marketplace.domain.card.CardValidationResult
 import com.narcissus.marketplace.domain.model.CheckoutItem
+import com.narcissus.marketplace.ui.cart.R
+import com.narcissus.marketplace.ui.cart.databinding.FragmentCheckoutBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel

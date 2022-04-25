@@ -2,7 +2,6 @@ package com.narcissus.marketplace.ui.sign_in.di
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.narcissus.marketplace.R
 import org.koin.android.ext.koin.androidContext

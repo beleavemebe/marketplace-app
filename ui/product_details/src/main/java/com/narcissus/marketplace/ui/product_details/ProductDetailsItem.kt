@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.google.android.material.card.MaterialCardView
+import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
+import com.narcissus.marketplace.core.databinding.ListItemRecyclerBinding
+import com.narcissus.marketplace.domain.model.Review
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsDividerBinding
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsMainInfoBinding
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsMainInfoPlaceholderBinding
@@ -24,10 +28,6 @@ import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsT
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsTitleButtonBinding
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoAdapter
 import com.narcissus.marketplace.ui.product_details.main_info_recycler_view.ProductMainInfoItem
-import com.google.android.material.card.MaterialCardView
-import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import com.narcissus.marketplace.core.databinding.ListItemRecyclerBinding
-import com.narcissus.marketplace.domain.model.Review
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
