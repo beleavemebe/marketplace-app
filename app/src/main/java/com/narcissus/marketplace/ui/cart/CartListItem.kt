@@ -52,11 +52,6 @@ sealed class CartListItem {
                     binding.productAmount.setAmountListener {amount->
                         onItemAmountChanged(item.cartItem, amount)
                     }
-//                    binding.productAmount.amountFlow.onEach { amount ->
-//                        if(amount!=-1){
-//                            onItemAmountChanged(item.cartItem, amount)
-//                        }
-//                    }.launchIn(scope)
                     binding.productAmount.boundaryAmountReachedTriggerFlow.onEach { isReached ->
                         if (isReached) {
                             binding.mlCartItem.transitionToStart()

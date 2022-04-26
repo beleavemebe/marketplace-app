@@ -32,14 +32,11 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
     fun setAmount(value: Int) {
         amount = value
         checkBoundaryAmountReached()
-   //     _amountFlow.value = value
     }
     fun setAmountListener(listener:(Int)->Unit){
         amountListener=listener
     }
     private var amount = 0
-//    private val _amountFlow = MutableStateFlow(1)
-//    val amountFlow = _amountFlow.asStateFlow()
     var maxAmount: Int = 0
     private val _boundaryAmountReachedTriggerFlow = MutableSharedFlow<Boolean>()
     val boundaryAmountReachedTriggerFlow = _boundaryAmountReachedTriggerFlow.asSharedFlow()
@@ -63,7 +60,6 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         viewScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-     //   observeBoundaryAmountReachedFlow()
     }
 
     private fun initListeners() {
@@ -89,27 +85,15 @@ class IncreaseDecreaseAmountView @JvmOverloads constructor(
         viewScope?.launch { _boundaryAmountReachedTriggerFlow.emit(true) }
     }
 
-//    private fun observeBoundaryAmountReachedFlow() {
-//        viewScope?.let {
-//            amountFlow.onEach { currentAmount ->
-//                when (currentAmount) {
-//                    1 -> ibDecrease.alpha = TRANSLUCENT_ALPHA
-//                    else -> ibDecrease.alpha = DENSE_ALPHA
-//                }
-//                when (currentAmount) {
-//                    maxAmount -> ibIncrease.alpha = TRANSLUCENT_ALPHA
-//                    else -> ibIncrease.alpha = DENSE_ALPHA
-//                }
-//            }.launchIn(it)
-//        }
-//    }
     private fun increaseAmount(){
         amount += 1
         checkBoundaryAmountReached()
+        amountListener?.let { it(amount) }
     }
     private fun decreaseAmount(){
         amount = max(MIN_AMOUNT, amount - 1)
         checkBoundaryAmountReached()
+        amountListener?.let { it(amount) }
     }
 
 
