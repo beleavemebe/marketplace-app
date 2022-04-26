@@ -32,7 +32,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             com.narcissus.marketplace.core.R.style.LoadingDialogImpassable,
         )
             .setView(com.narcissus.marketplace.core.R.layout.layout_progress_bar).setCancelable(false).create()
-        dialog.window?.setWindowAnimations(com.narcissus.marketplace.core.R.style.AA)
+        dialog.window?.setWindowAnimations(com.narcissus.marketplace.core.R.style.LoadingDialogAnimations)
         renderTransition()
         initRecyclerView()
         initButtons()
