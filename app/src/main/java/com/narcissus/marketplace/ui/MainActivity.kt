@@ -17,6 +17,12 @@ import com.narcissus.marketplace.core.navigation.destination.NavDestination
 import com.narcissus.marketplace.core.navigation.destination.UserDestination
 import com.narcissus.marketplace.core.navigation.destination.uri
 import com.narcissus.marketplace.databinding.ActivityMainBinding
+import com.narcissus.marketplace.ui.cart.R as CART
+import com.narcissus.marketplace.ui.catalog.R as CATALOG
+import com.narcissus.marketplace.ui.home.R as HOME
+import com.narcissus.marketplace.ui.sign_in.R as SIGN_IN
+import com.narcissus.marketplace.ui.splash.R as SPLASH
+import com.narcissus.marketplace.ui.user.R as USER
 
 class MainActivity : AppCompatActivity(), MarketplaceNavigator {
     private lateinit var binding: ActivityMainBinding
@@ -34,10 +40,18 @@ class MainActivity : AppCompatActivity(), MarketplaceNavigator {
         initBottomNavigation(navController)
     }
 
+    private val topLevelDestinations =
+        setOf(
+            HOME.id.nav_graph_home,
+            CATALOG.id.nav_graph_catalog,
+            CART.id.nav_graph_cart,
+            USER.id.nav_graph_user,
+        )
+
     private val fullScreenDestinations =
         setOf(
-            com.narcissus.marketplace.ui.splash.R.id.nav_graph_splash,
-            R.id.nav_graph_sign_in,
+            SPLASH.id.nav_graph_splash,
+            SIGN_IN.id.nav_graph_sign_in,
         )
 
     private fun initBottomNavigation(navController: NavController) {
@@ -50,14 +64,6 @@ class MainActivity : AppCompatActivity(), MarketplaceNavigator {
             }
         }
     }
-
-    private val topLevelDestinations =
-        setOf(
-            R.id.nav_graph_home,
-            R.id.nav_graph_catalog,
-            R.id.nav_graph_cart,
-            com.narcissus.marketplace.ui.user.R.id.nav_graph_user,
-        )
 
     override fun onBackPressed() {
         // TODO: find a proper way

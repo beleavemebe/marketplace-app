@@ -34,8 +34,6 @@ import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
 val domainModule = module {
-    loadKoinModules(dataModule)
-
     factory { GetTopRatedProducts(get()) }
     factory { GetTopSalesProducts(get()) }
     factory { GetRandomProducts(get()) }

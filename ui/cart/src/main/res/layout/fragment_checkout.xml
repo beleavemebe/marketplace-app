@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".checkout.CheckoutFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context="com.narcissus.marketplace.ui.cart.checkout.CheckoutFragment">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupCheckout"

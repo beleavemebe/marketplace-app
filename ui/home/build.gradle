@@ -14,6 +14,9 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -30,6 +33,22 @@ android {
 }
 
 dependencies {
+    implementation project(Modules.domain)
+    implementation project(Modules.core)
+    implementation project(Modules.productDetails)
+
+    implementation(Coil.coil)
+    implementation(AdapterDelegates.adapterDelegates)
+
+    implementation(Koin.koinCore)
+    implementation(Koin.koinAndroid)
+
+    implementation(Coroutines.coroutinesCore)
+    implementation(Coroutines.coroutinesAndroid)
+
+    implementation(Navigation.navigationUi)
+    implementation(Navigation.navigationRuntime)
+    implementation(Navigation.navigationFragment)
 
     implementation(Androidx.core)
     implementation(Androidx.appCompat)

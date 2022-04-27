@@ -49,6 +49,9 @@ dependencies {
     implementation(Koin.koinAndroid)
     implementation(Koin.koinWorkManager)
 
+    implementation(Navigation.navigationUi)
+    implementation(Navigation.navigationRuntime)
+
     implementation(Androidx.core)
     implementation(Androidx.appCompat)
     implementation(Google.material)

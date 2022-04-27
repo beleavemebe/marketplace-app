@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -14,6 +16,9 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -30,6 +35,17 @@ android {
 }
 
 dependencies {
+    implementation project(Modules.domain)
+    implementation project(Modules.core)
+
+    implementation(Koin.koinCore)
+    implementation(Koin.koinAndroid)
+
+    implementation(Navigation.navigationUi)
+    implementation(Navigation.navigationRuntime)
+    implementation(Navigation.navigationFragment)
+
+    implementation(Google.playServicesAuth)
 
     implementation(Androidx.core)
     implementation(Androidx.appCompat)

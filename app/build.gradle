@@ -52,32 +52,15 @@ dependencies {
     implementation project(Modules.search)
     implementation project(Modules.productDetails)
 
-    implementation(Coil.coil)
-    implementation(Lottie.lottie)
-    implementation(Decoro.decoro)
-    implementation(Shimmer.shimmer)
-    implementation(WorkManager.workManager)
-    implementation(AdapterDelegates.adapterDelegates)
-
     implementation(Koin.koinCore)
     implementation(Koin.koinAndroid)
     implementation(Koin.koinNavigation)
     implementation(Koin.koinWorkManager)
 
-    implementation(Coroutines.coroutinesCore)
-    implementation(Coroutines.coroutinesAndroid)
-    implementation(Coroutines.coroutinesPlayServices)
-
     implementation(Navigation.navigationUi)
     implementation(Navigation.navigationRuntime)
     implementation(Navigation.navigationFragment)
 
-    implementation platform(Firebase.firebaseBom)
-    implementation(Firebase.analytics)
-    implementation(Firebase.crashlytics)
-    implementation(Firebase.common)
-    implementation(Firebase.auth)
-    implementation(Firebase.storage)
     implementation(Google.playServicesAuth)
 
     implementation(Androidx.core)
