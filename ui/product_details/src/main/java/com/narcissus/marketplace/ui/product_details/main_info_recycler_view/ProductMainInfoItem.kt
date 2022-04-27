@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.DiffUtil
+import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.ui.product_details.R
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsMainInfoListPurchaseButtonActiveBinding
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsMainInfoListPurchaseButtonInactiveBinding
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsMainInfoListRatingSectionBinding
 import com.narcissus.marketplace.ui.product_details.utils.getTextLinearGradient
-import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
 typealias RatingSectionBinding = ListItemDetailsMainInfoListRatingSectionBinding
 typealias PurchaseButtonActiveBinding = ListItemDetailsMainInfoListPurchaseButtonActiveBinding

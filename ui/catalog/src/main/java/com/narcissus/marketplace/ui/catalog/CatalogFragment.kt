@@ -2,16 +2,14 @@ package com.narcissus.marketplace.ui.catalog
 
 import android.os.Bundle
 import android.view.View
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.narcissus.marketplace.ui.catalog.databinding.FragmentCatalogBinding
 import com.google.android.material.transition.MaterialFadeThrough
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.narcissus.marketplace.core.util.launchWhenStarted
+import com.narcissus.marketplace.ui.catalog.databinding.FragmentCatalogBinding
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.narcissus.marketplace.core.R as CORE
 
 class CatalogFragment : Fragment(R.layout.fragment_catalog) {
     private var _binding: FragmentCatalogBinding? = null

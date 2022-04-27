@@ -3,9 +3,9 @@ package com.narcissus.marketplace.ui.cart.checkout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.narcissus.marketplace.ui.cart.databinding.ListItemCheckoutDetailBinding
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.narcissus.marketplace.domain.model.CheckoutItem
+import com.narcissus.marketplace.ui.cart.databinding.ListItemCheckoutDetailBinding
 import com.narcissus.marketplace.core.R as CORE
 
 typealias DetailBinding = ListItemCheckoutDetailBinding

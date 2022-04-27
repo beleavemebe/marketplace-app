@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import coil.load
 import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
+import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemProductPreviewBinding
 import com.narcissus.marketplace.ui.product_details.databinding.ListItemProductPreviewLoadingBinding
-import com.narcissus.marketplace.domain.model.ProductPreview
 import com.narcissus.marketplace.core.R as CORE
 
 typealias LoadingBinding = ListItemProductPreviewLoadingBinding

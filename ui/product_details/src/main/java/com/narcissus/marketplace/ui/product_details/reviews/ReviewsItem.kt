@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsReviewBinding
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
+import com.narcissus.marketplace.ui.product_details.databinding.ListItemDetailsReviewBinding
 import com.narcissus.marketplace.ui.product_details.model.ParcelableReview
 
 typealias ReviewBinding = ListItemDetailsReviewBinding
