@@ -1,0 +1,16 @@
+object Modules {
+    const val domain = ":domain"
+    const val data = ":data"
+    const val core = ":core"
+    const val apiClient = ":apiclient"
+    const val firebase = ":firebase"
+    const val persistence = ":persistence"
+    const val splash = ":ui:splash"
+    const val signIn = ":ui:sign_in"
+    const val home = ":ui:home"
+    const val catalog = ":ui:catalog"
+    const val cart = ":ui:cart"
+    const val user = ":ui:user"
+    const val search = ":ui:search"
+    const val productDetails = ":ui:product_details"
+}

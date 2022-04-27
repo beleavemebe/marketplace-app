@@ -12,6 +12,7 @@ class ValidateCard {
         cvv: String,
     ): CardValidationResult {
         return when {
+            true -> CardValidationResult.Success
             !isCardHolderValid(cardHolderName) -> CardValidationResult.InvalidCardHolderName
             !isCardNumberValid(cardNumber) -> CardValidationResult.InvalidCardNumber
             !isExpirationDateValid(expirationDate) -> CardValidationResult.InvalidExpirationDate

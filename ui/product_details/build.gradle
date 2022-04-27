@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 32
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(Modules.domain)
+    implementation project(Modules.core)
+
+    implementation(Coil.coil)
+    implementation(Shimmer.shimmer)
+    implementation(AdapterDelegates.adapterDelegates)
+
+    implementation(Coroutines.coroutinesCore)
+    implementation(Coroutines.coroutinesAndroid)
+
+    implementation(Navigation.navigationUi)
+    implementation(Navigation.navigationRuntime)
+    implementation(Navigation.navigationFragment)
+
+    implementation(Koin.koinCore)
+    implementation(Koin.koinAndroid)
+
+    implementation(Androidx.core)
+    implementation(Androidx.appCompat)
+    implementation(Google.material)
+    testImplementation(Junit.junit)
+    androidTestImplementation(Androidx.junit)
+    androidTestImplementation(Androidx.espressoCore)
+}

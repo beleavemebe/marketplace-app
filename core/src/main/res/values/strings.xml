@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Marketplace App</string>
+    <string name="home">Home</string>
+    <string name="catalog">Catalog</string>
+    <string name="cart">Cart</string>
+    <string name="user">User</string>
     <string name="appTitle">NCS SHOP</string>
     <string name="order">Order</string>
     <string name="descriptionAppLogo">NCS Shop Logo</string>
     <string name="price_placeholder">$%1$d</string>
     <string name="amount_placeholder">%1$dx</string>
     <string name="order_number_placeholder">#%1$s</string>
+    <string name="name_empty">Please, enter your full name</string>
+    <string name="add_to_cart">Add to cart</string>
 </resources>
