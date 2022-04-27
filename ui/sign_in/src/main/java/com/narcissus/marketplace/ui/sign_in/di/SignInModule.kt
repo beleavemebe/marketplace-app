@@ -3,7 +3,6 @@ package com.narcissus.marketplace.ui.sign_in.di
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.narcissus.marketplace.ui.sign_in.R
 import com.narcissus.marketplace.ui.sign_in.SignInViewModel
 import com.narcissus.marketplace.ui.sign_in.sign_up.SignUpViewModel
 import org.koin.android.ext.koin.androidContext
@@ -43,4 +42,3 @@ val signInModule = module {
             .build()
     }
 }
-
