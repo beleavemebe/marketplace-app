@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Marketplace App</string>
+    <string name="app_name">NCS Shop</string>
     <string name="home">Home</string>
     <string name="catalog">Catalog</string>
     <string name="cart">Cart</string>
