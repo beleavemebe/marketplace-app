@@ -1,6 +1,8 @@
 package com.narcissus.marketplace.ui.user
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +27,6 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 class UserFragment : Fragment() {
-
     private val sharedPref by lazy {
         requireActivity().getPreferences(Context.MODE_PRIVATE)
     }
@@ -74,6 +75,7 @@ class UserFragment : Fragment() {
             is UserSideEffect.SwitchTheme -> switchTheme(sideEffect.checked)
             is UserSideEffect.NavigateToSignIn -> navigateToSignIn()
             is UserSideEffect.NavigateToOrders -> navigateToOrders()
+            is UserSideEffect.ViewSourceCode -> viewSourceCode()
         }
     }
 
@@ -84,6 +86,13 @@ class UserFragment : Fragment() {
 
     private fun navigateToOrders() {
         navigator.navigate(OrdersDestination)
+    }
+
+    private fun viewSourceCode() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SOURCE_CODE_URL))
+        if (intent.resolveActivity(requireContext().packageManager) != null) {
+            requireContext().startActivity(intent)
+        }
     }
 
     private fun switchTheme(isChecked: Boolean) {
@@ -105,5 +114,9 @@ class UserFragment : Fragment() {
         currentToast?.cancel()
         currentToast = toast
         toast.show()
+    }
+
+    companion object {
+        const val SOURCE_CODE_URL = "http://github.com/beleavemebe/marketplace-app"
     }
 }

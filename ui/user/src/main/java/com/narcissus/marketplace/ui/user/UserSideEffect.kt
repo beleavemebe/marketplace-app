@@ -5,4 +5,5 @@ sealed class UserSideEffect {
     data class SwitchTheme(val checked: Boolean) : UserSideEffect()
     object NavigateToSignIn : UserSideEffect()
     object NavigateToOrders : UserSideEffect()
+    object ViewSourceCode : UserSideEffect()
 }
