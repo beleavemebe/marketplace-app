@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".checkout.CheckoutFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupCheckout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="btnPlaceOrder, tvSummary, clCards, clTotal, mdUnderContent, mdUnderContent, mdUnderSummary, etCardHolder, etCardNumber, etCvv, etMonthYear, rvCheckoutDetails, dummy" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="statusAnim, tvMessage" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="loadingAnim" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="150dp"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/rounded_shape"
+            app:dividerThickness="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCards"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/md">
+
+            <ImageView
+                android:id="@+id/ivVisa"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/solid_stroke"
+                android:contentDescription="@string/visa_card"
+                android:src="@drawable/ic_visa"
+                app:layout_constraintEnd_toStartOf="@+id/ivMastercard"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivMastercard"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/solid_stroke"
+                android:contentDescription="@string/mastercard"
+                android:src="@drawable/ic_mastercard"
+                app:layout_constraintEnd_toStartOf="@+id/ivMir"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ivVisa"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivMir"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/solid_stroke"
+                android:contentDescription="@string/mir_card"
+                android:src="@drawable/ic_mir"
+                app:layout_constraintEnd_toStartOf="@+id/ivMaestro"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ivMastercard"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivMaestro"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@drawable/solid_stroke"
+                android:contentDescription="@string/maestro_card"
+                android:src="@drawable/ic_maestro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivMir"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/etCardHolder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:autofillHints="AUTOFILL_HINT_PERSON_NAME"
+            android:hint="@string/card_holder"
+            android:importantForAutofill="yes"
+            android:inputType="textVisiblePassword|textNoSuggestions"
+            android:paddingHorizontal="2dp"
+            android:paddingVertical="8dp"
+            android:singleLine="true"
+            android:textAppearance="@style/S1_subtitle"
+            app:layout_constraintEnd_toEndOf="@+id/clCards"
+            app:layout_constraintStart_toStartOf="@+id/clCards"
+            app:layout_constraintTop_toBottomOf="@+id/clCards" />
+
+        <EditText
+            android:id="@+id/etCardNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_NUMBER"
+            android:hint="@string/card_number"
+            android:importantForAutofill="yes"
+            android:inputType="phone"
+            android:paddingHorizontal="2dp"
+            android:paddingVertical="8dp"
+            android:singleLine="true"
+            android:textAppearance="@style/S1_subtitle"
+            app:layout_constraintEnd_toEndOf="@+id/etCardHolder"
+            app:layout_constraintStart_toStartOf="@+id/etCardHolder"
+            app:layout_constraintTop_toBottomOf="@+id/etCardHolder" />
+
+        <EditText
+            android:id="@+id/etMonthYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DATE"
+            android:hint="@string/mm_yy"
+            android:importantForAutofill="yes"
+            android:inputType="date"
+            android:paddingVertical="8dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/S1_subtitle"
+            app:layout_constraintStart_toStartOf="@+id/etCardNumber"
+            app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
+
+        <EditText
+            android:id="@+id/etCvv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:hint="@string/cvc_cvv"
+            android:autofillHints="AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE"
+            android:importantForAutofill="yes"
+            android:inputType="numberPassword"
+            android:maxLength="3"
+            android:paddingVertical="8dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/S1_subtitle"
+            app:layout_constraintEnd_toEndOf="@+id/etCardNumber"
+            app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
+
+        <TextView
+            android:id="@+id/tvSummary"
+            style="@style/H6_headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/order_summary"
+            android:textColor="?attr/colorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etCvv" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/mdUnderSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginVertical="@dimen/margin_default"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSummary" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/mdUnderContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginVertical="@dimen/margin_medium"
+            app:layout_constraintBottom_toTopOf="@+id/clTotal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCheckoutDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mdUnderSummary"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:itemCount="3"
+            tools:listitem="@layout/list_item_checkout_detail" />
+
+        <View
+            android:id="@+id/dummy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/mdUnderContent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvCheckoutDetails" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTotal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mdUnderContent">
+
+            <TextView
+                style="@style/S2_subtitle_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_large"
+                android:text="@string/total"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvOrderTotalPrice"
+                style="@style/B1_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_large"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1305$" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPlaceOrder"
+            style="@style/Btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:background="@drawable/button_background_selector"
+            android:text="@string/place_order"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clTotal"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/statusAnim"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="false"
+            tools:lottie_fileName="failure.json" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loadingAnim"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="circular_progress.json"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:id="@+id/tvMessage"
+            style="@style/H6_headline_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_regular_ttf"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/statusAnim"
+            app:layout_constraintStart_toStartOf="@+id/statusAnim"
+            app:layout_constraintTop_toTopOf="@+id/statusAnim"
+            app:layout_constraintVertical_bias="0.75"
+            tools:text="Message text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

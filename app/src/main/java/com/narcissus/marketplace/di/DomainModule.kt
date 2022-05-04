@@ -1,6 +1,5 @@
 package com.narcissus.marketplace.di
 
-import com.narcissus.marketplace.data.di.dataModule
 import com.narcissus.marketplace.domain.usecase.AddToCart
 import com.narcissus.marketplace.domain.usecase.GetAuthStateFlow
 import com.narcissus.marketplace.domain.usecase.GetCart
@@ -30,12 +29,9 @@ import com.narcissus.marketplace.domain.usecase.SignInWithGoogle
 import com.narcissus.marketplace.domain.usecase.SignOut
 import com.narcissus.marketplace.domain.usecase.SignUpWithEmail
 import com.narcissus.marketplace.domain.usecase.ValidateCard
-import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
 val domainModule = module {
-    loadKoinModules(dataModule)
-
     factory { GetTopRatedProducts(get()) }
     factory { GetTopSalesProducts(get()) }
     factory { GetRandomProducts(get()) }

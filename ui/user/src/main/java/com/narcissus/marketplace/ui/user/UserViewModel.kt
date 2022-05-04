@@ -88,7 +88,7 @@ class UserViewModel(
         toast("Report bug")
     }
 
-    fun goToSourceCode() {
-        toast("Source code")
+    fun goToSourceCode() = intent {
+        postSideEffect(UserSideEffect.ViewSourceCode)
     }
 }

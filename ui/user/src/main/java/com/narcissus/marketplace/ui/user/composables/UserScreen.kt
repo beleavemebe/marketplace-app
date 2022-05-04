@@ -33,11 +33,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.narcissus.marketplace.domain.model.UserProfile
+import com.narcissus.marketplace.ui.user.R
 import com.narcissus.marketplace.ui.user.UserViewModel
 import com.narcissus.marketplace.ui.user.theme.DarkTheme
 import com.narcissus.marketplace.ui.user.theme.DefaultPadding
@@ -124,7 +126,7 @@ fun UserScreen(
             }
 
             Item(
-                text = "Source code",
+                text = stringResource(R.string.source_code),
                 iconResId = CORE.drawable.ic_code,
             ) {
                 viewModel.goToSourceCode()

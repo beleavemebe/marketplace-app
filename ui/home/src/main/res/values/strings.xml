@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_sales">Top sales</string>
+    <string name="top_rated">Top rated</string>
+    <string name="you_viewed">You viewed</string>
+    <string name="explore">Explore</string>
+    <string name="special_offer">Special offer</string>
+    <string name="products_of_the_day">Products of the day</string>
+    <string name="percent_off_placeholder">-%1$d%%</string>
+    <string name="featured">Featured</string>
+    <string name="home_screen_footer">That\'s it! 🙃\nVisit our catalog\nfor more cool offers</string>
+    <string name="special_offer_banner">Special offer banner</string>
+    <string name="people_are_buying">People are buying</string>
+</resources>

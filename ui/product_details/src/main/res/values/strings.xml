@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="product_image">Product image</string>
+    <string name="sales_placeholder">%1$d sales</string>
+    <string name="in_stock_placeholder">In stock: %1$d</string>
+    <string name="purchase">Purchase</string>
+    <string name="type">Type</string>
+    <string name="color">Color</string>
+    <string name="material">Material</string>
+    <string name="description">Description</string>
+    <string name="about">About</string>
+    <string name="reviews">Reviews</string>
+    <string name="similar_products">Similar Products</string>
+    <string name="show_all_reviews">Show all reviews</string>
+    <string name="hide_all_reviews">Hide all reviews</string>
+    <string name="all_reviews">All reviews</string>
+    <string name="go_to_cart">Go to Cart</string>
+</resources>

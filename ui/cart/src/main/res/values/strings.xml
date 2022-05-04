@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="your_cart_is_empty">Your cart is empty</string>
+    <string name="increase_cart_item_amount">Increase amount</string>
+    <string name="decrease_cart_item_amount">Decrease amount</string>
+    <string name="delete_selected_items">Delete selected</string>
+    <string name="products_amount_placeholder">Selected: %1$d</string>
+    <string name="select_all_items">Select all</string>
+    <string name="checkout">Checkout</string>
+    <string name="visa_card">Visa card</string>
+    <string name="mir_card">Mir card</string>
+    <string name="mastercard">Mastercard</string>
+    <string name="maestro_card">Maestro card</string>
+    <string name="card_holder">CARD HOLDER</string>
+    <string name="card_number">CARD NUMBER</string>
+    <string name="mm_yy">MM/YY</string>
+    <string name="cvc_cvv">CVC/CVV</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="place_order">Place Order</string>
+    <string name="total">Total</string>
+    <string name="please_wait">Checkout in progress, please wait</string>
+    <string name="invalid_card_number">Invalid card number</string>
+    <string name="invalid_expire_date">Invalid expire date</string>
+    <string name="invalid_cvv">Please enter full CVV</string>
+    <string name="payment_successful">Payment successful</string>
+    <string name="payment_failed">Payment failed</string>
+    <string name="order_is_paid_successfully">Order #%1$d is paid successfully</string>
+    <string name="checkout_channel_name">Checkout status</string>
+</resources>

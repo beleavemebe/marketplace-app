@@ -1,6 +1,8 @@
 package com.narcissus.marketplace.ui.user
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,14 +22,11 @@ import com.narcissus.marketplace.ui.user.composables.Loading
 import com.narcissus.marketplace.ui.user.composables.UserScreen
 import com.narcissus.marketplace.ui.user.composables.YouAreNotLoggedIn
 import com.narcissus.marketplace.ui.user.theme.DefaultTheme
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.core.parameter.parametersOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 class UserFragment : Fragment() {
-
     private val sharedPref by lazy {
         requireActivity().getPreferences(Context.MODE_PRIVATE)
     }
@@ -76,17 +75,24 @@ class UserFragment : Fragment() {
             is UserSideEffect.SwitchTheme -> switchTheme(sideEffect.checked)
             is UserSideEffect.NavigateToSignIn -> navigateToSignIn()
             is UserSideEffect.NavigateToOrders -> navigateToOrders()
+            is UserSideEffect.ViewSourceCode -> viewSourceCode()
         }
     }
 
     private fun navigateToSignIn() {
-        val destination: SignInDestination by inject { parametersOf(true) }
-        navigator.navigate(destination)
+        val signInDestination = SignInDestination(hasNavigatedFromUserScreen = true)
+        navigator.navigate(signInDestination)
     }
 
     private fun navigateToOrders() {
-        val destination = OrdersDestination
-        navigator.navigate(destination)
+        navigator.navigate(OrdersDestination)
+    }
+
+    private fun viewSourceCode() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SOURCE_CODE_URL))
+        if (intent.resolveActivity(requireContext().packageManager) != null) {
+            requireContext().startActivity(intent)
+        }
     }
 
     private fun switchTheme(isChecked: Boolean) {
@@ -108,5 +114,9 @@ class UserFragment : Fragment() {
         currentToast?.cancel()
         currentToast = toast
         toast.show()
+    }
+
+    companion object {
+        const val SOURCE_CODE_URL = "http://github.com/beleavemebe/marketplace-app"
     }
 }
