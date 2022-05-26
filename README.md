@@ -17,7 +17,10 @@ The codebase focuses on following key things:
 - [x] Dark theme
 - [x] Notifications
 <h2>Design</h2>
-Click below to see design system of this app
+
+![Readme preview](https://user-images.githubusercontent.com/79194789/170563519-16b9de53-b47e-4f17-8b99-cd71f9ce8092.png)
+
+Click below to see full design system of this app
 <br></br>
  <a href="https://www.figma.com/file/KsQuIeHl9aypcJUHLYnAWU/marketplace?node-id=0%3A1">
  <img src="https://user-images.githubusercontent.com/66072196/166246753-662d7a8c-cab7-4ff8-84d1-4c4dd525da53.svg"></a>
